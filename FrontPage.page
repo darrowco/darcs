@@ -20,14 +20,7 @@ Tools<br>
 
 <div id="intro">
         
-Darcs is a free and open source, cross-platform version control system,
-like <a href="http://git-scm.com/">git</a>, <a
-href="http://mercurial.selenic.com/">mercurial</a> or <a
-href="http://subversion.apache.org/">svn</a> but with a
-very different approach: focus on changes rather
-than snapshots. Darcs offers a **freer** way of working, and a
-**simpler** user interface. Darcs *does not require a central
-server*, and work perfectly in **offline** mode.
+The Code4Lib community is a group of computer programmers and library technologists who largely work for and with libraries.
         
 </div>
 

@@ -240,7 +240,7 @@ pre.dark b { color: orange; }
 #footer,
 #footer a:link,
 #footer a:visited  { color: hsl(0, 0%, 53%); }
-.cmd-opt-hdr { color: hsl(240, 88%, 88%); }
+.cmd-opt-hdr { color: hsl(240, 28%, 40%); }
 
 /* more saturated */
 h1, h2 { color: hsl(250, 60%, 40%); }
