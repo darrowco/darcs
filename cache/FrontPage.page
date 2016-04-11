@@ -70,7 +70,7 @@ Code4Lib - CSUCI - April 11, 2016
 <p><br> Tools<br> <br> * <a href="https://git-scm.com/">git</a>: Distributed Verson Control<br> * <a href="https://github.com/">github</a>: Web Git repository<br> * <a href="http://www.gitit.net/">gitit</a> Creates a git-based wiki<br> * <a href="http://pandoc.org/">Pandoc</a> Document conversion<br> * <a href="http://pandoc.org/">Slide.ly</a> Slide Show<br></p>
 </div>
 <div id="intro">
-<p>Darcs is a free and open source, cross-platform version control system, like <a href="http://git-scm.com/">git</a>, <a href="http://mercurial.selenic.com/">mercurial</a> or <a href="http://subversion.apache.org/">svn</a> but with a very different approach: focus on changes rather than snapshots. Darcs offers a <strong>freer</strong> way of working, and a <strong>simpler</strong> user interface. Darcs <em>does not require a central server</em>, and work perfectly in <strong>offline</strong> mode.</p>
+<p>The Code4Lib community is a group of computer programmers and library technologists who largely work for and with libraries.</p>
 </div>
 <div id="leftcol">
 <table>

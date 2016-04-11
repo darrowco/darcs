@@ -27,14 +27,14 @@ The Code4Lib community is a group of computer programmers and library technologi
 <div id="leftcol">
 
 +---------------------------------------+-------------------------------------+
-| # Why Darcs                           | # Using Darcs                       |
+| # Why git                             | # Using git                         |
 |                                       |                                     |
-| - [Key Features]                      | - [Darcs for Users]                 |
-| - [What makes Darcs different]        | - [Darcs for Developers]            |
+| - [Key Features]                      | - [git for Users]                   |
+| - [What makes git different]          | - [git for Developers]              |
 +---------------------------------------+-------------------------------------+
-| # Community                           | # About Darcs                       |
+| # Community                           | # About git                         |
 |                                       |                                     |
-| - [Get Involved]                      |  - [More about Darcs]               |
+| - [Get Involved]                      |  - [More about git]                 |
 +---------------------------------------+-------------------------------------+
 
 </div>
@@ -43,10 +43,7 @@ The Code4Lib community is a group of computer programmers and library technologi
 
 # News
 
-* Apr. 2016 [Darcs News #112](http://blog.darcs.net/2016/04/darcs-news-112.html)
-* Jan. 2016 [Darcs 2.10.3 released!](http://lists.osuosl.org/pipermail/darcs-users/2016-January/027182.html)
-* Nov. 2015 [Darcs 2.10.2 released!](http://lists.osuosl.org/pipermail/darcs-users/2015-November/027151.html)
-* More news: [Planet Darcs](http://planet.darcs.net)
+* Apr. 2016 Code4Lib meetup
 
 </div>
 
