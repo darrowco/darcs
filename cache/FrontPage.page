@@ -67,7 +67,7 @@
 <div id="download-heading">
 Code4Lib - CSUCI - April 11, 2016
 </div>
-<p><br> Tools<br> <br> * <a href="https://git-scm.com/">git</a>: Distributed Verson Control<br> * <a href="https://github.com/">github</a>: Web Git repository<br> * <a href="http://www.gitit.net/">gitit</a> Creates a git-based wiki<br> * <a href="http://pandoc.org/">Pandoc</a> Document conversion<br> * <a href="http://pandoc.org/">Slide.ly</a> Slide Show<br></p>
+<p><br> Tools<br> <br> * <a href="https://git-scm.com/">git</a>: Distributed Verson Control<br> * <a href="https://github.com/">github</a>: Web Git repository<br> * <a href="http://www.gitit.net/">gitit</a> Creates a git-based wiki<br> * <a href="http://pandoc.org/">Pandoc</a> Document conversion<br> * <a href="http://pandoc.org/">Slide.ly</a> Slide Show<br> <br> Slideshow<br> <br> * <a href="git%20Slideshow" title="Go to wiki page">git Slideshow</a>: git workflow with multiple workers<br> * <a href="gitit%20Slideshow" title="Go to wiki page">gitit Slideshow</a>: Distributed slideshow creation<br></p>
 </div>
 <div id="intro">
 <p>The Code4Lib community is a group of computer programmers and library technologists who largely work for and with libraries.</p>
