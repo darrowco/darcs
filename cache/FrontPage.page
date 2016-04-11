@@ -68,7 +68,7 @@
 install latest Darcs 2.10.3:
 </div>
 <ul>
-<li>with <a href="http://www.haskellstack.org">stack</a>:<br> <code>stack install darcs [–resolver=lts-5.1]</code></li>
+<li><a href="http://www.haskellstack.org">stack</a>:<br> <code>stack install darcs [–resolver=lts-5.1]</code></li>
 <li>with <a href="http://www.haskell.org/haskellwiki/Cabal/How_to_install_a_Cabal_package">cabal</a>: <code>cabal install darcs-2.10.3</code></li>
 <li><a href="/Binaries">Darcs binaries</a> for many platforms</li>
 <li><a href="releases/darcs-2.10.3.tar.gz">current release source</a> tarball</li>
