@@ -12,9 +12,9 @@ Tools<br>
 <br>
 * [git](https://git-scm.com/): Distributed Verson Control<br>
 * use with [github](https://github.com/): Web-based Git repository hosting service
-* [Darcs binaries](/Binaries) for many platforms
-* [current release source](releases/darcs-2.10.3.tar.gz) tarball
-* or get latest developing source code as [zip file](http://darcs.net/reviewed/reviewed.zip)
+* [gitit](http://www.gitit.net/) creates a git-based wiki
+* comprehensive document conversion by [Pandoc](http://pandoc.org/)
+* conversion output includes [Slide.ly](http://pandoc.org/) that created this slide show
 
 </div>
 
