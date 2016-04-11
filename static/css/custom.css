@@ -242,11 +242,11 @@ pre.dark b { color: orange; }
 #footer a:visited  { color: hsl(0, 0%, 53%); }
 .cmd-opt-hdr { color: hsl(240, 28%, 40%); }
 
-/* more saturated
+/* more saturated */
 h1, h2 { color: hsl(250, 60%, 40%); }
 #download { border: 3px solid hsl(240, 100%, 21%); }
 pre { border-bottom-color: hsl(240, 40%, 60%); }
- */
+/* */
 
 /* green
 h1,h2 { color: black; }
