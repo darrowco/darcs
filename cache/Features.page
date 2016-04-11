@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     
-    <title>Darcs - Features</title>
+    <title>UCLA Library - Features</title>
         <link href="/css/custom.css" rel="stylesheet" media="screen, projection" type="text/css" />
     <link href="/css/print.css" rel="stylesheet" media="print" type= "text/css" />
     
@@ -68,7 +68,7 @@
 >
 <h1 id="some-key-features">Some Key Features</h1>
 <ul>
-<li><strong>Offline mode</strong>. Darcs is distributed. This means your own working directory is a repository in its own right. You can quickly record your work even if you’re on the road with no access to the server or with a bad network connection. When you get home, you do a <code>darcs push</code> to transmit it to the public server.</li>
+<li><strong>Offline mode</strong>. Git is distributed. This means your own working directory is a repository in its own right. You can quickly record your work even if you’re on the road with no access to the server or with a bad network connection. When you get home, you do a <code>darcs push</code> to transmit it to the public server.</li>
 <li><strong>Local preparation</strong>. Darcs enables you to modify patches before sending them to a remote repository, or even to throw them away completely and start over.</li>
 <li><strong>Easy branching and merging</strong>. Every repository is a branch. There is no branch administration except pushing and pulling between repositories.</li>
 <li><strong>Easy collaboration by e-mail</strong>. If you want to add a feature or bugfix to some project, you can make a local clone, apply your changes, then send the patches by email (<code>darcs send</code>). The project’s maintainers can decide whether to accept or reject the patches. This way, you do not need commit privileges to contribute.</li>
