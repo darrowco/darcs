@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     
-    <title>UCLA Library - FrontPage</title>
+    <title>UCLA Library - git Slideshow</title>
         <link href="/css/custom.css" rel="stylesheet" media="screen, projection" type="text/css" />
     <link href="/css/print.css" rel="stylesheet" media="print" type= "text/css" />
     
@@ -42,15 +42,19 @@
 </div>
             <ul class="tabs"
 ><li class="selected"
-  ><a href="/FrontPage"
+  ><a href="/git%20Slideshow"
     >view</a
     ></li
   ><li
-  ><a href="/_history/FrontPage"
+  ><a href="/_edit/git%20Slideshow"
+    >edit</a
+    ></li
+  ><li
+  ><a href="/_history/git%20Slideshow"
     >history</a
     ></li
   ><li
-  ><a href="/_discuss/FrontPage"
+  ><a href="/_discuss/git%20Slideshow"
     >discuss</a
     ></li
   ></ul
@@ -58,69 +62,24 @@
             <div id="content">
   
   <style>h1.pageTitle.FrontPage {display:none;}</style>
-  <h1 class="pageTitle FrontPage"><a href="/FrontPage">FrontPage</a></h1>
+  <h1 class="pageTitle git Slideshow"><a href="/git%20Slideshow">git Slideshow</a></h1>
   
   <div id="wikipage"
 >
-<div id="splash">
-<div id="download">
-<div id="download-heading">
-Code4Lib - CSUCI - April 11, 2016
+<h1 id="the-basic-idea">1. <a href="http://127.0.0.1:5001/git%20Slideshow?export&amp;format=Slidy">The Basic Idea</a><br></h1>
+<div class="figure">
+<img src="/img/1_gitit_main.png" />
+
 </div>
-<p><br> Tools<br> <br> * <a href="https://git-scm.com/">git</a>: Distributed Verson Control<br> * <a href="https://github.com/">github</a>: Web Git repository<br> * <a href="http://www.gitit.net/">gitit</a> Creates a git-based wiki<br> * <a href="http://pandoc.org/">Pandoc</a> Document conversion<br> * <a href="http://pandoc.org/">Slide.ly</a> Slide Show<br> <br> <br> Slideshows<br> <br> * <a href="git%20Slideshow" title="Go to wiki page">git Slideshow</a>: Workflow with multiple workers<br> * <a href="gitit%20Slideshow" title="Go to wiki page">gitit Slideshow</a>: Distributed slideshow creation<br></p>
+<h1 id="two-key-branches-on-github"><a href="git%20Slideshow">2. Two Key Branches on GitHub</a><br></h1>
+<div class="figure">
+<img src="/img/2_gitit_basic.png" />
+
 </div>
-<div id="intro">
-<p>The Code4Lib community is a group of computer programmers and library technologists who largely work for and with libraries.</p>
-</div>
-<div id="leftcol">
-<table>
-<colgroup>
-<col width="50%" />
-<col width="50%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><h1 id="why-git">Why git</h1>
-<ul>
-<li><a href="/Features">Key Features</a></li>
-<li>[What makes git different]</li>
-</ul></td>
-<td><h1 id="using-git">Using git</h1>
-<ul>
-<li>[git for Users]</li>
-<li>[git for Developers]</li>
-</ul></td>
-</tr>
-<tr class="even">
-<td><h1 id="community">Community</h1>
-<ul>
-<li><a href="/Community">Get Involved</a></li>
-</ul></td>
-<td><h1 id="about-git">About git</h1>
-<ul>
-<li>[More about git]</li>
-</ul></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="rightcol">
-<h1 id="news">News</h1>
-<ul>
-<li>Apr. 2016 Code4Lib meetup</li>
-</ul>
-</div>
-<div id="footer">
-<div id="sponsors">
-<p><a href="http://www.library.ucla.edu/about/giving-library">UCLA Library sponsors</a></p>
-</div>
-<div id="donate">
-<p><a href="http://www.library.ucla.edu/about/giving-library">Giving to the Library</a></p>
-</div>
-<div id="conservancy">
-<p><a href="http://www.library.ucla.edu/">Library Home Page</a></p>
-</div>
-</div>
+<h1 id="single-user-is-easy"><a href="git%20Slideshow">3. Single User is Easy</a><br></h1>
+<div class="figure">
+<img src="/img/3_gitit_easy.png" />
+
 </div></div
 >
 </div>
@@ -148,7 +107,7 @@ Code4Lib - CSUCI - April 11, 2016
 <script type="text/javascript">
 /* <![CDATA[ */
      $(document).bind("keydown", "ctrl+r", function() {
-         $.post("/_expire/FrontPage");
+         $.post("/_expire/git%20Slideshow");
          return true;
          });
 /* ]]> */

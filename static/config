@@ -76,7 +76,7 @@ log-level: DEBUG
 # Possible values (from most to least verbose) are DEBUG, INFO,
 # NOTICE, WARNING, ERROR, CRITICAL, ALERT, EMERGENCY.
 
-front-page: FrontPage2
+front-page: FrontPage
 # specifies which wiki page is to be used as the wiki's front page.
 # Gitit creates a default front page on startup, if one does not exist
 # already.
@@ -87,11 +87,17 @@ no-delete: FrontPage, Thanks, Donations
 # A comma-separated list of page names.  Leave blank to allow
 # every page to be deleted.
 
-no-edit: FrontPage, Thanks, Donations
+no-edit:
 # specifies pages that cannot be edited through the web interface.
 # Leave blank to allow every page to be edited.
 
-table-of-contents: yes
+default-summary: Updated
+# specifies text to be used in the change description if the author
+# leaves the "description" field blank.  If default-summary is blank
+# (the default), the author will be required to fill in the description
+# field.
+
+table-of-contents: no
 # specifies whether to print a tables of contents (with links to
 # sections) on each wiki page.
 
@@ -112,7 +118,7 @@ max-cache-size: 2M
 
 use-cache: yes
 
-max-upload-size: 100K
+max-upload-size: 100000K
 # specifies an upper limit on the size (in bytes) of files uploaded
 # through the wiki's web interface.
 
@@ -151,7 +157,7 @@ access-question-answers: darcs, Darcs, DARCS
 #When Gitit is built against a fixed Happstack, flip this to yes
 compress-responses: no
 
-wiki-title: Darcs
+wiki-title: UCLA Library
 
 require-authentication: modify
 
