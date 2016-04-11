@@ -65,7 +65,7 @@
 <div id="splash">
 <div id="download">
 <div id="download-heading">
-install latest Darcs 2.10.3:
+Code4Lib - CSUCI - April 11, 2016
 </div>
 <ul>
 <li><a href="http://www.haskellstack.org">stack</a>:<br> <code>stack install darcs [–resolver=lts-5.1]</code></li>

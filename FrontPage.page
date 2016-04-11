@@ -8,9 +8,8 @@ toc:no
 
 <div id="download-heading">Code4Lib - CSUCI - April 11, 2016</div>
 
-*  [stack](http://www.haskellstack.org):<br>
-<code>stack install darcs [--resolver=lts-5.1]</code>
-* with [cabal](http://www.haskell.org/haskellwiki/Cabal/How_to_install_a_Cabal_package):
+* [git](https://git-scm.com/): Distributed Verson Control<br>
+* use with [github](https://github.com/): Web-based Git repository hosting service
 <code>cabal install darcs-2.10.3</code>
 * [Darcs binaries](/Binaries) for many platforms
 * [current release source](releases/darcs-2.10.3.tar.gz) tarball
