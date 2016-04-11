@@ -67,7 +67,7 @@
 <div id="download-heading">
 Code4Lib - CSUCI - April 11, 2016
 </div>
-<p><br> Tools<br> <br> * <a href="https://git-scm.com/">git</a>: Distributed Verson Control<br> * use with <a href="https://github.com/">github</a>: Web-based Git repository hosting service * <a href="/Binaries">Darcs binaries</a> for many platforms * <a href="releases/darcs-2.10.3.tar.gz">current release source</a> tarball * or get latest developing source code as <a href="http://darcs.net/reviewed/reviewed.zip">zip file</a></p>
+<p><br> Tools<br> <br> * <a href="https://git-scm.com/">git</a>: Distributed Verson Control<br> * use with <a href="https://github.com/">github</a>: Web-based Git repository hosting service * <a href="http://www.gitit.net/">gitit</a> creates a git-based wiki * comprehensive document conversion by <a href="http://pandoc.org/">Pandoc</a> * conversion output includes <a href="http://pandoc.org/">Slide.ly</a> that created this slide show</p>
 </div>
 <div id="intro">
 <p>Darcs is a free and open source, cross-platform version control system, like <a href="http://git-scm.com/">git</a>, <a href="http://mercurial.selenic.com/">mercurial</a> or <a href="http://subversion.apache.org/">svn</a> but with a very different approach: focus on changes rather than snapshots. Darcs offers a <strong>freer</strong> way of working, and a <strong>simpler</strong> user interface. Darcs <em>does not require a central server</em>, and work perfectly in <strong>offline</strong> mode.</p>
