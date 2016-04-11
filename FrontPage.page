@@ -7,10 +7,10 @@ toc:no
 <div id="download">
 
 <div id="download-heading">Code4Lib - CSUCI - April 11, 2016</div>
-
+<p>
+Tools
 * [git](https://git-scm.com/): Distributed Verson Control<br>
 * use with [github](https://github.com/): Web-based Git repository hosting service
-<code>cabal install darcs-2.10.3</code>
 * [Darcs binaries](/Binaries) for many platforms
 * [current release source](releases/darcs-2.10.3.tar.gz) tarball
 * or get latest developing source code as [zip file](http://darcs.net/reviewed/reviewed.zip)
