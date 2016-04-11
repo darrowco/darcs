@@ -7,8 +7,9 @@ toc:no
 <div id="download">
 
 <div id="download-heading">Code4Lib - CSUCI - April 11, 2016</div>
-<p>
-Tools
+<br>
+Tools<br>
+<br>
 * [git](https://git-scm.com/): Distributed Verson Control<br>
 * use with [github](https://github.com/): Web-based Git repository hosting service
 * [Darcs binaries](/Binaries) for many platforms
