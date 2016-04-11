@@ -1,0 +1,446 @@
+# News and discussions
+
+1.  Ganesh Sittampalam pushed to HEAD and to the 2.8 branch patches that make
+    darcs compile with GHC 7.6.1:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2012-December/026733.html>
+
+# Issues resolved in the last week (7)
+
+issue1332 Florent Becker
+  ~ -   for good
+    -   <http://bugs.darcs.net/issue1332>
+
+issue2225 Owen Stephens
+  ~ -   add an option to obliterate all patches not in remote repo
+    -   <http://bugs.darcs.net/issue2225>
+
+issue2228 Owen Stephens
+  ~ -   calls to less include -R argument to interpret colour codes
+    -   <http://bugs.darcs.net/issue2228>
+
+issue2230 Owen Stephens
+  ~ -   die immediately if an invalid context file is provided to get --context
+    -   <http://bugs.darcs.net/issue2230>
+
+issue2246 Owen Stephens
+  ~ -   - add default boring entry for emacs session save files
+    -   <http://bugs.darcs.net/issue2246>
+
+issue2253 Owen Stephens
+  ~ -   - attempting to use the patch index shouldn't create it on OF repos
+    -   <http://bugs.darcs.net/issue2253>
+
+issue2278 Mark Stosberg
+  ~ -   Document default value for --keep-date / --no-keep-date
+    -   <http://bugs.darcs.net/issue2278>
+
+
+# Patches applied in the last week (324)
+
+2012-12-12 Mark Stosberg
+  ~ -   docs for 'rebase obliterate' are now more specific.
+    -   rebase typo fix: "darcs rebase start" does not exist. Reference 'suspend' instead
+    -   Resolve Issue2278: Document default value for --keep-date / --no-keep-date
+    -   Update docs for rebase subcommands to clarify that they can select multiple patches
+    -   Clarify some points about setting up mail sending
+
+2012-11-12 Ganesh Sittampalam
+  ~ -   fix Windows build
+
+2012-10-07 Owen Stephens
+  ~ -   Hlint Repository/Prefs
+    -   resolve issue2246 - add default boring entry for emacs session save files
+    -   Tidy/Style Repository/Prefs
+
+2012-09-09 Ganesh Sittampalam
+  ~ -   TAG 2.9.5
+    -   bump version to 2.9.5
+    -   TAG 2.9.4
+    -   bump version to 2.9.4
+
+2012-08-19 Owen Stephens
+  ~ -   resolve issue2225: add an option to obliterate all patches not in remote repo
+
+2012-11-03 Ganesh Sittampalam
+  ~ -   fix comment
+    -   replace C SHA256 bindings with external libraries
+    -   simplify some copy-and-pasted code
+    -   fix error message
+    -   de-haddock some comments in an invalid location
+    -   fix warning
+    -   add some documentation for the Rebase code
+    -   make RebaseSelect use RebaseFixup
+    -   clean up extensions/flags in Darcs.Rebase.Select
+    -   move RebaseName commute functions to Rebase.Name
+    -   move RebaseName instances to Rebase.Name module
+    -   split Darcs.Patch.Rebase.Name out from Darcs.Patch.Rebase.Fixup
+    -   break out Darcs.Patch.Rebase.Select module
+    -   document PatchType
+    -   document NameHack
+    -   add some documentation to revertRepositoryChanges
+    -   tweak parameter names to Suspended to make it clear they are lists
+
+2012-11-05 Eric Kow
+  ~ -   WIP: issue2212
+
+2012-11-05 Florent Becker
+  ~ -   generalize genCommuteWhatWeCanRL: allow heterogenous commute, add gen...FL
+
+2012-10-07 Ganesh Sittampalam
+  ~ -   move MonadProgress IO instance to use Darcs.Repository.ApplyPatches wrapper
+    -   fix warning
+
+2012-11-11 Owen Stephens
+  ~ -   Tidy/Style UI/Commands
+    -   Ignore an HLint suggestion in UI/Commands
+
+2012-10-25 Ganesh Sittampalam
+  ~ -   fix a warning on Linux
+    -   fix a couple of warnings on Windows
+
+2012-10-11 Owen Stephens
+  ~ -   Add a HLint directory, containing HLint ignores and a shell script to run HLint
+    -   HLint Utils/Crypt/SHA256
+    -   HLint Utils/Crypt/SHA1
+    -   HLint Utils/CommandLine
+    -   Hlint Util/Printer/Color
+    -   Hlint Repository/External
+    -   Hlint UI/External
+    -   Hlint UI/Commands/Push
+    -   Hlint UI/RunCommand
+    -   Hlint UI/Commands/Push
+    -   Hlint UI/Commands/Pull
+    -   Hlint UI/Commands
+    -   Hlint Repository/FileMod
+    -   Hlint Repository/Lock
+    -   Fix Rollback output giving wrong command name
+    -   Tidy/Style Commands/Rollback
+
+2012-09-09 Ganesh Sittampalam
+  ~ -   Workaround -> Darcs.Util.Workaround
+    -   URL.* -> Darcs.Util.Download.*
+    -   extract some utility code from Darcs.Repository.Lock
+    -   SHA1 -> Darcs.Util.Crypt.SHA1
+    -   Ratified -> Darcs.Util.Ratified
+    -   Progress -> Darcs.Util.Progress
+    -   Printer -> Darcs.Util.Printer
+    -   Lcs -> Darcs.Util.Lcs
+    -   IsoDate -> Darcs.Util.IsoDate
+    -   ByteStringUtils -> Darcs.Util.ByteString
+    -   Exec -> Darcs.Util.Exec
+    -   English -> Darcs.Util.English
+    -   resolve conflicts between patch index creation and Darcs.Path renaming
+    -   Darcs.Path -> Darcs.Util.Path
+    -   DateMatcher -> Darcs.Util.DateMatcher
+    -   Darcs.Ssh -> Darcs.Repository.Ssh
+    -   Darcs.SignalHandler -> Darcs.Util.SignalHandler
+    -   Darcs.Global -> Darcs.Util.Global
+    -   Darcs.FileModMonad -> Darcs.Patch.FileMod.Monad
+    -   Darcs.ColorPrinter -> Darcs.Util.Printer.Color
+    -   drop unused language pragma
+    -   get rid of an orphan instance in Darcs.Repository.ApplyPatches
+    -   use newtype wrapper to avoid duplicated instances
+    -   use GeneralizedNewtypeDeriving in ApplyPatches
+    -   make mRemoveDirectory catch consistent between TolerantIO and SilentIO
+
+2012-09-03 Owen Stephens
+  ~ -   Remove duplicate context file mmapping, instead use centralised function
+    -   resolve issue2230: die immediately if an invalid context file is provided to get --context
+    -   accept issue2230 get --context fails too late
+    -   Hlint Patch/Annotate
+    -   Hlint Patch/Apply
+    -   Hlint Patch/Depends
+    -   Hlint Patch
+    -   Hlint Utils/ByteString
+    -   Hlint Util/Workaround
+    -   Hlint Util/Download/Curl
+    -   Hlint Util/Download
+    -   Hlint UI/Commands/Put
+    -   Hlint Repository/Compat
+    -   Hlint UI/Commands/ShowRepo
+    -   Hlint Patch/V2/Real
+    -   Hlint UI/Commands/Annotate
+    -   Hlint UI/Commands/Diff
+    -   Hlint UI/Commands/ShowIndex
+    -   Hlint Repository/Rebase
+    -   Hlint win32/Darcs/Util/CtrlC
+    -   Hlint DateTester
+    -   Hlint Util/SignalHandler
+    -   Hlint Util/Printer
+    -   Hlint Util/Progress
+    -   Hlint Util/Path
+    -   Hlint Util/Lcs
+    -   Hlint Util/IsoDate
+    -   Hlint Util/Exec
+    -   Hlint Util/DateMatcher
+    -   Hlint Repository/ApplyPatches
+    -   Hlint Util/Global
+    -   Hlint Util/Bug
+    -   Hlint Util
+    -   Hlint UI/Usage
+    -   Hlint UI/SelectChanges
+    -   Hlint UI/RemoteApply
+    -   Hlint UI/Flags
+    -   Hlint UI/Email
+    -   Hlint UI/CommandsAux
+    -   Hlint UI/Commands/Util
+    -   Hlint UI/Commands/Unrevert
+    -   Hlint UI/Commands/TransferMode
+    -   Hlint UI/Commands/Tag
+    -   Hlint UI/Commands/ShowPatchIndex
+    -   Hlint UI/Commands/ShowFiles
+    -   Hlint UI/Commands/ShowAuthors
+    -   Hlint UI/Commands/Send
+    -   Hlint UI/Commands/Revert
+    -   Hlint UI/Commands/Repair
+    -   Hlint UI/Commands/Remove
+    -   Hlint UI/Commands/Record
+    -   Hlint UI/Commands/Rebase
+    -   Hlint UI/Commands/Put
+    -   Hlint UI/Commands/Optimize
+    -   Hlint UI/Commands/Move
+    -   Hlint UI/Commands/MarkConflicts
+    -   Hlint UI/Commands/Init
+    -   Hlint UI/Commands/Help
+    -   Hlint UI/Commands/Convert
+    -   Hlint UI/Commands/Apply
+    -   Hlint UI/Commands/Changes
+    -   Hlint UI/Commands/AmendRecord
+    -   Hlint UI/Commands/Add
+    -   Hlint UI/Arguments
+    -   Hlint Repository/Job
+    -   Hlint Repository/Repair
+    -   Hlint Repository/Test
+    -   Hlint Repository/State
+    -   Hlint Repository/Ssh
+    -   Hlint Repository/Resolution
+    -   Hlint Repository/Old
+    -   Hlint Repository/Internal
+    -   Hlint Repository/HashedIO
+    -   Hlint Repository/Format
+    -   Hlint Darcs/Repository
+    -   Hlint Patch/Witnesses/WZipper
+    -   Hlint Patch/V2/Non
+    -   Hlint Patch/V1/Viewing
+    -   Hlint Patch/V1/Read
+    -   Hlint Patch/V1/Core
+    -   Hlint Patch/V1/Commute
+    -   Hlint Patch/V1/Apply
+    -   Hlint Patch/TouchesFiles
+    -   Hlint Patch/Summary
+    -   Hlint Patch/RegChars
+    -   Hlint Patch/Rebase
+    -   Hlint Patch/ReadMonads
+    -   Hlint Patch/Prim/V3/Show
+    -   Hlint Patch/Prim/V3/Commute
+    -   Hlint Patch/OldDate
+    -   Hlint Patch/Prim/V3/Apply
+    -   Hlint Patch/Prim/V1/Coalesce
+    -   Hlint Patch/Prim/V1/Show
+    -   Hlint Patch/Prim/V1/Read
+    -   Hlint Patch/Prim/V1/Details
+    -   Hlint Patch/Prim/V1/Commute
+    -   Hlint Patch/Prim/V1/Apply
+    -   Hlint Patch/Permutations
+    -   Hlint Patch/PatchInfoAnd
+    -   Hlint Patch/Match
+    -   Hlint Patch/Info
+    -   Hlint Patch/FileMod/Types
+    -   Hlint Patch/FileMod/Monad
+    -   Hlint Patch/ConflictMarking
+    -   Hlint Patch/Bracketed
+    -   Hlint Patch/ApplyMonad
+
+2012-08-28 Ganesh Sittampalam
+  ~ -   stop using Prelude.catch
+    -   note about the rebase representation
+    -   tidy/comment commuterRebasing
+    -   tidy and comment Rebasing and RebaseItem
+    -   tidy exports
+    -   extract nameHack into its own class/module
+    -   move some stuff out of Darcs.Repository.Job into .Rebase
+    -   make Darcs.Repository.Rebase module
+    -   move RecontextRebase out into its own module
+    -   give "internal patches" their own module/class
+    -   reify name fixup into an empty patch
+    -   fix bug when a fresh copy of a suspended patch is pulled
+    -   rework how we handle the rebase patch during amend-record
+    -   test to expose bug in rebase-block handling
+    -   initial check/repair for the rebase state
+    -   make amend-record handling more robust
+    -   refactor Fixups
+    -   simplify test
+    -   add some selection options to rebase unsuspend
+    -   add some selection options to rebase suspend
+    -   support --reverse for rebase suspend
+    -   don't insist on all patches in a Named having the same polarity
+    -   rebase: track renames from amend-record
+    -   move RebaseName out into its own module to help dependencies
+    -   simplify the way rebase hints work
+    -   fix forceCommuteName
+    -   fix showPatch for RebaseName
+    -   initial version of name tracking during rebase
+    -   add infrastructure for total commuters
+    -   move adding patches to a where clause
+    -   todo items
+    -   add rebase inject
+    -   generalise type of fmapFL_Named
+    -   add description to RebaseSelect
+    -   commute rebase patch to head of repo lazily
+    -   command to reify fixups
+    -   add tentativelyAddPatches_
+    -   document takeHeadRebase
+    -   hacky summary display
+    -   add test for rebase to track explicit deps/tags
+    -   fix typo in comment
+    -   add mapFL_FL_M
+    -   update name of rebase patch
+    -   todo item
+    -   rebase obliterate command
+    -   add test of pulling a tag into a rebasing repo
+    -   ignore internal patches when tagging
+    -   addHack needs to recognise tags, which have no contents
+    -   add test of tagging a rebasing repo
+    -   test for eliminating the rebase patch from the UI
+    -   add mechanism for marking patches as 'internal'
+    -   PatchDebug instances for rebase
+    -   add rebase command
+
+2012-11-06 Owen Stephens
+  ~ -   Tweak issue1332 test, which was accidentally passing
+
+2012-11-08 Florent Becker
+  ~ -   Resolve issue1332 for good
+
+2012-10-22 Owen Stephens
+  ~ -   accept issue2257: able to attempt to obliterate depended-on patch
+
+2012-10-18 Ganesh Sittampalam
+  ~ -   update README
+    -   TAG 2.9.3
+    -   bump version to 2.9.3
+
+2012-08-26 BSRK Aditya
+  ~ -   Add flag rts to cabal
+
+2012-10-16 Owen Stephens
+  ~ -   More detailed "existing entry" error when creating PI
+
+2012-08-25 Guillaume Hoffmann
+  ~ -   move old fashioned get warning earlier in code for better UI separation
+
+2012-08-25 BSRK Aditya
+  ~ -   If the path does not have a file, lookupFids should return an empty list
+    -   Add patch-index tests.
+    -   Add test changes-duplicate
+    -   Add haddock for lookupFid
+    -   Add patch index correctness and timing scripts to contrib
+    -   more compact filterPatches function
+    -   Add -fno-warn-missing-methods compiler option to FileModMonad
+    -   Do not create patch index at get if --disable-patch-index is passed
+    -   If user uses ctrl-c at get, do not create patch index
+    -   disable patch index in lazy-optimize-reorder test
+    -   disable patch index in tests for repair-corrupt
+    -   Add test for annotate on directories
+    -   resolve ambiguous options in tests
+    -   Flags related to patch-index support.
+
+2012-08-05 Eric Kow
+  ~ -   Fix tests that were broken by send --mail UI change.
+
+2012-10-03 Ganesh Sittampalam
+  ~ -   stop using throw in the IO monad
+    -   fix utf8 test after rollback --record removal
+
+2012-10-10 Owen Stephens
+  ~ -   Resolve issue2253 - attempting to use the patch index shouldn't create it on OF repos
+
+2012-08-25 Eric Kow
+  ~ -   Util.Text.sentence (appends a '.' to a Doc)
+    -   Make Printer.Doc an IsString instance.
+    -   Make cabal-dev directory boring.
+    -   Break up Setup.lhs a bit with banners.
+
+2012-09-22 Petr Rockai
+  ~ -   Tests: Use type -P instead of -p for "which".
+    -   Fix (old) tests to work correctly with set -o pipefail.
+    -   Tests: use DARCS_EDITOR in place of EDITOR (safer).
+    -   Fix issue1935 test that only worked before with cURL enabled.
+    -   Tests: replace "set -ev" with ". ./lib" in old tests.
+    -   Tests: Implement which in terms of type and cut.
+
+2012-09-02 Owen Stephens
+  ~ -   Fix incorrect use of UI PatchInfo printing where disk format is required
+    -   Give PatchInfo's humanFriendly a more informative name, and use it in a few UI-facing outputs
+
+2012-09-09 Ganesh Sittampalam
+  ~ -   script to check for illegal dependencies
+    -   add a comment about keeping System.Posix modules
+    -   CtrlC -> Darcs.Util.CtrlC
+    -   Darcs.URL -> Darcs.Util.URL
+    -   move Darcs.Repository.FileModTypes -> Darcs.Patch.FileMod.Types
+    -   Darcs.Bug -> Darcs.Util.Bug
+    -   Crypt.SHA256 -> Darcs.Util.Crypt.SHA256
+    -   CommandLine -> Darcs.Util.CommandLine
+    -   resolve conflicts in repeated testTentative code extraction
+
+2012-08-18 Owen Stephens
+  ~ -   Extract some repeated testTentative code from several commands
+    -   resolve issue2228: calls to less include -R argument to interpret colour codes
+    -   Use a Maybe String rather than checking for null string in URL download errors
+    -   Add some haddock and a few tweaks to URL.hs
+
+2012-08-25 Simon Michael
+  ~ -   fix darcsden-breaking regression due to Cache do-block tweak
+
+2012-08-12 Owen Stephens
+  ~ -   Tweak a nested do-block in Cache for improved readability
+    -   Remove duplicate 'fn' function and do some CSE in Cache
+    -   Simplify checkCacheReachability function
+    -   Simplify Eq instance for CacheLoc
+    -   Camel case isthisrepo in Cache
+    -   Style/Tidy Cache.hs
+
+2012-08-26 Ganesh Sittampalam
+  ~ -   resolve conflict between GZCRC tidying and move of formatText
+    -   move text formatting out into separate module
+    -   rename Darcs.Utils to Darcs.Util
+    -   don't need extensible-exceptions now we're on GHC >= 7.0
+    -   ifdef the content of URL.Curl so it can always be loaded in ghci
+
+2012-08-09 Eric Kow
+  ~ -   Accept issue494: move patches should not needlessly populate pending.
+
+2012-08-25 Ganesh Sittampalam
+  ~ -   improve RepoJob haddock
+    -   break out Darcs.Repository.Job from Darcs.Repository.Internal
+    -   improve haddock for Repo
+    -   improve PatchSet haddock
+
+2012-08-21 Guillaume Hoffmann
+  ~ -   checkUnrecordedConflicts does not need a UseCache argument
+    -   rm bogus commented line
+    -   fix weird indentation in Repository.hs
+    -   rename identifyDarcsRepository to identifyRepository
+
+2012-08-05 Eric Kow
+  ~ -   A few more comments and Haddock about the pending patch.
+    -   Rename handlePendForAdd to tentativelyRemoveFromPending
+    -   Try to comment and Haddock some prim patch stuff.
+    -   Accept issue2219: some issues with the no-working-dir flag
+
+2012-08-21 Guillaume Hoffmann
+  ~ -   no longer show repo type since it is always darcs
+    -   remove senseless comment
+    -   make that no Darcs.Repository.* module import Darcs.Repository
+
+2012-08-14 Ganesh Sittampalam
+  ~ -   document PrimV1Job
+
+2012-08-18 Owen Stephens
+  ~ -   Tidy GZCRCS 
+    -   Accept issue 2243
+    -   Add failing test for issue2234
+    -   Accept issue2242 rollback of mv confuses darcs
+

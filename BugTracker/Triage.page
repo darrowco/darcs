@@ -1,0 +1,63 @@
+---
+title: Triaging bug
+...
+
+# Reading
+
+There's a structured way of reading bug reports that can make your life
+easier. Drill down this checklist:
+
+1.  Did the user tell us what went wrong?
+2.  What did they expect?
+3.  What exactly did they do?
+4.  Did they provide the data we regularly ask during diagnostics (logs,
+    version numbers etc)?
+5.  Where did the issue happen (machine, specific software running on it
+    etc -something that might influence us).
+
+# Responding
+
+Basically your job is to maximise actionability, reduce the amount of
+stuff that other people re-reading the bug need to think about.
+
+Things to think about:
+
+-   Does the original poster need to supply you with some particular
+    details? Which?
+-   Is there a specific debugging step that needs to be undertaken? Are
+    there particular questions that need looking into?
+-   Do we have a rough idea how to fix it?
+
+# Filing
+
+We hope the process of filing away a bug is as self-explanatory as
+possible. If there's anything unclear, these pages may help
+
+-   [priority and status](BugTracker/PriorityStatus)
+-   [topics](BugTracker/Topics)
+
+## Merging bugs
+
+We don't have a notion of merging in roundup yet, so for now we set the
+new bug to 'duplicate' and point to the old bug with the superseder
+flag.
+
+## Splitting bugs
+
+Sometimes users will re-open old bugs because they encounter the same
+error message. It's probably a good idea to close these back and just
+create a new bug, see [issue701](http://bugs.darcs.net/issue701), in
+particular
+[http://bugs.darcs.net/msg7340](http://bugs.darcs.net/msg7340) as this
+makes things rather difficult to follow.
+
+Likewise if people are chatty and talk about more than one thing in the
+same bug, be sure to create new bug entries for each.
+
+# See also
+
+-   [mulander
+    advice](http://irclog.perlgeek.de/darcs/2012-02-18#i_5170206) - Adam
+    Wolk has kindly taken some time out to help us get better at bug
+    tracking. Check out this discussion
+

@@ -1,0 +1,55 @@
+Darcs needs a better frontend in emacs. Here, we collect ideas for this
+frontend.
+
+-   Borrow ideas from pcl-cvs and
+    [xtla](http://wiki.gnuarch.org/moin.cgi/xtla)
+-   record, pull, rollback, unrecord, unpull, push: Prints a list of
+    changes or patches, and lets the user choose which he wants by
+    marking them with SPC. (You need to parse whatsnew and changes
+    output for this, and then interact with darcs for y/n display. You
+    can also just send the right number of y's and n's, but that has
+    problems when the repository is modified in the meantime.)
+-   Incremental changelog editing using C-x v v
+
+Here's an idea for a summary mode which could be added to darcs.el:
+
+M-x darcs-summary pops up a buffer display similar to pcl-cvs, showing
+changed files within the current project, grouped by directory. Each
+filename in the buffer displays the diff stats to the right. It is a
+tree view, so hitting RET on any file reveals a summary of all the
+changes in that file, with one line per diff item. These diff items also
+show a diff summary to the right. Hitting RET on a diff items expands
+the item to show actual differences:
+
+    Directory .:
+      M TODO (+3)
+        hunk 6 (+3)
+      {
+      +- The running balance for the register report
+      +  could be done more efficiently.
+      +
+      }
+
+Keystrokes available on every item within the file (directory line, file
+line, diff entry line) allow you to: revert the s), display change(s) in
+diff format, ediff change(s), jump to that location in the source file,
+or add the change(s) to a "proposed patch" buffer.
+
+The proposed patch is accumulated within a separate buffer, whose format
+is identical to the summary buffer, except it shows only the approved
+changes. It could even be that changes are "moved" from one summary
+buffer to another, to give a better indication of what has been
+confirmed, and what remains to be reviewed. An alternate method would be
+to bold items within the summary buffer, indicating those changes are to
+be committed.
+
+Finally, when the set of desired changes is chosen and reviewed, a
+keystroke for "commit" builds the patch and opens a buffer for
+describing the change. After hitting C-c C-c, the minibuffer prompts for
+a one-line comment, and commits the change. -- John Wiegley
+<[johnw@gnu.org](mailto:johnw@gnu.org)\>
+
+# See also
+
+-   [Emacs]()
+

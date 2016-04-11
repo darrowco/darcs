@@ -1,0 +1,59 @@
+---
+categories : Development
+...
+
+From this page you will find all relevant knowledge for contributing to
+Darcs.
+
+# The very basics: fix something in 5 steps
+
+    darcs clone --lazy http://darcs.net
+    *hack code*
+    darcs record -a -m "what my patch does"
+    darcs send
+    *send the generated patch file to patches@darcs.net *
+
+# The basics
+
+-   [Getting Started Guide](Development/GettingStarted) for new developers
+-   [Understanding Darcs on wikibooks](https://en.wikibooks.org/wiki/Understanding_Darcs)
+-   [FAQ](Development/FAQ)
+-   [Tips](Development/Tips)
+
+## What to do?
+
+-   [How to Help]
+-   [Ideas](Ideas) - The big ideas for the development of darcs.
+-   [Probably easy bugs](http://tinyurl.com/darcs-probablyeasy2) - A
+    list of bugs that should be relatively easy to fix.
+-   [development
+    list](http://lists.osuosl.org/mailman/listinfo/darcs-devel)
+    (darcs-devel) for contributing to (or observing) darcs development
+-   [Regression Tests](Development/RegressionTests) - Adding tests to the test suite.
+-   [Priorities](Development/Priorities)
+
+## Reference material
+
+-   [API documentation for darcs (Haddock)](http://darcs.net/api-doc)
+-   Darcs [Internals](/Internals) - Explanations on how various darcs
+    subsystems work
+-   Coding [Style](Development/CodingStyle)
+
+# Digging deeper
+
+## Processes
+
+-   [Release Management](Development/ReleaseManagement)
+-   [Buildbot](Development/BuildBot)
+-   [Policy](Development/Policy)
+-   [Hacking Sprints](Sprints)
+
+## Current Status
+
+-   [buildbot status](http://buildbot.darcs.net)
+-   *TODO* [code coverage in
+    tests](http://repos.mornfall.net/darcs/mainline/dist/hpc/hpc_index.html)
+    (out of date; see issue1940)
+
+
+[How to Help]: /HowToHelp

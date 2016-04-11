@@ -1,0 +1,447 @@
+Use cases:
+
+1.  Merging (without conflicts)
+
+    -   this includes maintaining a local set of patches on top of
+        upstream, e.g. for tweaks or for quilt-like handling
+
+2.  Making a change in a patch which other patches depend on
+
+3.  (perhaps) recovering from repo corruption
+
+4.  Reordering dependent patches
+
+Design:
+
+'darcs rebase start' temporarily places the repo in a special state,
+indicated by 'rebase-in-progress' in \_darcs/format. This is necessary
+because a rebase will typically be an long-running operation where the
+user needs to stop and resolve conflicts etc in the middle.
+
+A repository with a rebase in progress ("a rebasing repository")
+supports an extra kind of patch, "suspended" patches. This is
+implemented by having all patches be embedded into a new datatype,
+Rebasing, which has two constructors, Normal and Suspended. The on-disk
+format of "Normal" is just like the underlying patch, so a standard
+repository can be converted into a rebasing repository for just by
+updating \_darcs/format. In the reverse direction, a rebasing repository
+with no suspended patches can also be trivially converted into a
+standard repo.
+
+From the point of view of the underlying code, patch theory, etc, any
+number of suspended patches can exist in a rebasing repository. However
+for UI simplicity, the top-level command maintains precisely one of
+these patches:
+
+    data Rebasing p C(x y) where 
+      Normal :: p C(x y) -> Rebasing p C(x y) 
+      Suspended :: FL (RebaseItem p) C(x y) -> Rebasing p C(x x) 
+
+The type of Suspended reflects the fact that a suspended patch can be
+inserted anywhere in the repository as long as the starting context is
+ok:
+
+<pre>
+                 y
+                 |suspended
+                 |
+                 |
+-----------------|-----------
+normal patches   x  more normal patches
+</pre>
+
+The contents of a suspended patch is a list of "rebase items":
+
+    data RebaseItem p C(x y) where 
+      Editing :: Named p C(x y) -> RebaseItem p C(x y) 
+      Fixup :: Prim C(x y) -> RebaseItem p C(x y) 
+
+A rebase item can either be a normal patch that is being edited, or it
+can be a fixup patch. Patches that are being edited will eventually make
+their way back into the repo as normal patches, whereas fixup patches
+are just there to make the contexts match up properly. Fixup patches are
+kept minimised; they are commuted towards the end, and any fixup patches
+at the very end of the suspended patch are dropped as they are no longer
+needed for the context of a patch being edited.
+
+A suspended patch commutes freely with normal patches, by adding fixup
+patches to adjust the starting context of the suspended patch:
+
+    (Normal p);(Suspended q) <-> (Suspended (Fixup p;q));(Normal p)
+    (Suspended q);(Normal p) <-> (Normal p);(Suspended (Fixup p^;q))
+
+If the suspended patch is at the end of the repository, it is easy to
+"shuffle" patches into it:
+
+    (Normal p);(Suspended q) --> (Suspended (Editing p;q))
+
+The reverse transformation is also easy, but there is an important
+caveat: all patches for editing must be given a new identity when they
+are "shuffled out". This is because once inside a suspended patch any
+patches for editing may have their contents or dependencies changed in
+ways that makes them incompatible with their old identities.
+
+What about Fixup patches? Consider the following situation:
+
+    Suspended (Fixup p1;Editing p2;q)
+
+Suppose we want to shuffle out p2. Note that p1 doesn't commute with p2;
+if it did it would have been moved past p2.
+
+The way we deal with this is to treat this as a merge, and present the
+resulting conflicts to the user to resolve:
+
+    merge(p1^, p2) ==> p1mgd^, p2mgd
+
+                           -/
+                           /|
+                          / resolution
+              p2mgd      /
+         --------------> 
+        |               |
+        |               |
+    p1  |               | p1mgd
+        |               |
+        |               |
+        |               |
+        v               v
+         -------------->
+              p2
+
+We put effect(p2mgd) in the repo, leave Fixup(effect(p1mgd)) in the
+suspended patch, and apply resolution to the working copy.
+
+It is this operation that leads to a change in identity being required
+for p2. In addition, anything in the suspended patch that depends on p2
+must also have its identity changed because of the change to p2. To
+simplify things, we assume that any patches for editing are tainted in
+this way, even though it might be the case that some aren't (e.g. a
+patch that has just been shuffled in). This is reasonable because for
+any patch where tainting could have been avoided, the patch could simply
+have been left outside the suspended patch in the first place.
+
+# Common tasks
+
+## Deep amend-record
+
+If we want to amend-record X, but there are some patches that depend on
+X:
+
+1)  shuffle in all the patches that depend on X
+2)  amend-record X
+3)  shuffle out the patches, if necessary resolving conflicts as we go
+
+The overall effect of 2) will be to introduce a Fixup patch that
+reflects the changes that were added to X. It is this Fixup patch that
+may cause conflicts to appear.
+
+## Merging without conflicts
+
+If we want to update a long-lived branch to latest "head" without having
+conflicts:
+
+1)  create the following repo (how to do this is still an open question,
+    perhaps multi-head repos?):
+
+<pre>
+
+                                             | conflicting patches from branch
+                                             |
+                                             |
+---------------------------------------------|-------------------
+non-conflicting patches from head and branch    conflicting patches from head
+</pre>
+
+at this stage there are no fixups.
+
+2)  commute the suspended patch to the end:
+
+<pre>
+
+                                                                | conflicting patches from branch
+                                                                |
+                                                                |
+                                                                | fixups
+head + non-conflicting patches branch                           |
+-----------------------------------------------------------------
+</pre>
+
+shuffle out the patches, resolving conflicts as you go
+
+# TODO
+
+-   Testing
+
+-   Figure out the proper command set for users, e.g.
+
+    -   naming of existing things, e.g. shufflein/shuffleout (or do we
+        keep them at all)
+
+    -   aggregate commands:
+
+        -   shuffleout until conflict
+
+        -   deep amend-record
+
+        -   pull straight into rebase context
+
+    -   Manipulation inside suspended patch?
+
+        -   obliterate
+
+        -   insert fixups manually (advanced) as commuting will tweak
+            what's in there
+
+        -   reordering (or perhaps on shuffleout)
+
+    -   Changes command for viewing suspended patch
+
+-   Need to make arguments accepted consistent with other similar
+    commands
+
+    -   e.g. matching options for shuffleout
+
+-   On shuffleout, what should happen to
+
+    -   patch name - optionally automatically transform it? (note that
+        we always change either the date or the salt)
+
+    -   explicit patch dependencies - definitely need to do something
+        here as the old ones may not exist
+
+-   Repository representation
+
+    -   suspended patches in one file will not scale that well, do we
+        care?
+
+    -   could use an inventory instead with more effort in the repo
+        internals code
+
+-   Should the suspended patch always be forced to the end?
+
+-   Bugs
+
+    -   It seems to be possible to get a messed up unrevert context. I
+        guess this ought to be in the witnesses...
+
+    -   darcs pull/get can setup a suspended patch in a remote
+        repository, without setting the right format
+
+    -   rebase patches seem to parse as empty rather than failing when
+        found unexpectedly
+
+-   Should we detect when we seem to already have a related (by
+    amendment) copy of a patch being pulled
+
+    -   obviously this would be a heuristic
+
+-   Some helpful messages:
+
+    -   "You have n patches left to unsuspend"
+
+    -   "About to suspend a conflict, this may be unpleasant to
+        unsuspend"
+
+    -   "About to unsuspend an empty patch, just delete it?"
+
+    -   when rebase-in-progress, darcs pull defaults to skipping
+        conflicts - "skipping conflicts during a rebase, use rebase pull
+        to handle this"
+
+        -   should we allow --no-skip-conflicts to override?
+
+# Sprint meeting
+
+> nomeata\> \* use case : debian upstream packages -\> final package \*
+> already has git-based tools (based on git rebase) to handle that, ie
+> regenerates a patch series each time a new upstream version arrives \*
+> moreover it detects if the patch is applied in upstream, and gets rid
+> of it if so
+>
+> ganesh\> thought about that but is not implemented as of now (throwing
+> away
+>   ~ patches)
+>
+> Eric asks whether people here have used git rebase. Answer: hardly
+> anyone.
+>
+> nomeata also wants patch merging and splitting
+>
+> ganesh did not plan to do it for now
+>
+> eric: to sium up, 2 cases : far branch, and deep-amend-record (ie
+> editing a series of patches)
+>
+> other application: repairing a broken repo
+>
+> ganesh\> has roughly a code for the UI. 2 phases: tell what you want
+> to rebase (list of patches you want to suspend, for instance in a long
+> winding branch, the set of conflicting patches)
+>
+> florent ui suggestion: during interactive pull, darcs proposes a fixup
+> for conflicting patches
+>
+> ganesh\> a darcs pull --rebase command would not be interactive
+>
+> eric\> all rebase commands should live in the darcs rebase subcommand,
+> not as flags to other subcommands
+>
+> nomeata\> rebase as a way to remove existing conflicts from a repos
+> ganesh\> that's another user interface
+>
+> Part of the ui implies multiple heads, but we don't want that because
+> it breaks the "one dire = one branch" philosophy of darcs, so decision
+> : only have darcs rebase --pull
+>
+> eric\> let's write scenarios of that (whiteboard)
+>
+> note for me\> rebase leaves the repo in a "suspended" state ie there
+> are suspended patches and you can unsuspend them with a rebase command
+>
+> end: discussion about what darcs should say to the user when they pull
+> conflits: florent\> let's do --skip-conflict by default
+
+# User story simple version
+
+Starting point is two repositories, your BRANCH and the UPSTREAM repo.
+
+> -   Your branch has patches 1
+> -   UPSTREAM has patches U1 U2 U3
+> -   U2 conflicts with 1
+
+You are in BRANCH, and at first you try
+`darcs pull` (from UPSTREAM) but there are conflicts :-(  So you do it another way;
+you instead try `darcs rebase pull`
+
+    $ darcs rebase pull
+    U1 stuff
+    Shall I rebase pull this patch? [yn...] y
+
+(intermediate state 1 U1)
+
+    U2 stuff
+    Shall I rebase pull this patch? [yn...] y
+
+(intermediate state U1 U2 then suspended X 1) <-- X == U2\^1 the
+conflict
+
+    U3 stuff
+    Shall I rebase pull this patch? [yn...] y
+
+(intermediate state U1 U2 U3 then suspended X' 1') X' == U2\^1' <--
+conflict
+
+    darcs rebase in progress; 1 patch suspended
+    do 'darcs rebase unsuspend'
+
+Great! Now it's time to try unsuspend our patch
+
+    darcs rebase unsuspend
+    X stuff <-- ??? UI to be decided
+    ...     <-- some kind of marker [UI to be decided]
+    1 stuff
+    Shall I unsuspend this patch? [yn...] y <-- TODO: more helpful wording?
+    [1 does not commute with X]
+    darcs rebase in progress; edit your working dir and do 'darcs amend-record'
+
+(intermediate state : do merge of X'\^ with 1'; get back 1'' and X'\^'
+plus R) NB:
+
+> -   1 has a new patchinfo due to use of unsuspend
+> -   1 only has the effect of the conflict; no conflictor just prims
+
+(intermediate state : 1' appended, so U1..U3 1'; working is R)
+
+    $ vim src/foo.c <-- user resolves the conflict
+    $ darcs amend-record <-- plain old amend-record
+    Darcs rebase complete!
+
+Hooray!
+
+# User story advanced version
+
+Starting point is two repositories, your BRANCH and the UPSTREAM repo.
+
+> -   Your branch has patches 1 2 3.
+> -   UPSTREAM has patches U1 U2 U3
+> -   U1 conflicts with 2 -- we call this conflict Y <-- what does that
+>     mean?
+> -   U2 conflicts with 1 -- we call this conflict X
+> -   3 depends on 1
+
+You are in BRANCH, and at first you try
+`darcs pull` (from UPSTREAM) but there are conflicts :-(  So you do it another way;
+you instead try `darcs rebase pull`
+
+    $ darcs rebase pull
+    U1 stuff
+    Shall I rebase pull this patch? [yn...] y
+
+(intermediate state 1 3 U1 then suspended Y 2) <-- no conflict between
+1,3/U1 so no suspending
+
+    U2 stuff
+    Shall I rebase pull this patch? [yn...] y
+
+(intermediate state U1 U2 then suspended X 1 3 Y 2) <-- 1;3 were
+prepended
+
+    U3 stuff
+    Shall I rebase pull this patch? [yn...] y
+
+(intermediate state U1 U2 U3 then suspended X 1 3 Y 2) [primes omitted
+for sanity]
+
+    darcs rebase in progress; 3 patches suspended
+    do 'darcs rebase unsuspend'
+
+Great! Now it's time to try unsuspend our patches
+
+    darcs rebase unsuspend
+    X stuff <-- ??? UI to be decided
+    ...     <-- some kind of marker [UI to be decided]
+    1 stuff
+    Shall I unsuspend this patch? [yn...] y
+
+    [1 does not commute with X]
+
+(intermediate state : do merge of X\^ with 1'; get back 1'' and X'\^'
+plus R) (intermediate state : 1' appended, so U1..U3 1'; working is R)
+
+    $ vim src/foo.c <-- user resolves the conflict
+    $ darcs amend-record <-- plain old amend-record
+    Darcs rebase still in progress; 2 patches suspended.
+    do 'darcs rebase unsuspend'
+
+(intermediate state : U1..U3 1'') NB: now 3 depends on 1''
+
+    darcs rebase unsuspend
+    X stuff <-- ??? UI to be decided
+    ...     <-- some kind of marker [UI to be decided]
+    3 stuff
+    Shall I unsuspend this patch? [yn...] n <-- !!! (cherry picking goodness)
+    Y stuff <-- ??? UI to be decided
+    ...     <-- some kind of marker [UI to be decided]
+    2 stuff
+    Shall I unsuspend this patch? [yn...] y
+    darcs rebase in progress; edit your working dir and do 'darcs amend-record'
+    $ vim src/foo.c <-- user resolves the conflict
+    $ darcs amend-record <-- plain old amend-record
+    Darcs rebase still in progress; 1 patches suspended.
+    do 'darcs rebase unsuspend'
+
+Now the users decides that 3 is not worth the trouble...
+
+    $ darcs rebase obliterate
+    X stuff
+    ...
+    3 stuff
+    Shall I obliterate this suspended patch? [yn...] y
+    1 suspended patch obliterated
+    Darcs rebase complete!
+
+Hooray!
+
+# Diagram questions
+
+What exactly do X and Y contain?

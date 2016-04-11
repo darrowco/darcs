@@ -1,0 +1,112 @@
+# News and discussions
+
+1.  Growing the darcs team: The darcs unstable repository is coming
+    back, with David Roundy as its maintainer. Eric will be taking care
+    of stable and keeping in closely in synch.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-September/013388.html](http://lists.osuosl.org/pipermail/darcs-users/2008-September/013388.html)
+
+2.  Shiny new IRC logs: Thanks to Moritz Lenz, the \#darcs and
+    \#darcs-theory IRC channels are now being logged with fancy
+    formatting and search capability
+    -   [http://irclog.perlgeek.de/darcs](http://irclog.perlgeek.de/darcs)
+    -   [http://irclog.perlgeek.de/darcs-theory](http://irclog.perlgeek.de/darcs-theory)
+
+3.  Hacking darcs: Petr Ročkai shares his recent hopes and experiences
+    as a darcs user turned developer. Come share the excitement!
+    -   [http://mornfall.net/blog/hacking\_darcs.html](http://mornfall.net/blog/hacking_darcs.html)
+
+# Reviewers
+
+Thanks to our patch reviewers for this week for giving David a hand!
+
+-   Jason Dagit
+-   Nathan Gray
+-   Eric Kow
+-   Petr Ročkai
+
+# Issues resolved in the last week (1)
+
+issue966 Dmitry Kurochkin
+  ~ fix apply\_inv\_to\_matcher\_inclusive.
+    [http://bugs.darcs.net/issue966](http://bugs.darcs.net/issue966)
+
+# Patches applied in the last week (37)
+
+2008-08-31 David Roundy
+  ~ -   don't show ssh stderr output unless we're passed --debug.
+    -   fix bug in --list-options (tab completion).
+    -   fix bug in makeRelative.
+
+2008-08-30 Ganesh Sittampalam
+  ~ -   add warning to configure about Haskell zlib speed
+    -   make use of Haskell zlib dependent on bytestring
+    -   add option to use Haskell zlib package
+
+2008-08-22 Eric Kow
+  ~ -   Remove unused FileSystem module.
+    -   Add a link to a repository browser for darcs's code.
+
+2008-08-29 [kili@outback.escape.de](mailto:kili@outback.escape.de)
+  ~ -   Replace grep invocation by perl code
+
+2008-08-24 David Roundy
+  ~ -   clean up network/get.sh test.
+    -   fix type of withRepository and friends.
+    -   fix recent bug in --list-options.
+
+2008-08-28 Dmitry Kurochkin
+  ~ -   Check for package random on windows, used in Ssh module.
+    -   Debug messages in curl module.
+
+2008-08-28 David Roundy
+  ~ -   TAG working version.
+
+2008-08-27 Dmitry Kurochkin
+  ~ -   Use InclusiveOrExclusive instead of Bool in
+        apply\_inv\_to\_matcher.
+
+2008-08-27 David Roundy
+  ~ -   add more modules to make witnesses.
+
+2008-08-27 Jason Dagit
+  ~ -   updates to Darcs.Patch.Unit for type witnesses
+
+2008-08-27 Dmitry Kurochkin
+  ~ -   Refactor get\_matcher and apply\_inv\_to\_matcher functions from
+        Darcs.Match module.
+    -   Resolve issue966: fix apply\_inv\_to\_matcher\_inclusive.
+    -   Simplify withCurrentDirectory.
+
+2008-08-27 Jason Dagit
+  ~ -   updates to Sealed.lhs to support type witness refactor in
+        commands
+    -   updates to Ordered.lhs to support type witness refactor in
+        commands
+    -   make Annotate.lhs compile with type witnesses
+
+2008-08-27 David Roundy
+  ~ -   fix type witnesses in Internal.
+
+2008-08-27 Jason Dagit
+  ~ -   updates to Repository.Internal to fix conflicts and support type
+        witness refactor in commands
+    -   fix error in Properties due to new commuteFL
+    -   fix minor type witness compile error with new commuteFL
+    -   fix conflicts with get\_extra changes
+    -   improve reporting for bug in get\_extra
+    -   Finish refactor of Unrevert as well as making it pass
+        double-unrevert.sh
+    -   add double-unrevert.sh test
+    -   partial type witnesses in Unrevert
+
+2008-08-26 Eric Kow
+  ~ -   More ChangeLog entries since 2.0.2
+
+2008-08-27 David Roundy
+  ~ -   fix bug in defaultrepo.
+
+2008-08-26 Jason Dagit
+  ~ -   fix accidental reversal in tentativelyAddToPending
+    -   minor refator to get\_extra improve comments
+
+

@@ -1,0 +1,790 @@
+---
+title: Frequently Asked Questions
+...
+
+If you have a question that is not answered here, please get in touch
+with us at [darcs-users@darcs.net](mailto:darcs-users@darcs.net), or on
+\#darcs on irc.freenode.net. Thanks!
+
+# Performance
+
+Darcs performance is improving, but still bad in many areas.  There are some
+things you can do to help it, though, and some specific issues with
+workarounds.  Have a look in the [performance FAQ](FAQ/Performance) for more
+help.
+
+# Basic usage 1: local operations
+
+## How do I get coloured diffs?
+
+For the high-level diffs (`darcs whatsnew`), set the
+environment variable DARCS_DO_COLOR_LINES=1
+
+For low-level diffs (`darcs diff`), install the program
+colordiff and put
+`diff diff-command colordiff -rN -u %1 %2` in your global
+darcs defaults file ($HOME/.darcs/defaults on Mac/Linux,
+see the darcs manual for Windows)
+
+## How do I go back to an older version of my repository?
+
+Short answer: `darcs clone --tag` or `darcs clone --to-match`, being
+aware that clone will create a copy of the repository.
+
+Long answer: What exactly do you mean by go back to an older version?
+
+If you're just a casual darcs user, and you want to go back in somebody
+else's repository, first check to see if they have any tags:
+`darcs show tags`. If so, you can `darcs clone --tag T`, where T is the
+name of the tag you want to go back to.
+
+If they don't have any tags, then you can use `darcs clone --to-match`
+(see `darcs help patterns` for
+patch-matching details) to pick which patch we should match up to.
+
+Note that `darcs clone` will get a new copy of the repo, at the specified 
+patch. If you already have a copy of the repository, and want to modify it
+in place, use `darcs obliterate` with either the '--from-match' or 
+'--from-tag' options (Note the inversion of from/to, since we want to obliterate 
+a suffix of our patch-history, not get a prefix).
+N.B. `darcs obliterate` will *obliterate* the patches you select - if they are not present in another repository, they will be irrecoverable! 
+
+Darcs thinks in terms of patches. The darcs history is just a sequence
+of patches. As an informal example, one person might have a darcs
+repository with the patches (A B C), whereas somebody else might have (A
+C D). What exactly do we mean by version then? Darcs operations are
+about adding and removing patches to this sequence. If your repository
+has patches (A B C), and your friend has (A C D), and you pull from his
+repository, you will have sequence (A B C D) in your repository.
+
+Anyway, suppose we have a repository A B C D, what does it mean to go
+back to a previous "version?"
+
+One way might be to do something like `darcs clone --to-match 'name B'`,
+which will give you the sequence (A B). But what if instead of going
+back to B, you just wanted to *get rid* of B? Darcs is quite happy to do
+that, dependencies permitting.. You could `darcs clone` a copy of the
+repository and then do `darcs obliterate --match 'name B'` to just get
+rid of patch B.
+
+In the Darcs world, a "version" is simply a set of patches. So if you
+want to get exactly the same version of a repository as somebody else,
+you have to get the same set of patches that they do. (Darcs's job is to
+guarantee that the same set of patches in any order gives the same
+result)
+
+## How do I uniquely identify a patch?
+
+You refer to it by its patch hash, via --match 'hash ...'.
+
+Since Darcs 2.10, you can identify a patch's hash is by running
+`darcs log`. For older versions, run `darcs log --xml`.
+
+Note: see [Hashes](Internals/Hashes) for a description of how these
+hashes are generated (they come from the metadata, not the patch
+contents). This is because a patch can have different contents depending
+on its context.
+
+## How do I add an entire tree of files to Darcs?
+
+    darcs add -r .
+
+## How can I find out what files darcs is managing?
+
+    darcs show files
+
+## How do I find out what files darcs is not managing?
+
+Use `darcs whatsnew -ls`. Files which darcs thinks you might want to add
+marked with a lower case `a`. To have darcs always ignore certain files,
+you can use a *boringfile* (see [the
+manual](http://www.darcs.net/manual/bigpage.html#boring)). To
+see also what boring files darcs is not managing, use
+`darcs whatsnew -ls --boring`.
+
+In the boringfile, if you want to match a directory and its contents,
+use a regex like:
+
+    ^foo(/|$)
+
+In particular, be aware that there is no `/` or `./` at the beginning of
+the paths that darcs matches against.
+
+## How can I compare patches which result in a conflict? I also want to see their full log entries.
+
+Currently this is not possible, but [we are working on
+that](http://bugs.darcs.net/issue833).
+
+## I use darcs to record changes made to configuration files in my /etc, is this safe?
+
+No. As mentioned above, darcs does not version file permissions; files
+pulled will have permission bits set as if they were newly-created
+files. Many files in /etc need specific permission bits; therefore, it's
+not currently safe to control their versions with darcs.
+
+## How do I list all the tags of a repository?
+
+    darcs show tags
+
+More detailed:
+
+    darcs log --tags="."
+
+## How do I see the contents of a patch?
+
+There are three approaches you could take:
+
+1.  `darcs annotate -p`: the direct, focused approach
+2.  `darcs diff -p` : performs a diff; you could even use --diff-command
+    to view the differences in a graphical viewer
+3.  `darcs log -v -p | less` : shows you multiple patches. Use this
+    if you're not sure exactly what patch you're looking for, but you
+    have a some search criteria in mind. One technique would be to omit
+    the `-p` and just use the search feature in your pager
+
+## What is a boring file?
+
+A file is considered "boring" if its path matches a set of regular
+expressions defined in the [\_darcs/prefs/boring
+file](http://darcs.net/manual/bigpage.html#boring). Darcs add
+will ignore such files by default. See the manual page for more details.
+
+## How does darcs know which files to treat as binary?
+
+You tell it by updating the [\_darcs/prefs/binaries
+file](http://darcs.net/manual/bigpage.html#SECTION00410050000000000000).
+
+Darcs also automatically treats files containing \^Z or '\\0' as binary.
+
+## My repository complains about not being able to get a lock!
+
+Are you sure nobody is using the repository at the moment? If so, delete
+the delete the lock file and run `darcs check`.
+
+## I just got a conflict! What do I do?
+
+Conflicts deserve an FAQ of their own. Have a look at the [Conflicts
+FAQ](FAQ/Conflicts)
+
+## How to rename patch ?
+
+With following command:
+
+     darcs amend --edit-long-comment
+     # Don't accept any change to patch iself, but at the end
+     # the editor (EDITOR) will open and you can change the name
+     # of the patch. 
+
+Warning: Don't change patch name once it is sent to another repository!
+
+# Basic usage 2: interacting with other repositories
+
+## What is the syntax of the uri for push/pull using different protocols?
+
+ssh
+  ~ `darcs pull username@host.com:path/relative/to/home` and
+    `darcs push username@host.com:path/relative/to/home`
+
+ftp
+  ~ `darcs pull ftp://user:password@host.com/path/relative/to/home`
+
+    The password can be omitted, but you'll have to type it several
+    times. darcs push doesn't work via ftp
+
+http
+  ~ `darcs pull http://domain.com/path/to/repo`
+
+    darcs push doesn't work via http (but darcs send will if the remote
+    repository is correctly configured)
+
+mail
+  ~ Use darcs send/apply
+
+## How do I avoid typing my ssh passphrase all the time?
+
+Upgrade both your server and your client sides to a version of darcs 2.
+This implements a form of ssh connection sharing which reduces the
+number of connections to at most two.
+
+Making use of ssh-agent will allow you to enter your passphrase just
+once, regardless of your darcs version; however, additionally upgrading
+the server and the client to darcs 2 will keep the cryptography
+negotiation to a minimum.
+
+## Darcs pull/push over ssh doesn't work when the darcs binary is in a nonstandard location?
+
+darcs has a `--remote-darcs` flag to set the path to
+the remote darcs executable.
+
+Otherwise, make sure that the darcs binary is located in a directory
+that is in the PATH even for non-interactive shells. You can test this
+with:
+
+    ssh remotehost echo \$PATH
+
+If the path where darcs is located doesn't show up, you have to modify
+the PATH variable in a configuration file that is read by the shell even
+for non-interactive logins (like `~/.zshenv` for ZSH or `~/.bashrc` for
+bash).
+
+## How do I get exactly same set of patches as somebody else?
+
+By using tags or context files. See
+<http://blog.worldmaker.net/2008/mar/27/darcs-and-useful-context-file>
+or the user's manual for more details.
+
+Since Darcs 2.10.3 you can verify that you have the same set of patches as
+somebody else by comparing the Repository Weak Hash shown by `darcs show repo`:
+two repositories with the same patches (possibly in different orders) have the
+same Weak Hash.
+
+## Darcs seems to hang when I pull or apply patches. Why?
+
+If you are pulling patches (as opposed to applying them), you may be
+dealing with too many untagged patches. See the questions in the
+[Performance](FAQ/Performance) section.
+Otherwise, you might have run into the exponential time conflicts bug
+(darcs 1.x). See the [Conflicts FAQ](FAQ/Conflicts) for more help.
+
+## How do I determine the difference between my repository and the remote one?
+
+If you want to see which patches are missing from your or the remote
+repository, you can run
+
+    # patches you are missing
+    darcs pull --dry-run
+    # patches the remote repository is missing
+    darcs push --dry-run
+
+To compute a diff between two different repositories, at present, you'll
+need to just get a copy of the remote repository and perform the diff by
+hand. See [issue1869](http://bugs.darcs.net/issue1869) for a feature
+request that would add cross-repository diffing.
+
+## How can I tell which patches I pushed to a remote repo before?
+
+You can use `darcs push --dry-run -p 'PATCHNAME' remoterepo` where
+PATCHNAME is the name of your patch and remoterepo the location of the
+other repository. If darcs says 'Nothing to push' you have not been
+pushing that patch yet.
+
+# Advanced usage
+
+## How can a group share patches without access to each other's repos?
+
+Use *context files*, and *send* and *apply* with *patch bundles*.
+
+A context file is created with;;
+
+    darcs log --context \> con\_A
+
+and contains everything darcs needs to know to "fake" a *send* to a
+repo. These context files can be distributed over the group.
+
+Person A:
+
+    darcs send --context=con_B -o bundle .
+    [interactive]
+    mail B < bundle
+
+Person B:
+
+    darcs apply --interactive bundle
+
+As B applies new patches, A's (and every one else's) context file for
+B's repo get more and more out of date, so B should at times send out an
+updated contextfile.
+
+Person B:
+
+    darcs log --context > con_B
+    mail A C D < con_B
+
+## Why doesn't darcs have a getpref feature to go with setpref?
+
+Try `darcs show repo`. It will print out the prefs along with other
+information about the repository.
+
+## Darcs offers me unexpected match results
+
+You may find that commands like `darcs pull --match X` offers you
+patches that do not appear to match the criterion you specified.
+
+What is really going on here is that darcs is offering you the patches
+that you would need to pull in order to pull patches that do match `X`.
+
+There are three cases: either you don't want to pull any patch that does
+not match X, or you want to pull them implicitely as needed, or you want
+to review them.
+
+In the first case, you can tell Darcs not to only offer patches you can
+pull without any dependencies not matching `X` with the `--no-deps`
+flag. Of course, this implies that some matches will not be offered to
+you at all, since pulling them requires pulling some non-`X` patch. This
+makes sense for instance if you only want to pull patches touching a
+given file, but not necessarily all of them.
+
+In the second case, you can tell Darcs not to ask you about patches not
+matching `X`, but pull them silently as needed. For this, you have to
+use the `--dont-prompt-for-dependencies` flag. Of course, this implies
+that some patches will be pulled without you having seen them in the
+interactive selection. If that bothers you, you may want to first do a
+`darcs pull --dry-run --interactive --match X --dont-prompt-for-dependencies`
+first, to see what dependencies will be pulled. This makes sense if you
+want to pull patches implementing a given feature, along with their
+dependencies.
+
+In the last case, what you're seeing is actually what you want to see,
+though the UI does not make it explicit that you're seeing these patches
+because of dependencies.
+
+Note that [issue337](http://bugs.darcs.net/issue337) on the Darcs
+bugtracker has a proposed refinement to make Darcs matching more
+intuitive. You may want to make yourself nosy on that ticket if you're
+interested in this topic.
+
+## How do I rollback a patch that something else depends on?
+
+Try selecting the patch and all its dependencies with darcs rollback,
+and then just selecting the changes you actually want to rollback.
+
+Tips:
+
+-   You can select patches more easily by using --match to identify the
+    patch you're looking for. Note that people are sometimes confused by
+    when Darcs seems to offer unrelated matches; see the corresponding
+    [FAQ entry](FAQ#darcs-offers-me-unexpected-match-results) for more
+    details.
+
+-   Keep in mind that when selecting changes in interactive mode, you
+    can just short cuts like 's' and 'f' to skip over or select all the
+    changes in a file, respectively).
+
+## How do I apply a patch when it has missing dependencies?
+
+You'll want to get the dependencies. Do you know which repository was
+the patch sent against?
+
+Patch bundles sent with newer versions of Darcs should advertise it with
+a line like
+
+    1 patch for repository http://example.com/repo
+
+If you don't see such a line, and if the bundle was sent by email, you
+can look at the Darcs-URL header of that email to find out.
+
+Now try the following:
+
+    # get the version of master the patch was sent against
+    # and apply the patch to it
+    darcs clone --context p.dpatch http://example.com/master /tmp/master-lite
+    cd /tmp/master-lite
+    darcs apply /tmp/p.dpatch
+
+    # pull the patch from the copy of master
+    cd local-copy
+    darcs pull /tmp/master-lite
+
+Using the original repo gives you the context. Using `clone --context` makes
+sure you get only the context. And using darcs apply on master-lite and
+then pulling in the patch you really want to apply lets you pick out
+only the bare minimum of dependencies.
+
+If you know the names of the patches you want to apply, you can use
+darcs pull -p to make cherry picking more convenient.
+
+## Why does `darcs apply` force me to get unrelated dependencies?
+
+Patch bundles contain two kinds of data. First, the new patch themselves
+(metadata and contents), and then a context, which is a list of patches
+(metadata) that the destination repository is supposed to have. Basically,
+a bundle means: "if you have this context, then you have enough information
+to apply theses patches".
+
+In some cases the context may contain more patches than necessary.
+This is because, before version 2.10, Darcs generated bundles "the easy way":
+it just grabs the whole common context between the source and destination
+repositories (up to the last common tag) and puts it in the bundle
+as a requirement.
+
+This always works when some bundle generated from repo A to repo B,
+is only applied to B. But when you want to apply this bundle to some
+other repository C which lacks some patches (even seemingly useless ones),
+it will fail.
+
+This no longer happens since Darcs 2.10, which minimizes the context of
+patch bundles by default. So the context only contains patches that are
+absolutely necessary (as a side effect patch bundles can be much smaller
+in big projects).
+
+## How do I force-apply a patch if I can't get the dependencies?
+
+Darcs does not support this use-case by default because it comes with
+unintended consequences (mainly for people who have a copy of the
+original patch).
+
+A future release may offer something like a `darcs rebase apply` command
+to do something like this, but even still, getting the dependencies is
+the best option.
+
+A good sanity check is if you can identify the *cause* of the missing
+dependencies:
+
+> -   Is it because you're applying the patch to a different repository
+>     than the one it was sent against? Then see the question above.
+> -   Has the original repository been lost for good?
+> -   Is it a bug in Darcs? (send an email to
+>     [bugs@darcs.net](mailto:bugs@darcs.net), please)
+> -   Are you just trying to "clean up" the patch context? (You'll want
+>     the upcoming `darcs rebase` feature)
+
+If you're still *absolutely* sure you want to do this and you know why
+you want to do it, then you'll have to perform a "manual rebase". A
+manual rebase consists in hand-editing the patch bundle, removing the
+patch bundle hash at the end, and removing the context lines. Keep in
+mind that patch bundles are newline-sensitive. Use at your own risk!
+
+## How can I host a repository on a dumb server, ie, that does not have darcs?
+
+If this server is accessible by SSH you can try to use [sshfs](SSH) and
+create a clone with `--no-working-dir` and `--disable-patch-index` to
+reduce the amount of data needed when interacting with it.
+
+# Features
+
+## Does Darcs support binary files?
+
+Yes. You can have multiple versions of a file in a repository, and go
+back to earlier versions.
+
+However, each revision of the binary file is stored in its entirety, not as
+deltas (as Subversion does). See [issue1009](http://bugs.darcs.net/issue1009)
+to improve storing efficiency, but this requires a change of repository
+format and thus is not planned for soon.
+
+## Does darcs version file meta data, such as permissions?
+
+No, but setting the executable bit based on a shebang (\#!) line at
+the top is possible by using the `--set-scripts-executable` option.
+That would set all scripts that can be executed by Unix to be
+executable.
+
+An alternative to the above is to keep your files non-executable in the
+repository, and use a predist pref to tweak the permissions. Write a
+script called `fix-perms` that does all the tweaking needed, and then
+do:
+
+    darcs add fix-perms
+    darcs setpref predist 'sh ./fix-perms; rm fix-perms'
+    darcs record
+
+Recall that prefs are versioned if you use `setpref`.
+
+Note that darcs will not preserve file permissions, even on local pulls
+between repos owned by the same user. From testing, it appears that the
+permissions in the target repository are set as if a new file had been
+added to that directory, regardless of the permissions in the source
+repository.
+
+## Does darcs support nested repositories, or allow you to check out a working copy that is a subtree of another repository?
+
+No, you can only duplicate and modify entire repositories. It is
+possible to nest repositories, however this is not really recommended,
+and it is certainly not flexible enough for you to manage things similar
+to the way you would with inherently hierarchical systems like Subversion.
+
+## Does darcs have support for RCS style keyword expansion?
+
+No, see [DifferencesFromSubversion]().
+
+## Can darcs handle symlinks?
+
+No. If you use symbolic links in your working directory, Darcs will just
+treat it as a regular file or directory.
+
+There are three ways of coping with this:
+
+1.  Do not use symbolic links (this may be acceptable if they are
+    personal links for your convenience)
+2.  Accept that Darcs treats them as regular files, which means that
+    somebody who retrieves your repository will get not linked files but
+    duplicates
+3.  Do not version control symbolic links, but add an
+    "update-symlinks.sh" and version control that.
+
+We suggest using the third approach:
+
+    # example update-symlinks.sh
+    ln -s foo/quux bar
+    ln -s foo/wibble wibble2
+
+    # example _darcs/prefs/defaults
+    ALL posthook sh update-symlinks.sh
+
+These two files will make darcs recreate and update symbolic links at
+each darcs operation. Posthooks are local to a repository, so you would
+have to tell people fetching your repository to put the same entry into
+their `_darcs/prefs/defaults`. If do you so this, then you can simulate
+versioned symlinks by version controlling the update-symlinks.sh file.
+
+## Can I version control files with characters in the full Unicode spectrum?
+
+Darcs is almost agnostic to character-encodings, the big exception being
+that you have to use some sort of 8-bit encoding in order for darcs to
+treat your files as text.
+
+UTF-8 works, as files would usually contain no embedded \^Z or \\0
+(encoding of characters outside the ASCII range uses bytes with the high
+bit set). See the manual section on characters sets: "UTF-8 will work if
+you set DARCS\_DONT\_ESCAPE\_8BIT to 1", otherwise all non-ASCII
+characters will be escaped when output.
+
+Apart from output issues, UTF-8 works largely because of its
+compatibility with ASCII -- common end of line markers (U+000A and
+U+000D) are identified and files can be treated as text, whilst the rest
+of the Unicode range is encoded only using specific sets of bytes with
+the high bit set.
+
+UTF-16 is not well supported as it is (usually) treated as binary due to
+\\0 bytes (basic European alphabet ranges include \\0, e.g. 'A' is
+encoded as 00 41).
+
+## Can I write patch comments, or have an author name, with characters in the full Unicode spectrum?
+
+Darcs agnosticism w/r/t character encodings can be a problem here if you
+are collaborating with people that use different character encodings.
+The best practice is to make sure that everybody uses the UTF-8
+encoding.
+
+## How do I sign and verify darcs patches?
+
+There are actually two questions you could ask: how to sign patches, and
+how to sign repositories. Darcs gives you a mechanism to sign individual
+patches (using GPG), but it doesn't yet support the signing of
+repositories.
+
+## How do I sign and verify darcs repositories?
+
+This isn't possible yet.
+
+## Can I flag a patch so it doesn't get pushed or pulled?
+
+This would typically be for changes that are only for local use; e.g.
+configuration files.
+
+And the answer is: no.
+
+## Can I change the darcs timeout?
+
+Yes, just set the environment variable "DARCS\_CONNECTION\_TIMEOUT" with
+the number of second that you will wait for a connection to happen. This
+feature only works with HTTP repositories (and via curl, which is most
+likely what you're using). The default timeout is 30 seconds.
+
+## How do I create a branch in Darcs?
+
+Darcs branches and repositories are the same thing.
+So to create a branch, you have to use `darcs clone` (`darcs clone --lazy` in
+particular). This creates create a new directory.
+If you have a lot of branches, it could be
+a good idea to have a single container directory and subdirectories
+underneath it for all the branches you use, eg
+
+    foo-project
+    |-- trunk
+    |-- release-2.4
+    `-- hacking-on-bar
+
+Support for in-repository branches is a frequently requested Darcs
+feature. We agree that having some kind of [branch
+mechanism](Ideas/Branches) that does not require you to create a new
+directory could be very useful and we are currently thinking of how to
+get it right. One issue we are trying to wrap our heads around is
+introducing such a feature while preserving the core simplicity of
+Darcs.
+
+## Is there an equivalent of `git stash` for quick saving of working directory changes?
+
+No, but the `revert` command systematically backs up reverted changes in a
+special internal patch called "the unrevert patch". Then, with the command
+`darcs unrevert` you can apply back the contents of this patch to the working
+copy.
+
+Be careful that the unrevert patch is overwritten each time you run `darcs revert`.
+That is, if you want to use the unrevert patch as a stash branch, you have to do
+a single revert command. Therefore you want to use revert with the `-a` flag.
+
+A manual hack you can do for a more fine-grained stashing is the following:
+
+    darcs revert ; mv _darcs/patches/unrevert xxx.dpatch
+
+You can later apply the xxx.dpatch file to the working copy with `darcs apply`.
+
+# Upgrading to darcs 2
+
+## Why do I get lossy conversion warnings when I convert to the darcs 2 format with `darcs convert`?
+
+This is because convert "flattens" some conflicts, converting them into
+ordinary non-conflicting patches, and the result of this flattening
+depends on the repository state (and the order of patches in a
+repository).
+
+## Should I convert my repository to the Darcs 2 format?
+
+If you never experience bugs such as exponential merge times or [1],
+you are better not upgrading the patch semantics, then no.
+This is because the Darcs 2 format does a better job at merging
+some common conflicts, but it also has some important bugs dealing
+with duplicate patches and nested conflicts. [2]
+
+It's important to know that you can keep Darcs 1 semantics but still get
+a lot of the same benefits of the Darcs 2 format by invoking
+`darcs optimize --upgrade` (from Darcs 2.4 and up) or `darcs optimize upgrade` (from Darcs 2.10).
+
+It is also important to know that the Darcs team will probably support
+old patch semantics indefinitely, so you do not need to worry about your
+repositories becoming obsolete.
+
+[1] See
+
+> -   <http://bugs.darcs.net/issue279>
+> -   <http://bugs.darcs.net/issue1075>
+
+[2] [Darcs-2 conflict handling
+bugs](http://bugs.darcs.net/issue?@search_text=&title=&@columns=title&topic=15&id=&@columns=id&creation=&creator=&activity=&@columns=activity&@sort=activity&actor=&nosy=&priority=&@group=priority&status=-1,1,2,3,4,5,6,16,17&@columns=status&assignedto=&@columns=assignedto&@pagesize=50&@startwith=0&@queryname=&@old-queryname=&@action=search)
+
+See [DarcsTwo]() for more details.
+
+# Other
+
+## Where can I find hosting for my darcs project?
+
+Short answer: <http://hub.darcs.net>.
+See also [Hosting](Hosting).
+
+## What's the best way for a user to work on Darcs itself?
+
+See [Developer FAQ](Development/FAQ) and [Developer
+Tips](Development/Tips)
+
+## Does Darcs support Cygwin on Windows?
+
+Not officially (sorry!). The Darcs binary on Windows is a normal Windows
+executable that does not understand Cygwin paths. You could try, at your
+own risk, a wrapper script (which does the job of converting Cygwin
+paths like /home/foo to Windows paths) provided by the darcs user
+community; see [Windows]() for more details.
+
+Note that we would be happy to reconsider Cygwin support if somebody is
+willing to add Cygwin support for GHC.
+
+## How do I start using darcs for a web application (or some other code base) that is already in production?
+
+It is trivial to start using darcs for an existing web application that
+has two environments; in my case the environments are testing and
+production. To get started, I did the following:
+
+-   Backup everything; it never hurts to have some backups
+-   Do the following in the production environment:
+
+    -   `darcs initialize`
+    -   [optional] add stuff to ignore to the boring file
+    -   I had to add a directory var/ to my boring file because I wanted
+        that to be different in all of my repos. Adding the directory to
+        the boring file makes darcs ignore the var/ dir.
+    -   `darcs add --r ./`
+    -   I did this so I could add everything in my production
+        environment to the darcs repository, you might want something
+        different, if so, read the darcs add help.
+    -   `darcs record --all --look-for-adds`
+    -   I named my patch ‚"initial revision from production,"
+
+-   Now the magic: without creating a darcs repository, copy the \_darcs
+    directory, in its entirety, from the production environment to the
+    development environment.
+-   Issue the following command in the development environment (now with
+    the production environment's \_darcs directory):
+
+        darcs record --look-for-adds
+
+-   For this patch, I named it something like "initial revisions from
+    development‚" That is it; you now have a repository that contains
+    your production code, up to date with your development changes. In
+    my scenario, I had to consolidate a project that had multiple
+    developers working on both the production and the development
+    environments, without keeping the other up-to-date.
+
+## How can I control the umask of the files a darcs push operation creates?
+
+It's a typical use-case that a remote unix server is used to share a
+repo using SSH accounts and a unix group for the project members. By
+default darcs runs with the server's umask, which usually does not
+include group write permissions. Currently you have two options to set
+the umask:
+
+1.  add the line "apply umask 0002" to \_darcs/prefs/defaults
+2.  add the line "apply umask 0002" to \~/.darcs/defaults I've created
+    an issue for a system-wide solution for this:
+    [issue1185](http://bugs.darcs.net/issue1185)
+
+## How do I see different patches if their names are not unique?
+
+Since 2.10, use the hash part of the ouput of `darcs log`.
+
+For older versions, use the hash part of the xml output (the gz extension can be omitted):
+
+    $ darcs log --xml-output
+    <changelog>
+    <patch author='me@email.com' date='20040605033308' local_date='Sat Jun  5 05:33:08 CEST 2004'
+     inverted='False' hash='20040605033308-e14b9-451ae7bc1c4e822940526960e4d8a1faed2f5ed4.gz'>
+            <name>initial import of hello.txt</name>
+    </patch>
+    </changelog>
+    $ darcs annotate --match "hash 20040605033308-e14b9-451ae7bc1c4e822940526960e4d8a1faed2f5ed4.gz"
+    [initial import of hello.txt
+    me@email.com**20040605033308] {
+    addfile ./hello.txt
+    hunk ./hello.txt 1
+    +Hello darcs!
+    }
+
+## Potential developers don't have darcs and want to get my repository. How to do?
+
+If someone who wants to contribute to your project has a problem
+installing or building darcs on their OS, you may want to make it easy
+for them to at least get the latest recorded version of the repository.
+
+The simplest way to provide that is to set a posthook in your
+repository. Add the following two lines in the file
+\_darcs/prefs/defaults of your repository:
+
+    apply posthook darcs dist
+    apply run-posthook
+
+Now, each time you `push` or `record` in that repository, the command
+`darcs dist` will be called, and a tarball myrepo.tar.gz will be
+created, always containing the latest recorded version of the repository
+files.
+
+Now, in addition to telling people to do
+`darcs clone --lazy http://www.site.org/myrepo/` you can also point them
+to `http://www.site.org/myrepo/myrepo.tar.gz`.
+
+Since Darcs 2.10, you can generate ZIP archives from a repository instead of
+a .TAR.GZ, using the command `darcs dist --zip`. This may be easier for people
+who use Windows. Also, if you host your repositories at <http://hub.darcs.net>
+you have a "Download ZIP" button that provides the same feature.
+
+## How do I get the code of a darcs repository when I don't have darcs and I am not the developer?
+
+If the files are listed by the remote web server (directory list), you
+can use wget:
+
+    wget -r -nH -np -R "index.html*" http://www.site.org/myrepo/
+
+# Troubleshooting -- Weird messages
+
+-   See the [Troubleshooting](Troubleshooting) page
+-   [Diagnostic Messages](DiagnosticMessages) A guide to diagnostic
+    messages produced by darcs
+

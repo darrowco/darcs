@@ -1,0 +1,107 @@
+# News and discussions
+
+1. Jason Dagit completed his master thesis about ensuring correctness of
+  ~ darcs with Haskell's type system, and made it available to all:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-March/018634.html](http://lists.osuosl.org/pipermail/darcs-users/2009-March/018634.html)
+
+2. Reinier Lamers launched a discussion about improving automated tests,
+  ~ and plans to contribute work about it during the incoming sprint:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-March/018593.html](http://lists.osuosl.org/pipermail/darcs-users/2009-March/018593.html)
+  ~ -   [http://wiki.darcs.net/DarcsWiki/Sprints/2009-04](http://wiki.darcs.net/DarcsWiki/Sprints/2009-04)
+
+# Issues resolved in the last week (5)
+
+issue1162 Ben Franksen
+  ~ -   makeAbsolute is now a total function
+    -   [http://bugs.darcs.net/issue1162](http://bugs.darcs.net/issue1162)
+
+issue1301 Trent W. Buck
+  ~ -   remove obsolete zsh completion scripts.
+    -   [http://bugs.darcs.net/issue1301](http://bugs.darcs.net/issue1301)
+
+issue1373 Trent W. Buck
+  ~ -   make --token-chars [\^ tn] work as advertised.
+    -   [http://bugs.darcs.net/issue1373](http://bugs.darcs.net/issue1373)
+
+issue1402 Trent W. Buck
+  ~ -   don't "phone home" about bugs.
+    -   [http://bugs.darcs.net/issue1402](http://bugs.darcs.net/issue1402)
+
+issue1405 Trent W. Buck
+  ~ -   improve discoverability of global author file.
+    -   [http://bugs.darcs.net/issue1405](http://bugs.darcs.net/issue1405)
+
+# Patches applied in the last week (31)
+
+2009-03-29 Trent W. Buck
+  ~ -   Accept issue1190: conflicts between HUNK and REPLACE aren't
+        marked.
+
+2009-03-27 [ben.franksen@online.de](mailto:ben.franksen@online.de)
+  ~ -   Resolve issue1162: makeAbsolute is now a total function
+
+2009-03-26 Eric Kow
+  ~ -   Tidy up Darcs.Bug now that we are no longer using the
+        maintenance file.
+
+2009-03-28 Trent W. Buck
+  ~ -   Half-heartedly include \_darcs/prefs/binaries help in manpage.
+    -   Document \_darcs/prefs/binaries.
+
+2009-03-27 Reinier Lamers
+  ~ -   Refactor PatchCheck monad to be defined with
+        Control.Monad.State.State
+    -   Add comments in Darcs.Patch.Check
+
+2009-03-28 Trent W. Buck
+  ~ -   Resolve issue1373: make --token-chars [\^ tn] work as
+        advertised.
+
+2009-03-28 Marco Túlio Gontijo e Silva
+  ~ -   Update e-mail address for Marco Túlio Gontijo e Silva.
+
+2009-03-28 Trent W. Buck
+  ~ -   Resolve issue1301: remove obsolete zsh completion scripts.
+
+2009-03-26 Simon Michael
+  ~ -   add a link to the official haddock docs at darcs.net
+    -   api docs: comment out leading underscore names which break
+        hoogle 4.0.0.5
+
+2009-03-26 Eric Kow
+  ~ -   Explain purpose of invisiblePrinter.
+
+2009-03-26 Trent W. Buck
+  ~ -   Resolve issue1402: don't "phone home" about bugs.
+    -   Resolve issue1405: improve discoverability of global author
+        file.
+
+2009-03-23 Eric Kow
+  ~ -   Move emailformat.sh to bugs/.
+
+2009-03-23 Tommy Pettersson
+  ~ -   bugfix, build of documentation after issue1393 mv / move swap
+
+2009-03-22 Reinier Lamers
+  ~ -   Use faster get\_unrecorded\_in\_files in remove command
+    -   Use faster get\_unrecorded\_in\_files in amend-record command
+    -   Add haddock comment to
+        Darcs.Commands.Unrecord.generic\_obliterate\_cmd
+    -   Use faster get\_unrecorded\_in\_files in revert command
+    -   Use get\_unrecorded\_in\_files\_unsorted in changes command
+    -   Make record look only at cmdline arg files, if any
+    -   Add get\_unrecorded\_in\_files\_unsorted function
+
+2009-03-22 Trent W. Buck
+  ~ -   Refactor test preference.
+    -   Refactor bugs/add\_permissions.sh.
+    -   Refactor "darcs move" help.
+    -   Refactor "darcs revert" help.
+    -   Don't use "accidentally" twice in the same sentence.
+    -   Refactor darcs\_binaries.
+    -   Refactor actual\_boring\_file\_filter.
+
+

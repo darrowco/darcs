@@ -1,0 +1,112 @@
+# darcs-monitor
+
+[![flattr](http://api.flattr.com/button/button-compact-static-100x17.png)](http://flattr.com/thing/60023/darcs-monitor)
+
+Darcs-monitor will send email to a specified recipient about new changes
+added to a specific darcs repository. It can be run as an apply posthook
+(resulting in near-instantaneous “push” emails), or periodically from
+Cron, or occasionally by hand, whatever seems most convenient.
+
+## Downloads
+
+The primary distribution site since 0.3.4 (May 2008) is
+[Hackage](http://hackage.haskell.org/cgi-bin/hackage-scripts/package/darcs-monitor).
+You can also get it by darcs at
+[http://marcot.eti.br/darcs/darcs-monitor](http://marcot.eti.br/darcs/darcs-monitor)/
+. It depends on mtl and [HaXml](HaXml) and is written in Haskell,
+naturally. It has been tested only with GHC 6.8 so far. For installation
+and usage instructions, refer to the README at any of the locations
+above.
+
+Please note that this software is very new and thus can be buggy. As
+with any email-sending software, bugs can result in major annoyance;
+user caution is warranted.
+
+## Release history
+
+### 0.4.1 (2011-04-13)
+
+-   Use HaXml 1.20.
+-   Enable use with darcs --interactive.
+
+### 0.4.0 (2010-09-08)
+
+-   make it possible to use more than one email address as recipient.
+-   update maintainer address
+-   update darcs repository address
+
+### 0.3.8 (2010-03-07)
+
+-   Correct crash with GHC 6.12.1 because of malformed UTF-8 character
+    in the darcs output.
+
+### 0.3.7 (2010-02-27)
+
+-   New maintainer: Marco Túlio Gontijo e Silva
+    <[marcot@debian.org](mailto:marcot@debian.org)\>.
+-   Include --max-diff option.
+-   README: Update the Homepage link and the darcs repository.
+-   darcs-monitor.1: Don't generate manpage and correct syntax for
+    "...".
+-   Make the code Warning-free and hlint-free.
+-   darcs-monitor.cabal:
+
+> -   Include more fields.
+> -   Include upper bound to base dependency.
+> -   Include ChangeLog in Extra-Source-Files.
+
+-   ChangeLog: Include the log for 0.3.[3-6] in ChangeLog.
+
+### 0.3.6 (2008-05-10)
+
+-   use Cabal's mechanism for telling the program what version it is
+-   consequently the Setup.hs customization has been removed
+
+### 0.3.5 (2008-05-10)
+
+-   change the Cabal description to reflect the fact that this package
+    fails to build with development versions of [HaXml](HaXml)
+
+### 0.3.4 (2008-05-04)
+
+-   add a Description to the Cabal file
+
+### 0.3.3 (2008-05-04)
+
+-   fixes to enable building with GHC 6.8
+-   now requires Cabal 1.2
+
+### 0.3.2 (2007-08-31)
+
+-   another documentation update
+
+### 0.3.1 (2007-05-31)
+
+-   documentation update
+
+### 0.3 (2007-05-31)
+
+-   there is now support for the %CHANGES% and %SHORTREPO% substitutions
+    in the template
+-   a default template is now provided
+-   ? and " entity references in darcs changes –xml is now supported
+-   patches with just the author email address (no real name) are now
+    handled correctly
+-   when multiple emails are sent, they are now sent in chronological
+    order
+-   emails are announced to the user
+
+### 0.2 (2007-02-12)
+
+-   new option --dry-run
+
+### 0.1 (2007-02-11)
+
+-   Initial release.
+
+## Credits
+
+The program was primarily written by
+[AnttiJuhaniKaijanaho](People/AnttiJuhaniKaijanaho).
+[BenjaFallenstein](BenjaFallenstein) and
+[BenjaminFranksen](BenjaminFranksen) have also contributed code.

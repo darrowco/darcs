@@ -1,0 +1,50 @@
+---
+title: Setting up a shared group repository
+...
+
+*WARNING: this is a work in progress*
+
+The aim of this document is to produce a checklist of things you need to do to set up a shared darcs directory on a server that different users can push to.
+
+# Basic checklist
+
+We assume here that you are doing all of these steps as superuser
+
+1. create a group for the users in question and add them to it
+
+          addgroup cool-people
+          adduser bob cool-people
+          adduser sue cool-people
+
+1. ensure that all users in question have umask 002 (sorry!)
+ 
+1. create a directory owned by that group
+
+          mkdir /srv/repos/cool-project
+
+1. create the darcs directory itself
+
+           # could be darcs get too
+           darcs init --repo /srv/repos/cool-project
+
+1. make sure the directory is group writable and that subdirectories inherit the group id
+
+           chgrp -R cool-people /srv/repos/cool-project
+           chmod -R g+rwXs /srv/repos/cool-project
+
+1. make sure that people writing to the repo in a way that allows others in the group to overwrite the files
+
+           echo 'apply umask 002' > /srv/repos/cool-project/_darcs/prefs/defaults
+
+# Useful concepts in a nutshell
+
+* umask: applying a more liberal umask (002 as opposed to 022) ensures that fewer permissions are stripped off by default
+* setgid bit (chmod g+s): on a dir, ensures that new files inherit the group ID
+
+# Things that can go wrong
+
+* darcs: _darcs/index: opening of '_darcs/index' failed: permission denied (Permission denied)
+
+     - I think this is not specific to _darcs/index.  It's just that you inherited overly strict permissions on that file.  chmod g+w it just this once.  You basically need to work out why this file is getting recreated with g-w; most likely the user has not set umask 002
+
+* files are sometimes owned by root, why not the user that pushes them?

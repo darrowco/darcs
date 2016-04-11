@@ -1,0 +1,79 @@
+# News and discussions
+
+1.  Petr Ročkai is working on a new Storage.Hashed module, a cleaner and
+    more performant replacement for SlurpDirectory, hopefully allowing
+    noticeably faster diff-related commands:
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-January/017280.html](http://lists.osuosl.org/pipermail/darcs-users/2009-January/017280.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-January/017510.html](http://lists.osuosl.org/pipermail/darcs-users/2009-January/017510.html)
+
+2.  Buildbots are being adapted as part of the switch to Cabal that will
+    occur in the next major release of darcs:
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-January/017480.html](http://lists.osuosl.org/pipermail/darcs-users/2009-January/017480.html)
+
+3.  Using gitit + darcs backend as a new wiki for darcs.net ? Discussion
+    and experiments are going on:
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-January/017393.html](http://lists.osuosl.org/pipermail/darcs-users/2009-January/017393.html)
+
+# Issues resolved in the last week (3)
+
+issue1310 Trent W. Buck
+  ~ -   create merged darcsCommand{add}.
+    -   [http://bugs.darcs.net/issue1310](http://bugs.darcs.net/issue1310)
+
+issue1313 Trent W. Buck
+  ~ -   Clickable ToC and xrefs in PDF user manual.
+    -   [http://bugs.darcs.net/issue1313](http://bugs.darcs.net/issue1313)
+
+issue1333 Petr Rockai
+  ~ -   Improve "cannot push to current repository" warning.
+    -   [http://bugs.darcs.net/issue1333](http://bugs.darcs.net/issue1333)
+
+# Patches applied in the last week (22)
+
+2009-01-28 Petr Rockai
+  ~ -   Relax regex and parsec dependencies in darcs.cabal.
+    -   Cabal: Look around for diff and sendmail properly.
+
+2009-01-28 Eric Kow
+  ~ -   Update push-formerly-pl.sh test for issue1333
+    -   Canonize Don Stewart, Petr Rockai, Benedikt Schmidt and Spencer
+        Janssen
+
+2009-01-28 Petr Rockai
+  ~ -   Resolve issue1333: Improve "cannot push to current repository"
+        warning.
+
+2009-01-27 Eric Kow
+  ~ -   autoconf: Fix definition of SENDMAIL macro when sendmail is not
+        found
+    -   autoconf: Define BIGENDIAN instead of setting it.
+
+2009-01-26 Petr Rockai
+  ~ -   Relax a few version constraints in darcs.cabal.
+    -   Add missing doublequotes to multiple tests.
+
+2009-01-26 Trent W. Buck
+  ~ -   Accept issue1266: warn on init inside a repo.
+    -   Have autoconf forget about .hs.in.
+
+2009-01-25 Petr Rockai
+  ~ -   Drop autogeneration of Autoconf.hs, use CPP instead.
+    -   Produce -DPACKAGE\_VERSION="..." programatically in Setup.lhs.
+    -   Replace ThisVersion.hs generation within Setup with some simple
+        CPP.
+
+2009-01-25 Eric Kow
+  ~ -   Add -fglasgow-exts to Darcs.Patch.Show
+    -   Remove stale import from Darcs.Commands.ShowRepo
+
+2009-01-24 Petr Rockai
+  ~ -   Flip the repo test over to Cabal.
+    -   A grand unified pwd hack.
+    -   Refactor version machinery in Setup.lhs.
+
+2009-01-24 Trent W. Buck
+  ~ -   Resolve issue1310: create merged darcsCommand{add}.
+    -   Resolve issue1313: Clickable ToC and xrefs in PDF user manual.
+    -   Test for strace first.
+
+

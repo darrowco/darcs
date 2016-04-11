@@ -1,0 +1,44 @@
+# News and discussions
+
+1.  Mark Stosberg shared his remarks concerning the user interface of
+    hunk splitting in darcs 2.4 beta 1, and several improvements were
+    proposed:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-January/022838.html](http://lists.osuosl.org/pipermail/darcs-users/2010-January/022838.html)
+
+2.  Thanks to our benchmark suite, a performance regression for check
+    and repair was detected, and Reiner Lamers blocked the current
+    release process until this regression is fixed:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-January/022868.html](http://lists.osuosl.org/pipermail/darcs-users/2010-January/022868.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-January/022855.html](http://lists.osuosl.org/pipermail/darcs-users/2010-January/022855.html)
+
+# Issues resolved in the last week (1)
+
+issue1677 Petr Rockai
+  ~ -   require hashed-storage 0.4.4.
+    -   [http://bugs.darcs.net/issue1677](http://bugs.darcs.net/issue1677)
+
+# Patches applied in the last week (9)
+
+2010-01-17 Reinier Lamers
+  ~ -   Fix typo in release script
+
+2010-01-12 Petr Rockai
+  ~ -   We should call "make website" before creating release tarballs.
+    -   Make "make website" work with clean doc/ as well.
+    -   Fix our version mechanism to make non-clean rebuilds pick up
+        right version.
+
+2010-01-15 Eric Kow
+  ~ -   Acknowledge NLTG group within Brighton for Eric's 20% time.
+    -   Replace University of Brighton logo with crisper version.
+    -   Link to donations page from front page.
+
+2010-01-12 Petr Rockai
+  ~ -   Resolve issue1677: require hashed-storage 0.4.4.
+
+2010-01-06 Reinier Lamers
+  ~ -   Make release.sh handle beta releases correctly
+
+

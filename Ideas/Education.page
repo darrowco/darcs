@@ -1,0 +1,111 @@
+# Rationale
+
+A darcs designed for version control learners.
+
+darcs can be a good choice to introduce version control to students.
+Still, some changes could be useful, in particular in the context of a
+university. Some changes concern the user interface and other the
+features.
+
+This page lists wishable modifications to obtain such a version of
+darcs, with indication on the difficulty to create patches doing them.
+
+# Changes
+
+## Apply -i
+
+apply interactive by default (not the case of regular darcs because of a
+scriptability problem, cf [DefaultSwitches]().
+
+## More messages
+darcs pull displays from which url it pulls:
+
+    Pulling from:
+
+    [->] http://source/darcs
+         http://source/darcs2
+         http://source/darcs4
+
+Display right away from/to which repo it is pulling/pushing.
+
+Or always do it interactively? Like:
+
+    Choose source to pull from
+
+    a)http://source/darcs
+    b)http://source/darcs2
+    c)http://source/darcs4
+    d) delete one of the above sources from the list
+
+When only one source, no need for the menu, just display the source.
+
+Bug ticket for that <http://bugs.darcs.net/issue1772>
+
+## External graphical diff
+
+When available, automatically do --diff-command with meld or kdiff3 for
+whatsnew, diff.
+
+May be a problem via ssh. What about a -g option for "graphical"?
+
+## Hidden aliases
+
+darcs cat for darcs show contents
+
+## Obtain relevant information from a repo
+
+darcs show repo should show the date of the oldest and latest patches of
+the repo.
+
+darcs show stats ? display lines of code per author, etc.
+
+## Localization
+
+Make darcs speak the language of the students.
+
+## Proactive behaviour
+
+Refuse to version binary files? And print a message: "You should rather
+only version the source (text) files of that file. To really version
+this file, use darcs add --binary file.pdf".
+
+## Disabled features
+
+Disable cache, since students have space quotas on their home
+directories? Or provide cache garbage collection.
+Cache GC is in darcs 2.10 but it's not automatic.
+
+## Easy send and apply
+
+Make send work even when distant repo not reachable. Automatically
+generate a context file against latest patch ?
+
+Or say: "distant repo ADDRESS not reachable, generating a patch with
+whole repo history as context."
+
+And then systematically gzip the whole thing when darcs will accept
+gzipped patches.
+
+# Issues that directly concern darcs
+
+Conflict marking and easy invocation of graphical diff3 program to
+visualize a conflict and choose how to resolve.
+
+Put email address of the repo in darcs send -o output
+
+# Meanwhile
+
+List a set of default prefs to put in \~/.darcs/prefs for the students
+to have a friendlier darcs:
+
+    apply interactive
+
+# Things resolved in HEAD:
+
+* Less key choices in the ui
+* darcs init: "Repository successfully created" (done in HEAD)
+* directly store author name in \~/.darcs/author (done in HEAD)
+* Use the pager for darcs log
+* Refuse empty patch names.
+* Do not prompt for long patch names (launch text editor if no flag `-m name`)
+* darcs status for darcs w -ls

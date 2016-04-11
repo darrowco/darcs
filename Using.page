@@ -1,0 +1,33 @@
+The official Darcs manual lives at
+<http://darcs.net/manual>.
+
+This section of the wiki provides informal user-oriented documentation,
+perhaps filling in some blanks from the official manual.
+
+# Informal documentation
+
+-   [Quick Start](/QuickStart)
+-   [Model](Using/Model)
+-   [HunkEditor](Using/HunkEditor)
+-   [Send](Using/Send)
+-   [Test](Using/Test)
+-   [Record](Using/Record)
+-   [Convert](Using/Convert)
+
+## Overview of commands
+
+-   [RosettaStone](RosettaStone): comparison of commands with other systems
+-   [Cheat Sheet](/Using/darcs-cheat-sheet.pdf) for darcs 2.8 (slightly outdated)
+    [Source](/Using/darcs-cheat-sheet.sla.gz)
+
+## Use cases
+
+-   [Group repository](Using/GroupRepo)
+
+# See also
+
+-   <http://darcs.net/manual> - the official
+    manual
+-   Darcs [Internals](Internals) - High-level technical documentation
+    showing power users and library users what's under the hood
+

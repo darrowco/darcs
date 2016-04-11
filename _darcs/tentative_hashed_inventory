@@ -1,0 +1,218 @@
+pristine:488ab711601a724ca5b0f88b0c78d3bf478e2e371dcf13d73be7f317246a0cb2
+Starting with inventory:
+0000021504-bbdde9d6cebd9aad7bd97b6087d43197009e65d859a4b4bf846fbb0e940aa7f1
+[TAG 2016-01-20 (autotag)
+gitit@darcs.net**20160120132604
+ Ignore-this: bd96ddd2f8d2ecd2cac6f70263ae42f1
+] 
+hash: 0000013232-dc825fd5b47f856938ba2ec3d7158c4210bb78284a315b02782b8df1bf8ee938
+[theory
+Guillaume Hoffmann <guillaumh@gmail.com>**20160120181058
+ Ignore-this: e3064d369c1b93db89b26cc5321bf596
+] 
+hash: 0000003335-f2c5c1d17b972e33030cb56ea14b5930e7bfdec85b2db7a5472dd5c06ce42c74
+[rm dead link and dead page
+Guillaume Hoffmann <guillaumh@gmail.com>**20160120182045
+ Ignore-this: bde550388b9206d6ab419a1e1d5f1894
+] 
+hash: 0000001022-d6964a60c3737f47fbb8dbfa8f82bcdee1ab505803f84f1ed914534cff56a483
+[added link to bug report
+kxra <kxra@riseup.net>**20160121231021
+ Ignore-this: eb5abb7993ea556fdc9afdc189763eca
+] 
+hash: 0000000208-913c7d2ca49244d59ea72f97b1afe0bb849d6c56e807158628667a88c7312933
+[add stack to install instructions
+gitit@darcs.net**20160126140008
+ Ignore-this: a58968a2e28ab3154f82cc5e3c8c3c0e
+] 
+hash: 0000000239-5da8ed68718214ff57ae5bf588a3243f7b5304443426b84a53553eb26acc2f96
+[stack install line wrap
+gitit@darcs.net**20160126140717
+ Ignore-this: 754933e5841a8ebfaa24ef54c98ef85f
+] 
+hash: 0000000226-3707b0ebe312f4c8f118bb65476bddd546f369b7351f7aa7f947ddcc6ff197ec
+[MergersDocumentation format
+Guillaume Hoffmann <guillaumh@gmail.com>**20160127144837
+ Ignore-this: bb6c14dfd21e0487f28e5f99880b55d4
+] 
+hash: 0000005929-c130590a39c38f2ce41a6db1a477506f05bf7f02e8e433f5c3d5dee77ebe7953
+[wibble
+Guillaume Hoffmann <guillaumh@gmail.com>**20160127145428
+ Ignore-this: bc6737c41a874e72f3bd9c7e51ecb16d
+] 
+hash: 0000000457-ae2e4189265f63399a4a857a30ddfedf4daf1ce280ab3711ed8c021191cc4022
+[2.10.3 releases notes
+Guillaume Hoffmann <guillaumh@gmail.com>**20160129161835
+ Ignore-this: d9cb96117ec160fa4e2d13df1f2bcfaf
+] 
+hash: 0000001082-c7b997bf7ec1d5f1d2ad175b630da667840ef4d03755558c781567175e4bc5f2
+[conflictors update
+Guillaume Hoffmann <guillaumh@gmail.com>**20160129161857
+ Ignore-this: 413068b4852e8b17ea6b3aea4a1da726
+] 
+hash: 0000001171-53f046380683021222f6d3ed87d6288ab9d4d50c7b67128378beaa33fa403840
+[move FoCAL to Ideas
+Guillaume Hoffmann <guillaumh@gmail.com>**20160129173743
+ Ignore-this: bc6230834cb5e8956fc42428e636d564
+] 
+hash: 0000001101-b17e86f029fb9049df8b035c5803e49dc5b21e6b5e620a389b9e3d9f2b9aaa5a
+[remove links to dead teratorn.org
+Guillaume Hoffmann <guillaumh@gmail.com>**20160131110118
+ Ignore-this: e61e5c61d0e064771d1b568f8a12f127
+] 
+hash: 0000004139-cc5f7c793d58aea413f55bc249476d15d1a712d0455dc7cc639dd29b1b250a6e
+[minghc deprecated in favour of stack under Windows
+Guillaume Hoffmann <guillaumh@gmail.com>**20160131110546
+ Ignore-this: fd90d93eba8bb1bc9e2534b931896e76
+] 
+hash: 0000000505-8b883a6b075e15e82bdf6d2a456e9136bda40fcc9a7c6b3a19b0e55178eb2cc0
+[2.10.3
+Guillaume Hoffmann <guillaumh@gmail.com>**20160131110757
+ Ignore-this: 294a58f9909d3167004123b1e371f4da
+] 
+hash: 0000001143-7346f7d216acb79f44fb8a321eae5107b52be441efeff2c67f5c5ceeb6c69b16
+[darcsden issues link
+Guillaume Hoffmann <guillaumh@gmail.com>**20160201173051
+ Ignore-this: a4f19b1faf505079abaf8714b1152386
+] 
+hash: 0000000366-eb680f2ff0d5e1c7a3a58dbae4d104d72b36d1279b0a2557646f17f8c7dd26fe
+[move dev tip paragraph
+Guillaume Hoffmann <guillaumh@gmail.com>**20160205143634
+ Ignore-this: 361028275d764bbb89000ce9659f61d6
+] 
+hash: 0000001070-fdf6644033671e265de39ccc4a0321e27390c2738fbf7029f72a00aad1b57290
+[rm unlinked ConflictsHistory
+Guillaume Hoffmann <guillaumh@gmail.com>**20160205165811
+ Ignore-this: ec5e1da3201e9abf630cc084378bc64
+] 
+hash: 0000000664-d696398e940f51ef2d47125eaf08fcbfba1524f324c2ae25c9097cf75ecca9b4
+[update conversion pages and tailor is fairly dead
+Guillaume Hoffmann <guillaumh@gmail.com>**20160205172804
+ Ignore-this: 4aa356b27c227bc2274268774df4f31b
+] 
+hash: 0000062234-a490dc72c44c0617eefb6260a7f94ba85cc325bd002612ad68f5cbbd655bab76
+[misc
+Guillaume Hoffmann <guillaumh@gmail.com>**20160205172848
+ Ignore-this: f119048fc97a182ca34387fdb2efb82e
+] 
+hash: 0000001593-7ee06a762fb7d44f6e2b7060861bd9086610491166c92a78121f5662c9462e94
+[rm dead DarcDeps
+Guillaume Hoffmann <guillaumh@gmail.com>**20160205173020
+ Ignore-this: f5b3da1fab24d25c6ef39f511e7c1212
+] 
+hash: 0000001235-3729c29b56bdc256cc2d8a8eaf679081d64b898cbf6494f36893c911bdf893d6
+[rm Unison page, we live in a Darcs2 and dropbox world now
+Guillaume Hoffmann <guillaumh@gmail.com>**20160205173735
+ Ignore-this: 24511634736396d7095c9461fe5625df
+] 
+hash: 0000005655-5cd358925693c1c9e8db0508ad4e97d63601e531b2bad2a9b3b80c5306d1d26b
+[misc
+Guillaume Hoffmann <guillaumh@gmail.com>**20160205174940
+ Ignore-this: b4b4cdc66335df4097bba37c0520f125
+] 
+hash: 0000000642-42608c6146c00e4fcec7aa5780cc30b80df48294bd098b96371221307bfec479
+[tailor references
+Guillaume Hoffmann <guillaumh@gmail.com>**20160205175157
+ Ignore-this: ac9d64122c3b699e2fc1da2f72fffc53
+] 
+hash: 0000000246-13bc59e9ba237ac880540d6e69bd1ab44d2a80db712b959a38ac509f15c5d3fb
+[development very basics
+Guillaume Hoffmann <guillaumh@gmail.com>**20160207112952
+ Ignore-this: 19a2dcd1267ebedbc7197aec9424563
+] 
+hash: 0000000638-5402a1faa88c55c3f9fbf965f1e6d2ad504d546fcaf66222f1e5a0dde3674028
+[move Darcs3Wishlist to Ideas
+Guillaume Hoffmann <guillaumh@gmail.com>**20160209173947
+ Ignore-this: ec58dfbb2b7b5868c34633438f09a67e
+] 
+hash: 0000000257-d25652b39a46ceb53501a9ec04a6fb2b1d6d72cec53b0194ed6af0798daac04a
+[move ConflictMisery and HiddenConflicts contents to appropriate place
+Guillaume Hoffmann <guillaumh@gmail.com>**20160209174330
+ Ignore-this: 27aadad47f335fad07209d38dfeae552
+] 
+hash: 0000009071-feb341a28a1bdd436033c5242c2b49f0840d0371e9996cf801c86bc430bea010
+[darcs2docbook unusable with new darcs log output format
+Guillaume Hoffmann <guillaumh@gmail.com>**20160209175506
+ Ignore-this: a14fc23a46aeeda3b56f1833c1b56fba
+] 
+hash: 0000001514-24e6ffa2b29700bcde8ae63866c9075d67d297aa3aa8e25cf961c734b53ef966
+[update FAQs
+Guillaume Hoffmann <guillaumh@gmail.com>**20160211112909
+ Ignore-this: 4ae28cdf4d7da5d086f8317157e51590
+] 
+hash: 0000002145-3c2b16f340ff4f74fc7388427951cd335aacc9a2e3dc8d7db105d34d245a9522
+[trim a little RosettaStone
+Guillaume Hoffmann <guillaumh@gmail.com>**20160212092116
+ Ignore-this: feee45c6cdaeca43b1bc260f5818e286
+] 
+hash: 0000002657-58983b3f53c217d960537c8f412d67999321f784a282d3e66457c56e38d4c86b
+[merge msmtp help into Using/Send
+Guillaume Hoffmann <guillaumh@gmail.com>**20160215161938
+ Ignore-this: 427453bd1edb4d48122bef511e491fed
+] 
+hash: 0000002638-f2fe4a0ef46b472c842aa288220825ca04d9faaa9de59b827a4bc8634a07f6ca
+[merge RepoViaSSH and sshfs into SSH
+Guillaume Hoffmann <guillaumh@gmail.com>**20160215192518
+ Ignore-this: 2d55e7097bad94e967d18df4ab9e79cf
+] 
+hash: 0000008032-eecf8c7d3c5bc3c99d62fc27a341d4021909050c1b4be81454ddec73483b6637
+[remove hashed-storage mention in Policy
+Guillaume Hoffmann <guillaumh@gmail.com>**20160324170158
+ Ignore-this: abf8731bc6b1c9d53a2fc042bbe460f
+] 
+hash: 0000000595-c60e070f3370715cdfcc7c4d176084a903921b4fdd57371f848307dade018096
+[markdown links
+Guillaume Hoffmann <guillaumh@gmail.com>**20160324172123
+ Ignore-this: 4ef667a171e0f2d60dd5a60648f84900
+] 
+hash: 0000004250-b5f3450ce9c5c191b7fcd5c73a2b66b03d75872ef85d6a677712f7e88ecffa3a
+[DWN 2016-04-01
+Guillaume Hoffmann <guillaumh@gmail.com>**20160401180338
+ Ignore-this: 5cbb2a14110a37878d7dcb9ecf49df07
+] 
+hash: 0000013754-864885443bceffdfd194c8868ecd377a3d13c242dbb742034e1521913fd69b3d
+[darcs news on front page
+Guillaume Hoffmann <guillaumh@gmail.com>**20160401180737
+ Ignore-this: b9521b7cf6d34dc86ed230fc21d755a
+] 
+hash: 0000000344-7ab2542d9bb5293fb20d306ef013c83d5cc089e601685ae1f012341497eed2ce
+[break lines
+Guillaume Hoffmann <guillaumh@gmail.com>**20160403223620
+ Ignore-this: c4b5c987b179785de7d4395f86273804
+] 
+hash: 0000007000-c05b9cd7aca00c5d46407b91d39be5042c65593206441528a8bf5a5533de8605
+[hashed storage integration in HEAD
+Guillaume Hoffmann <guillaumh@gmail.com>**20160403223637
+ Ignore-this: 6cad532e2c40b0048ef0449e6606e496
+] 
+hash: 0000000698-2f43e143227ee3e70ac2e2208ca25867ada3e7a1b7b5fc6b723a0e1c1860805e
+[2.12 release preliminary data
+Guillaume Hoffmann <guillaumh@gmail.com>**20160403225716
+ Ignore-this: 2f910fa210781a941d09d4c2e0e22972
+] 
+hash: 0000001249-fdaa64600bece955de7280f905bd156d1942063406ee4d479c24d7348d31fcb5
+[bug tracker link for 2.12 release
+Guillaume Hoffmann <guillaumh@gmail.com>**20160404152541
+ Ignore-this: 492e497ee4cfdaa96923d4f4272591c3
+] 
+hash: 0000000212-f9902beee9c56c3def1379c0299620b5b531517fdea7c30bcb783430c05fb7ce
+[darcs team update
+Guillaume Hoffmann <guillaumh@gmail.com>**20160404154517
+ Ignore-this: 4f5555f371c79468bf93fa7bcc90f4e4
+] 
+hash: 0000001135-a53a2f85d709821cd2fecaa7f40fa26587ef791f8c838de4dd54e9303f8c6e90
+[add sprint
+GaneshSittampalam <ganesh@earth.li>**20160404205123
+ Ignore-this: f969562680157b33c1b402a38c53bfd
+] 
+hash: 0000000365-2a3775c332fee60e20d3187b175f7bddf8a405d9953bd576ffaa8467e4a55457
+[formatting
+GaneshSittampalam <ganesh@earth.li>**20160404205343
+ Ignore-this: 421f048337a69d2ace066b2d04bbdf92
+] 
+hash: 0000000345-e6aaaac7330d9aea7405a73ecfe6161e7a200a68cffa4576d1c54c0857d7b5b9
+[my flight details
+GaneshSittampalam <ganesh@earth.li>**20160405054724
+ Ignore-this: f34862c070d1ec355ad9770826a63874
+] 
+hash: 0000000279-02bac79c265c8fae81990b8ad2de2c65168d26eb8ae838b693ba431ca331a5cb

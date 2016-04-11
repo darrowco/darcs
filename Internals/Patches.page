@@ -1,0 +1,51 @@
+We should put any documentation that go into Haddock should do into
+Haddock. This just serves to provide a sort of high-level overview tying
+everything together (perhaps this also belongs as documentation for the
+Darcs.Patch module?).
+
+# Darcs patch containers
+
+Darcs 1 patches look like this:
+
+    Named patch
+    |
+    +-- Patch (Merger, PP, etc)
+        |
+        +-- Patch (nesting)
+        |
+        +-- Prim
+
+Darcs 2 patches look like this:
+
+    Named patch
+    |
+    +-- RealPatch (Conflictor, Duplicate, etc)
+        |
+        +-- Non
+        |   |
+        |   +-- RealPatch (nesting)
+        |   |
+        |   +-- Prim
+        |
+        +-- Prim
+
+# Patch classes
+
+  ------------ -------- ----------------
+  Nonable      Non      
+  Patchy       Patchy   
+  Apply        Patchy   apply
+  Commute      Patchy   commute, merge
+  ReadPatch    Patchy   
+  Invert       Patchy   invert
+  FromPrim     Prim     ???
+  ToFromPrim   Prim     
+  FromPrims    Prim     
+  Effect       Prim     
+  Conflict              
+  ------------ -------- ----------------
+
+# See also
+
+-   <http://darcs.net/api-doc/Darcs-Patch.html>
+

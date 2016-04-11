@@ -1,0 +1,44 @@
+Don't take this template too seriously! It's just here to remind you of
+things to communicate, but you should definitely break the mold to get
+your message across better.
+
+# Darcs @VERSION@ announcement (@DATE@)
+
+The darcs team would like to announce the immediate availability of
+darcs @XXX@, a distributed, advanced revision control system written in
+Haskell.
+
+This release fixes a number of issues that were found in darcs
+@PREVIOUS\_VERSION@. ((MAYBE? We strongly recommend that WHO? upgrade to
+this version.)). ((UP TO THREE IMPORTANT CHANGES))
+
+The easiest way to install darcs is using the Haskell Platform [1]. If
+you have installed the Haskell Platform or cabal-install, you can
+install this release by doing:
+
+    $ cabal update
+    $ cabal install darcs
+
+Alternatively, you can download the tarball from
+[http://darcs.net/releases/darcs-@VERSION@.tar.gz](http://darcs.net/releases/darcs-@VERSION@.tar.gz)
+and build it by hand as explained in the README file.
+
+## What's New
+
+-   Important changes in Darcs @VERSION@
+
+-   Issues resolved in Darcs @VERSION@
+
+    -   @NNNN@: issue
+    -   ((NB: you should segregrate the regressions that were only
+        introduced in HEAD darcs, ie. that weren't already present in
+        the last release))
+
+## Reporting bugs
+
+If you have an issue with darcs @VERSION@, you can report it via the web
+on [http://bugs.darcs.net](http://bugs.darcs.net)/ . You can also report
+bugs by email to [bugs@darcs.net](mailto:bugs@darcs.net).
+
+[1]: You can download the Haskell platform from
+[http://hackage.haskell.org/platform](http://hackage.haskell.org/platform)/

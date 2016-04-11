@@ -1,0 +1,9 @@
+# Another idea: import and export patches by translating the paths
+
+Import the patches from the repo you intend to have as a submodule, but first move all files into a subdir. If it were possible just to apply such a moving special patch once and if it was effective for all the patches you **import** from the repo intended as submodule, but not for the patches you import from a "branch" of the main repo...
+
+...well, it could be a special variant of the `pull` command (say, `import`) and of the `push` command (say, `export`) that would additionaly translate the paths accordingly.
+
+The import variant of the pull command could represent the imported patch as the original patch+a patch that moves the paths.
+
+(Thought about this when saw [the question on this topic](http://stackoverflow.com/a/10591085/94687).--Ivan Z.

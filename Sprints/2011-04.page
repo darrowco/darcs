@@ -1,0 +1,102 @@
+# Report
+
+[http://blog.darcs.net/2011/04/darcs-hacking-sprint-6-report.html](http://blog.darcs.net/2011/04/darcs-hacking-sprint-6-report.html)
+
+# When and where
+
+The sprint will be hosted in Paris, France on April 1st, 2nd and 3rd
+(Friday to Sunday). We have access to a meeting room from 09h00 to 18h00
+each day.
+
+# How to come
+
+The sprint is kindly hosted by [IRILL](http://www.irill.org/), in the
+13th arrondissement or Paris, near the metro stop Place d'Italie.
+
+See
+[http://www.irill.org/about/access](http://www.irill.org/about/access)
+for more information.
+
+# Participants
+
+1.  Guillaume (at IRILL from 10 in the morning, in Paris before and
+    after the sprint)
+2.  Eric (arriving with Ganesh/Owen in Paris, Thursday after 2200)
+3.  Ganesh
+4.  Iago
+5.  Owen (owst)
+6.  Juliusz
+7.  rks
+
+# Discussions wanted
+
+1.  GSoC 2011
+2.  Seamless Git/etc integration
+3.  Conflicts UI?
+4.  Rebase
+5.  Darcs 3 patches
+6.  [Reorganising commands: check, repair, trackdown, test,
+    unrevert](http://lists.osuosl.org/pipermail/darcs-devel/2011-February/012353.html)
+    ([See also this patch on trackdown
+    help](http://bugs.darcs.net/patch27))
+7.  Optimize: understanding and documenting (better) the various
+    optimize subcommands (eg, plain optimize vs. optimize --reorder).
+    Seeing whether inventories could be automatically maintained
+    (solving
+    [http://bugs.darcs.net/issue2044](http://bugs.darcs.net/issue2044)
+    in a preventive way). Seeing whether garbage collection of pristine
+    could be done automatically on a regular basis (a la git).
+8.  ["have no modules in the top level of the name
+    space"](http://bugs.darcs.net/msg11495) (see also ["actual
+    users"](http://wiki.darcs.net/Library))
+9.  [reviewing optimize
+    --http](http://irclog.perlgeek.de/darcs/2011-03-24#i_3419500), ie,
+    calculate time and space tradeoffs on various repositories
+10. XML encoding issues
+
+# Context
+
+-   darcs 2.5 released in 2010-10-30 (see
+    [Releases/2.5](../Releases/2.5))
+-   darcs 2.5.1 released in 2011-02-11
+-   GSoC student application period opens 2011-03-28 (eek!)
+
+After the sprint:
+
+-   GSoC student application period closes 2011-04-08
+-   darcs 2.8 planned for May or June 2011 (see [Roadmap](../Roadmap))
+
+# TODO
+
+-   thisrepo must die!
+-   optimize --http benchmarking/marketing
+-   patch review
+-   plus stuff on the whiteboard...
+-   search BTS for darcs 2.8 candidates bugs
+
+# Discussions held
+
+## Friday morning
+
+-   who's who
+-   [Sprints/2010-10]() review
+-   Darcs 2.8 prioritising
+
+## Friday afternoon
+
+-   apply -i behaviour WRT tty
+-   how to add a feature - wiki
+-   Where do we go from here? - Ganesh
+-   Juliusz darcs-git (dinner)
+
+## Saturday morning
+
+-   Ganesh: rebase technical design issues
+-   Development workflow
+
+## Saturday afternoon
+
+-   Eric: seamless Git integration dream
+-   GSoC Git interoperability
+-   Development workflow - needs-screening
+

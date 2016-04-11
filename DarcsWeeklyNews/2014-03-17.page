@@ -1,0 +1,116 @@
+# News and discussions
+
+1.  Darcs is participating once again to the Google Summer of Code, through
+    the umbrella organization Haskell.org.
+    Deadline for student application is Friday 21st:
+
+    -   <http://darcs.net/GSoC>
+    -   <https://www.google-melange.com/gsoc/document/show/gsoc_program/google/gsoc2014/help_page>
+
+2.  It is now possible to donate stock to darcs through the Software Freedom
+    Conservancy organization. Donations by Paypal, Flattr, checks and wire
+    transfer are still possible:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2013-December/026977.html>
+    -   <http://darcs.net/Donations>
+
+3.  Dan Licata wrote a presentation about Darcs as a higher inductive type:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2014-January/026985.html>
+
+4.  Darcs now directly provides import and export commands with Git. This code
+    was adapted from Petr Rockai's darcs-fastconvert, with some changes by
+    Owen Stephen from his Summer of Code project "darcs-bridge":
+
+    -   <http://hub.darcs.net/darcs/darcs-screened/patch/20140125154537-5ef8f>
+
+
+# Issues resolved (6)
+
+issue642 Jose Luis Neder
+  ~ -   Automatic detection of file renames
+    -   <http://bugs.darcs.net/issue642>
+
+issue2209 Jose Luis Neder
+  ~ -   Automatically detect replace
+    -   <http://bugs.darcs.net/issue2209>
+
+issue2319 Guillaume Hoffmann
+  ~ -   make changes non-interactive if fed to a pipe
+    -   <http://bugs.darcs.net/issue2319>
+
+issue2332 Guillaume Hoffmann
+  ~ -   ignore case of characters in prompt
+    -   <http://bugs.darcs.net/issue2332>
+
+issue2335 Guillaume Hoffmann
+  ~ -   one liner when adding tracked files if not verbose
+    -   <http://bugs.darcs.net/issue2335>
+
+issue2348  Ryan
+  ~ -   switch to cabal's test framework
+    -   <http://bugs.darcs.net/issue2348>
+
+
+# Patches applied (34)
+
+2014-03-02 Guillaume Hoffmann
+  ~ -   pandoc-ize README and remove mention of old flags and warnings
+    -   resolve issue2332: ignore case of characters in prompt
+
+2014-01-26 Dan Frumin
+  ~ -   Making sure darcs builds on OSX Mavericks
+
+2014-02-08 Ganesh Sittampalam
+  ~ -   hashed-storage: GHC 7.8 build fix
+    -   support GHC 7.8 and various assorted other version bumps
+    -   drop support for GHC 7.0/7.2
+    -   get rid of now redundant conditionalisation
+    -   remove accidentally added file
+    -   fix hashed-storage build on Windows
+    -   we need utf8-string on Windows too now for the fast-export/import code
+    -   bump cryptohash dependency
+
+2014-01-25 Guillaume Hoffmann
+  ~ -   Implement convert --export and --import for git conversion
+
+2014-01-10 Jose Luis Neder
+  ~ -   resolve issue2209: Automatically detect replace
+
+2014-01-08 Guillaume Hoffmann
+  ~ -   remove useless check of xml-output in get and convert
+    -   add hashed-storage 0.5.11
+
+2013-09-15 Jose Luis Neder
+  ~ -   resolve issue642: Automatic detection of file renames
+    -   Show fileid info with show index
+
+2013-11-28 Ryan
+  ~ -   resolve issue2348: switch to cabal's test framework
+
+2013-11-27 Guillaume Hoffmann
+  ~ -   fix bug when global prefs dir does not exist and try to save author name
+
+2013-11-26 Ganesh Sittampalam
+  ~ -   improve help text
+    -   need to use ByteString to read tests on unix
+    -   fix warnings
+    -   add a TODO comment
+    -   add pragmas to shell tests to allow for the test to specify configurations
+    -   remove explicit choice of Myers diff from test
+    -   add command-line options to control global test options
+
+2013-10-11 Guillaume Hoffmann
+  ~ -   resolve issue2335: one liner when adding tracked files if not verbose
+    -   announce added files with existing infrastructure
+    -   rename changes command to log, keep changes as alias
+    -   output darcs changes to a pager if more than 20 lines big
+    -   Make changes non-interactive by default again
+
+2013-06-14 Guillaume Hoffmann
+  ~ -   make changes non-interactive when given flags --count or --xml-output 
+
+2013-05-09 Guillaume Hoffmann
+  ~ -   fix issue2270 test since piped darcs changes is now never interactive
+    -   resolve issue2319: make changes non-interactive if fed to a pipe
+

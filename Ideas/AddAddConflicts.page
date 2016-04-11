@@ -1,0 +1,122 @@
+**Note: This page documents a proposal for patch semantics which has not
+been implemented or generally agreed on.**
+
+# Why are add-add conflicts bad?
+
+For one thing, consider the following scenario:
+
+You have two different projects stored in separate darcs repositories,
+foo and bar. You decide that you want to merge these projects into a
+single repository. So, in the separate repositories, you move all the
+files from the root directory into subdirectories 'foo' and 'bar'
+respectively, and then you merge the two repositories by pulling one
+into the other (or both into a common one or whatever, darcs guarantees
+it's all the same).
+
+Of course, both projects had a Makefile (for example). No problem, you
+say: they're now in separate subdirectories so it'll all be fine. But
+it's not true! The (abbreviated) history of each repo will be like this:
+
+    add Makefile
+    mv Makefile foo/Makefile
+
+    add Makefile
+    mv Makefile bar/Makefile
+
+and now to merge these two repos, we must first merge add Makefile with
+add Makefile, which is a conflict. In darcs once a patch is in conflict
+it requires manual resolution, and any dependent patches like actually
+adding content to the Makefiles, and the mv patches, will also be in
+conflict. The only resolution is to manually recreate the Makefiles in
+the right place and re-add their contents, which will commute badly and
+is generally a huge mess.
+
+But ahah, I hear you say. Darcs 2 patch semantics merges two identical
+patches without a conflict. So the add-add conflict is gone. Yes, that's
+true. But the patches that add content to the Makefile will still
+conflict with each other, as will the ones that move it into the foo or
+bar subdirectories. We're still in a mess.
+
+The fundamental problem here is that we need to treat the two different
+Makefiles as independent of each other, but darcs doesn't do this, and
+the very general conflict handling algorithm is a hindrance because it
+automatically puts dependent patches into conflict too.
+
+# A proposal
+
+My proposed alternative involves two innovations (by innovation I don't
+mean that I invented the ideas, just that they would be a new addition
+to darcs patch semantics): a new notion of "semi-conflicts", and a
+per-file GUID.
+
+A semi-conflict is a conflict from the point of view of the user, but
+one that the core patch semantics is blissfully unaware of. This makes
+it possible to recover from them without the blunt instrument of both
+patches and all their dependencies being reverted in the working
+directory. In particular if patches A and B introduce a semi-conflict,
+it is possible for patch A2 that was recorded in a repository with A but
+not B to remove the semi-conflict; this is not possible for "full"
+conflicts.
+
+The basic idea behind semi-conflicts is one that has come up repeatedly
+in the past: instead of simply undoing conflicting changes in pristine,
+we should represent the conflict in some way. The difficulty with doing
+that in general is that we simply don't know how to do this in general
+while at the same time preserving darcs' indifference to ordering; if A,
+B and C all conflict then we need to get the same conflicted
+representation no matter whether we merge (A+B)+C or B+(A+C) or
+whatever. The biggest difficulty here is with hunk patches.
+
+But just because we can't do it in general, doesn't mean we can't do it
+in specific cases, and the "filesystem" is a case in point. Let's
+suppose that we associate a GUID with each freshly added file. In other
+words, when we record an add patch, we create a GUID and enter that in
+the patch. That GUID will now follow the file around for its lifetime.
+
+How does this GUID help us? It gives us a clear way to disambiguate the
+two different Makefiles in the example above. Conceptually, the
+repository state (which is represented by the pristine cache) tracks the
+(filename, GUID) tuple, which is guaranteed never to cause a conflict.
+Of course, we have to decide what to do with the working copy. This is
+straightforward: the working copy will contain filename if there is only
+one GUID with that filename, and some encoded name like
+filename.GUID.darcs-conflict if there are multiple GUIDs with the same
+filename. If there are multiple GUIDs for some filename, then the
+repository is in semi-conflict.
+
+So, how does this work for the Makefile example above? The patches now
+become
+
+    add [guid1] Makefile
+    mv [guid1] Makefile foo/Makefile
+
+    add [guid2] Makefile
+    mv [guid2] Makefile bar/Makefile
+
+We merge the two adds to get a semi-conflict because there are two
+Makefiles in the root directory. But now the two mv commands are not in
+automatic conflict, and we can merge them in too. Once the first one is
+merged in, the two Makefiles are back in different directories and the
+semi-conflict disappears.
+
+A subtle point about semi-conflicts: (full) conflictedness is really a
+property of pairs of patches, and we derive the concept of a repository
+being in conflict from that - a repository is in conflict if it contains
+any patches in conflicts which have not been resolved. For
+semi-conflicts, it's really the other way around; a repository is what
+is in semi-conflict, and we derive the concept of patches being in
+conflict by whether their merging has introduced a semi-conflict.
+
+# Random notes
+
+Some past discussions on add-add conflicts:
+
+[http://lists.osuosl.org/pipermail/darcs-users/2004-September/003221.html](http://lists.osuosl.org/pipermail/darcs-users/2004-September/003221.html)
+
+[http://lists.osuosl.org/pipermail/darcs-users/2005-July/007939.html](http://lists.osuosl.org/pipermail/darcs-users/2005-July/007939.html)
+
+Commute remove with content change:
+
+[http://lists.osuosl.org/pipermail/darcs-users/2007-November/011403.html](http://lists.osuosl.org/pipermail/darcs-users/2007-November/011403.html)
+
+[http://lists.osuosl.org/pipermail/darcs-users/2007-November/011418.html](http://lists.osuosl.org/pipermail/darcs-users/2007-November/011418.html)

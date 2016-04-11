@@ -1,0 +1,297 @@
+# `bug in get_extra commuting patch`
+
+This bug is triggered if for whatever reason Darcs finds itself in a
+position where a patch which is shared by both repos appears to depend
+on a patch which is local to one of them only. Such a dependency would
+be absurd. We can divide this error into three known cases:
+
+> 1.  Darcs thinks a patch is shared, but it's actually local to one of
+>     the repositories
+> 2.  The contrary: Darcs mistakenly believes a shared patch is local
+> 3.  There is a real dependency and it indicates a deep Darcs bug (see
+>     issue1014)
+
+There have been several real life cases of this error message. So far we
+have tracked them down to
+
+> -   [issue1644](http://bugs.darcs.net/issue1644) Non-ASCII characters
+>     in patch bundles. In some cases, mailers may decide to send
+>     utf-8-encoded patch bundles as ISO8859-1. Upon decoding, Ttis
+>     causes Darcs to be confused about the identity of patches (it
+>     mistakenly believes that one of the patches mentioned in the
+>     context is missing from your repository). A good test for this is
+>     to m5 sum the bundle on both ends. See the issue for a workaround
+> -   issue27 - different patches with exactly the same name/log/etc get
+>     recorded in quick succession (giving them the same timestamp),
+>     thereby creating a case of mistaken identity. Fixed with patch
+>     salt.
+> -   issue753 - (I'm not entirely clear on this one yet, but it seems
+>     to involve corrupted patch bundles either changing the name or the
+>     contents of a patch)
+> -   issue1026 - single CVS repository has had its subdirectories
+>     converted into separate darcs repositories. The problem is that
+>     CVS does not perform atomic commits, but allows the same commit
+>     log to be applied to different files. This creates another case of
+>     mistaken identity in patches when attempting to pull between
+>     unrelated repositories. This has been resolved, along with
+>     issue27, although repositories that were converted prior to Darcs
+>     2.1 may still trigger the bug.
+> -   issue1014 - where due to Darcs 2 semantics wrt duplicate patches a
+>     common patch really can depend on two different local patches
+
+So what do you do when you see an error message like this? Contact the
+darcs team (<darcs-users@darcs.net>) so
+that we can try to develop a workaround together. Try also to determine
+if you have been bitten by one of the known cases above or if you may
+have found yet another way to trigger this error :-(
+
+# `darcs convert` fails!
+
+The problem: Suppose you have a plain darcs 1 repository, and want to
+convert it to darcs 2 format, and get an error message of the following
+type:
+
+    darcs failed:  Error applying hunk to file foo
+
+What are possible problems, and their solutions?
+
+One possible cause is that you have some "corrupt hunks" within some of
+your patches. Old fashioned repositories used by Darcs 1 were prone to
+this sort of corruption. Darcs-2 uses hashed repositories
+that avoid this problem. See [DarcsTwo]() for more details.
+
+An example: Suppose in file foo contains only the line 'abc'
+
+A patch that deletes the first line 'abc' and replaces it with 'def'
+(created e.g. with diff -u) might contain something like the following
+
+    @@ -1 +1 @@
+    -abc
+    +def
+
+The problem now arises if you have a patch that tries to delete the
+first line 'ghi' and replace it with 'def'. This will not work, because
+the first line actually reads 'abc', and not 'ghi'. Such a patch might
+might look like this:
+
+    @@ -1 +1 @@
+    -ghi
+    +def
+
+The original, plain darcs 1 repositories can (with some ingenuity...) be
+brought into a state where you have such corrupt hunks that fail to
+apply. This can become obvious when you try to `darcs convert` because
+the new formats try to prevent this kind of corruption.
+
+How can you fix it?
+
+1.  Create a new repository with `darcs init --hashed`
+2.  Pull your patches from the dubious repository, one by one, until you
+    identify a patch that fails. Write down the timestamp associated
+    with the patch.
+3.  Figure out why the patch fails: create a patch file manually:
+    `darcs diff -p 'thefailingpatchname' filename > fail.patch` where
+    'thefailingpatchname' is a pattern that identifies the patch,
+    filename is the name of the file for which the hunk fails to apply
+4.  Try to apply the patch manually:
+
+    `patch filename fail.patch`
+
+    and see what happens. It also helps to look at the patch, and the
+    file it is trying to patch, you can for instance see if the patch
+    wants to change a line in the file which does not exist.
+5.  Try to find a way to make the patch apply. Use `darcs revert` to
+    revert the file to the original state, and then edit the patch by
+    hand. For example, if the problem is that the patch should be
+    replacing the line 'abc' with 'def' instead of trying to replace
+    'ghi' with 'def', replace 'ghi' with 'abc'.
+6.  Once you have a version of the patch that applies,
+
+    a.  make a temporary copy of the dubious repository (e.g. with
+        `cp -R`),
+    b.  and change the corresponding patch in the temporary repository:
+        The patches are in `_darcs/patches`, and filenames start with a
+        number that indicates the timestamp (see step 2).
+        `20091001104115`.... is a patch that was made on the 1st of
+        October 2009, at 10:41 and 15 seconds (GMT). To edit the patches
+        you need to gunzip them, make the changes, and then gzip them.
+
+7.  Repeat steps 1 and 2, pulling from the temporary copy of the dubious
+    repository, and see whether you can now pull the fixed patch.
+
+Repeat for any remaining failing patches.
+
+8.  Once you have a repository with no more remaining failing patches,
+    you can run `darcs convert`.
+
+# Strange conflicts
+
+## Why do my "darcs replace" patches conflict?
+
+If you have two parallel darcs replace patches that use different token
+char expressions, they are treated as a conflict because *TODO*
+
+# Performance issues
+
+See [Performance](FrequentlyAskedQuestions#performance) for tips on
+improving darcs performance.
+
+# Darcs amend-record
+
+If amend-record is very slow or appears to hang, the problem may be complex contents in `_darcs/patches/unrevert`.
+This file acts as an optional net and can be renamed or moved to see if that helps. 
+
+# Darcs unrecord 
+
+
+If unrecord is very slow or appears to hang, the problem may be complex contents in `_darcs/patches/unrevert`.
+This file acts as an optional net and can be renamed or moved to see if that helps. 
+
+# Darcs send
+
+## Patches falsely reported as missing
+
+Sometimes darcs will say to you:
+
+    darcs: Cannot apply this patch bundle, since we're missing:
+
+And then print the info for a patch that you do have.
+
+In this case, there may be an encoding issue. If the context the patch
+bundle is encoded in a different way than the context in the repository,
+and the patch info contains non-ASCII characters, the patches are not
+recognized as being the same. In this case the sender of the patch must
+probably make sure that the patch bundle is sent with the right
+encoding.
+
+## Very large patch bundles
+
+Check to see if the remote repository has tagged recently.
+
+If they have not tagged in a while, it might be a good time for them to
+do so. In general, a good time to tag would be when you make a new
+release.
+
+If they have tagged in a while, have a look at your inventory file
+(`_darcs/hashed_inventory`). Do you see a long inventory with tag(s) in
+it? Try `darcs optimize --reorder`.
+
+What may have happened is that you pulled the tag on top of some local
+patches. The `optimize --reorder` rearranges your repository to give you
+"clean" tags (tags that only follow patches they depend on), which
+results in much smaller bundles.
+
+If none of this makes any sense, give us a shout on
+<darcs-users@darcs.net> or on the [IRC channel](IRC).
+
+## Problems applying patches from Mail.app
+
+This is due to an incorrect MIME parser
+([issue26](http://bugs.darcs.net/issue26)) in Darcs. The current
+workaround is to either open your mailbox in an alternative client like
+mutt, or just save the raw message and view it with `mutt -f`
+
+# Darcs push (and put)
+
+Symptoms:
+
+    $ darcs push --all foo@bar:baz
+
+    darcs failed:  Unable to "darcs apply" here.
+
+    You need to be in a repository directory to run this command.
+    Apply failed!
+
+Diagnosis:
+
+    $ ssh foo@bar               # an interactive session
+    foo@bar$ echo $PATH
+    /home/foo/.cabal/bin:/usr/local/bin:/usr/bin:/bin
+    foo@bar$ which darcs
+    /home/foo/.cabal/bin/darcs
+    foo@bar$ darcs --version
+    2.3.0 (release)
+    foo@bar$ exit
+
+    # non-interactive sessions
+    $ ssh foo@bar 'echo $PATH'
+    /usr/local/bin:/usr/bin:/bin
+    $ ssh foo@bar which darcs
+    /usr/bin/darcs
+    $ ssh foo@bar darcs --version
+    1.0.9 (release)
+
+Both Darcs 1.x and Darcs 2.x are installed on the remote host. The
+latter is installed in \~/.cabal/bin, which is added to $PATH by foo's
+.bashrc. Because .bashrc isn't sourced for non-interactive sessions, the
+local "darcs push" runs /usr/bin/darcs, which doesn't understand darcs-2
+repositories.
+
+Resolution:
+
+-   set PATH in \~/.ssh/environment (OpenSSH only);
+-   switch to a pull-based workflow; or
+-   install Darcs 2 in the default path (e.g. in /usr/local/bin).
+
+# Darcs push (ssh stdout problems)
+
+Symptoms:
+
+    $darcs push user@remote:/path/to/repo
+
+     "darcs failed:  Not a repository: user@remote:/path/to/repo ((scp)
+     failed to fetch: user@remote:/path/to/repo/_darcs/inventory."
+
+Diagnosis:
+
+Customized rc files (.bashrc, .zshrc) on the remote that print to the
+stdout when sourced interfere with the communication between the remote
+repository and darcs. If you use darcs push with the verbose flag:
+
+    $darcs push -v user@remote:/path/to/repo
+
+you should see the remote computer's stdout interfere with darcs.
+
+Resolution:
+
+Removing informative statements, such as 'echo date', that dump to the
+stdout on login should fix the issue. You could probably also script
+around the problem (ignore 'x' statements if connection is ssh).
+
+# HTTP problems
+
+## The official darcs statically linked binary doesn't honor the `http_proxy` environment variable
+
+Trying to use `darcs clone` over HTTP proxy results with the following
+error:
+
+    No proxy support for HTTP package yet (try libcurl)!
+
+Please use the dynamically linked binary instead.
+
+If you see something like:
+
+    darcs: error while loading shared libraries: libffi.so.5: cannot open shared object file: No such file or directory
+
+a quick fix like creating a proper symlink in `/usr/lib` might help.
+
+The dynamically linked binary can fetch data over HTTP proxies because
+it makes use of `libcurl`.
+
+## The official darcs dynamically linked binary adds garbage to output and breaks darcsweb
+
+When the official darcs dynamically linked binary is called, it may
+display additional output to stderr:
+
+    darcs: /usr/lib/libcurl.so.4: no version information available (required by darcs)
+
+This is a minor itch, but when using darcsweb (which makes darcs print
+XML output and parses it), this additional output breaks the XML parser.
+
+The fix is to use a shell wrapper that silences darcs and eliminates the
+stderr output. Assuming that the dynamically linked darcs binary is
+called `darcs-dynamic`, you can use a wrapper shell script like this:
+
+    #!/bin/sh
+
+    darcs-dynamic "$@" 2>/dev/null

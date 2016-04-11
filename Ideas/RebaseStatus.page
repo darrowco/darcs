@@ -1,0 +1,144 @@
+This page documents the current status of Rebase. [The design
+page](/Ideas/RebaseDesign) has a general design discussion.
+
+# What is rebase?
+
+Conceptually, rebase is a sophisticated version of the "diff and patch"
+approach that people are sometimes driven to when they need to make
+changes to patches which are depended on by other patches in a darcs repository.
+With rebase,
+patches can be held in a "suspended" state for a period of time.
+Crucially, rebase is built on the darcs patch handling code and it can
+use this to avoid any of the fuzziness associated with applying diffs to
+a changed tree - it keeps track of how the tree has changed. It also
+means that patches that can't be expressed naturally as diffs (e.g. file
+move, token replace) do not lose information.
+
+# Where do I get it?
+
+rebase is available in darcs 2.10
+
+# What's the current status
+
+It's been released, but it's still a bit raw, needs better documentation
+and there are various outstanding features to write.
+
+# What can I do with it?
+
+Rebase is primarily intended for two scenarios, though it may well find
+other uses over time.
+
+1.  "Deep" amend-record, where the patch to be amended other patches depending on it.
+
+2.  Doing a merge without conflicts, by editing the conflicts out of the
+    patches in one branch of the merge. This is important for long
+    running branches where conflicts can get out of hand over time.
+
+As with amend-record, changing a patch with rebase means that its
+identity changes. This also applies to all dependencies of the patch.
+
+# How do I use it?
+
+To suspend a patch from the repository, use
+
+> darcs rebase suspend
+
+If the patch has other patches depending on it, these must be suspended too. The normal
+rules of interactive selection and dependencies apply here.
+
+To restore a suspended patch, use
+
+> darcs rebase unsuspend
+
+When a patch is unsuspended, it is given a new identity. This means that
+once a patch has been suspended, you are committed to changing its
+identity.
+
+To pull patches from a remote repository, suspending any local patches
+that will then be in conflict, use
+
+> darcs rebase pull
+
+There is an obvious asymmetry to this command in that we cannot choose
+to suspend the remote patches instead. This is mainly because suspending
+the local patches is easiest to implement.
+
+# Recipes
+
+## Deep amend-record
+
+darcs rebase suspend --patch 'patchname'
+  ~ [answer 'y' to all patches] or
+
+darcs rebase suspend
+  ~ [answer 'w' to all patches until you get to the one you want, then
+    'y', then 'd']
+
+darcs rebase unsuspend
+  ~ [select the first patch, which will be the one you want to
+    amend-record]
+
+darcs amend-record
+  ~ [edit the patch as required]
+
+For each remaining suspended patch,
+
+darcs rebase unsuspend
+
+There may be conflicts caused by the amendment. In this case, resolve
+the conflicts and use darcs amend-record to update the newly unsuspended
+patch.
+
+## Merge from upstream
+
+darcs rebase pull upstream
+  ~ [select the patches to pull, then answer 'y' to each patch that is
+    offered for suspending]
+
+as with deep amend-record, iterate 'darcs rebase unsuspend' along with
+conflict resolution where necessary until done.
+
+## Re-rebase some work
+
+*TODO: either clarify or kill*
+
+Scenario: X works on a branch, you rebase it, X continues working on that branch
+
+- get X-branch-2
+- suspend all X-branch-2 patches
+- pull X-branch-1 (the nice rebased patches)
+- rebase obliterate the X-branch-2 patches
+
+## Regrouping patches aiming for clean results
+
+*TODO: either clarify or kill*
+
+Scenario: patch has lots of pieces that you'd like to redistribute over previous patches, but you're not entirely clear on which pieces go where, so you need a bit of trial and error (compiling) to figure out where.
+
+Basic idea: maintain a WIP patch that you suspend/unsuspend/unrecord/re-record as you go.  If you have a bit of patch that you know you want to add to an existing prior patch, suspend stuff on top, amend the patch you want.
+
+# Notes
+
+Currently any explicit dependencies will be dropped (and you will be
+warned) when unsuspending a patch.
+
+The suspended patches are stored in a special patch in the repository.
+As the patch description warns you, do not operate on this patch
+directly or bad things will happen.
+
+# TODO
+
+Handle explicit dependencies properly.
+
+add 'darcs amend-record --suspend' or similar to simplify the deep
+amend-record workflow
+
+allow force-reordering of dependent suspended patches
+
+Lots more!
+
+# Contact
+
+Please send feedback to
+[darcs-users@darcs.net](mailto:darcs-users@darcs.net) (you need to be
+subscribed) or to [ganesh@earth.li](mailto:ganesh@earth.li)

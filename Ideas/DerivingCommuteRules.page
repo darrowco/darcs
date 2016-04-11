@@ -1,0 +1,106 @@
+**Note: This page documents a possible idea for developing new patch types and tweaking existing ones. It doesn't currently form the basis for any implementation.**
+
+As we add new patch types, the number of commute rules we will have to implement could grow quadratically, although in some cases we might just say that patches never commute - e.g. syntax tree edits and hunk changes. We need a way of figuring out these rules. This proposal has one idea for doing that.
+
+Let's start with an example of hunk patches within a single file. These are currently represented as a line number plus a sequence of existing lines to remove and a sequence of lines to put in their place. For simplicity lets ignore the surrounding file system and just think about the file itself.
+
+We can model the hunk patch as a Haskell type (playing fast and loose with the precise syntax):
+
+    Hunk (n :: Int) (old :: [String]) (new :: [String])
+
+In fact, we don't really care whether the contents are Strings or not. Let's abstract that to the type variable `line`:
+
+    Hunk (n :: Int) (old :: [line]) (new :: [line])
+
+The underlying assumption here is that a file is modelled as a list of lines; we can index into the file at position `n`, chop out `old` and insert `new`.
+
+Let's call the initial contents of the file `oldcontents`:
+
+    oldcontents :: [line]
+
+If the hunk patch applies to the file, then we actually know that oldcontents must contain `old` at position `n`:
+
+    oldcontents = prefix ++ old ++ suffix
+    length prefix = n
+
+From this we can get the new contents:
+
+    newcontents = prefix ++ new ++ suffix
+
+How does this help us? Let's now consider two patches in sequence:
+
+    patch1 = Hunk n1 old1 new1
+    patch2 = Hunk n2 old2 new2
+
+The overall goal is to figure out how we can commute the sequence `patch1; patch2` into an alternate sequence `patch2'; patch1'`
+
+The file contents then goes through three states - `initial`, `intermediate` (after `patch1`) and `final` (after `patch2`):
+
+   initial = prefix1 ++ old1 ++ suffix1
+   length prefix1 = n1
+   intermediate = prefix1 ++ new1 ++ suffix1
+   intermediate = prefix2 ++ old2 ++ suffix2
+   length prefix2 = n2
+   final = prefix2 ++ new2 ++ suffix2
+
+We have two equations for `intermediate`. Consider how the two possible breakdowns might line up, and in particular where `old2` is found within `prefix1`, `new1` and `suffix1`. I'll break it down into three cases:
+
+1. `old2` is entirely contained within `prefix1`, i.e. `length prefix2 + length old2 <= length prefix1`
+2. `old2` is entirely contained within `suffix1`, i.e. `length prefix2 >= length prefix1 + length new1`
+3. otherwise `old2` overlaps with `new1`
+
+Appealing to intuition, we declare that case 3 implies that `patch1` and `patch2` don't commute.
+
+I'll consider only case 1 for now.
+
+Given condition 2, we can say that
+
+    prefix1 = prefix2 ++ old2 ++ gap
+
+and so our set of equations becomes
+
+    initial = prefix2 ++ old2 ++ gap ++ old1 ++ suffix1
+    length prefix2 + length old2 + length gap = n1
+    intermediate = prefix2 ++ old2 ++ gap ++ new1 ++ suffix1
+    intermediate = prefix2 ++ old2 ++ suffix2
+    length prefix2 = n2
+    final = prefix2 ++ new2 ++ suffix2
+
+from this we can derive
+
+    suffix2 = gap ++ new1 ++ suffix1
+
+
+and so our set of equations becomes
+
+    initial = prefix2 ++ old2 ++ gap ++ old1 ++ suffix1
+    length prefix2 + length old2 + length gap = n1
+    intermediate = prefix2 ++ old2 ++ gap ++ new1 ++ suffix1
+    length prefix2 = n2
+    final = prefix2 ++ new2 ++ gap ++ new1 ++ suffix1
+
+Again appealing to intuition, after a commute, the intermediate state between `patch2'` and `patch1'` should be
+
+    intermediate' = prefix2 ++ new2 ++ gap ++ old1 ++ suffix1
+
+from this, we can derive
+
+    patch2' = Hunk (length prefix2) old2 new2
+    patch1' = Hunk (length prefix2 + length new2 + length gap) old1 new1
+
+Using what we know about the lengths, we get
+
+    patch2' = Hunk n2 old2 new2
+    patch1' = Hunk (n1 + length new2 - length old2) old1 new1
+
+and this is subject to the condition that
+
+    n2 + length old2 <= n1
+
+Using a similar argument for case 2 gives us that
+
+    patch2' = Hunk (n2 - length new1 + length old1) old2 new2
+    patch1' = Hunk n1 old1 new1
+    n2 >= n1 + length new1
+
+(TODO: check this, I didn't actually go through the derivation :-)

@@ -1,0 +1,110 @@
+# News and discussions
+
+1. Petr Rockai provided us with an update about his Summer of Code
+project:
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-May/019886.html](http://lists.osuosl.org/pipermail/darcs-users/2009-May/019886.html)
+
+2. Eric Kow launched a new test version of darcsit, the replacement of
+  ~ darcs.net's wiki:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-May/019915.html](http://lists.osuosl.org/pipermail/darcs-users/2009-May/019915.html)
+  ~ -   [http://test.darcs.net](http://test.darcs.net)
+
+3. Discussions have started around the release schedule of Darcs 2.3,
+which
+  ~ will be released this summer:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-May/019920.html](http://lists.osuosl.org/pipermail/darcs-users/2009-May/019920.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-May/019937.html](http://lists.osuosl.org/pipermail/darcs-users/2009-May/019937.html)
+
+# Issues resolved in the last week (1)
+
+issue1229 Petr Rockai
+  ~ -   strictify checkPristineAgainstSlurpy.
+    -   [http://bugs.darcs.net/issue1229](http://bugs.darcs.net/issue1229)
+
+# Patches applied in the last week (43)
+
+2009-05-27 Eric Kow
+  ~ -   Add type witnesses to Darcs.Commands.Whatsnew.announce\_files.
+
+2009-05-27 Reinier Lamers
+  ~ -   Add comment explaining strictification of
+        checkPristineAgainstSlurpy
+
+2009-05-27 Petr Rockai
+  ~ -   Resolve issue1229: strictify checkPristineAgainstSlurpy.
+    -   Extend the weird filenames part of the whatsnew test to cover
+        indexed filenames.
+    -   Put back Setup into a Wall-clean state, robustify error
+        conditions a little.
+    -   Resolve conflict with import list cleanup in Setup.lhs.
+    -   Run tests in groups even when only a part of the testsuite is
+        being executed.
+    -   Factor out a common bit in WhatsNew.lhs.
+
+2009-05-27 Trent W. Buck
+  ~ -   Teach cabal about the manpage.
+
+2009-05-26 Eric Kow
+  ~ -   Remove perl dependency for pull\_compl.sh test.
+    -   Fix bodge for missing Data.Function in GHC 6.6.
+
+2009-05-23 Trent W. Buck
+  ~ -   Temporary bodge for missing Data.Function in GHC 6.6.
+
+2009-05-25 Reinier Lamers
+  ~ -   Make unit tests build again with autotools
+
+2009-05-26 Trent W. Buck
+  ~ -   Mention +RTS voodoo in unit --help.
+    -   Churn: rewrite some of initialize\_help for readability.
+    -   Remove subsections subsumed by darcsCommand.
+    -   Teach preproc's darcsCommand to use subsection.
+    -   Rewrite "Repository Formats" chapter.
+    -   Refactor "darcs optimize" help.
+
+2009-05-25 Dan Pascu
+  ~ -   Replaced perl construct with printf
+
+2009-05-25 Trent W. Buck
+  ~ -   Require version strings to be strings.
+    -   Refactor Setup.commonBuildHook.
+    -   Extract Executable darcs by name.
+    -   Appease ghc -Wall in Setup.
+    -   Remove trivial bashisms.
+    -   Rewrite darcs-shell commentary.
+    -   Rollback unnecessary bashism.
+
+2009-05-20 CSÉCSY László
+  ~ -   Translate git-shell2 to darcs-shell.
+    -   Import git-shell2.
+
+2009-05-20 Trent W. Buck
+  ~ -   Migrate DARCS\_SSH and DARCS\_SCP documentation to
+        environmentHelp.
+    -   Migrate DARCS\_EDITOR documentation to environmentHelp.
+
+2009-05-18 Reinier Lamers
+  ~ -   Add forgotten closing parenthesis in unit output
+    -   Make Test.Runner build without IncoherentInstances
+    -   Give enough information to reproduce failing Quickcheck tests
+    -   Add command line options for unit to set no. of threads
+    -   Make Darcs.Patch.Unit use Test.Runner
+    -   Make Test.Runner capable of tracking failure reasons
+    -   Refactor unit.lhs to use Test.Runner
+    -   Add Test.Runner module to run the unit tests
+
+2009-05-15 Trent W. Buck
+  ~ -   Relicense licensed tests (GPL2+ to MIT).
+    -   Refactor authors\_cmd (darcs show authors).
+
+2009-05-17 Eric Kow
+  ~ -   Accept issue1461: case folding can corrupt working directory.
+
+2009-04-18 Petr Rockai
+  ~ -   Export few more bits used by Gorsvet from Repository.Internal.
+
+

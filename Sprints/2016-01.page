@@ -1,0 +1,95 @@
+# Report
+
+<http://blog.darcs.net/2016/01/darcs-hacking-sprint-10-report.html>
+
+# When
+
+January 2016, from Friday 15th to Sunday 17th. 9:30 AM to 7:30 PM.
+
+# Where
+
+[ETS de Ingeniería Informática](https://www.informatica.us.es/index.php/situacion), University of Seville, Spain;
+module E, Departamento de Ciencias de la Computación e Inteligencia Artificial.
+
+# Logistics
+
+  - taxi from airport costs 22€ (25€ by night), bus from airport (linea EA) costs 4€ to Paseo Colón or
+    the terminus Plaza de Armas (6€ if you buy also returning, "ida y vuelta").
+    From there go to the university by bus line 3 (costs ~2€, pay cash on the bus).
+  - university has eduroam, we can also have internet access by cable
+  - sprint room has an electric kettle, a nespresso machine and a fridge
+  - there is a supermarket nearby and bars/restaurants just crossing the street
+  - on Friday the faculty cantina will be open from 1 PM to 3 PM (menu costs 4.5€). (In Sevilla people usually eat lunch at 2PM.)
+  - on Friday we may have more participants (students, teachers)
+
+# Who
+
+-   Guillaume Hoffmann (gh) - (staying in Sevilla for the whole month)
+-   Ganesh Sittampalam (Heffalump) - arriving SVQ Thursday 1910, flight leaves SVQ Sunday 2045, staying [Exe Sevilla Palmera](http://www.exesevillapalmera.com/)
+-   Florent Becker (gal_bolle)
+
+# What
+
+## Irrelevant/wontfix/not for this sprint
+
+  - <http://tinyurl.com/darcs-probablyeasy2> - easy bugs to solve
+
+  - switch from test-framework to tasty
+
+  - Darcs and [stack](www.haskellstack.org): add a stack file to darcs for the next releases
+    - none of us want to do it right now
+
+  - tentative-files-less darcs?
+      - we need them. maybe we write them too much before doing the atomic swap?
+      - nothing obvious to fix, let's not try anything
+
+  - Darcs 2.10.3 and 2.12.0 with [GHC 8](https://ghc.haskell.org/trac/ghc/wiki/Status/GHC-8.0.1)
+    - [GHC8 RC1](https://mail.haskell.org/pipermail/ghc-devs/2016-January/010966.html)
+    - we don't have time for this this weekend and GHC 8's release is no longer imminent anyway
+
+    * migrate darcs repos to hub.darcs.net ? see
+      <http://lists.osuosl.org/pipermail/darcs-devel/2015-March/016712.html>
+        * things that should happen before: issue tracking (up to what's bugs.darcs.net is doing)
+        * patch/bundle submission should happen before
+            * there is old code for that (2 year old) that should be updated w/ email notifications (which we have now in darcsden)
+
+## already addressed
+
+  - [patch XOR](http://bugs.darcs.net/patch1414) as a repo state identifier
+    - (we discussed about SSID)
+    - Ga: we could make tags have a cryptographic hash inside of them?
+    - accepted
+
+  - [GSoC 2016](https://developers.google.com/open-source/gsoc/timeline)
+    * organization application: Feb 8th to 19th
+    * student application: March 14th to 25th
+        * we would do the effort of participating only if someone we already know would participate as a student
+        * we contacted dan
+
+  * replace Patch/RealPatch names by something clearer?
+    * we have to find new names.. they refer to Darcs1 and Darcs2 semantics
+    * patch sent (new names ara RepoPatchV1/RepoPatchV2)
+
+### Guillaume
+
+  * user manual + developer handbook
+    * user manual should be versioned in the darcs repository (more publicity, we don't have that many contributors)
+    * so that when people submit patches, we nag them into updating the manual also
+    * but it should be put online in some semantic url like darcs.net/manual/2.10/
+    * developer handbook: let's write in on the wiki
+
+### Ganesh
+
+  - refactorings for 2.12:
+    - Ganesh' stash refactorings?
+        -  maybe not stash stash code but the underlying refactoring can go first
+
+### Florent
+
+  - interactive selection refactor/generalization for faster rollback with matching ?
+    * florent: has an old branch for interactive diff
+
+### All
+
+  - [Pijul](https://pijul.org/)
+

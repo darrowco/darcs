@@ -1,0 +1,110 @@
+# News and discussions
+
+1.  An alpha release of darcs 2.5 might happen soon:
+
+    -   [http://irclog.perlgeek.de/darcs/2010-06-06\#i\_2408520](http://irclog.perlgeek.de/darcs/2010-06-06#i_2408520)
+
+2.  Summer of Code: Alexey Levan sent a first version of patches for
+    darcs optimize --http, and Adolfo Builes sent a patch fixing a bug
+    concerning cache pool choice by darcs:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-June/024159.html](http://lists.osuosl.org/pipermail/darcs-users/2010-June/024159.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-June/024132.html](http://lists.osuosl.org/pipermail/darcs-users/2010-June/024132.html)
+
+# Issues resolved in the last week (10)
+
+issue1337 Petr Rockai
+  ~ -   mark the test as passing. Likely addressed by noslurps.
+    -   [http://bugs.darcs.net/issue1337](http://bugs.darcs.net/issue1337)
+
+issue1503 Adolfo Builes
+  ~ -   prefer local caches to remote ones
+    -   [http://bugs.darcs.net/issue1503](http://bugs.darcs.net/issue1503)
+
+issue1610 Petr Rockai
+  ~ -   mark the test as passing. Likely fixed by NewSet.
+    -   [http://bugs.darcs.net/issue1610](http://bugs.darcs.net/issue1610)
+
+issue1817 Petr Rockai
+  ~ -   --external-merge broken, by bumping h-s dependency to 0.5.1.
+    -   [http://bugs.darcs.net/issue1817](http://bugs.darcs.net/issue1817)
+
+issue1839 Florent Becker
+  ~ -   k broken in interactive selection
+    -   [http://bugs.darcs.net/issue1839](http://bugs.darcs.net/issue1839)
+
+issue1843 Florent Becker
+  ~ -   interactive 'v' prints double entries
+    -   [http://bugs.darcs.net/issue1843](http://bugs.darcs.net/issue1843)
+
+issue1848 Florent Becker
+  ~ -   Patch.Choices.makeEverythingSooner is incorrect
+    -   [http://bugs.darcs.net/issue1848](http://bugs.darcs.net/issue1848)
+
+issue1860 Petr Rockai
+  ~ -   (Un)applying move patches may lead to incomplete pristine.
+    -   [http://bugs.darcs.net/issue1860](http://bugs.darcs.net/issue1860)
+
+issue1861 Eric Kow
+  ~ -   Fix typo in --no-boring help.
+    -   [http://bugs.darcs.net/issue1861](http://bugs.darcs.net/issue1861)
+
+issue1864 Florent Becker
+  ~ -   w should only skip one patch
+    -   [http://bugs.darcs.net/issue1864](http://bugs.darcs.net/issue1864)
+
+# Patches applied in the last week (18)
+
+2010-06-03 Petr Rockai
+  ~ -   Resolve issue1610: mark the test as passing. Likely fixed by
+        NewSet.
+    -   Resolve issue1337: mark the test as passing. Likely addressed by
+        noslurps.
+
+2010-05-28 Florent Becker
+  ~ -   clean fetch's options
+
+2010-06-06 Petr Rockai
+  ~ -   Resolve issue1860: (Un)applying move patches may lead to
+        incomplete pristine.
+
+2010-05-31 Florent Becker
+  ~ -   show patches the right way in unrecord --verbose
+
+2010-06-06 Petr Rockai
+  ~ -   Accept issue1860: (Un)applying move patches may lead to
+        incomplete pristine.
+    -   Resolve issue1817: --external-merge broken, by bumping h-s
+        dependency to 0.5.1.
+    -   Make the external-resolution.sh test a bit more thorough.
+
+2010-06-06 Florent Becker
+  ~ -   resolve issue1864: w should only skip one patch
+
+2010-06-06 Eric Kow
+  ~ -   Resolve issue1861: Fix typo in --no-boring help.
+
+2010-06-03 Petr Rockai
+  ~ -   Skip the case folding test on case-sensitive systems.
+
+2010-06-03 Eric Kow
+  ~ -   Fix whitespace in Darcs.Repository.InternalTypes.
+
+2010-06-03 Florent Becker
+  ~ -   resolve issue1848: Patch.Choices.makeEverythingSooner is
+        incorrect
+
+2010-06-03 Adolfo Builes
+  ~ -   Resolve issue1503: prefer local caches to remote ones
+
+2010-05-31 Eric Kow
+  ~ -   Accept issue1857: error reading \_darcs/pristine.hashed on
+        failed test.
+    -   Accept issue1848: rollback -p should allow interactive patch
+        selection.
+
+2010-05-27 Florent Becker
+  ~ -   resolve issue1843: interactive 'v' prints double entries
+    -   resolve issue1839: k broken in interactive selection
+
+

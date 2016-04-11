@@ -1,0 +1,300 @@
+# Darcs 2.4.4 announcement (2010-05-23)
+
+Hi all,
+
+The darcs team would like to announce the immediate availability of
+darcs 2.4.4. This release fixes a couple of issues that were found in
+Darcs 2.4.3. We strongly recommend that everybody using Darcs 2.4.x
+upgrade to this version. As of this release, official binaries are
+available for both Windows and MacOS X:
+
+> -   [http://darcs.net/binaries/windows/darcs-2.4.4-win1.zip](http://darcs.net/binaries/windows/darcs-2.4.4-win1.zip)
+> -   [http://darcs.net/binaries/macosx/darcs-2.4.4-OSX-10.6-i386.tar.gz](http://darcs.net/binaries/macosx/darcs-2.4.4-OSX-10.6-i386.tar.gz)
+
+The easiest way to install darcs from source is using the Haskell
+Platform [1]. If you have installed the Haskell Platform or
+cabal-install, you can install this release by doing:
+
+    $ cabal update
+    $ cabal install darcs
+
+Alternatively, you can download the tarball from
+[http://darcs.net/releases/darcs-2.4.4\_1.tar.gz](http://darcs.net/releases/darcs-2.4.4_1.tar.gz)
+and build it by hand as explained in the README file.
+
+## What's New
+
+-   Important changes in Darcs 2.4.4
+
+    -   darcs builds on Windows with GHC 6.10 (and GHC 6.12).
+    -   darcs (built with GHC 6.12 on Windows) works with SSH again
+
+-   Issues resolved in Darcs 2.4.4
+
+    -   1814: Apply binary mode to ssh process and patch file handles.
+
+## Known Issues
+
+Aside from our fine list of bugs at
+[http://bugs.darcs.net](http://bugs.darcs.net) , there is a minor issue
+with the binaries for this release: darcs --exact-version does not
+report the Darcs version. This is due to a release flub on my end. We
+will correct the binaries within a week and post new links to the wiki.
+To avoid this error, packagers for other platforms should take note to
+use the '\_1' version of the tarball above.
+
+We have had several mishaps in the Darcs 2.4 series and were not
+expecting to do these many point releases. I would like to apologise for
+any inconvenience we have caused. The good news is that thanks to these
+these recent problems, we have tightened up our release quality control
+process (buildbot testing of the release branch on 3 major platforms,
+better coordination release manager and packagers), and hope to have a
+much smoother Darcs 2.5 release this summer.
+
+## Reporting Bugs
+
+If you do have an issue with this version of Darcs, you can report it
+via the web on [http://bugs.darcs.net](http://bugs.darcs.net)/ . You can
+also report bugs by email to [bugs@darcs.net](mailto:bugs@darcs.net).
+
+Kind Regards, the interim darcs release manager, Eric Kow
+
+[1]: You can download the Haskell platform from
+[http://hackage.haskell.org/platform](http://hackage.haskell.org/platform)/
+
+# Darcs 2.4.3 announcement (2010-05-09)
+
+The darcs team would like to announce the immediate availability of
+darcs 2.4.3. Darcs is a distributed, advanced revision control system
+written in Haskell.
+
+This release [1] fixes a number of issues that were found in darcs
+2.4.1. We strongly recommend that everybody using Darcs 2.4.0 or 2.4.1
+upgrade to this version. The two most important issues resolved were
+that Darcs would fail on Windows with an "mmap of \_darcs/index", and
+that darcs get --partial would produce inconsistent repositories.
+
+The easiest way to install darcs is using the Haskell Platform [2]. If
+you have installed the Haskell Platform or cabal-install, you can
+install this release by doing:
+
+    $ cabal update
+    $ cabal install darcs
+
+Alternatively, you can download the tarball from
+[http://darcs.net/releases/darcs-2.4.3.tar.gz](http://darcs.net/releases/darcs-2.4.3.tar.gz)
+and build it by hand as explained in the README file.
+
+## What's New
+
+-   Important changes in Darcs 2.4.3
+
+    -   darcs will no longer give "mmap of \_darcs/index" errors on
+        Windows
+    -   darcs convert performance regression (against 2.3.x) solved
+    -   darcs get --partial no longer produces inconsistent repositories
+    -   GHC 6.12 support on Windows
+
+-   Issues resolved in Darcs 2.4.3
+
+    -   1761: mmap of '\_darcs/index' failed on Windows mapped drives
+    -   1814: include contrib/darcs-errors.hlint in release tarball
+    -   1823: read (mmap) \_darcs/index file correctly on Windows
+    -   1826: error building on Windows with GHC 6.12
+    -   1837: inconsistent repository upon darcs get --partial
+
+## Reporting bugs
+
+If you have an issue with darcs 2.4.3, you can report it via the web on
+[http://bugs.darcs.net](http://bugs.darcs.net)/ . You can also report
+bugs by email to [bugs@darcs.net](mailto:bugs@darcs.net).
+
+Kind Regards, the interim darcs release manager, Eric Kow
+
+[1]: This was meant to be the Darcs 2.4.2, but we caught another build
+error under GHC 6.12 on Windows
+
+[2]: You can download the Haskell platform from
+[http://hackage.haskell.org/platform](http://hackage.haskell.org/platform)/
+
+# Darcs 2.4.1 announcement (2010-04-12)
+
+Hi all,
+
+The darcs team would like to announce the immediate availability of
+darcs 2.4.1. This release fixes a number of issues that were found in
+darcs 2.4. The most important of these issues were that darcs did not
+work on Windows shares, and that darcs would not work if it was built
+with a wrong version of the mmap package.
+
+The easiest way to install darcs is using the Haskell Platform [1]. If
+you have installed the Haskell Platform or cabal-install, you can
+install this release by doing:
+
+    $ cabal update
+    $ cabal install --reinstall darcs
+
+Alternatively, you can download the tarball from
+[http://darcs.net/releases/darcs-2.4.1.tar.gz](http://darcs.net/releases/darcs-2.4.1.tar.gz)
+and build it by hand as explained in the README file.
+
+## What's New
+
+-   Important changes in Darcs 2.4.1
+
+> -   darcs works again on Windows network shares
+> -   missing documentation and test files have been added to the
+>     tarball
+> -   darcs will no longer give errors about a nonexistent file when
+>     compiled with the wrong mmap
+> -   moving files between directories can no longer break the directory
+>     index
+> -   darcs handles the case that someone uses 'remove -r' on an
+>     untracked directory
+> -   darcs ignores symlinks again, like all pre-2.4 releases
+
+-   Bugs Fixed in Darcs 2.4.1
+
+> -   1645: ignore symlinks
+> -   1750: uncover help text for 'darcs show pristine'
+> -   1753: restrict mmap to version used by hashed-storage
+> -   1754: fix issue458.sh on systems with xattrs
+> -   1756: moving files between directories breaks index
+> -   1757: add test files to distribution tarball
+> -   1765: refuse to remove non-tracked directories recursively
+> -   1767: send CRC erros to standard error
+
+## Reporting bugs
+
+If you have an issue with darcs 2.4.1, you can report it via the web on
+[http://bugs.darcs.net](http://bugs.darcs.net)/ . You can also report
+bugs by email to [bugs@darcs.net](mailto:bugs@darcs.net).
+
+Kind Regards, the darcs release manager, Reinier Lamers
+
+[1]: You can download the Haskell platform from
+[http://hackage.haskell.org/platform](http://hackage.haskell.org/platform)/
+
+# Darcs 2.4.0 announcement (2010-02-07)
+
+February 27, 2010 - The darcs team is proud to announce the immediate
+availability of darcs 2.4. darcs 2.4 contains many improvements and
+bugfixes compared to darcs 2.3.1. Highlights are the faster operation of
+record, revert and related commands, and the experimental interactive
+hunk editing.
+
+The easiest way to install darcs is using the Haskell Platform [1]. If
+you have installed the Haskell Platform or cabal-install, you can
+install this beta release by doing:
+
+    $ cabal update
+    $ cabal install --reinstall darcs
+
+Alternatively, you can download the tarball from
+[[http://darcs.net/releases/darcs-2.4.tar.gz](http://darcs.net/releases/darcs-2.4.tar.gz)](http://darcs.net/releases/darcs-2.4.tar.gz),
+and build it by hand as explained in the README file.
+
+## Interactive hunk editing
+
+To try out interactive hunk editing, press 'e' when you are prompted
+with a hunk patch by 'darcs record'. You will then be shown an editor
+screen in which you can edit the state you want to record between the
+last two ruler lines.
+
+You can find more information about the hunk editing feature on [the
+hunk editor wiki page](http://wiki.darcs.net/HunkEditor).
+
+## Performance
+
+darcs in its current form does not perform very well on huge
+repositories. In order to systematically address this issue, and to
+catch performance regressions, we have started a darcs benchmarking
+project. You can find benchmarks of darcs performance in many different
+situations on [the benchmarks wiki
+page](http://wiki.darcs.net/Benchmarks). On [this other wiki
+page](http://wiki.darcs.net/Benchmarks/Quasar), you will find graphs of
+the benchmark results on a Windows Vista machine.
+
+On that page, you will also find instructions on how to run your own
+darcs benchmarks.
+
+## Reporting bugs
+
+If you have an issue with darcs 2.4, you can report it via the web on
+[http://bugs.darcs.net](http://bugs.darcs.net)/ . You can also report
+bugs by email to [bugs@darcs.net](mailto:bugs@darcs.net).
+
+## What's New
+
+A list of important changes since 2.3.1 is as follows:
+
+-   Use fast index-based diffing everywhere (Petr)
+-   Interactive patch splitting (Ganesh)
+-   An 'optimize --upgrade' option to convert to hashed format in-place
+    (Eric)
+-   Hunk matching (Kamil Dworakowski, tat.wright)
+-   Progress reporting is no longer deceptive (Roman)
+-   A 'remove --recursive' option to remove a directory tree from
+    revision control (Roman)
+-   'show files' accepts arguments to show a subset of tracked files
+    (Luca)
+-   A '--remote-darcs' flag for pushing to a host where darcs isn't
+    called darcs
+-   Many miscellaneous Windows improvements (Salvatore, Petr and others)
+-   'darcs send' now mentions the repository name in the email body
+    (Joachim)
+-   Handle files with boring names in the repository correctly (Petr)
+-   Fix parsing of .authorspellings file (Tomáš)
+-   Various sane new command-line option names (Florent)
+-   Remove the '--checkpoint' option (Petr)
+-   Use external libraries for all UTF-8 handling (Eric, Reinier)
+-   Use the Haskell zlib package exclusively for compression (Petr)
+
+A list of issues resolved since 2.3.1:
+
+-   183: do not sort changes --summary output
+-   223: add --remote-darcs flag to specify name of remote darcs
+    executable
+-   291: provide (basic) interactive patch splitting
+-   540: darcs remove --recursive
+-   835: 'show files' with arguments
+-   1122: get --complete should not offer to create a lazy repository
+-   1216: list Match section in ToC
+-   1224: refuse to convert a repo that's already in darcs-2 format
+-   1300: logfile deleted on unsucessful record
+-   1308: push should warn about unpulled patches before patch-selection
+-   1336: sane error message on --last "" (empty string to numbers
+    parser)
+-   1362: mention repo name in mail send body
+-   1377: getProgname for local darcs instances
+-   1392: use parsec to parse .authorspelling
+-   1424: darcs get wrongly reports "using lazy repository" if you
+    ctrl-c old-fashioned get
+-   1447: different online help for send/apply --cc
+-   1488: fix crash in whatsnew when invoked in non-tracked directory
+-   1548: show contents requires at least one argument
+-   1554: allow opt-out of -threaded (fix ARM builds)
+-   1563: official thank-you page
+-   1578: don't put newlines in the Haskeline prompts
+-   1583: on darcs get, suggest upgrading source repo to hashed
+-   1584: provide optimize --upgrade command
+-   1588: add --skip-conflicts option
+-   1594: define PREPROCHTML in makefile
+-   1620: make amend leave a log file when it should
+-   1636: hunk matching
+-   1643: optimize --upgrade should do optimize
+-   1652: suggest cabal update before cabal install
+-   1659: make restrictBoring take recorded state into account
+-   1677: create correct hashes for empty directories in index
+-   1681: preserve log on amend failure
+-   1709: fix short version of progress reporting
+-   1712: correctly report number of patches to pull
+-   1720: fix cabal haddock problem
+-   1731: fix performance regression in check and repair
+-   1741: fix --list-options when option has multiple names
+-   1749: refuse to remove non-empty directories
+
+Kind Regards, the darcs release manager, Reinier Lamers
+
+[1]: You can download the Haskell platform from
+[http://hackage.haskell.org/platform](http://hackage.haskell.org/platform)/

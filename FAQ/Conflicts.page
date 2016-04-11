@@ -1,0 +1,391 @@
+---
+title: Frequently Asked Questions (Conflicts)
+...
+
+Conflicts typically happen when the same part of the file is edited in
+two (or more) repositories independently. This occurs all too frequently
+when working with many developers. In this section, we show the basic
+techniques for dealing with so-called *everyday conflicts*.
+
+# Pulling or applying conflicting patches
+
+When pulling patches that conflict each other (e.g., change the same
+part of the file) Darcs detects the conflict and marks it in the
+repository content. It then lets the user resolve the problem.
+
+    B $ darcs pull ../A
+    Pulling from "/tmp/A"...
+    Sun Mar 22 22:23:39 CET 2009  user@machine
+      * in fact it was rooms
+    Shall I pull this patch? (1/1)  [ynWsfvplxdaqjk], or ? for help: y
+    Backing up ./a.txt(-darcs-backup0)
+    We have conflicts in the following files:
+    ./a.txt
+    Finished pulling and applying.
+
+    B $ darcs whatsnew
+    hunk ./a.txt 3
+    -seats
+    +v v v v v v v
+    +rooms
+    +*************
+    +tables
+    +^ ^ ^ ^ ^ ^ ^
+    B $
+
+The other Darcs commands adding patches to repositories (`darcs push` or
+`darcs apply`) do not allow conflicting patches by default. You can use
+`--allow-conflicts` or `--mark-conflicts` options with `darcs apply`,
+however.
+
+You can push a conflicting patch if you also push a patch resolving the
+conflict at the same time.
+
+# How do conflicts behave?
+
+When you pull patches that conflict with patches in your local
+repository, Darcs marks them for you as shown above. The command
+`darcs revert` will remove the conflict marking and back up to state
+before conflicting patches:
+
+    B $ darcs revert --all 
+    Finished reverting.
+    B $ cat a.txt
+    All
+    the
+    seats
+    were
+    occupied
+    .
+    B $
+
+The conflict is not resolved after `darcs revert` command, however, it
+is just not marked.
+
+As you might have noticed from behavior of `darcs revert`, darcs does
+not let the conflicting patches change the state of the repository. The
+conflicting parts of the patches are commuted so that they have *no
+effect* on the repository state.
+
+    B $ darcs push ../A
+    Pushing to "/tmp/A"...
+    Sun Mar 22 22:23:09 CET 2009  user@machine
+      * in fact it was tables
+    Shall I push this patch? (1/1)  [ynWsfvplxdaqjk], or ? for help: y
+
+    darcs failed:  Refusing to apply patches leading to conflicts.
+    If you would rather apply the patch and mark the conflicts,
+    use the --mark-conflicts or --allow-conflicts options to apply
+    These can set as defaults by adding
+     apply mark-conflicts
+    to _darcs/prefs/defaults in the target repo. 
+    Backing up ./a.txt(-darcs-backup0)
+    There are conflicts in the following files:
+    ./a.txt
+    Apply failed!
+    B $
+
+The confusing output suggesting `--mark-conflicts` option is because
+`darcs push` consists internally of the `darcs send` command run in
+source repository and the `darcs apply` command run in target
+repository.
+
+# How do I tell if I have a conflict?
+
+We have some work lined up to make this easier for you. In the meantime:
+
+1.  Did you remember to record your work before pulling or applying
+    patches?
+2.  If you are sure you have no unrecorded work before pulling or
+    applying patches, do `darcs whatsnew -s`. Any changes must surely be
+    conflicts. DONE
+3.  If not or if you're not sure, that's OK! Our goal now will be to see
+    if just the patches already in your repository conflict with the new
+    patches that you pulled in or applied.
+
+    1.  Save everything now with `darcs record -a -m DRAFT`
+    2.  Use `darcs send -O` to save the work
+    3.  Use `darcs obliterate -p DRAFT` to remove the draft patch.
+    4.  Do `darcs mark-conflicts`
+    5.  If it says there are no conflicts to mark, skip to step 8.
+    6.  If it says it finished marking conflicts, do
+        `darcs whatsnew -s`; those are the files with conflicts in them.
+    7.  Do `darcs revert -a`
+    8.  Do `darcs apply draft.dpatch` to restore your working directory.
+    9.  Do `darcs unrecord` to remove the patch. DONE
+
+# I've reverted or edited the conflict markers away! How do I find the conflicts now?
+
+The `darcs mark-conflicts` command can be used to search and mark the
+existing unresolved conflicts:
+
+    B $ darcs mark-conflicts
+    Finished marking conflicts.
+    B $ darcs whatsnew
+    hunk ./a.txt 3
+    -seats
+    +v v v v v v v
+    +rooms
+    +*************
+    +tables
+    +^ ^ ^ ^ ^ ^ ^
+    B $
+
+Please note that `darcs mark-conflicts` reverts all unrecorded changes
+before marking - just like `darcs revert --all` but **without
+possibility to unrevert your changes**. If you have your own unrecorded
+changes run `darcs revert` before running `darcs mark-conflicts`.
+
+Conflicts are also stored in the patch files, and they can be seen on
+darcs changes -v output. The conflict is marked with `conflictor`.
+
+    B $ darcs changes -v
+    Sun Mar 22 22:23:39 CET 2009  user@machine
+      * in fact it was rooms
+        conflictor [
+        hunk ./a.txt 3
+        -seats
+        +tables
+        ]
+        |:
+        hunk ./a.txt 3
+        -seats
+        +rooms
+
+    Sun Mar 22 22:23:09 CET 2009  user@machine
+      * in fact it was tables
+        hunk ./a.txt 3
+        -seats
+        +tables
+
+    Sun Mar 22 22:22:46 CET 2009  user@machine
+      * first add
+        addfile ./a.txt
+        hunk ./a.txt 1
+        +All
+        +the
+        +seats
+        +were
+        +occupied
+        +.
+
+    B $
+
+The `darcs changes -s` output also indicates the named patches and files
+that have conflicts with exclamation mark:
+
+    Sun Mar 22 22:23:39 CET 2009  user@machine
+      * in fact it was rooms
+
+        M! ./a.txt -1 +1
+
+    Sun Mar 22 22:23:09 CET 2009  user@machine
+      * in fact it was tables
+
+        M ./a.txt -1 +1
+
+    Sun Mar 22 22:22:46 CET 2009  user@machine
+      * first add
+
+        A ./a.txt
+
+    B $
+
+Unfortunately, you have to figure out which are the other patches
+involved in the conflict by yourself. This can be pretty hard if the
+conflicting patch is deeply nested and its hunks are commuted. The
+`darcs changes -v` output helps you but please note that, e.g., the line
+numbers change when other patches are commuted with the conflicting one.
+
+# How can I resolve conflicts? The general case
+
+When you are merging two public repositories, the usual way to resolve
+conflicts is by creating a resolution patch that depends on the
+conflicting patches. It's important to propagate the resolution patch to
+all the other branches, in order to avoid creating a conflict fight
+(described below), to which Darcs is particularly susceptible.
+
+# What is a conflict fight?
+
+See the following example
+
+    R1 $ cat text
+    1 This
+    2 is
+    3a the
+    3b fourth
+    4 test
+    R1 $ darcs record -m M2 --all
+    Finished recording patch 'M2'
+    R1 $ darcs push
+    Pushing to "../R2"...
+    Fri Oct 26 00:36:34 EEST 2007  mela@invalid
+      * M2
+    Shall I push this patch? (1/1)  [ynWvpxqadjk], or ? for help: y
+    Finished applying...
+    R1 $ darcs changes -v --last 2
+    Fri Oct 26 00:36:34 EEST 2007  mela@invalid
+      * M2
+        hunk ./text 3
+        -3 a
+        +3a the
+        +3b fourth
+    Fri Oct 26 00:09:09 EEST 2007  pessi@invalid
+      * P1
+        merger 0.0 (
+        hunk ./text 3
+        -3 a
+        +3a a
+        +3b second
+        hunk ./text 3
+        -3 a
+        +3a the
+        +3b third
+        )
+    R1 $
+
+Be careful when tagging while there are live conflicts in your
+repository. When you create a tag, Darcs assumes you have resolved any
+conflicts. A tag depends on all the patches in the repository, even if
+they are conflicting. However, tags can be useful by preventing
+conflicts from propagating. If the new patch depends on the tag (in the
+context of the new patch), it won't propagate the conflict.
+
+Also:
+
+-   {X} Do not try to resolve your conflicts without all the possible
+    patches present in your local repository.
+-   {X} Do not try to undo some conflicting changes with new patches
+    locally **before** pulling conflicting patches.
+
+# Rewriting history (private repositories only)
+
+If you are only working with one-off, private repositories and you are
+sure that there is no risk of confusion, you could also try 'rewriting
+history', that is, modifying patches in such a way that the conflict
+never even existed in the first place. This is about as naughty as using
+amend-record and may not work as well when merging long chains of
+conflicting patches.
+
+## Rewriting history with unrecord
+
+You can unrecord the conflicting patch, edit the files and then
+re-record it:
+
+    R1 $ darcs unrecord
+    Fri Oct 26 00:09:09 EEST 2007  pessi@invalid
+      * P1
+    Shall I unrecord this patch? (1/3)  [ynWvpxqadjk], or ? for help: n
+    Fri Oct 26 00:07:44 EEST 2007  mela@invalid
+      * M1
+    Shall I unrecord this patch? (2/3)  [ynWvpxqadjk], or ? for help: y
+    This operation will make unrevert impossible!
+    Proceed? [yn]y
+    Finished unrecording.
+    R1 $ cat text
+    1 This
+    2 is
+    v v v v v v v
+    3a a
+    3b second
+    *************
+    3a the
+    3b third
+    ^ ^ ^ ^ ^ ^ ^
+    4 test
+    R1 $ $EDITOR text
+    R1 $ darcs record -m M1+P1
+    hunk ./text 4
+    -3b third
+    +3b second and third
+    Shall I record this change? (1/?)  [ynWsfqadjkc], or ? for help: y
+    Finished recording patch 'M1+P1'
+    R1 $
+
+## Rewriting history with amend-record
+
+Alternatively, you can resolve conflicts and then amend the local patch:
+
+    R1 $ darcs mark
+    Finished marking conflicts.
+    R1 $ $EDITOR text
+    R1 $ darcs amend-record
+    Fri Oct 26 00:09:09 EEST 2007  pessi@invalid
+      * P1
+    Shall I amend this patch? [yNvpq], or ? for help: n
+    Fri Oct 26 00:07:44 EEST 2007  mela@invalid
+      * M1
+    Shall I amend this patch? [yNvpq], or ? for help: y
+    hunk ./text 3
+    -3 a
+    +3a a
+    +3b second and third
+    Shall I add this change? (1/?)  [ynWsfqadjkc], or ? for help: y
+    Finished amending patch:
+    Fri Oct 26 00:28:50 EEST 2007  mela@invalid
+      * M1
+    R1 $ darcs changes -v --last 2
+    Fri Oct 26 00:28:50 EEST 2007  mela@invalid
+      * M1
+        hunk ./text 3
+        -3a the
+        -3b third
+        +3a a
+        +3b second and third
+    Fri Oct 26 00:09:09 EEST 2007  pessi@invalid
+      * P1
+        hunk ./text 3
+        -3 a
+        +3a the
+        +3b third
+    R1 $
+
+Note that the new patches (M1+P1 or M1 with new date) have new name and
+hash. They are in conflict with the original patches (M1), too. So make
+sure you have obliterated all original conflicting patches from all the
+repositories.
+
+## Rewriting history with rebase
+
+**TODO**
+
+# Why resolution patches should be propagated if at all possible
+
+This is not a conflict fight *per se*.
+
+Assume two repositories, C (for central) and W (for working). At the
+start of the example, they both have the same set of patches, B (for
+base): `C: B W: B`
+
+As time goes on, patches are made to both repositories in parallel:
+`C: B + C0 W: B + W0`
+
+Pulling into W from C, allows the developer working on W to get the
+latest and integrate and test before pushing:
+`C: B + C0 W: B + (W0 || C0)`
+
+If there were any conflicts with this, then a new patch will have to be
+recorded in W to fix them: `C: B + C0 W: B + (W0 || C0) + W1`
+
+At a later date, more work has gone on in parallel:
+`C: B + C0 + C1 W: B + (W0 || C0) + W1 + W2`
+
+*Now* the developer wants to pull from C, achieving:
+`C: B + C0 + C1 W: B + (((W0 || C0) + W1 + W2) || (C0 + C1))`
+
+*But*, if there are conflicts with C1 and W1, this pull will never
+complete. The problem seems to be that since C1 is a delta on C0, darcs
+must back track and essentially unravel the merge of C0 and W0. My
+understanding on this is fuzzy at best.
+
+This is real problem, as this scenario is not unreasonable. There are
+reasonable cases, where the developer working on W isn't able to push up
+to to C as often as she pulls from C.
+
+-- [MarkLentczner](MarkLentczner)
+
+# See also
+
+-   if you are using an darcs-1 repository format (check the Format line
+    of `darcs show repo`), see [FAQ/ConflictsDarcs1]()
+

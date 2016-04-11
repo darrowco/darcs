@@ -1,0 +1,20 @@
+Random musings on conflict marking:
+
+-   Maybe should dump a file listing conflicts
+
+-   Would like to effect of some non-hunk patches (eg. for graphical
+    diff on (re)moved files) to be inserting a hunk at the beginning of
+    a file like
+
+        v v v v v v v
+        moved from foo to bar
+        ^ ^ ^ ^ ^ ^ ^
+
+        v v v v v v v
+        removed from repository
+        ^ ^ ^ ^ ^ ^ ^
+
+-   Maybe a fancy EffectPatch type or something so that these comments
+    can just keep accumulating
+
+

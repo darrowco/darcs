@@ -1,0 +1,16 @@
+# Match types
+
+Make a table? - name - explanation - commands
+
+-   Patch vs tag vs pattern
+
+-   Several vs One vs After vs Up to
+
+-   nonrange matcher
+-   nonrange matcher is tag
+-   first
+-   second
+
+# Match traversal
+
+# High level description of match algorithms

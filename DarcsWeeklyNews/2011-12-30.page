@@ -1,0 +1,97 @@
+# News and discussions
+
+1.  Owen Stephens summarized his work on the darcs-bridge summer of code
+    and did some followup work on it:
+
+    -   [http://blog.owenstephens.co.uk/201109/gsoc-darcs-bridge-%E2%80%93-results](http://blog.owenstephens.co.uk/201109/gsoc-darcs-bridge-–-results)
+    -   [http://blog.owenstephens.co.uk/201111/darcs-bridge-bug-tracker-and-updates](http://blog.owenstephens.co.uk/201111/darcs-bridge-bug-tracker-and-updates)
+
+2.  Eric Kow introduced an 'announce' topic filter on the mailing list
+    to provide a low-traffic announcement subset of the list:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2011-November/026321.html](http://lists.osuosl.org/pipermail/darcs-users/2011-November/026321.html)
+
+3.  Mark Stosberg announced a donation of $500 on behalf of Summersault.
+    Remember you too can donate by going on the donations page of
+    darcs.net:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2011-December/026335.html](http://lists.osuosl.org/pipermail/darcs-users/2011-December/026335.html)
+    -   [http://www.darcs.net/donations.html](http://www.darcs.net/donations.html)
+
+4.  Interested by participating in the next Darcs sprint in March? Add
+    yourself to the wiki page:
+
+    -   [http://wiki.darcs.net/Sprints/2012-03](http://wiki.darcs.net/Sprints/2012-03)
+
+# Issues resolved in the last week (1)
+
+issue1705 Eric Kow
+  ~ -   show contents --index fixed by Owen.
+    -   [http://bugs.darcs.net/issue1705](http://bugs.darcs.net/issue1705)
+
+# Patches applied in the last week (27)
+
+2011-06-15 Florent Becker
+  ~ -   Add a 'o' command to interactive selection for going to the
+        first patch
+
+2011-12-28 Owen Stephens
+  ~ -   Use Data.List prefix functions for checking urls/targets in
+        Send.
+    -   Extract function to generate email "to" string in Send, removing
+        some duplicated code.
+    -   Remove Hlint and compiler warnings from Send.
+
+2011-12-01 Gabriel Kerneis
+  ~ -   Fix missing langinfo.h on Windows
+
+2011-11-30 Ganesh Sittampalam
+  ~ -   update text dep to make sure we have decodeUtf8'
+
+2011-11-29 Gabriel Kerneis
+  ~ -   Fix test suite for new makeEmail signature
+    -   Guess ascii and utf-8 charsets
+    -   Add a --charset flag for darcs send
+    -   Add ByteStringUtils.isAscii
+    -   Utility functions to check locale encoding
+
+2011-12-29 Ganesh Sittampalam
+  ~ -   test that send reports UTF-8 encoding when needed
+
+2011-12-29 Eric Kow
+  ~ -   Resolve issue1705: show contents --index fixed by Owen.
+    -   Accept issue1705: test show contents --index=1
+
+2011-07-01 Florent Becker
+  ~ -   More appropriate explanation for hunk-editing in revert
+
+2011-07-27 Owen Stephens
+  ~ -   Remove duplicated pending reading code in readRecordedAndPending
+
+2011-09-03 Eric Kow
+  ~ -   Add forgotten URL.Curl module.
+    -   Slight readability tweak on URL.addReq
+    -   Redundant liftIO.
+    -   Break up urlThread into top-level functions.
+    -   Reorganise URL fetching code.
+
+2011-07-11 Owen Stephens
+  ~ -   Re-enable machine-readable annotate output.
+
+2011-08-14 Petr Rockai
+  ~ -   Resolve conflict with Owen in Darcs.Match.
+
+2011-06-29 Owen Stephens
+  ~ -   Fix error with unhandled --index in show contents
+
+2011-12-24 Mark Wright
+  ~ -   relax HTTP dependency
+
+2011-09-06 Eric Kow
+  ~ -   Give immediate useful advice when repository upgrade required.
+
+2011-08-01 Owen Stephens
+  ~ -   Add addToSpecificInventory function, for use in
+        darcs-fastconvert
+
+

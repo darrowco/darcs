@@ -1,0 +1,15 @@
+# Sample \_darcs/prefs/motd file if you have to repair a repository
+
+WARNING: this repository was corrupted in the past.
+
+We've repaired the damage on our end, but you may have to do the same on
+yours. If you've fetched this repository before YYYY-MM-DD, please do
+the following:
+
+1.  record all your local changes
+2.  `darcs send -O -a` to save those changes in a patch bundle
+3.  delete your copy of the repository
+4.  `darcs clone` this repository again
+5.  `darcs apply` your changes
+
+Sorry for the inconvenience!

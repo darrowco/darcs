@@ -1,0 +1,225 @@
+# News and discussions
+
+1.  Venues confirmed for the darcs hacking sprint, 25-26 October.
+    Brighton and Portland are CONFIRMED; Paris is likely. Come hack with
+    us!
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-September/013575.html](http://lists.osuosl.org/pipermail/darcs-users/2008-September/013575.html)
+
+2.  Planning darcs 2.0.3. We have started making steps towards a release
+    for the end of September. Eric thinks we are only a buildbot and
+    couple of bugfixes away from a prerelease.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-September/013516.html](http://lists.osuosl.org/pipermail/darcs-users/2008-September/013516.html)
+
+3.  Darcs patch theory. Ian Lynagh continues his patch theory research.
+    He has written up a nice explanation and a working prototype of a
+    darcs-like patch theory.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-September/013611.html](http://lists.osuosl.org/pipermail/darcs-users/2008-September/013611.html)
+    -   [http://urchin.earth.li/\~ian/theory.pdf](http://urchin.earth.li/~ian/theory.pdf)
+    -   darcs get
+        [http://code.haskell.org/darcs/minidarcs](http://code.haskell.org/darcs/minidarcs)
+    -   darcs get
+        [http://urchin.earth.li/\~ian/theory](http://urchin.earth.li/~ian/theory)
+
+4.  Retiring GHC 6.4. The darcs team would like to know if anybody is
+    still using GHC 6.4 to compile darcs, so that we can focus on later
+    versions (6.6 and 6.8).
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-September/013659.html](http://lists.osuosl.org/pipermail/darcs-users/2008-September/013659.html)
+
+# Reviewers
+
+Thanks to our patch reviewers for this week for giving David a hand!
+
+-   Jason Dagit
+-   Trent Buck
+
+# Issues resolved in the last week (7)
+
+issue844 David Roundy
+  ~ -   darcs doesn't guarantee always to compress patches.
+    -   [http://bugs.darcs.net/issue844](http://bugs.darcs.net/issue844)
+
+issue924 Eric Kow
+  ~ -   test for QuickCheck2 in disttest
+    -   [http://bugs.darcs.net/issue924](http://bugs.darcs.net/issue924)
+
+issue1015 Ganesh Sittampalam
+  ~ -   workaround internal API change on Windows in GHC 6.8.3
+    -   [http://bugs.darcs.net/issue1015](http://bugs.darcs.net/issue1015)
+
+issue1037 Dmitry Kurochkin
+  ~ -   compile with -D\_REENTRANT.
+    -   [http://bugs.darcs.net/issue1037](http://bugs.darcs.net/issue1037)
+
+issue1049 David Roundy
+  ~ -   undo lazy patch bundle scanning.
+    -   [http://bugs.darcs.net/issue1049](http://bugs.darcs.net/issue1049)
+
+issue1050 Eric Kow
+  ~ -   Disable haskeline by default.
+    -   [http://bugs.darcs.net/issue1050](http://bugs.darcs.net/issue1050)
+
+issue1063 Eric Kow
+  ~ -   Wrap pwd in cygpath in shell tests.
+    -   [http://bugs.darcs.net/issue1063](http://bugs.darcs.net/issue1063)
+
+# Patches applied in the last week (72)
+
+2008-09-08 David Roundy
+  ~ -   don't define pipeliningLimit if we don't use it.
+
+2008-09-08 Dmitry Kurochkin
+  ~ -   Add -[-no]-http-pipelining options, disable pipelining by
+        default for curl < 7.19.1.
+
+2008-09-08 Eric Kow
+  ~ -   Do no word splitting after expansion in pwd-based shell tests.
+    -   Resolve issue1063: Wrap pwd in cygpath in shell tests.
+
+2008-09-07 Nicolas Pouillard
+  ~ -   Apply Eric suggestions on tests/binary.sh
+
+2008-09-08 Eric Kow
+  ~ -   Remove old ChangeLog entries (before 2.0.2).
+    -   Replace old ChangeLog entries for 1.0.3rc1.
+    -   Do not recompute ChangeLogs from darcs 2.0.2 or before.
+    -   Make binary.sh test more robust wrt spaces in filenames.
+
+2008-09-07 Nicolas Pouillard
+  ~ -   Add a test for binary patch files.
+    -   Update the memo about running test at record time
+
+2008-09-06 Matthias Kilian
+  ~ -   No -v option to cp(1)
+    -   Fix the gzip test for OpenBSD's gzip
+
+2008-09-06 David Roundy
+  ~ -   update web page to point at both stable and unstable branches.
+
+2008-09-05 Jason Dagit
+  ~ -   bug fix for amend-cancelling.sh test
+    -   add test for amending a depended upon patch
+
+2008-09-04 Dmitry Kurochkin
+  ~ -   URL.hs: print debug message when wait\_next\_url starts.
+    -   URL.hs: fix race condition in copyUrlWithPriority and waitUrl.
+
+2008-09-05 Eric Kow
+  ~ -   Fix advice to get QuickCheck 2.
+
+2008-09-05 David Roundy
+  ~ -   revise advice to indicate darcs check over make disttest.
+
+2008-09-02 Jason Dagit
+  ~ -   Add Repository IO monad, RIO.
+
+2008-09-05 Eric Kow
+  ~ -   Makefile: offer advice on record --no-test
+    -   Switch test pref to make disttest.
+    -   Allow make disttest to run without the configure script being
+        present.
+    -   Resolve issue1050: Disable haskeline by default.
+    -   Resolve issue924: test for QuickCheck2 in disttest
+    -   Makefile: Tidy up disttest.
+
+2008-09-04 David Roundy
+  ~ -   relocate issue1057.sh to bugs/.
+
+2008-09-04 [naur@post11.tele.dk](mailto:naur@post11.tele.dk)
+  ~ -   Test for issue 1057: pull fails to report "Can't pull from
+        current repository" when pulling via symbolic link
+
+2008-09-03 [me@mornfall.net](mailto:me@mornfall.net)
+  ~ -   Remove [DarcsFlag] use in (most of) HashedIO, HashedRepo API.
+    -   Remove a few unused [DarcsFlag] parameters from HashedRepo and
+        Repository.Internal.
+    -   Replace [DarcsFlag] with Compression in HashedIO Slurpy.
+    -   Add data Compression to Darcs.Flags.
+
+2008-09-04 Eric Kow
+  ~ -   Replace Maybe Bool with custom tri-state type in patch selection
+        code.
+    -   Roundup integration: avoid changing the bug topic.
+    -   Provide DARCS\_KEEP\_TEMPDIR hint in testing README.
+
+2008-09-04 [me@mornfall.net](mailto:me@mornfall.net)
+  ~ -   Haddock speculateFileUsingCache.
+    -   Remove the obsolete release/debian stuff.
+    -   Refactor Cache's handling of hashed paths. No functional change.
+
+2008-09-02 David Roundy
+  ~ -   convert mv.pl into shell.
+    -   clean up ShowRepo a tad.
+    -   add type witnesses to new functions.
+
+2008-09-01 Ganesh Sittampalam
+  ~ -   resolve issue1015: workaround internal API change on Windows in
+        GHC 6.8.3
+
+2008-09-02 David Roundy
+  ~ -   add another debug message.
+    -   fix bug in handling of corrupted pending file, and in test.
+
+2008-09-02 [me@mornfall.net](mailto:me@mornfall.net)
+  ~ -   Make clean\_hashdir take a list of root hashes and use it in
+        repair.
+    -   Add HashedRepo.readHashedPristineRoot.
+    -   Make the "hashed" repair use pristine.hashed for its work.
+    -   Add Repository.replacePristineFromSlurpy.
+    -   Resolve conflicts.
+    -   Fix checkPristineAgainst{Cwd,Slurpy}: we ignored files missing
+        in pristine.
+    -   Only "update" (sync to disk) the slurpy every 100 patches.
+    -   First working (albeit slow) version of repair that uses hashed
+        newpristine.
+    -   Add Repository.checkPristineAgainstSlurpy.
+    -   Haddock the {slurp,write,sync}HashedPristine functions in
+        HashedIO.
+    -   Change type of subdir parameter in Cache/HashedIO functions from
+        String to HashedDir.
+    -   Rename hashSlurped, slurpHashed and syncHashed to
+        writeHashedPristine, slurpHashedPristine and syncHashedPristine,
+        respectively.
+
+2008-09-01 Ganesh Sittampalam
+  ~ -   autoconf terminfo support
+
+2008-08-29 [me@mornfall.net](mailto:me@mornfall.net)
+  ~ -   Optionally replace curses binding with "terminfo" from hackage.
+
+2008-09-01 Dmitry Kurochkin
+  ~ -   Resolve issue1037: compile with -D\_REENTRANT.
+
+2008-09-01 [zooko@zooko.com](mailto:zooko@zooko.com)
+  ~ -   add makefile target "disttest" which does the script currently
+        stored in \_darcs/prefs/prefs
+
+2008-09-01 David Roundy
+  ~ -   add fortran .mod files to boring.
+    -   resolve issue1049: undo lazy patch bundle scanning.
+
+2008-08-31 [zooko@zooko.com](mailto:zooko@zooko.com)
+  ~ -   tests: quote the repo variable in mv.pl so that the test will
+        work when PWD has a space in it
+    -   tests: silence unnecessary warning output from running tests
+    -   ChangeLog entries: ignore a minor patch which has the string
+        "warning" in it
+    -   ChangeLog entries: ignore all patches with the string "ChangeLog
+        entries" in them when generating ChangeLog entries
+    -   ChangeLog entries: ignore a minor patch which includes the name
+        "warning" because it makes buildbot think that the build step is
+        emitting a compiler warning
+
+2008-09-01 David Roundy
+  ~ -   resolve issue844: darcs doesn't guarantee always to compress
+        patches.
+
+2008-08-30 Eric Kow
+  ~ -   Add test case for issue844.
+
+2008-09-01 Alex Lance
+  ~ -   Fixed typo: "view this patch in \*fill with the pager".
+
+2008-08-31 David Roundy
+  ~ -   don't show ssh stderr output unless we're passed --debug.
+
+

@@ -1,0 +1,35 @@
+# 2.12
+
+Release date: 2016-??-?? (after the release of GHC 8.0)
+
+See <http://tinyurl.com/darcs2-12bugs> .
+
+# What's new in 2.12.0   (as of 2016-04-03) #
+
+## New features ##
+
+* git import/export improvements (port from Owen's darc-bridge, GSoC 2012 project)
+    * high-level handling of file moves when importing from git
+* `darcs show dependencies`: export dependency graph as dot file (Ale Gadea)
+
+## User Interface ##
+
+* improvements in "darcs record" with irrelevant files (Ben Franksen)
+
+## Performance ##
+
+## Developer-related ##
+
+* switch to sandi from dataenc (Daniil Frumin)
+* rebase/stash preparation refactoring (Ganesh)
+* require ghc 7.6 (base > 4.6) (because last debian stable)
+* change argument order of type witness RL (Ben Franksen)
+* Darcs.Repository / repository cloning refactoring (Ben Franksen)
+* use of async when cloning with packs (Ben Franksen)
+* SSH code refactoring (Ben Franksen)
+* Patch and RealPatch renamed to RepoPatchV1 and RepoPatchV2 (Guillaume Hoffmann)
+* merged hashed-storage into libdarcs and hashed-storage tests into darcs-test (Guillaume Hoffmann)
+
+## Issues resolved in Darcs 2.12 ##
+
+

@@ -1,0 +1,252 @@
+# News and discussions
+
+1.  Eric announced the release of darcs 2.4.3, which fixes critical bugs
+    under Windows and fixes the performance regression of darcs convert:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-May/023972.html](http://lists.osuosl.org/pipermail/darcs-users/2010-May/023972.html)
+    -   [http://wiki.darcs.net/Releases/2.4](http://wiki.darcs.net/Releases/2.4)
+    -   [http://wiki.darcs.net/Binaries](http://wiki.darcs.net/Binaries)
+
+2.  Simon Michael proposed a cleanup of the repository format names and
+    gathered a few answers and proposals:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2010-May/023936.html](http://lists.osuosl.org/pipermail/darcs-users/2010-May/023936.html)
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2010-May/023969.html](http://lists.osuosl.org/pipermail/darcs-users/2010-May/023969.html)
+
+3.  Ganesh and Petr explained why it is not recommended anymore to build
+    darcs with GHC 6.8:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2010-April/023774.html](http://lists.osuosl.org/pipermail/darcs-users/2010-April/023774.html)
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2010-April/023776.html](http://lists.osuosl.org/pipermail/darcs-users/2010-April/023776.html)
+> -   [http://wiki.darcs.net/Debian](http://wiki.darcs.net/Debian)
+
+# Issues resolved in the last week (7)
+
+issue64 Reinier Lamers
+  ~ -   store metadata as UTF-8, autodetect UTF-8, and don't normalize
+        to NFC
+    -   [http://bugs.darcs.net/issue64](http://bugs.darcs.net/issue64)
+
+issue1232 Dino Morelli
+  ~ -   darcs convert forgets \_darcs/prefs/prefs
+    -   [http://bugs.darcs.net/issue1232](http://bugs.darcs.net/issue1232)
+
+issue1760 Petr Rockai
+  ~ -   Fix working directory handling in Commands.Convert.
+    -   [http://bugs.darcs.net/issue1760](http://bugs.darcs.net/issue1760)
+
+issue1769 Matthias Kilian
+  ~ -   add support for --match 'comment ...'
+    -   [http://bugs.darcs.net/issue1769](http://bugs.darcs.net/issue1769)
+
+issue1814 Petr Rockai
+  ~ -   Include contrib/darcs-errors.hlint in release tarball.
+    -   [http://bugs.darcs.net/issue1814](http://bugs.darcs.net/issue1814)
+
+issue1824 Eric Kow
+  ~ -   avoid PACKAGE\_VERSION under Windows.
+    -   [http://bugs.darcs.net/issue1824](http://bugs.darcs.net/issue1824)
+
+issue1837 Petr Rockai
+  ~ -   Add readWorking and use it in pristineFromWorking.
+    -   [http://bugs.darcs.net/issue1837](http://bugs.darcs.net/issue1837)
+
+# Patches applied in the last week (115)
+
+2010-05-09 Eric Kow
+  ~ -   Update homepage news for darcs 2.4.3 release.
+    -   Update website to link to 2.4.3 tarball.
+    -   The roundup tracker does not use a guest/guest login.
+
+2010-05-08 Petr Rockai
+  ~ -   Fix a number of "unused" warnings in Darcs.Commands.\*.
+    -   Fix a number of "unused" warnings in Darcs.Repository\*.
+    -   A new implementation of PatchSet and its operations.
+    -   Give a more informative error when hunk apply fails.
+
+2010-05-08 Jason Dagit
+  ~ -   work around cabal flag composition bug
+
+2010-05-07 Eric Kow
+  ~ -   Camel case Darcs.Test.
+    -   Camel case Darcs.Commands.ShowFiles.
+    -   Mark issue1837 test as passing.
+    -   Accept issue1837: inconsistent repo upon darcs get --partial.
+
+2010-05-06 Petr Rockai
+  ~ -   Also use readWorking in setScriptsExecutable (minor refactor).
+    -   Resolve issue1837: Add readWorking and use it in
+        pristineFromWorking.
+    -   In replacePristine, cope also with Trees that have no hashes in
+        them.
+
+2010-05-07 Eric Kow
+  ~ -   Remove seemingly unused Darcs.CheckFileSystem.
+
+2010-05-06 Petr Rockai
+  ~ -   Remove unorm.h dependency on Windows, since it's no longer used.
+    -   Remove the icuuc dependency now that it is no longer used.
+    -   Fix compilation on GHC 6.12 on win32 (needs unix-compat).
+    -   Normalise path separators in the query\_manifest test.
+    -   Let's try to fix install-deps.sh for the case of multiple
+        packages missing.
+    -   Bump hashed-storage dependency to 0.5.
+    -   Purge Slurpy usage in Commands.Rollback (use announceFiles from
+        whatsnew).
+    -   Use stock setScriptsExecutable from Darcs.Repository in
+        Commands.Convert.
+    -   Clean up unused bits in Repository.HashedIO.
+    -   Make clean\_hashdir work on repository-local dirs even without
+        caches.
+    -   Resolve conflict in Commands.Record.
+    -   Resolve conflicts in Commands.Add.
+    -   Resolve conflicts in Match.
+    -   Resolve conflict in Commands.Move.
+    -   Resolve conflicts in Repository.Internal.
+    -   Resolve conflicts in Commands.ShowFiles.
+    -   Filter out \_darcs in setScriptsExecutable.
+    -   Make the automatic pristine conversion a bit nicer.
+    -   Bump the mmap dependency to match that of hashed-storage HEAD.
+    -   Remove a couple of unused Cache parameters.
+    -   Automatically drop size prefixes from all of pristine when
+        needed.
+    -   Purge unused fileExists from Commands.Record.
+    -   Avoid use of SlurpDirectory in Commands.ShowFiles.
+    -   Remove SlurpDirectory.
+    -   Replace slurp\_recorded with readRecorded in make\_new\_pending.
+    -   Use a more canonic way to create empty hashed pristine.
+    -   Reimplement applyHashed in terms of hashedTreeIO
+        (Storage.Hashed.Monad).
+    -   Use a more canonic way to create empty hashed pristine in
+        optimize (--upgrade).
+    -   Port Commands.Move from Slurpy to Tree.
+    -   Re-implement setScriptsExecutable using Trees instead of
+        Slurpies.
+    -   Re-implement optimize --relink using Trees instead of Slurpies.
+    -   Generalize announceFiles used by whatsnew and use it in record
+        as well.
+    -   Re-work Commands.Add (simplify, use the new treeHas\*
+        functions).
+    -   Re-implement the Slurp-based file/dir existence-check functions
+        in terms of Trees.
+    -   Replace SlurpDirectory usage in Commands.Add with Tree-based
+        code.
+    -   Remove implementation of --store-in-memory, simplifying matcher
+        code.
+
+2010-05-05 Eric Kow
+  ~ -   Camel case some leftovers in Darcs.Commands.{Add,Move}.
+    -   Camel case Darcs.Commands.Pull again (fetch).
+    -   Catch Darcs.Hopefully up with Darcs.Patch.Info camel casing.
+    -   Resolve conflicts: fetch, obliterate -o vs SelectChanges
+        refactor.
+
+2010-04-22 Florent Becker
+  ~ -   Add a fetch command
+    -   Add -o option to obliterate, to keep a backup of the patch
+    -   fix conflicts in Send
+    -   extract a few functions from Send
+
+2010-05-05 Dino Morelli
+  ~ -   Extend issue1232: darcs convert fails if missing
+        \_darcs/prefs/prefs
+    -   Extend issue1232: test to account for missing
+        \_darcs/prefs/prefs case
+
+2010-05-05 Eric Kow
+  ~ -   Camel case Darcs.Patch.Info.
+    -   Remove redundant Darcs.Commands.Optimize.isTag.
+    -   Fix typos in matcher documentation.
+
+2010-05-02 Matthias Kilian
+  ~ -   Documentation for \`hunk' and \`comment' matchers
+    -   resolve issue1769: add support for --match 'comment ...'
+
+2010-05-05 Eric Kow
+  ~ -   Camel case unit tester.
+    -   Fix unit.lhs: s/metadataStringTest/metadataDecodingTest/.
+
+2010-05-02 Petr Rockai
+  ~ -   Resolve issue1760: Fix working directory handling in
+        Commands.Convert.
+
+2010-05-02 Florent Becker
+  ~ -   remove spurious todo in Choices.hs
+    -   make the new Patch.Choices compile in ghc6.10
+    -   Fix representation of patches in darcs revert's interactive
+        selection
+    -   Clean up the new version of Patch.Choices
+    -   fix patch counting in interactive selection
+    -   fix conflicts in SelectChanges
+    -   Change representation of PatchChoices
+    -   resolve conflicts in SelectChanges
+    -   monadify interactive patch selection
+    -   Resolve conflicts in Record.lhs
+    -   add the --reverse option to all patch-selecting commands
+    -   resolve conflicts in AmendRecord.lhs
+    -   Simplify SelectChanges' interface and non-interactive part
+    -   add a witnessed zipper type
+    -   Some haddocks for Patch.Choices
+
+2010-05-02 Reinier Lamers
+  ~ -   Rename metadataStringTest to metadataDecodingTest
+    -   Add some haddock in Darcs.Patch.Info
+    -   Document behavior of text decoding functions in case of
+        malformed input
+    -   resolve issue64: store metadata as UTF-8, autodetect UTF-8, and
+        don't normalize to NFC
+
+2010-04-30 Petr Rockai
+  ~ -   Resolve issue1814: Include contrib/darcs-errors.hlint in release
+        tarball.
+
+2010-05-03 Eric Kow
+  ~ -   Resolve issue1824: avoid PACKAGE\_VERSION under Windows.
+    -   Avoid PACKAGE\_VERSION CPP macro in HTTP (see issue1824 note
+        below).
+
+2010-04-25 Dmitry Kurochkin
+  ~ -   Haddock for Darcs.Repository.Cache.unionRemoteCaches.
+
+2010-04-14 Eric Kow
+  ~ -   Camel case SHA1.
+
+2010-04-27 Petr Rockai
+  ~ -   Fix typo (dacas -\> darcs).
+
+2010-04-18 Dmitry Kurochkin
+  ~ -   URL: keep notify MVars in a single place.
+    -   Fix hscurl.c when URL is downloaded during the first call to
+        curl\_multi\_perform.
+    -   hscurl.c: remove \#ifdef HAVE\_CURL check.
+    -   Simplify libcurl pipelining configuration.
+    -   Pass -DCURL\_PIPELINING to C compiler when HTTP pipelining is
+        enabled.
+
+2010-04-26 Eric Kow
+  ~ -   Mention darcs blog and planet on homepage.
+
+2010-04-17 Dino Morelli
+  ~ -   style tweak: reformatted an import
+    -   Resolve issue1232: darcs convert forgets \_darcs/prefs/prefs
+    -   Accept issue1232: darcs convert forgets \_darcs/prefs/prefs
+
+2010-04-23 Eric Kow
+  ~ -   Camel case Darcs.Patch.OldDate.
+    -   Camel case Darcs.URL.
+    -   Camel case Darcs.Resolution.
+    -   Camel case Darcs.CommandsAux.
+    -   Camel case Darcs.ArgumentDefaults.
+    -   Camel case ByteStringUtils.
+
+2010-04-25 Petr Rockai
+  ~ -   Skip tests/issue1645-ignore-symlinks on win32.
+    -   Bump h-s dependency to 0.4.12, working around an lstat bug on
+        windows.
+
+2010-04-22 Florent Becker
+  ~ -   export the right list of patches when not pulling anything
+    -   Resolve conflicts in Commands.Pull
+    -   Refactor Darcs.Commands.Pull
+
+

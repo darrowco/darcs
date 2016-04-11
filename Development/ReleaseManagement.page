@@ -1,0 +1,139 @@
+# Important points
+
+The release branch lives in
+<http://darcs.net/releases/branch-X.X>
+
+Point releases can go on the same branch as their parent release (so
+branch-2.4 would still be used for Darcs 2.4.1)
+
+Try to work from the main branch if at all possible. By rights all
+release-branch patches should come from the mainline and flow back to
+the mainline. This will allow us to do things in the future such as
+'darcs log --from-tag=2.4.3'
+
+## Patches for the freeze
+
+Patches that need to go in after a freeze should make this point very
+clear in the description, lest the Release Manager miss it.
+
+It would be helpful to test and submit these the release branch:
+
+    darcs send http://darcs.net/releases/branch-X.X
+
+# Workflow
+
+## Cutting the release branch
+
+1.  Announce release plans and schedule
+2.  Start writing NEWS entries
+3.  For major releases, create
+    <http://wiki.darcs.net/Releases/X.X>
+    (see 2.4)
+4.  Create release branch on darcs.net (don't forget to set
+    \_darcs/prefs/email to
+    [darcs-users@darcs.net](mailto:darcs-users@darcs.net))
+5.  If you're a BTS admin, try [editing the milestones](http://bugs.darcs.net/milestone) or else get an admin ([Eric Kow](/People/EricKow)?) to do it
+    * Suppose you want to release Darcs 2.30
+    * Rename: 2.28 CURRENT => 2.28 STABLE
+    * Rename: 2.30 HEAD    => 2.30 CURRENT (ly being released)
+    * Create: 2.32 HEAD
+6.  Edit the darcs-roundup posthooks on screened/reviewed (2.30 HEAD => 2.32 HEAD)
+7.  Make sure the release branches have appropriate posthook (2.30 CURRENT)
+
+## T minus 24 hours
+
+1.  Make sure you've got milestone-X.X accounted for on the BTS.  All closed or bumped, right?
+2.  Record NEWS changes, put in release date
+3.  bump version number in darcs.cabal
+4.  `cabal test && cabal test unit`
+5.  Draft release announcement and send to some proofreaders if not beta
+    (while test is running)
+6.  darcs tag
+7.  `release/release.sh`
+8.  Try to give some warning to binary packagers
+
+## Liftoff!
+
+1.  Darcs push to release branch
+2.  Upload tarball to hackage with `cabal upload`
+3.  Put tarball on the darcs website and test it
+4.  Change the
+    `darcs-unstable@darcs.net:releases/darcs-latest.tar.gz`
+    symlink to point to the tarball of the new release
+5.  Send release announcement, and put it on
+    <http://wiki.darcs.net/Releases/X.X>
+    (this gives us a permalink for the release announcement, see
+    [Releases/2.4]() as an example)
+6.  Update darcs homepage by editing FrontPage in the wiki repo
+7.  Update the Releases page on the wiki
+8.  Update the \#darcs topic
+9.  Stick around for a few days, in case we need a quick X.X.1 fix...
+
+## And reentry
+
+One week later...
+
+1.  Send [release announcement](/Templates/ReleaseAnnouncement), and put
+    it on
+    <http://wiki.darcs.net/Releases/X.X>
+    (this gives us a permalink for the release announcement, see
+    [/Releases/2.4]() as an example)
+2.  Celebrate!
+
+# Tricky bits
+
+## Argh! There's a bug in the release candidate
+
+Good! That means our release process caught something. Give yourself a
+pat on the QA back.
+
+Now what's the best way to respond to this?
+
+-   Create an issue on bugs.darcs.net for the bug if doesn't exist
+    yet, and mark its milestone as X.Y.
+-   Release a new RC when this issue has been resolved and the
+    resolution is in the release branch
+-   If the RC has been bug-free for a week, release darcs-X.Y.
+    Otherwise, repeat the above steps.
+
+## What happens if we discover a new bug/regression after the release?
+
+Don't panic. This sort of thing happens and the only thing you can
+really do is to try and cope with it to the best of your ability.
+
+Minor packaging flubs:
+
+-   you could always make a trivial point release quickly following
+    the original (it happens)
+-   for really minor issues, it should probably not take the packagers
+    any extra time to make a new version
+
+Actual bugs in Darcs:
+
+-   if it's a really serious regression, you should consider rolling
+    the binaries page on the wiki back so that it points to the last
+    good version
+-   mark the new bugs as milestone X.Y in the tracker
+-   start a new (point) release cycle
+
+A point release cycle:
+
+-   release an RC that fixes the issue that prompted the point release
+-   As with major releases, tag and release an RC as final after no
+    bugs have been reported for it within a week
+
+# Tips
+
+-   Use the buildbots. You should (ideally) only pull patches from
+    unstable that pass buildbots
+-   darcs log --from-tag=last_version > foo
+
+    and copy foo into the ChangeLog and edit it
+-   Advice on ChangeLogs, announcements: [How we write Launchpad
+    announcements](http://www.understated.co.uk/2008/how-we-write-launchpad-announcements/)
+-   Send release announcements to `darcs-users` and `haskell-cafe` for
+    prereleases and to `darcs-users`, `haskell-cafe` and `haskell` for
+    final releases. Reinier once sent release announcements to the
+    mailing lists of our colleagues of git and bazaar, but this was not
+    universally well-received.
+

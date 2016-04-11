@@ -1,0 +1,59 @@
+# What are subrepositories?
+
+# What should using subrepositories be like?
+
+It should...
+
+-   retain darcs' simplicity
+-   allow the user to do operation once - i.e. one record for all
+    subrepositories
+-   prevent subrepository boundaries from being crossed
+-   (fancy?) make it possible to share subrepositories across different
+    parent repos
+-   Andrew's wish: track subrepository patches with the umbrella
+    repository, but allow for selectively pulling patches from the
+    subproject's original repository into this one, as well as pushing
+    them back out. (say, I wanted my own branch of project B as part of
+    my project A, and wanted to keep B updated by pulling patches into
+    it from the outside, and pushing my own patches to B back out to the
+    community, all the while keeping my own version of B as just a part
+    of project A, with patches to A and B all together.
+
+# How could do we accomplish this?
+
+## List of proposals
+
+1.  Explicit support for [NestedRepositories](NestedRepositories) via
+    special patch types
+2.  Domains
+
+* * * * *
+
+## [NestedRepo](NestedRepo) patch types
+
+[http://lists.osuosl.org/pipermail/darcs-users/2005-October/008450.html](http://lists.osuosl.org/pipermail/darcs-users/2005-October/008450.html)
+
+### Summary
+
+### Details
+
+(JuliuszChroboczek and [DavidRoundy](DavidRoundy))
+
+### Examples
+
+* * * * *
+
+## Domains (John Meacham)
+
+### Summary
+
+### Details
+
+### Examples
+
+* * * * *
+
+# See also
+
+-   [NestedRepositories](NestedRepositories)
+

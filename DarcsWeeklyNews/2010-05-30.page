@@ -1,0 +1,57 @@
+# News and discussions
+
+1.  Darcs 2.4.4 was released this week:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-May/024057.html](http://lists.osuosl.org/pipermail/darcs-users/2010-May/024057.html)
+
+2.  Eric talked about the ongoing work in fixing the bug about non-ASCII
+    filenames:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-May/024103.html](http://lists.osuosl.org/pipermail/darcs-users/2010-May/024103.html)
+
+3.  Adolfo wrote his first Google Summer of Code blog report:
+
+    -   [http://abuiles.blogspot.com/2010/05/gsoc-week-1-getting-to-know-you.html](http://abuiles.blogspot.com/2010/05/gsoc-week-1-getting-to-know-you.html)
+
+# Issues resolved in the last week (2)
+
+issue1763 Petr Rockai
+  ~ -   use correct filename encoding in conflictors.
+    -   [http://bugs.darcs.net/issue1763](http://bugs.darcs.net/issue1763)
+
+issue1784 Guillaume Hoffmann
+  ~ -   push and pull print remote address right away
+    -   [http://bugs.darcs.net/issue1784](http://bugs.darcs.net/issue1784)
+
+# Patches applied in the last week (14)
+
+2010-05-18 Guillaume Hoffmann
+  ~ -   resolve issue1784: push and pull print remote address right away
+
+2010-05-05 Eric Kow
+  ~ -   Accept issue1825: darcs remove with no args leads to buggy
+        pending.
+
+2010-05-27 Petr Rockai
+  ~ -   Resolve issue1763: use correct filename encoding in conflictors.
+
+2010-05-15 Eric Kow
+  ~ -   Bump version to 2.4.4.
+    -   News entries for Darcs 2.4.4.
+
+2010-05-11 Petr Rockai
+  ~ -   Remove more not + redirections usage in testsuite (breaks
+        win32).
+    -   Do not redirect output to a file when using "not" to avoid
+        trouble on win32.
+
+2010-05-09 Eric Kow
+  ~ -   Bump version to 2.4.3.
+    -   News entry for Darcs 2.4.3.
+    -   Clarify 2.4.2 news entry.
+    -   Update homepage for 2.4.4 release.
+    -   Remove announce.html.
+    -   News entries for darcs 2.4.2.
+    -   Bump version to 2.4.2.
+
+

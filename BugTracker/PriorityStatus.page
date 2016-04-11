@@ -1,0 +1,55 @@
+# Priorities
+
+The priority value of an issue summarizes the importance of the issue,
+as seen by the darcs team. The importance of the issue, as seen by the
+reporter of the issue, must be apparent from the messages of the issue.
+
+The actual priority values that can be used at any time can be extracted
+from the bug tracker itself:
+[http://bugs.darcs.net/priority](http://bugs.darcs.net/priority) . The
+priority values are described in the following table, mostly taken from
+[http://roundup.sourceforge.net/doc-1.0/user\_guide.html](http://roundup.sourceforge.net/doc-1.0/user_guide.html)
+.
+
+-   `critical` - Makes Darcs unusable or mostly so, or causes data loss,
+    or introduces a security hole.
+-   `urgent` - Major effect on the usability of a package, without
+    rendering it completely unusable to everyone.
+-   `bug` - The default value, applicable to most bugs.
+-   `feature` - Feature requests (let's do this!)
+-   `wishlist` - Lower priority feature requests (patches welcome!).
+-   `invalid` - Spam, noise, etc
+-   `not-our-bug` - The issue cannot be resolved within darcs itself
+
+# Status
+
+The status value of an issue in the bug tracker summarizes the status of
+the issue. The actual status values that can be used at any time can be
+extracted from the bug tracker itself:
+[http://bugs.darcs.net/status](http://bugs.darcs.net/status). The use
+and interpretation of status values are described in the following
+table.
+
+-   `unknown` - Bugs with this status should be considered as needing
+    customer service and/or triage.
+-   `waiting-for` - Need details from the original reporter; need a
+    dependency fulfilled
+-   `needs-reproduction` - Can anybody else reproduce the symptoms?
+-   `needs-testcase` - Now that we can reproduce it, can we distill it
+    into a formal test?
+-   `needs-diagnosis/design` - We have all the information we need, now
+    need to think about something in particular
+-   `needs-implementation` - ready to hack!
+-   `in-progress` - Work is in progress to solve the problem described
+    by the issue. Assigned to person working on it.
+-   `deferred` - We just cannot deal with this bug right now and have to
+    retarget it for the far future. To be used sparingly.
+-   `duplicate` - The issue is a duplicate of another issue. Don't
+    forget to point to old bug using superseder
+-   `wont-fix` - Sorry.
+-   `given-up` - An issue which cannot be reproduced or with questions
+    left unanswered for a long time.
+-   `resolved` - The issue has been resolved. The state of the issue and
+    reason for considering the issue resolved must be described in
+    messages of the issue.
+

@@ -1,0 +1,95 @@
+# New notes (2011-08)
+
+-   {First,Last}Reverse - newest patches first instead of oldest first
+-   Given P and C st C depends on P (ie. P is "Parent")
+
+> -   First (eg. pull): ¬P → ¬C (no to "P" implies no to "C")
+> -   FirstReverse (eg. pull --reverse): C → P
+> -   Last (eg. unpull --reverse): P → C
+> -   LastReverse (eg. unpull): ¬C → ¬P
+
+-   Watch out for the fact that unpull --reverse is Last, and unpull is
+    LastReverse
+
+# Old notes
+
+A large number of darcs commands allow you select a number of patches on
+which to run some kind of job. How does this patch selection mechanism
+work?
+
+-   What is reversed for? - this seems to refer to the order in which
+    patches are evaluated. Note that when working with reversed, we also
+    invert the patches
+-   What is last for? - this is only used in commands which delete
+    changes or patches (revert, unrecord, obliterate). Note that last
+    does not neccesarily mean that `islast` will be set! See below.
+
+''FIXME: I don't know what's going on yet. I'm just taking notes until
+things become clear for me''
+
+A job is of type `([Patch],[Patch]) -> IO a`. Here is a table of
+selections of all the jobs which accept input from a selection and
+meaning of the two patch lists for each job:
+
+    +---------------+------------+--------------+-----------+---------+
+    |job            | selection  | last/rev     | first     | second  |
+    +---------------+------------+--------------+-----------+---------+
+    |Amend patch    |p from repo |              |oldp       |skipped  |
+    |Rollback named |ch to file  |last reversed |           |         |
+    |Rollback prim  |ch to file  |last          |           |         |
+    |Amend          |ch to file  |              |unrec      |chs      |
+    |Revert         |ch to file  |last          |p          |skipped  |
+    |Unrevert       |ch to file  |              |skipped    |p        |
+    |Record         |ch to file  |              |skipped    |chs      |
+    |Record deps    |ch          |     reversed |           |deps     |
+    |Apply          |ch          |              |           |to apply |
+    |Pull           |ch          |              |           |to pull  |
+    |Push           |ch          |              |           |to push  |
+    |Send           |ch          |              |           |to send  |
+    |Unrecord       |ch          |last reversed |to unrecord|         |
+    |Obliterate     |ch          |last reversed |ps         |         |
+    +---------------+------------+--------------+-----------+---------+
+
+# patch selection commands
+
+    |text_select |with_any_selected_changes           |
+    |gui_select  |with_any_selected_changes           |
+    |text_view   |Changes (with_any_selected_changes) |
+    |wspr        |with_selected_patch_from_repo       |
+
+Notes:
+
+-   Useful insight: `text_select` recursively processes a list of
+    patches, only that we represent this with three lists:
+-   `lps_done :: [LabelledPatch]`
+
+    -   patches the user has already looked at
+
+-   `lps :: [LabelledPatch]`
+
+    -   patches which the user has not looked at (head == current patch)
+
+-   `pc  :: PatchChoices`
+
+    - this is where we can look up a patch to see if it should be forced
+    yes or no
+
+-   Before `text_select` is called - `with_any_selected_changes` takes
+    care to reverse the patches if `isreversed` is set. It also does
+    other stuff, but I'm not sure what, yet.
+-   `isreversed` and `isinverted` are always true at the same time --
+    it's just that we name them differently to call attention to
+    different aspects of the patch
+
+# See also
+
+-   [DeveloperFAQ](../FAQ)
+-   SelectChanges.lhs
+
+    -   the user interface to patch selection
+
+-   PatchChoice.lhs
+
+    -   the patch selection internals (called by `SelectChanges.lhs`)
+
+

@@ -1,0 +1,24 @@
+# Major releases
+
+Following existing practice and the guidelines on
+[http://wiki.darcs.net/Development/ReleaseManagement](http://wiki.darcs.net/Development/ReleaseManagement),
+we will have a two-week soft freeze, followed by a two week deep freeze,
+followed by the release.
+
+The start of the soft freeze (day N) will be @XXX@day @DD@ @MMM@
+
+  ------------- ------ ------- --------- -------------------------------------
+  On @XXX@day   @DD@   @MMM@   (N+3),    beta 1 is tagged and released
+  On @XXX@day   @DD@   @MMM@   (N+14),   the release branch is deep
+                                         -frozen
+  On @XXX@day   @DD@   @MMM@   (N+17),   beta 2 is tagged and relased
+  On @XXX@day   @DD@   @MMM@   (N+24),   rc1 is taggd and released
+  On @XXX@day   @DD@   @MMM@   (N+30),   rc2 or final is tagged and released
+  ------------- ------ ------- --------- -------------------------------------
+
+During the soft freeze, only fixes for serious issues and patches
+achieving release targets will be pulled to the release branch. The end
+of the release cycle is uncertain: when new bugs are found in a release
+candidate, there will be another RC a week later. Only when bugs are not
+found in a release candidate for a week, it will be tagged and released
+as darcs @X.Y.0@

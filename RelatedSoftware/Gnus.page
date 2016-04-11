@@ -1,0 +1,59 @@
+The following code, when put into your .gnus.el, will bind the key a in
+such a way that hitting it on an attached Darcs patch will query for a
+darcs repository to apply this patch to.
+
+    (eval-after-load "gnus-art"
+      '(define-key gnus-mime-button-map (kbd "a") 'my-gnus-darcs-apply-part))
+
+    (defun my-gnus-darcs-apply-part (repo)
+      "Apply the MIME part under point to a Darcs repository."
+      (interactive "DApply to Darcs repository: ")
+      (gnus-article-check-buffer)
+      (let ((data (get-text-property (point)
+                                     'gnus-data)))
+        (when data
+          (mm-with-unibyte-buffer
+            (mm-insert-part data)
+            (my-send-region-to-command (point-min)
+                                       (point-max)
+                                       "darcs" "apply"
+                                       (format "--repodir=%s"
+                                               (expand-file-name repo))
+                                       "-a")))))
+
+    (defun my-send-region-to-command (beg end command &rest args)
+      "Call COMMAND with ARGS, and display output in a special buffer."
+      (let* ((coding-system-for-write 'binary)
+             (buf (with-current-buffer
+                      (get-buffer-create "*Shell Command Output*")
+                    (setq buffer-read-only nil)
+                    (erase-buffer)
+                    (current-buffer)))
+             (exit-status (apply 'call-process-region
+                                 beg end
+                                 command
+                                 nil buf nil
+                                 args)))
+        (with-current-buffer buf
+          (setq mode-line-process
+                (cond ((null exit-status)
+                       " - Error")
+                      ((stringp exit-status)
+                       (format " - Signal [%s]" exit-status))
+                      ((not (equal 0 exit-status))
+                       (format " - Exit [%d]" exit-status)))))
+        (if (with-current-buffer buf (> (point-max)
+                                        (point-min)))
+            ;; There's some output, display it
+            (display-message-or-buffer buf)
+          ;; No output; error?
+          (cond ((null exit-status)
+                 (message "(Command failed with error)"))
+                ((equal 0 exit-status)
+                 (message "(Command succeeded with no output)"))
+                ((stringp exit-status)
+                 (message "(Command killed by signal %s)"
+                          exit-status))
+                (t
+                 (message "(Command failed with code %d and no output)"
+                          exit-status output))))))

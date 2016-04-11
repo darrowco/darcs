@@ -1,0 +1,7 @@
+# The sources have been moved
+
+I could find the sources only at <http://hub.darcs.net/ganesh/darcs-rebase-20120820-old>,  not the initially given link.
+
+Are they too old? Have they already been merged into mainline darcs? --Ivan Z.
+
+It looks like this feature has already been merged into a 2.8.x release (<http://bugs.darcs.net/issue938>), so no neeed for separate sources --Ivan Z.

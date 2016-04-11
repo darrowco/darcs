@@ -1,0 +1,7 @@
+`darcs-history` is a program to be used as
+darcs posthook and that tracks patch movements inside of a repository:
+
+-   <http://lists.osuosl.org/pipermail/darcs-devel/2013-February/014754.html>
+-   <http://lists.osuosl.org/pipermail/darcs-devel/2013-February/014898.html>
+-   <http://www.informatik.uni-kiel.de/~sebf/darcs/darcs-history/README.html>
+

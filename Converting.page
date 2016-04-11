@@ -1,0 +1,316 @@
+# Converting SVN repositories to Darcs
+
+## Via Git
+
+1. Use git-svn to clone a svn repo to git.
+2. Then use git fast-export and Darcs > 2.10 to import to a Darcs repo.
+
+## Using tailor
+
+Here is how to convert a SVN repository into a darcs repository, using
+[Tailor](RelatedSoftware/Tailor) .
+
+Sadly, tailor, as of 0.9.35, does not correctly handle svn moves. This
+can be manually worked around when tailor fails by doing a
+`darcs check`, `rm _darcs/index`, fixing \_darcs/patches/pending by
+erasing all the lines that incorrectly show adds of files that are in
+the moved directories (and probably also removes of files, which may be
+a different bug), doing `darcs record --all --pipe` and putting in the
+requsite meta-information etc., and then ending with another
+`darcs check`. Tailor should then be restarted from the next patch. At
+minimum this requires changing the config file to set the starting
+revision and removing the tailor.state\* files.
+
+Let us take the following project as an example:
+<http://code.google.com/p/ppss>. First,
+install Tailor (`apt-get install tailor` on Ubuntu/Debian). Then, in a
+file named `recipe.py`, paste:
+
+    #!/usr/bin/env /usr/bin/tailor
+
+    """
+    [DEFAULT]
+    verbose = True
+    patch-name-format=%(firstlogline)s
+    remove-first-log-line=True
+
+    [ppss]
+    target = darcs:ppss
+    root-directory = ppss_conversion
+    source = svn:ppss
+    subdir = ppss_darcs
+
+    [darcs:ppss]
+    darcs-command = darcs
+
+    [svn:ppss]
+    repository = http://ppss.googlecode.com/svn/
+    module = trunk 
+    """
+
+What this recipe file means is that Tailor is going to create a
+`ppss_conversion` directory where everything will happen, and inside it
+a `ppss_darcs` directory that will contain the darcs version of the
+initial SVN repository.
+
+Then make it executable (`chmod +x recipe.py`) and run it. After a few
+minutes you will have your darcs repository. Of course this operation is
+much faster if the SVN repository you want to convert is located on your
+hard drive.
+
+Moreover, Tailor enables you to maintain a two-way sync between a SVN
+repository and a Darcs repository: (TODO update dead link).
+
+This recipe can be easily adapted to convert a CVS repository to a darcs
+one.
+
+# Converting CVS repositories to Darcs
+
+## Using cvs-fast-export and darcs convert import
+
+This should be enough for one-time conversions.
+
+## Using Tailor
+
+See the SVN section 
+
+## One-time conversion with cvs2darcs
+
+There is a script called **cvs2darcs** that can import a CVS repository
+as a Darcs repository available from
+<http://ab-initio.mit.edu/cvs2darcs>
+
+Or for developers who want to hack on cvs2darcs:
+
+    darcs clone http://ab-initio.mit.edu/cvs2darcs/cvs2darcs
+    autoreconf --verbose --install --symlink --force
+
+Configure and install it with:
+
+    ./configure
+    make install
+
+(You can omit the second step if you don't have root access and/or just
+want to run cvs2darcs from the source directory. You can also change the
+installation directory with the usual --prefix option to ./configure.)
+
+If you have access to the CVS repository itself (and cannot just check
+out from it), then it will greatly speed things up if you copy the
+repository to a local disk. You do not need to do anything special to
+access a local CVS repository; its CVSROOT is just the absolute path of
+the repository directory. (There is no need to put a :pserver: or :ext:
+access method in front of the root.) Suppose that the CVS repository is
+located in "/the/cvsrepo", and that the project you want is called
+"myproject". Then, you just do:
+
+**cvs2darcs -d /the/cvsrepo myproject**
+
+This will create a directory "myproject" and convert it to a Darcs
+repository. Other options for cvs2darcs can be found in its man page,
+online at:
+<http://ab-initio.mit.edu/cvs2darcs/cvs2darcs-man.html>
+
+The script is fairly verbose. You should first see a warning about a
+file "Tag" not existing. Then it should go on to check out from the CVS
+repository one version after the other, starting with the oldest. You
+should also see darcs ask some questions such as "author?" and "name?",
+but the answers to these will stay hidden. The whole process will take
+some time. As mentioned above, having the CVS repository available
+locally helps a lot. There should be some support for checking out CVS
+branches (see the **-b** option in the man page).
+
+In 2009, there was a [discussion on the mailing list about how to make
+cvs2darcs
+work](http://lists.osuosl.org/pipermail/darcs-users/2009-January/017394.html).
+We talked about "cvsps not found in path" and "invalid argument" errors.
+
+* * * * *
+
+A couple concepts that confuse many CVS users at first:
+
+A branch in darcs is a repository (repo). A repo can contain many tags,
+but only one branch.
+
+You cannot "roll back" the working directory to an earlier version
+without actually rolling the whole repo back to that version. Well, you
+sort of can, but it involves using darcs commands that could be
+considered risky. Instead, if you want to have a working directory for
+an earlier version, just create a new repo that only contains patches up
+to that version. Leave your original repo alone.
+
+As a result, you are likely to need to create new repos fairly often.
+Since darcs does not manage multiple repos, it is up to you to use good
+naming and structure to keep everything sane. One recommended approach
+is to put all the related repos in a single top-level project directory:
+
+    MyProject/
+      main/
+      Branch-1.0/
+      PlayAroundWithUtf8/
+
+Using this model, there would be nothing in the MyProject directory
+except some darcs repos.
+
+### Tracking ongoing changes in a CVS repository
+
+Sometimes, rather than doing a one-time conversion to darcs and then
+sticking with darcs exclusively, you may wish to continue to use CVS but
+mirror the CVS changes the darcs repository. This is possible with
+cvs2darcs. First, when you run cvs2darcs for the first time, you should
+pass the --preserve-cvs flag to preserve the CVS information in the
+checkout directory. Alternatively, just run cvs2darcs in an existing
+checkout directory:
+
+    cd /path/to/checkout/directory
+    cvs2darcs .
+    cvs update -A
+
+(The last command resets any sticky tags set during the cvs2darcs
+conversion.) Then, work with the CVS repository as usual, committing
+patches or updating to get new ones. At any point in time, you can then
+run:
+
+    cvs2darcs .
+    cvs update -A
+
+to bring the darcs repository into sync with any CVS patches checked in
+since the last cvs2darcs invocation.
+
+### Converting CVS' '.cvsignore' to Darcs' 'boring'
+
+Here is a script by [Emilio
+Lopes](http://www.emacswiki.org/cgi-bin/wiki/EmilioLopes) : It works by
+translating CVS' `.cvsignore` files to a Darcs `boring` file. Note that
+there exists one `.cvsignore` per project subdirectory.
+
+    #! /bin/sh
+    # -*- Scheme -*-
+    exec scsh -o srfi-1 -o srfi-13 -o let-opt -e main -s "$0" "$@"
+    !#
+
+    ;;; cvsignore2darcsboring --- convert .cvsignore files to Darcs' boring format
+
+    ;; Copyright (C) 2005 Emílio C. Lopes
+
+    ;; Author: Emílio C. Lopes <eclig@gmx.net>
+    ;; Created: Mon Aug 15 10:55:56 CEST 2005
+    ;; Version: 0.1
+
+    ;; This program is free software; you can redistribute it and/or modify
+    ;; it under the terms of the GNU General Public License as published by
+    ;; the Free Software Foundation; either version 2, or (at your option)
+    ;; any later version.
+
+    ;; This program is distributed in the hope that it will be useful,
+    ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ;; GNU General Public License for more details.
+
+    ;; If you have not received a copy of the GNU General Public License
+    ;; along with this software, it can be obtained from the GNU Project's
+    ;; World Wide Web server (http://www.gnu.org/copyleft/gpl.html), from
+    ;; its FTP server (ftp://ftp.gnu.org/pub/gnu/GPL), by sending an
+    ;; eletronic mail to this program's author or by writting to the
+    ;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+    ;; Boston, MA 02110-1301, USA.
+
+    ;; If you find this program useful please consider making a donation to
+    ;; the Free Software Foundation. See http://www.fsf.org/help/donate.html
+    ;; (USA), http://www.fsfeurope.org/help/donate.en.html (Europe) or
+    ;; http://fsf.org.in (India) for details on how to accomplish this.
+    ;; In some countries your donation is tax-deductible.
+
+    ;;; Commentary:
+
+    ;; This program converts a set of CVS' .cvsignore files in one
+    ;; (hopefully) equivalent Darcs ignore file.  To use it change to the
+    ;; directory containing the root of your CVS project and start this
+    ;; program there.  It will search recursively for all .cvsignore files
+    ;; in the directory tree and write the corresponding Darcs boring file
+    ;; to the standard output.  You can then append the output of this
+    ;; program to Darcs' default boring file (_darcs/prefs/boring).
+    ;; No files are actually created or deleted by this program.
+
+    ;; To run this program you need a copy of Scsh, the Scheme Shell.
+    ;; It is freely available from http://www.scsh.net.  This program was
+    ;; written for Scsh version 0.6.6.
+
+    
+    ;;; Code:
+
+    (define (main prog+args)
+      (process-dir (cwd) '()))
+
+    (define (process-dir dir path-list)
+      (with-cwd dir
+        (let ((cvsignore ".cvsignore"))
+          (if (file-exists? cvsignore)
+              (for-each writeln (cvsignore->darcsboring cvsignore (path-list->file-name path-list)))))
+        (for-each (lambda (subdir)
+                    (process-dir subdir (append path-list (list subdir))))
+                  (subdirs "."))))
+
+    (define (cvsignore->darcsboring cvsignore prefix)
+      (cvs-globs->darcs-regexps
+         (append-map (field-splitter) (file-as-string-list cvsignore))
+         prefix))
+
+    (define (cvs-globs->darcs-regexps cvs-globs . maybe-prefix)
+      (let-optionals maybe-prefix ((prefix ""))
+        (map (lambda (glob)
+               (string-append "^" (maybe-add-slash prefix) (glob->regexp glob) "$"))
+             cvs-globs)))
+
+    (define (glob->regexp glob-pattern)
+      (fold (lambda (from/to string)
+              (replace-regexp-in-string (rx ,(car from/to)) (caddr from/to) string))
+            glob-pattern
+            '(("." -> "\\.") ("?" -> ".?") ("*" -> ".*")))  )
+
+    (define (maybe-add-slash str)
+      (if (or (string-null? str)
+              (string-suffix? "/" str))
+          str
+          (string-append str "/")))
+
+    (define (replace-regexp-in-string regexp replacement string)
+      ;; Replace all occurrences of REGEXP with REPLACEMENT in STRING.
+      ;; If REPLACEMENT is a procedure, it is applied to the match
+      ;; structure for the given match and should return a string to be
+      ;; used in the result.
+      ;; Example:
+      ;;    (replace-regexp-in-string (rx "foo") "bar" "foo foobar abc foofoo")
+      ;;       => "bar barbar abc barbar"
+      (regexp-substitute/global #f regexp string 'pre replacement 'post))
+
+    (define (file-as-string-list file)
+      ;; Return contents of FILE as a list of lines.
+      (call-with-input-file file
+        (lambda (port)
+          (port->string-list port))))
+
+    (define (subdirs dir)
+      (with-cwd dir
+        (filter (lambda (subdir)
+                  (and (file-directory? subdir)
+                       (not (member subdir '("cvs" "CVS" "_darcs")))))
+                (directory-files dir))))
+
+    (define (writeln . args)
+      (for-each display args)
+      (newline))
+
+    ;;; cvsignore2darcsboring ends here
+
+You also have to manually add the pattern `\.a$`, used for library
+archives, which CVS ignores by default.
+
+### Related Pages
+
+-   [CVS-style development with
+    darcs](http://lists.osuosl.org/pipermail/darcs-users/2004-July/002356.html),
+    a thoughtful post to the darcs users list.
+-   David Roundy gives his thoughts on [interoperability with
+    CVS](http://lists.osuosl.org/pipermail/darcs-users/2003-October/000535.html)
+    (Oct, 2003)
+

@@ -1,0 +1,84 @@
+# About the repositories
+
+  repo         patches   files   darcs dir   total size
+  ------------ --------- ------- ----------- ------------
+  GHC          20942     1298    143 MB      165 MB
+  darcs        7920      504     41 MB       45 MB
+  tahoe-lafs   4232      458     65 MB       65 MB
+  tabular      55        16      0.34 MB     0.39 MB
+
+# Todo
+
+These benchmarks are not up to date with regards to the Darcs 2.5
+release.
+
+# General notes
+
+Unless otherwise indicated, each benchmark was run with a hot disk
+cache. Before timing a benchmark, we would run it once first, without
+timing, to warm up the cache. See below for some results with a forced
+cold cache.
+
+The number of runs for each test satisfies the following constraints:
+
+-   at least 3 runs
+-   at least 10 seconds worth of runs
+-   at most 100 runs
+
+We're currently investigating long term storage of results so that we
+can use more than 100 runs, and also the use of the criterion package
+for a more principle approach.
+
+# Benchmarks
+
+For the most relevant benchmarks, select a machine which most resembles
+yours
+
+  name                            purchased   description   operating system          CPU                    RAM   hard disk
+  ------------------------------- ----------- ------------- ------------------------- ---------------------- ----- ---------------
+  [GhLinux](Benchmarks/GhLinux)   2007        desktop       Linux [Ubuntu 10.04]      3Ghz Intel Pentium 4   2GB   ?
+  [Dewdrop](Benchmarks/Dewdrop)   2006-09     Macbook       MacOS X 10.6.2 (32 bit)   2GHz Intel Core Duo    2GB   7200 RPM SATA
+
+# Older Benchmarks
+
+  name                                      purchased    description   operating system                CPU                     RAM   hard disk
+  ----------------------------------------- ------------ ------------- ------------------------------- ----------------------- ----- ------------------------------
+  [TahoeLAFSOrg](Benchmarks/TahoeLAFSOrg)   2005 or so   server        Linux [Ubuntu 10.04] (32 bit)   3GHz Intel Pentium 4    1GB   SATA
+  [Quasar](Benchmarks/Quasar)               2008-08      desktop       Windows Vista (32 bit)          3GHz Intel Core 2 Duo   2GB   7200 RPM SATA hardware RAID1
+  [Apricot](Benchmarks/Apricot)             2008-02      Macbook Pro   MacOS X 10.5.8                  2GHz Intel Core 2 Duo   4GB   5400 RPM
+  [Vs2](Benchmarks/Vs2)                     2005         desktop       Linux [Debian Sid]              Pentium 4               1GB   IDE
+
+# Darcs vs. Git and Mercurial
+
+* see [Mornfall](Benchmarks/Mornfall)
+
+# General comments on the benchmarks
+
+1.  If you upgrade to Darcs 2.4, it's a good idea to
+    `darcs optimize --pristine` your repositories
+2.  Note that performance for such repositories may degrade for Darcs
+    2.3.1, however.
+3.  `darcs get` appears to be painfully slow on MacOS X (esp compared to
+    Linux). Why?
+
+# Contribute benchmarks!
+
+You just have to
+
+    cabal update
+    cabal install darcs-benchmark
+    cd /tmp/ && mkdir bench && cd bench
+    darcs-benchmark get
+    darcs-benchmark run darcs-2.3.1 darcs-2.3.99.2
+
+For ongoing work on darcs-benchmark, try
+`darcs get --lazy http://darcsden.com/kowey/darcs-benchmark` or see
+[Development/Benchmarks]()
+
+# Todo
+
+Use [Robert Frendt's inter-DVCS benchmarking
+scripts](http://lists.osuosl.org/pipermail/darcs-users/2010-June/024396.html)
+with successive versions of darcs?
+
+[A simpler option](http://blog.prelode.com/2010/04/trowmicrobenchmarks/)

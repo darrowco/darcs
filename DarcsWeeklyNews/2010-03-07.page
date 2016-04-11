@@ -1,0 +1,81 @@
+# News and discussions
+
+1.  Darcs 2.4 was released! Reinier wrote a comprehensive announcement
+    at:
+
+    -   [http://darcs.net/announce.html](http://darcs.net/announce.html)
+
+2.  Petr explained the difference of performance between darcs 2.3.1 and
+    2.4 on optimised pristine repositories:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-February/023155.html](http://lists.osuosl.org/pipermail/darcs-users/2010-February/023155.html)
+
+3.  Max Battcher released musdex, a tool enabling darcs to version
+    compressed files formats such as docx or odt:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-March/023171.html](http://lists.osuosl.org/pipermail/darcs-users/2010-March/023171.html)
+
+# Issues resolved in the last week (3)
+
+issue1731 Reinier Lamers
+  ~ -   bump the hashed-storage dependency once more
+    -   [http://bugs.darcs.net/issue1731](http://bugs.darcs.net/issue1731)
+
+issue1749 Reinier Lamers
+  ~ -   refuse to remove nonempty directories in makeRemovePatch
+    -   [http://bugs.darcs.net/issue1749](http://bugs.darcs.net/issue1749)
+
+issue1755 Eric Kow
+  ~ -   fix apparent hard line break in homepage.
+    -   [http://bugs.darcs.net/issue1755](http://bugs.darcs.net/issue1755)
+
+# Patches applied in the last week (27)
+
+2010-03-01 Eric Kow
+  ~ -   Resolve issue1755: fix apparent hard line break in homepage.
+    -   Add a darcs get link to the homepage.
+
+2010-02-27 Ganesh Sittampalam
+  ~ -   update link to stable source
+    -   resolve conflict in index.html
+
+2010-02-27 Reinier Lamers
+  ~ -   Add 2.4 release announcement to web site
+    -   TAG 2.4
+    -   Bump version number for 2.4 release
+
+2010-02-24 Eric Kow
+  ~ -   Restore import of Origin needed for witness builds.
+
+2010-02-14 Benedikt Schmidt
+  ~ -   fix unused imports warnings
+
+2010-02-18 Reinier Lamers
+  ~ -   TAG 2.3.99.2
+    -   Bump version number for darcs 2.4 rc2
+    -   resolve issue1731: bump the hashed-storage dependency once more
+    -   TAG 2.3.99.1
+    -   Bump verson for 2.4rc1
+    -   TAG 2.3.98.3
+    -   Bump version number for darcs 2.4 beta 3
+    -   TAG 2.3.98.2
+    -   Bump version number for darcs 2.4 beta 2
+    -   TAG 2.3.98.1
+    -   Bump version for 2.4 beta 1
+
+2010-02-12 Petr Rockai
+  ~ -   Purge unused bits of checkpoint reading.
+    -   Add a missing Functor constraint on ReadableDirectory TreeMonad
+        instance.
+    -   Replace Slurpy usage in Commands.Diff.
+    -   Remove unused force\_replace\_slurpy.
+
+2010-02-08 Eric Kow
+  ~ -   Accept issue1740: darcs is confused if you move a tracked dir.
+
+2010-02-21 Reinier Lamers
+  ~ -   Rename and adjust issue 1749 tests now that it succeeds
+    -   resolve issue1749: refuse to remove nonempty directories in
+        makeRemovePatch
+
+

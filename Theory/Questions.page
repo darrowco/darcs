@@ -1,0 +1,93 @@
+* * * * *
+
+**See first of all**
+[David Roundy's explanation of the theory of patches](MergersDocumentation).
+
+* * * * *
+
+See [Motivation](Motivation) and [Example](Example).
+
+A patch is a partial function that maps trees to trees, yes? So P\_2
+P\_1 is just partial function composition? What does P <---\> P' mean -
+is it P = P' ie they are exactly the same maps, or just that P(x) ==
+P'(x) for the context x and P and P' are somehow "similar"? Is the
+inverse required to be an inverse for all inputs to the partial
+function, or just the context?
+
+More precisely, what is unwinding?
+
+* * * * *
+
+*[Motivation](Motivation) - Uses the word commute without saying what it
+means (in this context).*
+
+About 'commute': In algebra, the commutator of two elements is [A, B] =
+AB - BA, thus if [A, B] = 0 then AB = BA holds, which means you can
+change the order of AB to BA, you can commute both elements.
+
+This turned out to be a very important property in quantum physics: one
+can only measure two quantities simultaneously if they commute. Some
+important pairs like momentum and position don't commute. (see
+Heisenberg's uncertainty relation). The mathematical background is that
+you can't find a basis to represent two quantities simultaneously in
+Hilbert space (think: linear vector space in infinite dimensions) if
+they don't commute.
+
+If one would say that patch theory relied on algebra, it wouldn't sound
+as sexy. If I oversaw any deeper connection to quantum mechanics, please
+correct me. :-)
+
+By the way, where is patch theory described on this wiki? Can't find
+more than those few examples.
+
+Marc
+
+* * * * *
+
+# Link with OT and so6 work?
+
+There seems to be a strong connection between what darcs does, and
+scientific work on collaborative editing (e.g. "Operational
+Transformation"
+<http://doi.acm.org/10.1145/289444.289469>
+resp.
+<http://citeseer.ist.psu.edu/sun98operational.html>,
+including confluent, causality and intention preserving combination of
+operations. There is also related work in Software Configuration
+Management, e.g. "Operation-Based Merging"
+<http://doi.acm.org/10.1145/142868.143753>.
+Does darcs do anything *more* than they do, or is it the same
+theoretical foundation?
+
+Axel
+
+* * * * *
+
+''In a footnote of the manual
+([http://darcs.net/manual/footnode.html\#foot2011)](http://darcs.net/manual/footnode.html#foot2011)):
+« Alas, I don't know how to prove that the two constraints even can be
+satisfied. The best I have been able to do is to believe that they can
+be satisfied, and to be unable to find an case in which my
+implementation fails to satisfy them. »''
+
+''What are the implications of this? Is it possible that darcs doesn't
+restore a tagged version correctly because at the time of restoring
+there are new patches in the repository which it tries to merge?''
+
+No, it simply means that it might be the case that a merge is not
+possible, *i.e.* that « darcs pull » will fail sometimes.
+
+When you try to reconstruct a tag, you're trying to commute back to a
+configuration that once existed, so we already know that the commutation
+is possible.
+
+* * * * *
+
+*Can someone show me a transformation of a token name that is
+represented as such in the patches? When i change token names and look
+at whatsnew, i see line diffs via hunks.*
+
+Reading the darcs manual suggests that you need to use "darcs rename":
+it isn't "sufficiently smart" to "just realize" that all you've done is
+change a token name; I don't know anything about the Darcs internals, so
+I don't know how hard it would be to make darcs "sufficiently smart."

@@ -1,0 +1,374 @@
+# Building Darcs under Windows
+
+## with stack
+
+The following seems to work:
+
+    stack build --flag darcs:-curl --flag darcs:use-time-1point5
+
+## The simple way 
+
+To get working
+Haskell under Windows, you should use the [Haskell
+Platform](http://hackage.haskell.org/platform).
+From there, just open a cmd.exe window and type `cabal update` and
+`cabal install darcs -f-curl`.
+
+## Development
+
+To run the functional tests bundled with darcs (which is quite essential
+if you want to work on darcs itself), you need at least
+[MSYS](http://www.mingw.org/download.shtml). It comes with an
+easy-to-use installer. (You should find it under MSYS Base System,
+Current Release, MSYS-<version\>.exe.)
+
+## Building with cURL
+
+[FIXME this process needs to be checked]
+
+You may get better http performance if you build and install darcs with
+cURL support. However, doing this is *much* harder than the above. Also,
+installing this stuff is probably easier as an administrator (msys, at
+least). You need bash and a C compiler:
+
+[MSYS/MinGW](http://www.mingw.org/download.shtml) - a minimal GNU tools
+for Windows
+
+1.  Download and run MSYS-1.0.10.exe (current) as admin - installing
+    this will give you the basic tools, like tar.
+2.  Download and run msysDTK-1.0.1.exe (current) as admin
+3.  Setup your fstab
+
+<!-- -->
+
+    cp /etc/fstab.sample /etc/fstab # Close your MSYS window
+
+4.  Create an easy-to-type location for your stuff
+
+<!-- -->
+
+    mkdir /tmp/dstuff
+    cd /tmp/dstuff
+    mkdir mingw
+    mkdir msys
+
+5.  Download MinGW using the easy installer. I think I did the full
+    install. Alternatively, grab these packages and put them in
+    `/tmp/dstuff/mingw`:
+6.  mingw-runtime-3.9.tar.gz (current)
+7.  gcc core 3.4.5 (candidate) - other versions may work
+8.  binutils-2.16.91-20060119-1.tar.gz (candidate) - has to be this
+      ~ version
+
+9.  w32api-3.6.tar.gz (current)
+10. Untar all your packages. In MSYS:
+
+<!-- -->
+
+    mkdir /mingw
+    cd /mingw
+    for f in /tmp/dstuff/mingw/*.tar.gz; do tar xzf $f; done
+    cd /
+    for f in /tmp/dstuff/msys/*.tar.bz2; do tar -x --overwrite -j -f $f; done
+
+14. Create some handy directories:
+
+<!-- -->
+
+    mkdir /usr/src
+    mkdir -p /usr/local/bin
+
+## OpenSSL
+
+1.  Visit
+    <http://www.slproweb.com/products/Win32OpenSSL.html>
+    (OpenSSL binaries)
+2.  Download the OpenSSL installer and run it as an administrator
+3.  Get expected library names for these:
+
+<!-- -->
+
+    cd /c/OpenSSL/lib/MinGW
+    cp libeay32.a libcrypto.a
+    cp sslea32.a libssl.a
+
+## curl
+
+1.  Visit <http://curl.haxx.se/download.html>
+2.  Obtain the source tarball
+3.  Compile curl
+
+<!-- -->
+
+    tar xzf curl-7.18.1.tar.gz
+    cd curl-7.18.1
+    ./configure --with-ssl=/c/OpenSSL
+    make
+    make install
+
+## darcs
+
+1.  Copy the curl includes and libraries into the relevant locations
+    [FIXME]:
+
+<!-- -->
+
+    cp /c/OpenSSL/lib/MinGW/* /mingw/lib
+    cp /c/OpenSSL/lib/MinGW/* /c/ghc/ghc-6.6/gcc-lib
+    cp -R /usr/local/include/curl /mingw/include 
+    cp -R /usr/local/include/curl /c/ghc/ghc-6.6/gcc-lib/include
+    cp /usr/local/lib/libcurl* /mingw/lib
+    cp /usr/local/lib/libcurl* /c/ghc/ghc-6.6/gcc-lib         
+
+2.  Download darcs:
+
+<!-- -->
+
+    cd /tmp/dstuff
+    download http://www.darcs.net/darcs-2.3.0.tar.gz
+    tar xzf darcs-2.3.0.tar.gz
+
+3.  Build it once:
+
+<!-- -->
+
+    cd darcs-2.3.0
+    cabal install
+
+4.  [FIXME static builds?]
+5.  Make sure libcurl-4.dll is on your path:
+
+<!-- -->
+
+    export PATH=/usr/local/lib:${PATH}
+
+6.  Enjoy!
+
+[FIXME, the troubleshooting bits seemed pretty out of date, and
+basically all related to automake/autoconf/make related problems that
+should not exist anymore... so I deleted it.]
+
+# One minute SSH checklist
+
+Having trouble using darcs with SSH on Windows?
+
+1.  Make sure darcs knows where to find ssh. Darcs 2.8 and below search
+    for 'ssh', 'scp', and 'sftp' by default. Newer darcs may be smarter,
+    but for now, you'll have to copy plink to ssh, pscp to scp and pscp
+    to scp and update your PATH.
+
+2.  Set up an SSH key with pageant
+
+3.  Log in manually once and trust the server key.
+
+4.  Always use \`[login@server.com](mailto:login@server.com)\` instead
+    of \`server.com\`
+
+Steps 2-4 are due to a usability bug in Darcs. The problem is that Putty
+SSH communicates with users by reading on stdin and writing to stderr,
+as opposed to the terminal. The code which interacts with darcs
+transfer-mode does not cope with this situation very well at the moment.
+It neither passes the output through nor feeds any user input into
+putty, thus leading to an apparent hang. Sorry for the inconvenience.
+We're working on it!
+
+# Configuration
+
+These instructions describe how to set up Windows as a darcs client (not
+a darcs server). Darcs can be run from the standard Windows command
+shell, cmd.exe. Cygwin is not officially supported by the Darcs team,
+but perhaps you could try Zooko's wrapper script mentioned in the manual
+process below.
+
+## From a binary
+
+-   Download and unzip the [darcs
+    package](http://darcs.net/Binaries) for Windows. Let
+    us refer to the resulting directory (including the path to it) as
+    *DARCSDIR*.
+
+-   Add *DARCSDIR* to the end of your path:
+    -   XP:
+
+        -   Right click on 'My Computer'.
+        -   Choose 'Properties'.
+        -   Click the 'Advanced' tab.
+        -   Click 'Environment variables'
+
+    -   Vista: start -\> control panel -\> system -\> change settings
+        -\> advanced -\> environment variables
+
+    -   Find the 'PATH' environment variable and choose to edit it
+    -   Add ';*DARCSDIR*' to the end of the 'PATH' environment variable.
+    -   Save and close the windows.
+
+-   Download following files from the [PuTTY Download
+    Page](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html):
+    -   pageant.exe
+    -   puttygen.exe
+    -   plink.exe
+    -   psftp.exe and
+    -   pscp.exe
+
+-   Rename plink.exe to ssh.exe and pscp.exe to scp.exe and put them in
+    the DARCSDIR. (You could avoid renaming the files if you used the
+    environment variables DARCS\_SSH, etc; but renaming seems more
+    convenient). Ensure that all these .exe files have permissions that
+    allow you to execute them. If you are using cygwin, you can use
+    "chmod ugo+x FILENAME" to enable execute permissions for each file.
+-   If you want to use darcs over ssh you need to set up *passwordless*
+    ssh login (password-based authentification is currently broken on
+    windows). Darcs over ssh is required to push patches to a remote
+    machine.
+-   Generate a pair of keys as described on [section
+    8.2.1](http://the.earth.li/~sgtatham/putty/0.60/htmldoc/Chapter8.html#pubkey-puttygen)
+    of the putty documentation.
+-   To make ssh use your private key automatically (this is necessary
+    since we are setting up passwordless ssh login) you need to start
+    'pageant'. Therefore:
+
+    -   Create a new shortcut 'pageant.exe' in the 'Start -\> All
+        programs -\> Startup' menu. (These programs are automatically
+        executed on login.)
+    -   The shortcut shall execute ' *DARCSDIR*/pageant.exe
+        PATH-TO-THE-PRIVATE-KEY'. Note that since
+        PATH-TO-THE-PRIVATE-KEY may contains spaces, it may be necessary
+        to put quotes around it. It never hurts to put quotes around it.
+    -   Log out and log in again to check that 'pageant' automatically
+        starts up.
+    -   Check that the key is loaded: double click the icon in the
+        system tray. If there is listed one key, it should be fine. If
+        no keys are listed, check the shortcut.
+
+-   If everything went well, the final check is executing "ssh
+    USERNAME@HOST". If you get logged into the host you are done. If you
+    are asked to enter your password then it is not working.
+    Double-check that 'pageant' is started and the key is loaded, then
+    go back through this process to figure out what went wrong. **NOTE:
+    this check is a very useful step in debugging. If anything ever
+    seems wrong with your darcs-over-ssh behavior, then come back to
+    this step!**
+-   Now you can access your repository using, for example: darcs clone
+    USER@HOST:/PATH/TO/REPOSITORY
+
+-   If you want to configure user default prefs, you will need to define
+    a HOME environment variable. If you do, darcs will look for the file
+    '%HOME%\\.darcs\\defaults'.
+
+## The Manual Process -- try this if you want a newer version of darcs
+than the pre-packaged version supplied above
+
+The basics (with or without Cygwin):
+
+-   Download the latest darcs win32 binary from somewhere.
+
+Pushing patches to a remote server requires a SSH implementation such as
+putty
+<http://www.chiark.greenend.org.uk/\~sgtatham/putty>
+which supports both SCP and SFTP. Interactive password prompting will
+not work because the SSH clients are executed by darcs, so passwordless
+public key authentication must be configured. For a putty-oriented
+tutorial see
+<http://the.earth.li/~sgtatham/putty/0.60/htmldoc/Chapter8.html#pubkey>.
+
+To enable access of remote repositories over ssh (with or without
+Cygwin, if you want to use ssh):
+
+-   Download following files from the [PuTTY Download
+    Page](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html):
+    -   pageant.exe
+    -   puttygen.exe
+    -   plink.exe
+    -   psftp.exe and
+
+    - pscp.exe
+-   Put darcs.exe, plink.exe, pscp.exe, psftp.exe, pageant.exe, and
+    puttygen.exe in an empty directory.
+-   Rename plink.exe to ssh.exe and pscp.exe to scp.exe. (You could
+    avoid renaming the files if you used the environment variables
+    DARCS\_SSH, etc; but renaming seems more convenient). Ensure that
+    all these .exe files have permissions that allow you to execute
+    them. If you are using cygwin, you can use "chmod ugo+x FILENAME" to
+    enable execute permissions for each file.
+-   Set up passwordless ssh login as described on this page:
+    <http://the.earth.li/~sgtatham/putty/0.60/htmldoc/Chapter8.html#pubkey>
+
+Finally (without Cygwin):
+
+-   Add the directory where you stored the executables at the beginning
+    of your path.
+
+Finally (with Cygwin):
+
+-   Download
+    [cygwin-wrapper.bash](http://zooko.com/repos/darcsdir/cygwin/cygwin-wrapper.bash),
+    a cygwin bash script; put it in /usr/local/darcsdir-cygwin
+    (directory as seen by cygwin), put all of the ssh .exe's mentioned
+    above into the same directory. Rename the darcs.exe to
+    "realdarcs.exe". Rename cygwin-wrapper.bash to "darcs". Add
+    /usr/local/darcsdir-cygwin to the end of your path. Don't put
+    /usr/local/darcsdir-cygwin at the beginning, because that directory
+    contains executables such as "ssh.exe" which you probably don't want
+    to execute when you execute "ssh" on the bash command-line. Make
+    sure you don't have any other "darcs" executables earlier in your
+    path. (Hint: enter the commands "type darcs" and "type ssh" at the
+    bash command-line.)
+
+## HTTP Proxy using NTLM Authentication
+
+darcs will work with HTTP proxies, but only non-authenticating ones. In
+many corporate environments, HTTP proxy servers use NTLM authentication.
+A workaround is to use an NTLM Authentication Proxy, like cntlm -
+<http://cntlm.sourceforge.net/>.
+
+These instructions are for cntlm:
+
+-   download and install
+
+-   edit C:\\Program Files\\Cntlm\\cntlm.ini; enter your username,
+    password, domain, and current proxy setting (you can find this in IE
+    under menu-\>Tools-\>Internet Options-\>Connections tab-\>LAN
+    Settings)
+
+-   (re)start cntlm : Start Menu-\>Run-\>services.msc, locate Cntlm,
+    right-click...
+
+-   create env var HTTP\_PROXY=http://localhost:3128
+
+# Consoles
+
+Darcs is a native [Windows](Windows) console program, it doesn't use the
+Cygwin or MSYS libraries. This has some consequences, and affects which
+shell environments work best with darcs.
+
+We recommend running darcs in one of the following ways on Windows:
+
+-   Ordinary Windows CMD shell
+-   Cygwin shell with `CYGWIN=notty` (or `CYGWIN` not set to anything)
+-   [console2](http://console.sourceforge.net) also seems to work here
+-   MSYS without rxvt
+-   you can rename rxvt so that msys.bat only launches sh under the DOS
+    prompt
+-   or you can run `C:\msys\1.0\bin\sh --login -i` under
+    [console2](http://console.sourceforge.net))
+
+These other shell environments don't work as well with darcs:
+
+-   MSYS rxvt shell
+-   Cygwin bash shell with `CYGWIN=tty`
+-   Cygwin xterm or rxvt
+-   [Emacs](Emacs) shell buffer
+
+The main reason is that in these environments if you hit control-C to
+terminate darcs, it won't be able to catch the event and clean up. The
+usual result is that the `_darcs/lock` file is left behind and has to be
+manually removed, but worse things could happen.
+
+There are other side effects: in an interactive conversation with darcs,
+you'll have to hit return after each answer, whereas in a standard
+Windows console darcs can see the keystroke as soon as you press it.
+
+# Other resources
+
+-   strace for Windows:
+    <http://www.intellectualheaven.com/default.asp?BH=projects&H=strace.htm>

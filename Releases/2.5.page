@@ -1,0 +1,299 @@
+Outstanding [issues](http://bit.ly/hhROcW)
+
+# Darcs 2.5.2 announcement (2011-03-14)
+
+Hi,
+
+The darcs team is pleased to announce the release of darcs 2.5.2, a
+minor upgrade for the 2.5 release.
+
+This release bumps the parsec dependency that was missed in 2.5.1,
+ensuring full compatibility with the recent 2011.2.0.0 release. It also
+fixes a nasty regression from 2.4 where darcs allowed you to add files
+inside boring directories to the repository.
+
+## Installing
+
+The easiest way to install darcs 2.5.2 from source is by first
+installing the Haskell Platform
+([http://www.haskell.org/platform)](http://www.haskell.org/platform)).
+If you have installed the Haskell Platform or cabal-install, you can
+install this release by doing:
+
+    $ cabal update
+    $ cabal install darcs-2.5.2
+
+Alternatively, you can download the tarball from
+[http://darcs.net/releases/darcs-2.5.2.tar.gz](http://darcs.net/releases/darcs-2.5.2.tar.gz)
+and build it by hand as explained in the README file.
+
+Versions of GHC from 6.10.x to 7.0.x are supported.
+
+The 2.5 branch is also available as a darcs repository from
+[http://darcs.net/releases/branch-2.5](http://darcs.net/releases/branch-2.5)
+
+## Binaries
+
+These will be posted to
+[http://wiki.darcs.net/Binaries](http://wiki.darcs.net/Binaries) as they
+become available.
+
+## Reporting bugs
+
+If you have an issue with darcs 2.5.2, you can report it via the web on
+[http://bugs.darcs.net](http://bugs.darcs.net)/ . You can also report
+bugs by email to bugs at darcs.net.
+
+## Changelog
+
+> -   Bump parsec dependency to support 3.1
+>
+> -   Refuse to add files that are inside boring directories
+>
+>     This was a regression from the 2.4 series and led to broken
+>     patches because the parent directory was not added.
+>
+>     [http://bugs.darcs.net/issue2049](http://bugs.darcs.net/issue2049)
+>
+# Darcs 2.5.1 announcement (2011-02-10)
+
+Hi,
+
+The darcs team is pleased to announce the release of darcs 2.5.1, a
+minor upgrade for the 2.5 release. The main focus of this release is
+support for the GHC 7.0 series and the upcoming February 2011 Haskell
+Platform, but the release also includes a few bug fixes and minor
+usability improvements. A detailed changelog is below.
+
+## Installing
+
+The easiest way to install darcs 2.5.1 from source is by first
+installing the Haskell Platform
+([http://www.haskell.org/platform)](http://www.haskell.org/platform)).
+If you have installed the Haskell Platform or cabal-install, you can
+install this release by doing:
+
+    $ cabal update
+    $ cabal install darcs-2.5.1
+
+Alternatively, you can download the tarball from
+[http://darcs.net/releases/darcs-2.5.1.tar.gz](http://darcs.net/releases/darcs-2.5.1.tar.gz)
+and build it by hand as explained in the README file.
+
+Versions of GHC from 6.10.x to 7.0.x are supported.
+
+The 2.5 branch is also available as a darcs repository from
+[http://darcs.net/releases/branch-2.5](http://darcs.net/releases/branch-2.5)
+
+## Binaries
+
+These will be posted to
+[http://wiki.darcs.net/Binaries](http://wiki.darcs.net/Binaries) as they
+become available.
+
+## Reporting bugs
+
+If you have an issue with darcs 2.5.1, you can report it via the web on
+[http://bugs.darcs.net](http://bugs.darcs.net)/ . You can also report
+bugs by email to bugs at darcs.net.
+
+## Changelog
+
+> -   Include original text in conflict marks
+>
+>     Conflicts are now marked up as
+>
+>     v v v v v v v original text before any conflicting patch
+>     ============= conflicting result A *****\******\*\* conflicting
+>     result B .... \^ \^ \^ \^ \^ \^ \^
+>
+>     The inclusion of the original text makes it much easier to
+>     understand what the changes on either side of the conflict were.
+>
+>     This is only an incremental improvement to our conflict marking,
+>     which we understand is still hard to use. More substantial
+>     improvements are in the works.
+>
+> -   Support GHC 7.0 and various recent library versions
+>     ([http://bugs.darcs.net/issue2008](http://bugs.darcs.net/issue2008),
+>     [http://bugs.darcs.net/issue2019](http://bugs.darcs.net/issue2019))
+>
+>     This should mean that darcs 2.5.1 will work with the upcoming Feb
+>     2011 Haskell Platform release.
+>
+> -   Restrict the GHC version in the cabal file
+>
+>     This means that cabal builds will explicitly fail if an
+>     unsupported GHC version is encountered, which should cause less
+>     user confusion.
+>
+> -   Update warning message about old-fashioned repositories
+>
+>     It now points to a wiki page explaining our deprecation plan
+>     ([http://wiki.darcs.net/OF](http://wiki.darcs.net/OF))
+>
+> -   Guard against non-repository paths during get
+>     ([http://bugs.darcs.net/issue2035](http://bugs.darcs.net/issue2035))
+>
+>     Darcs normally checks for paths that point outside the repository
+>     when applying patches, but this check was missing in the case of
+>     get.
+>
+> -   Darcs library API: make the "program name" configurable
+>
+>     This makes it easier for external users of the library API to
+>     reuse Darcs' framework for handling commands.
+>
+> -   darcs send now prints the remote repository address up front
+>
+>     Previously it would first read the remote repository, which made
+>     it hard to see what was happening when accessing the remote
+>     repository hung.
+>
+> -   Informational message about --set-default is now disabled by
+>     explicit use of --no-set-default
+>     ([http://bugs.darcs.net/issue2003](http://bugs.darcs.net/issue2003))
+>
+>     This allows users to silence the message by placing 'pull
+>     no-set-default', 'push no-set-default' and 'send no-set-default'
+>     in \~/.darcs/defaults or \_darcs/prefs/defaults.
+>
+> -   Handle \_darcs/format correctly on get
+>     ([http://bugs.darcs.net/issue1978](http://bugs.darcs.net/issue1978))
+>
+>     This is mainly a forwards compatibility issue as no existing
+>     version of darcs would create format files that are affected by
+>     this bug.
+>
+> -   Fix linking with libdarcs on Windows
+>     ([http://bugs.darcs.net/issue2015](http://bugs.darcs.net/issue2015))
+>
+>     This was a simple problem with a missing object file.
+>
+# Darcs 2.5 announcement (2010-10-30)
+
+Hi all,
+
+The darcs team is proud to announce the release of darcs 2.5. Darcs 2.5
+contains many improvements over the 2.4 series. Most notable are the
+performance improvements in record and pull and the --bisect option for
+trackdown.
+
+The easiest way to install darcs 2.5 is using the Haskell Platform [1].
+If you have installed the Haskell Platform or cabal-install, you can
+install this release by doing:
+
+    $ cabal update
+    $ cabal install darcs
+
+Alternatively, you can download the tarball from
+[[http://darcs.net/releases/darcs-2.5.tar.gz](http://darcs.net/releases/darcs-2.5.tar.gz)](http://darcs.net/releases/darcs-2.5.tar.gz)
+and build it by hand as explained in the README file.
+
+## What's New
+
+A list of important changes since darcs 2.4.4:
+
+-   trackdown can now do binary search with the --bisect option
+-   darcs always stores patch metadata encoded with UTF-8
+-   diff now supports the --index option
+-   amend-record now supports the --ask-deps option
+-   apply now supports the --match option
+-   amend-record has a new --keep-date option
+-   inventory-changing commands (like record and pull) now operate in
+    constant time with respect to the number of patches in the
+    repository
+-   the push, pull, send and fetch commands no longer change the default
+    repository address by default
+-   the --edit-description option is now on by default for the send
+    command
+
+Issues resolved since darcs 2.4.4:
+
+-   [64](http://bugs.darcs.net/issue64): store metadata as UTF-8
+-   [121](http://bugs.darcs.net/issue121): add --ask-deps support to
+    amend-record
+-   [643](http://bugs.darcs.net/issue643): darcs send -o outputs remote
+    repo email address
+-   [1159](http://bugs.darcs.net/issue1159): avoid bogus repository
+    cache entries
+-   [1176](http://bugs.darcs.net/issue1176): caches interfere with
+    --remote-repo flag
+-   [1208](http://bugs.darcs.net/issue1208): add trackdown --bisect
+-   [1210](http://bugs.darcs.net/issue1210): global cache gets recorded
+    in \_darcs/prefs/sources
+-   [1232](http://bugs.darcs.net/issue1232): darcs convert copies
+    \_darcs/prefs/prefs
+-   [1250](http://bugs.darcs.net/issue1250): check for newlines in
+    setpref values
+-   [1277](http://bugs.darcs.net/issue1277): percolate repository format
+    errors correctly
+-   [1288](http://bugs.darcs.net/issue1288): the main darcs code now
+    compiles and runs with witnesses
+-   [1290](http://bugs.darcs.net/issue1290): support diff --index
+-   [1337](http://bugs.darcs.net/issue1337): don't show unrelated
+    patches in darcs changes on untracked path
+-   [1389](http://bugs.darcs.net/issue1389): change predist pref to
+    point people to use 'cabal sdist'
+-   [1427](http://bugs.darcs.net/issue1427): accept gzipped patch
+    bundles in darcs apply
+-   [1456](http://bugs.darcs.net/issue1456): make dist write more
+    portable archives
+-   [1473](http://bugs.darcs.net/issue1473): make annotate accept '.' as
+    argument
+-   [1503](http://bugs.darcs.net/issue1503): prefer local caches to
+    remote ones
+-   [1713](http://bugs.darcs.net/issue1713): shorter interactive prompts
+-   [1716](http://bugs.darcs.net/issue1716): allow mail header lines of
+    all whitespace in test
+-   [1719](http://bugs.darcs.net/issue1719): do not back up files when
+    no conflict markers are inserted
+-   [1726](http://bugs.darcs.net/issue1726): don't consider all files
+    with \_darcs prefix boring
+-   [1739](http://bugs.darcs.net/issue1739): make ColorPrinter handle
+    characters \> 255
+-   [1763](http://bugs.darcs.net/issue1763): use correct filename
+    encoding in conflictors
+-   [1765](http://bugs.darcs.net/issue1765): refuse to remove
+    non-tracked directories recursively
+-   [1769](http://bugs.darcs.net/issue1769): add support for --match
+    'comment ...'
+-   [1784](http://bugs.darcs.net/issue1784): push and pull print remote
+    address right away
+-   [1815](http://bugs.darcs.net/issue1815): work around Cabal sdist
+    permissions issue
+-   [1817](http://bugs.darcs.net/issue1817): fix support for external
+    merge tools
+-   [1824](http://bugs.darcs.net/issue1824): avoid PACKAGE\_VERSION
+    under Windows
+-   [1825](http://bugs.darcs.net/issue1825): do not omit important prims
+    in unrecordedChanges w/ files
+-   [1860](http://bugs.darcs.net/issue1860): (un)applying move patches
+    doesn't corrupt pristine
+-   [1861](http://bugs.darcs.net/issue1861): fix typo in --no-boring
+    help
+-   [1874](http://bugs.darcs.net/issue1874): recognise network tests on
+    cabal test command line
+-   [1875](http://bugs.darcs.net/issue1875): avoid accidentally setting
+    default
+-   [1879](http://bugs.darcs.net/issue1879): notice unexpected commute
+    failure on merge
+-   [1887](http://bugs.darcs.net/issue1887): add a missing newline to
+    --list-options output
+-   [1893](http://bugs.darcs.net/issue1893): move fields of conditional
+    builds within scope of condition
+-   [1898](http://bugs.darcs.net/issue1898): notify user when they can
+    use set-default
+-   [1913](http://bugs.darcs.net/issue1913): sort changes in treeDiff
+
+## Reporting bugs
+
+If you have an issue with darcs 2.5, you can report it via the web on
+[[http://bugs.darcs.net](http://bugs.darcs.net)/](http://bugs.darcs.net/).
+You can also report bugs by email to
+[bugs@darcs.net](mailto:bugs@darcs.net).
+
+Kind Regards, the darcs release manager, Reinier Lamers
+
+[1]: You can download the Haskell platform from
+[[http://hackage.haskell.org/platform](http://hackage.haskell.org/platform)/](http://hackage.haskell.org/platform/)

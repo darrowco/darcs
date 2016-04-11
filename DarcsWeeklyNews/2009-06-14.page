@@ -1,0 +1,55 @@
+# News and discussions
+
+1. Eric Kow announced that darcs 2.3 and later will not be compilable
+with
+  ~ GHC 6.6:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-June/020127.html](http://lists.osuosl.org/pipermail/darcs-users/2009-June/020127.html)
+
+2. Matthias Kilian put online a mirror of GHC's repository in hashed
+format,
+  ~ and compared performance of darcs get on the different repositories:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-June/020125.html](http://lists.osuosl.org/pipermail/darcs-users/2009-June/020125.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-June/020141.html](http://lists.osuosl.org/pipermail/darcs-users/2009-June/020141.html)
+
+3. Petr Rockai's Summer of Code Progress:
+  ~ \`\`I have worked on documenting the index format (and code),
+      ~ some minor cleanup and interoperability improvements.''
+
+    -   [http://web.mornfall.net/blog/soc\_progress\_3.html](http://web.mornfall.net/blog/soc_progress_3.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-June/020123.html](http://lists.osuosl.org/pipermail/darcs-users/2009-June/020123.html)
+
+# Issues resolved in the last week (1)
+
+issue1412 Reinier Lamers
+  ~ -   also adjust maxline in PatchCheck upon insert\_line
+    -   [http://bugs.darcs.net/issue1412](http://bugs.darcs.net/issue1412)
+
+# Patches applied in the last week (12)
+
+2009-06-12 Trent W. Buck
+  ~ -   Remove GHC 6.6 compatibility (Data.Function.on).
+    -   Update build dependency documentation.
+
+2009-06-11 Petr Rockai
+  ~ -   Bump version to 2.2.97.1.
+    -   Use the mmap package instead of bytestring-mmap.
+
+2009-06-11 Reinier Lamers
+  ~ -   Require test-framework etc. for building unit tests
+    -   Port unit tests from homegrown testrunner to test-framework
+    -   Remove testrunner subtree from darcs source tree
+    -   Clean up ugly late-night code in Darcs.Patch.Check
+
+2009-06-10 Eric Kow
+  ~ -   Remove api-doc targets from Makefile.
+    -   Do not depend on "make darcs" for "make website".
+    -   Fix homepage links to wiki.
+
+2009-06-09 Reinier Lamers
+  ~ -   resolve issue1412: also adjust maxline in PatchCheck upon
+        insert\_line
+
+

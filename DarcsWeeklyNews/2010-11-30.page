@@ -1,0 +1,21 @@
+# News and discussions
+
+1.  Alexey Levan is our new Windows packager, and has put online Windows
+    binaries of Darcs 2.5:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-November/025835.html](http://lists.osuosl.org/pipermail/darcs-users/2010-November/025835.html)
+    -   [http://wiki.darcs.net/Binaries\#microsoft-windows](http://wiki.darcs.net/Binaries#microsoft-windows)
+
+2.  We posted two roadmap blogs about Darcs 2.8:
+
+    -   [http://blog.darcs.net/2010/11/coming-in-darcs-28-read-only-support.html](http://blog.darcs.net/2010/11/coming-in-darcs-28-read-only-support.html)
+    -   [http://blog.darcs.net/2010/11/coming-in-darcs-28-new-features.html](http://blog.darcs.net/2010/11/coming-in-darcs-28-new-features.html)
+
+# Issues resolved in the last week (0)
+
+# Patches applied in the last week (1)
+
+2010-11-22 Eric Kow
+  ~ -   Restore a missing hyphen from patch191.
+
+

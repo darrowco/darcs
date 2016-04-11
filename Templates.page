@@ -1,0 +1,20 @@
+Canned text can sometimes be useful if you need to repeat slight
+variations on the same content.
+
+A good way to use canned text is just to import in your text editor so
+that you have the key dates/URLs/information and then personalise it.
+While sending canned text is efficient, receiving it can be a bit
+unpleasant; so a little personal touch would be very helpful when you
+can afford it.
+
+# Managing a darcs repository
+
+-   [Message of the Day](Templates/Motd) : possible content for your
+    `_darcs/prefs/motd` file
+
+# The Darcs Team
+
+-   [ReleaseCalendar](Templates/ReleaseCalendar)
+-   [ReleaseAnnouncement](Templates/ReleaseAnnouncement)
+-   [TestRequest](Templates/TestRequest)
+

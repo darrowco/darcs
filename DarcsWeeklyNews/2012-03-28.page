@@ -1,0 +1,80 @@
+# News and discussions
+
+1.  The Shouthampton sprint begins this Friday! More information on the
+    wiki:
+
+    -   [http://wiki.darcs.net/Sprints/2012-03](http://wiki.darcs.net/Sprints/2012-03)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2012-February/026379.html](http://lists.osuosl.org/pipermail/darcs-users/2012-February/026379.html)
+
+2.  Haskell.org is participating to this year's Google Summer of Code,
+    and is going to act as an umbrella organization for Darcs:
+
+    -   [http://www.haskell.org/pipermail/haskell-cafe/2012-March/100247.html](http://www.haskell.org/pipermail/haskell-cafe/2012-March/100247.html)
+
+# Issues resolved in the last week (2)
+
+issue1228 Michael Hendricks
+  ~ -   Add --pause-for-gui to diff, pull and apply
+    -   [http://bugs.darcs.net/issue1228](http://bugs.darcs.net/issue1228)
+
+issue2145 Guillaume Hoffmann
+  ~ -   enable j key in amend-record
+    -   [http://bugs.darcs.net/issue2145](http://bugs.darcs.net/issue2145)
+
+# Patches applied in the last week (20)
+
+2012-01-22 Owen Stephens
+  ~ -   Fix amend-unrecord test, broken by last-regrets prompt
+
+2012-03-15 Michael Hendricks
+  ~ -   Resolve issue1228: Add --pause-for-gui to diff, pull and apply
+    -   Style updates for Darcs.Commands.{Apply,Diff,Pull}
+    -   Function for asking the user to press Enter
+
+2012-03-19 Guillaume Hoffmann
+  ~ -   rollback fix for issue2135 that does not solve the unknown lines
+        in annotate
+
+2012-01-28 Will Langstroth
+  ~ -   Readability changes to Darcs.Annotate
+
+2012-01-22 Owen Stephens
+  ~ -   Resolve issue2135: Don't keep trying to annotate a file, after
+        processing the patch that added the file.
+
+2012-01-26 Will Langstroth
+  ~ -   Add Haddock header to Darcs.Annotate
+
+2012-03-09 Eric Kow
+  ~ -   Skip ssh tests in cabal test.
+
+2012-03-09 Guillaume Hoffmann
+  ~ -   resolve issue2145 enable j key in amend-record
+
+2012-03-23 Michael Hendricks
+  ~ -   Remove comment addressed in patch/issue discussion
+    -   Document 'l' option at the last regrets prompt
+
+2012-03-22 Guillaume Hoffmann
+  ~ -   change o key to g in select-changes UI for consistency with vim
+        and less
+
+2011-12-29 Eric Kow
+  ~ -   Last regrets spelling and capitalisation tweak.
+    -   Update tests to work with last regrets prompt.
+
+2011-06-15 Florent Becker
+  ~ -   Don't ask confirmation if there are no things to select in
+        textSelect
+    -   remove double confirmation in revert
+    -   Add a last question after all patches have been selected to
+        confirm the whole selection
+
+2012-02-19 Andreas Brandt
+  ~ -   Accept-issue1522: trailing slashes confuse darcs
+
+2012-03-01 Owen Stephens
+  ~ -   Tidy up and Haddock Non. Rename some functions in Non and
+        correspondingn use-sites in Real
+
+

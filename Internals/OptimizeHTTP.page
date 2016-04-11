@@ -1,0 +1,70 @@
+# Development
+
+- [Packs bugs](http://bugs.darcs.net/issue?%40columns=id,activity,title,status,assignedto&topic=48&%40sort=activity&%40group=priority&%40action=search)
+
+-  Benchmarks repositories TODO:
+    - small pack without new patches
+    - small pack with a few new patches
+    - small pack with many new patches
+    - big pack without new patches
+    - big pack with a few new patches
+    - big pack with many new patches
+   Then compare times of `get --no-packs --lazy`, `get --packs --lazy`,
+   `get --no-packs --complete`, `get --packs --complete`.
+
+
+# Benchmarks with existing big repositories
+
+- Xmonad: ~ 1200 patches <http://code.haskell.org/xmonad>
+- DDC: ~ 4500 patches <http://code.ouroborus.net/ddc/ddc-head>
+- Agda: ~ 4600 patches <http://code.haskell.org/Agda>
+- Darcs: ~ 11000 patches <http://darcs.net>
+- Nikki and the robots: ~ 2000 patches <http://code.joyridelabs.de/nikki>
+- <http://www.darcs.net/darcs-wiki>: ~ 7500 patches
+
+# Optimizing a repository for HTTP transfer
+
+To reduce number of files needed to transfer over network, the `optimize --http`
+command packs a repository into two tarballs, `basic.tar.gz` and
+`patches.tar.gz`, with the following content:
+
+## basic.tar.gz
+
+1.  \_darcs/hashed\_inventory
+2.  \_darcs/meta-filelist-pristine
+3.  \_darcs/pristine.hashed/\*
+
+meta-filelist-pristine contain directory listings for hashed.pristine
+dir, in reverse order wrt tarball itself. While
+getting, files from this listings are downloaded using cache in parallel
+with tarball.
+
+## patches.tar.gz
+
+1.  \_darcs/meta-filelist-inventories
+2.  \_darcs/patches/\*
+3.  \_darcs/inventories/\*
+
+# Getting an optimized repository
+
+1.  Download and unpack basic.tar.gz. Result: lazy repository from time
+    when `optimize http` has been done.
+2.  Pull from parent repository. Result: lazy repository from current time.
+3.  Download and unpack patches.tar.gz. Result: full repository.
+
+# Benchmarks from 2011
+
+How does `optimize http` improve the user experience?
+
+-   Jérémie's repo (\~900 patches): from 10s (`get --no-packs`) to 1s (`get`)
+-   <http://darcs.net/> (\~9300
+    patches): `darcs optimize --http` takes 14s to run. \_darcs goes
+    from 54 MBytes to 64 MBytes (indeed \_darcs/packs/ is 11 MBytes)
+    Complete get: from 37 to 2 minutes, lazy get from 27 seconds to 7
+    seconds.
+
+screened + 12 patches:
+
+    .      packs    no-packs
+    lazy   30s      1m30
+    full   2m30s    31m

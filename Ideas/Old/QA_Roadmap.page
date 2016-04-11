@@ -1,0 +1,53 @@
+# Darcs Quality Assurance Roadmap
+
+[I'm](People/MarkStosberg) starting this list of Quality Assurance
+related updates I'm personally interested to see happen with darcs. Feel
+free to adjust in the wiki spirit.
+
+I'm interested in improving the quality of the development process for
+the people involved as well as improving the quality of the user
+experience for the stable releases.
+
+I'm specifically trying to avoid typical software "features" in this
+list.
+
+-   darcs has a new performance benchmarking tool in the form of
+    [darcs\_speed\_test.pl](http://mark.stosberg.com/darcs_hive/darcs_speed_test).
+    It is useful for comparing the performance of how different features
+    of work with different versions of darcs. This will remind us which
+    features we'd still like to be faster, and catch regressions if
+    something becomes significantly slower. This tool is has just begun
+    development and could use some key updates:
+-   Nicer output formatting. Right now there is much more information to
+    review than necessary, when I think we mostly care about the 'wall
+    clock' time.
+
+From there, we can generate reports and statistics about which parts of
+darcs have automated functional tests, and which still need them. Those
+familiar with Perl's
+[Devel::Cover](http://search.cpan.org/perldoc?Devel::Cover) coverage
+testing module will already have sense of the usefulness of this.
+
+-   Publish failing TODO tests. In a number of cases
+    [I](People/MarkStosberg) have already written tests for desired
+    functionality in darcs. There could be an automatic generation and
+    publication of this list. Writing code that there is already a test
+    for can be easier and more fun. Publishing this TODO list increases
+    the chance that code contributions will have related automated tests
+    with them to help confirm their quality.
+
+-   Review built-in help descriptions to insure maximal clarity. Darcs
+    can even easier to learn and use by making the built-in help as
+    effective as possible.
+
+-   Make command-line completion super-easy to install, even without
+    installing an additional package such as 'bash completion'.
+
+These are just [my](People/MarkStosberg) ideas for now. Feel free to
+update the list, or dive and start on something. If you have questions,
+let's discuss on darcs-users.
+
+## Related Pages
+
+-   The [Perl Quality Assurance Project](http://qa.perl.org/)
+

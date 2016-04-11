@@ -1,0 +1,28 @@
+See [Donations]() for details.
+
+# Previous fundraising drives
+
+-   2009-03 (aim: $1000 for darcs hacking sprint travel, raised: $1025,
+    spent: ?)
+
+# Thoughts
+
+We now know what to do with small amounts of money : pay for sprints
+(travel, venues, etc). This stub is for organising our fundraising
+mechanisms.
+
+-   Who do people give money to?
+-   How do we spend it?
+-   How can we keep things lightweight?
+-   Who do we ask for money?
+
+# Possible uses for the money
+
+-   Bounties?
+-   Raising loads of cash to pay a developer for a year?
+-   Getting Microsoft to hire an intern for us? [note: would need to
+    BSD-license the relevant bits of darcs]
+-   Pay for sprint venues and travel
+-   [Hosting](Hosting) - how would darcs.net money help make this
+    situation better?
+

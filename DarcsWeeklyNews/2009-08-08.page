@@ -1,0 +1,41 @@
+# News and discussions
+
+1. Following a proposal by Eric Kow, the darcs team switched to a
+commit-bit
+  ~ development model. Now there is no longer a Patch Manager, and
+    several developers have commit rights to the main repository or
+    darcs:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-August/020727.html](http://lists.osuosl.org/pipermail/darcs-users/2009-August/020727.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-August/020796.html](http://lists.osuosl.org/pipermail/darcs-users/2009-August/020796.html)
+
+2. Petr Rockai passed the release manager hat to Reinier Lamers, and
+  ~ Thorkil Naur passed the issue manager hat to Eric Kow:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-August/020738.html](http://lists.osuosl.org/pipermail/darcs-users/2009-August/020738.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-August/020794.html](http://lists.osuosl.org/pipermail/darcs-users/2009-August/020794.html)
+
+3. End of Summer of Code is approaching. Discussion and reviews
+concerning
+  ~ the coming merge of Petr's hashed-storage patches into the main
+    darcs repository are going on:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-August/020780.html](http://lists.osuosl.org/pipermail/darcs-users/2009-August/020780.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-July/020698.html](http://lists.osuosl.org/pipermail/darcs-users/2009-July/020698.html)
+
+# Issues resolved in the last week (0)
+
+# Patches applied in the last week (3)
+
+2009-08-05 Petr Rockai
+  ~ -   Add script that tricks cabal into installing our build-depends
+        only.
+
+2009-08-03 Trent W. Buck
+  ~ -   Avoid unescaped hyphens and backslashes in manpage.
+    -   Typo: s/comand/command/.
+
+

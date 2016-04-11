@@ -1,0 +1,136 @@
+# News and discussions
+
+1. Since the last DWN, Petr Rockai released 3 betas, the last one being
+  ~ focussed on fixing bugs under Windows :
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-July/020371.html](http://lists.osuosl.org/pipermail/darcs-users/2009-July/020371.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-July/020409.html](http://lists.osuosl.org/pipermail/darcs-users/2009-July/020409.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-July/020435.html](http://lists.osuosl.org/pipermail/darcs-users/2009-July/020435.html)
+
+2. Petr also issued two posts (7 and 8) about his Summer of Code work
+  ~ on fast darcs:
+
+\*
+[http://web.mornfall.net/blog/soc\_progress\_7.html](http://web.mornfall.net/blog/soc_progress_7.html)
+  ~ -   [http://web.mornfall.net/blog/soc\_progress\_8.html](http://web.mornfall.net/blog/soc_progress_8.html)
+
+3. Ashley Moran gave a presentation of darcs at the North West Ruby
+  ~ USer Group, and put his slides online:
+
+\*
+[http://aviewfromafar.net/2009/7/17/nwrug-darcs-presentation](http://aviewfromafar.net/2009/7/17/nwrug-darcs-presentation)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-July/020499.html](http://lists.osuosl.org/pipermail/darcs-users/2009-July/020499.html)
+
+4. Ashley also started a (quite long) discussion about the different
+  ~ command names between darcs and the other DVCSs:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-July/020428.html](http://lists.osuosl.org/pipermail/darcs-users/2009-July/020428.html)
+
+5. Finally, Petr Rockai proposed a patch to gets rid of autoconf support
+  ~ in darcs, leaving cabal as the only build system:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-July/020508.html](http://lists.osuosl.org/pipermail/darcs-users/2009-July/020508.html)
+
+# Issues resolved in the last week (0)
+
+# Patches applied in the last week (63)
+
+2009-07-15 Petr Rockai
+  ~ -   TAG 2.2.98.4
+    -   Bump version to 2.2.98.4.
+    -   Bump the hashed-storage dependency to \>= 0.3.6.
+    -   Implement getFileStatus, and use it instead of
+        getSymbolicLinkStatus on win32.
+    -   Use mmapFilePS in gzReadFilePS to avoid lazy bytestring
+        readFile.
+    -   Use DARCS\_TESTING\_PREFS\_DIR in ShellHarness, since APPDATA
+        override does not work.
+    -   Recognize a special DARCS\_TESTING\_PREFS\_DIR envvar to
+        override the global preference directory.
+
+2009-07-16 Eric Kow
+  ~ -   Note darcs 2.3 pre-release and darcs 2.2 stable versions in
+        website.
+    -   Remove website automation from Makefile.
+    -   Rename index.html.in to index.html, forgoing website automation.
+    -   Fix type witnesses in Darcs.Gorsvet.
+    -   Remove bytestring flag from darcs.cabal.
+    -   Remove base3 flag from darcs.cabal.
+    -   LANGUAGE CPP pragma for Darcs.RunCommand and Darcs.TheCommands.
+
+2009-06-29 Reinier Lamers
+  ~ -   Move email unit tests to Darcs.Test module space
+    -   Teach cabal about new Darcs.Test modules
+    -   Move unit tests to Darcs.Test module space
+    -   Bound size of trees generated in Darcs.Patch.QuickCheck
+    -   Add some comments in Darcs.Patch.QuickCheck
+
+2009-06-21 Petr Rockai
+  ~ -   Avoid getSymbolicLinkStatus in mmap implementation, works around
+        GHC 6.8.2 bug.
+    -   TAG 2.2.98.3
+    -   Bump version to 2.2.98.3.
+    -   Fix Wall warnings about applyToTree in Darcs.Gorsvet.
+    -   Fix segfaults when index is both invalid and in the wrong
+        format.
+    -   Bump hashed-storage dependency to 0.3.5.
+    -   TAG 2.2.98.2
+    -   Include hspwd.hs in the distribution tarball.
+    -   Update build documentation in README.
+    -   Bump version to 2.2.98.2.
+    -   Use the index upgrade functionality from hashed-storage \>=
+        0.3.4.
+    -   Bump hashed-storage dependency to 0.3.4.
+
+2009-07-07 Eric Kow
+  ~ -   Fix type witnesses in Darcs.Gorsvet.
+
+2009-06-21 Petr Rockai
+  ~ -   Factor out applyToTree in Gorsvet.
+    -   Provide readRecorded in Gorsvet as well.
+
+2009-07-07 Eric Kow
+  ~ -   Fix witnesses in GZCRCs type signatures.
+    -   Missing LANGUAGE CPP pragma in Darcs.Commands.GZCRCs.
+    -   Missing LANGUAGE pragma in Darcs.Global.
+
+2009-07-01 Ganesh Sittampalam
+  ~ -   add a comment to gzDecompress
+    -   further gzcrcs docs updates
+    -   make gzDecompress just return a flag to report corruption
+    -   fix (fairly harmless) bug in test script
+    -   Remove unnecessary pattern signature (it's not H98)
+    -   improve wording of help text
+    -   add option to limit gzcrc check/repair to current repo
+
+2009-06-26 Trent W. Buck
+  ~ -   Add type signatures to all Darcs.Gorsvet top-level bindings.
+    -   Add type signature to Darcs.Gorsvet.applyToTentativePristine.
+
+2009-06-23 Petr Rockai
+  ~ -   TAG 2.2.98.1
+    -   Add missed GZCRCs module to distribution.
+    -   Use hackage zlib by default.
+    -   Resolve conflict with Ganesh's gzcrc work.
+
+2009-05-31 Ganesh Sittampalam
+  ~ -   gzcrcs test
+    -   Update for zlib changes
+    -   Add command for repairing compressed files with corrupt CRCs
+    -   rename gzipDecompress for consistency, export it and isGZFile
+    -   generalise gzipDecompress interface
+    -   global for CRC warnings
+    -   break out gz detection from gzReadFilePS
+
+2008-11-04 Trent W. Buck
+  ~ -   Delete obsolete test\_network target.
+
+2009-05-05 Ganesh Sittampalam
+  ~ -   update message and comments a bit
+    -   name change in zlib interface
+    -   reorganise a bit
+    -   put haddock where it belongs
+    -   detect and warn on patches with bad CRCs
+
+

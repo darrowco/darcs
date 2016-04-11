@@ -1,0 +1,799 @@
+# Basic
+
+## Initial import of existing project without version control
+
+If you have a very large project, you may not want to import the entire
+project in one record, as that will create a very large patch file.
+If your codebase is larger than
+50MB or so, you may want to start your repository out by adding a few
+directories at a time. Large repositories are quite managable as long as
+individual patches are small.
+
+Before adding a huge directory to darcs, use `darcs add --dry-run -r .`.
+That way, if you see a bunch of files that you want to be 'boring', you
+can update \_darcs/prefs/boring before you actually add the files to
+darcs management. In case of an error use `darcs remove -r` to undo the action.
+
+Here is a handy `bash` alias to quickly import an existing project. This
+can even be used to produce quick patches and easily produce unified
+diffs.
+
+    alias darcsify="darcs init && darcs add \$(darcs wh -ls | awk '/^a\ / {print \$2}') && darcs rec -a -m'Initial import'"
+
+## Undeleting an accidentally removed file
+
+When you need to undelete a file you accidentally deleted you can call
+
+    darcs revert -a [file or dir]
+
+The -a is to answer yes to all the patches since obviously a half
+restored file wouldn't do you much good.
+
+## Excluding the \_darcs directory when searching
+
+With the `zsh` shell:
+
+1.  Use `zsh` if you are using other shells.
+2.  setopt extendedglob
+
+3.  grep -R ^_darcs
+
+    -- The more general case would be
+    `<glob_to_include>~<glob_to_exclude>` With the `bash` shell
+
+4.  shopt -s extglob
+
+    to turn on extended globbing syntax.
+5.  grep -R string !(_darcs)
+
+    to cause the shell to skip the glob that matches `_darcs`. You might
+    also wish to use an alias or script to make this even easier. Here
+    are a couple options:
+
+An alias for your `.bash_profile`
+
+    alias dgrep="find . -path '*/_darcs' -prune -o -print0 | xargs -0 egrep"
+
+then you can just use `dgrep string`.
+
+A script for your `~/bin` directory, which includes a customizeable
+"prune" list, to ignore other things as well:
+
+    an rgrep script
+
+    #!/usr/bin/perl -w
+    # originally by Michael Schwern
+    # Like grep -r except...
+    # * you can leave off the directory and it will use . instead of waiting like
+    # a dumbshit for STDIN
+    # * It handles paths with spaces and quotes.
+    # * it will not traverse into these directories or files.
+    my @Prunes = (qw(.svn CVS blib *~ *.bak _darcs), '#*');
+    my @Args = @ARGV;
+    my $Dir;
+    if( grep(!/^-/, @Args) <= 1 ) {
+        $Dir = '.';
+    }
+    else {
+        $Dir = pop @Args;
+    }
+    @Args = map { "'$_'" }
+            map { s/'/'"'"'/g; $_ } @Args;
+    # Escape spaces and quotes
+    $Dir =~ s{([ '"])}{\\$1}g;
+    my $prunes = join ' -o ', map { "-name '$_' -prune" } @Prunes;
+    exec "find $Dir $prunes -o -type f -print0 | ".
+         "xargs -0 grep @Args";
+
+## how to get a bunch of tar balls (different revisions of same software) into a darcs repo
+
+The best way is to use darcs\_load\_dirs. This program is designed
+specifically for this purpose. It will not only handle changes, adds,
+and removes, but also has a way to prompt the operator to help with
+renames.
+
+Get it with:
+
+-   Available from
+    <http://software.complete.org/software/projects/show/vcs-load-dirs>
+    as either tarballs
+    <http://software.complete.org/software/projects/list\_files/vcs-load-dirs>
+    or from a git repository
+    <http://software.complete.org/software/repositories/show/vcs-load-dirs>
+
+-   Available as the darcs-load-dirs Debian package: aptitude install
+    darcs-load-dirs
+
+The manual method:
+
+you got different versions of the software in tarballs, now to get them
+into a darcs repo, follow these steps:
+
+1.  untar first version of tarball into vc/sw
+2.  darcs init, add and record
+3.  mv \_darcs into a different dir (/tmp)
+4.  rm -rf vc/sw/\*
+5.  mv \_darcs back to vc/sw
+6.  untar second version of tarball into vc/sw
+7.  darcs record
+8.  go to step 3 another version of this idea suggested was moving
+    \_darcs to another dir and a ln -s everytime instead of a rm and mv
+    (steps 4 & 5)
+
+## How to get darcs to not be so trigger-happy with its prompts
+
+To make darcs wait for the user to hit ENTER to submit their response,
+wrap your normal darcs command, options and all, inside a pipeline
+surrounded by *cat*. For example, to record changes interactively, but
+without the hot prompts:
+
+    cat | darcs record | cat
+
+Now the user will be required to type ENTER to submit his selections for
+all prompts, including the yes/no prompts.
+
+# Advanced
+
+## About master and working repositories
+
+Even when working alone on a project, you should not work in the
+repository itself, but in a copy thereof. This will allow you to quickly
+switch to older versions whenever you need to.
+
+For instance, it is a good practice to have a "threshold" repository
+between the repository in which you actually work and the "external"
+repository that the world can see (if such a repository exists).
+
+> `work in progress` -----\> `threshold` -----\> `world visible`
+
+Thus, while working in the "work in progress" repository, you can go
+backwards in time (`darcs unpull`), forwards in time (`darcs pull`), or
+even `rm -r` the working dir and get a new copy if you've messed up
+everything.
+
+Moreover, you can have different "work in progress" branches in
+parallel, and just cd between them, and also do a recursive diff to see
+the total change between two of them.
+
+## Making the most of decentralisation
+
+**Everybody pulls**, or how to deal with not having a central push
+depot.
+
+Say you are all working on an article and you don't want to go through
+the trouble of setting up a central push depot, dealing with umasks and
+all of that boring stuff. What you really want is a lightweight solution
+where everybody pulls from each other. This is possible in darcs, but
+the question here is how do we make it *convenient*? Here are some
+tricks I use to make my life easier:
+
+-   Create a central pull depot. Arbitrarily designate one of you to be
+    the pull master. The pull master's job is to pull from everybody
+    else and push changes into to pull depot (unless the pull depot is
+    just the pull master's working directory). Everybody else pulls from
+    the pull master (this is useful when not everybody is comfortable
+    with darcs yet)
+
+-   If pulling from everybody else also involves some very long,
+    hard-to-remember path, the pull master could also have a separate
+    repository for each person she is pulling from:
+
+        mkdir my_project
+        cd my_project
+        darcs clone /some/really/incredibly/long/path/pull_depot pull_depot
+        darcs clone /some/really/long/path/alice/repo alice
+        darcs clone /another/really/long/path/bob/repo bob
+        ...
+        cd alice
+        darcs pull
+        cd ..
+        cd bob
+        darcs pull
+        cd ..
+        cd pull_depot
+        darcs pull ../alice
+        darcs pull ../bob
+        darcs push
+
+    The reason this works for me is that my partners' really long paths
+    are harder to remember and less convenient to type than the relative
+    path of my pull depot. So I ask darcs to remember the hard stuff,
+    and let it forget the easy stuff. Keep in mind that none of these
+    are strictly neccesary. They are just tricks I use to make things
+    more convenient for me; and they may not be applicable for your
+    needs.
+
+## darcs and permissions (hard links)
+
+Patch-Tag, which uses unix security for securing repos, encountered the
+following problem, which is perhaps shared by others. When several users
+share a private repo, they are all on the same linux group, and the repo
+has rwxs for that group.
+
+However, darcs also has a global cache for patches (and whatever objects
+are under \_darcs/hashed.inventory)
+
+as described in the darcs manual -\> configuring darcs -\> prefs -\>
+sources
+
+<http://darcs.net/manual/bigpage.html#SECTION00410000000000000000>
+
+These patches are shared across repos using hard links.
+
+So, what happens if you have two repos, with two owners, some hashes in
+common? The hardlinked file objects can only belong to one group, so
+somebody is not going to be able to access that repo.
+
+In practice this happened less often than one might expect, because most
+users had the patches cached locally after an initial pull. It did
+happen though.
+
+Patch-Tag finally resolved the problem by making everything under
+\_darcs world readable. Since the parent directory (repo root for a
+particular repo) is world invisible, the effect is that the hardlinked
+file objects are shared by everybody that should have access to them,
+without compromising security.
+
+## darcs and permissions (configure)
+
+Ideally, when somebody darcs clone's your code, they should just be able
+to do `./configure; make; make install`, but one minor annoyance is that
+darcs doesn't keep track of file permissions. Here is what I do to get
+my Makefile to chmod u+x configure for the user.
+
+My configure script produces a preferences file called config.mk. If
+this file exists, I include it into my Makefile:
+
+    config_file:=config/config.mk
+    ifneq '$(wildcard $(config_file))' ''
+    include $(config_file)
+    endif
+
+If the file does not exist, then the following target is run. It
+performs the chmod for me. Note that the target must be called from all
+relevant targets, for instance, install
+
+    $(config_file):
+            chmod u+x configure
+            @echo >&2 "Please run ./configure to setup the build system."
+            @exit 1
+    install: $(config_file)
+
+Notes:
+
+-   this is half copied from the darcs Makefile
+-   might be GNU Makefile specific
+-   autoconf's configure seems to produce a file called config.status.
+    You could use that instead.
+
+## how to set up a shared writable repository without granting full ssh access
+
+Set up your repo and a group which can write to it. Something like the
+following, also arrange for their umask to be 002, I don't know how:
+
+    addgroup projectgroup
+    chgrp -R projectgroup /repos/project
+    chmod -R g+w /repos/project
+    find /repos/project -type d -exec chmod g+s {} \;
+
+(Signed email users, you might need to restore your allowed\_keys
+permissions after this.) Next install scponly:
+
+    Debian : apt-get install scponly
+    Arch Linux: pacman -S scponly
+    Gentoo : emerge scponly
+
+And for each committer:
+
+    adduser --home /repos/project --no-create-home --shell /usr/bin/scponly --ingroup projectgroup username
+
+This user will be able to push (and scp/sftp/rsync) as allowed by unix
+file permissions, with /repos/project as their login directory, but
+won't be able to execute anything. You could also use scpjailer to
+restrict them to the repo dir, which would be even better; I haven't
+tried this. Use your own judgement on how far to trust this..
+--[SimonMichael](SimonMichael)
+
+## grouping patches with tags in their names
+
+darcs can in many contexts work on whole groups of patches based on
+their names, by means of regular expressions. You can make use of this
+by putting tags in the patchnames.
+
+For example
+`reset pointer to zero after it is freed <bugfix> <file hash>`. Patches
+concerning the file hash code can than be listed with
+`darcs log -p '<file hash>'` and all bugfixes can be pushed with
+`darcs push -p '<bugfix>'`. All bugfixes for the file hash can be pulled
+with `darcs pull -p '<bugfix>.*<file hash>'`. Note that the tags must
+always be in alphabetical order (or some other well defined order) for
+multi-tag regexps to work.
+
+## How to keep track of who committed which patch
+
+When having a central branch where a select group of people can commit
+to (using shell access), it is often desirable to know who committed a
+certain patch (e.g. when the author of the patch didn't have commit
+access).
+
+A first solution is by using 'darcs send' to commit to the central
+branch. The procmail script can then log to a file the e-mail address of
+the sender of the patch.
+
+If you still prefer darcs push, you can create a wrapper around `darcs`
+on the server where the repository resides. You'll have to rename your
+`darcs` binary to `darcs.bin`, and create an executable script called
+`darcs` looking like this:
+
+    DARCS=/usr/bin/darcs
+    LOG=~/darcs.log
+    PARAMS=$*
+    NPARAMS=${PARAMS/#apply/apply -v}
+    if test "$PARAMS" != "$NPARAMS"; then
+            ( echo "********** Apply by $USER ***********" ; echo ; \
+            exec $DARCS $NPARAMS | grep -v -E "^(We |Will|diff|Applying|Finished)" ; \
+            echo ) >> $LOG
+    else
+            exec $DARCS $PARAMS
+    fi
+
+This will intercept `darcs apply` calls, change them into
+`darcs apply -v`, and log the output, together with the executing user
+to the given log file. -- [RemkoTroncon](People/RemkoTroncon)
+
+# Scripts
+
+## Script to apply darcs patches from Mac OS X's Mail.app
+
+I've writen a little Apple{{{}}}Script that lets you apply darcs patches
+created via `darcs send` without leaving Mail.app. Find it
+[here](http://hacks-galore.org/jao/ApplyDarcsPatch.scpt).
+---[JoseAntonioOrtegaRuiz](JoseAntonioOrtegaRuiz) (link updated by
+[TomCounsell](TomCounsell) 15 Feb 2007)
+
+## darcs send with Mac OS X's Mail.app
+
+You can configure darcs to use Mail.app to send patches.
+
+Save this [AppleScript](AppleScript) as `~/bin/send-mail.applescript`:
+
+    (* 
+    Running:
+    osascript send-mail.applescript <to> <cc> <subject> <body> <attachment> 
+    *)
+    on run argv
+
+        tell application "Mail"
+
+            set displayForManualSend to false
+
+            set toVar to item 1 of argv
+            set ccVar to item 2 of argv
+            set subjectVar to item 3 of argv
+            set bodyVar to item 4 of argv
+            set attachVar to item 5 of argv
+
+            set composeMessage to make new outgoing message
+            tell composeMessage
+                make new to recipient with properties {address:toVar}
+                if length of ccVar > 0 then
+                    make new cc recipient with properties {address:ccVar}
+                end if
+                set the subject to subjectVar
+                set the content to bodyVar
+
+                tell content
+                    make new attachment with properties {file name:attachVar} at after last paragraph
+                end tell
+
+                set visible to displayForManualSend
+            end tell
+
+            if not displayForManualSend then
+                send composeMessage
+            end if
+
+        end tell
+
+    end run
+
+And add this to to `~/.darcs/defaults`:
+
+    send sendmail-command osascript ~/bin/send-mail.applescript "%t" "%c" "%s" "%b" "%a"
+
+-- [BjornBringert](BjornBringert)
+
+## darcs send with GMail SMTP
+
+[Python script](http://rainforce.org/python/sendmail.py) - simple
+sendmail replacement that uses SMTP protocol for delivery. Tested with
+GMail, but should work for other services as well. Edit script to
+configure your smtp server, login/pass. Then execute darcs (windows
+variant):
+
+    darcs send -v --sendmail-command="c:\path\to\python sendmail.py """%t""" %<"
+
+See also [how to configure Msmtp](Using/Send).
+
+## Script to provide sums of the additions and deletions in `darcs whatsnew -s`
+
+This AWK script provides a sum of the additions and deletions in the
+output of `darcs whatsnew -s`. The output is like that on the LKML
+(presumably from git):
+
+    darcs whatsnew -s 2> /dev/null | awk 'BEGIN { pr = 0; a = 0; d = 0; } /^M/ { f += 1; d -= $3; a += $4; pr = 1; } END { if (pr == 1) { print f, "files changed", a, "insertions(+)", d, "deletions(-)"; } else { print "Are you sure this is a darcs repository?"; } }'
+
+If you would like to change or extend the script for your own needs but
+you are not familiar with AWK, Greg Goebel has written [a great
+tutorial](http://www.vectorsite.net/tsawk.html).
+
+## View 'darcs help' in markdown and manpage format
+
+The following command can be run to view darcs help in markdown:
+
+    darcs help markdown
+
+A similar command can be run for manpage style.
+
+    darcs help manpage | man -l -
+
+# Automated Testing
+
+If you have some automatic tests for your code, you can make darcs run
+the test suite each time a darcs record command is issued:
+
+    darcs setpref test 'make test'  # darcs setpref test 'the command to run when testing'
+
+If the test suite fails, the patch will not be recorded. If it passes,
+it will.
+
+
+# Misc.
+
+-   Before pulling a patch, make sure all local changes are recorded.
+    That way if you get a conflict, you are guaranteed to be able to go
+    back without having to untangle the conflict by hand. After you pull
+    you can always unrecord again if you didn't really want to make a
+    patch at that point. --[GaneshSittampalam](People/GaneshSittampalam)
+-   The \_darcs directory can be moved out of tree and replaced with a
+    symlink pointing to it. This is mainly useful for situations such as
+    preventing accidental deletion of a repository of /etc across
+    operating system reinstalls or importing a new version of a tree
+    from a project that doesn't itself use darcs.
+    --[JonathanConway](JonathanConway)
+
+## Another Cygwin configuration
+
+Here is how I got Cygwin to run
+  ~ -- a little different than
+    [Windows]()
+
+1.  Download the darcs's Windows binary and the customized sftp.zip
+2.  Put the darcs.exe and the sftp.exe in $HOME/bin
+3.  Download and install Putty, pscp, sftp, etc. (Don't you already have
+    this? :) )
+4.  Put this in your `~/.bashrc`:
+
+        export PATH=$PATH:$HOME/bin
+        # the -i is in case you are using a private key
+        export DARCS_SCP="`cygpath -d /cygdrive/c/utils/pscp.exe` -i c:\utils\keys\private.key"
+        export DARCS_SFTP="`cygpath -d $HOME/bin/sftp.exe` -i c:\utils\keys\private.key"
+
+5.  Re-start your Cygwin shell or `source ~/.bashrc` Now darcs should
+    work fine.
+
+6.  --- [MikeHostetler](MikeHostetler)
+
+## Configuring MacOS X to darcs send
+
+The postfix mail server is bundled with MacOS X. On MacOS X 10.4 it is
+launched on demand, so using `darcs send` will just work (via the
+sendmail compatibility interface to postfix). However there are high
+chances that your email will be rejected by the recipient's mail server
+because by default, if your user name is `username` and your computer
+name is `compname` the sender address will be
+`<username@compname.local>` and `compname.local` is not a valid sender
+domain. To make your emails acceptable you have to rewrite the sender
+address. To do that :
+
+1.  Add the following line to `/etc/postfix/main.cf`
+
+<!-- -->
+
+    canonical_maps = hash:/etc/postfix/canonical
+
+2.  Add the following line to `/etc/postfix/canonical`
+
+<!-- -->
+
+    username bla@example.com
+
+where `username` is your username and `bla@example.com` is your valid
+email address.
+
+3.  Rebuild
+
+<!-- -->
+
+    postmap /etc/postfix/canonical
+
+Execute the command in order to rebuild the indexed file after changing
+the text file.
+
+4.  Run (On 10.4 you don't need to do this, postfix is launched on
+    demand).
+
+<!-- -->
+
+    sudo postfix start
+
+to start Postfix.
+
+    sudo postfix stop
+
+to stop Postfix.
+
+Note that bounced messages will also be reported to `bla@example.com`.
+Tested with MacOS 10.4.3, postfix 2.1.5, darcs 1.0.4.
+
+-- DanielBünzli -- [AlbertoSantini](AlbertoSantini)
+
+## Use command line auto completion
+
+You can enable very useful auto completion functionality by following
+the instructions in [ShellCompletion](RelatedSoftware/ShellCompletion).
+
+The functionality differs depending on your shell. However I have found
+the bash support to be excellent. It supports autocompletion of darcs
+commands (clone, push, etc.), options and repositories (by recording the
+repositories you have previously used).
+
+-- [MartynLoughran](MartynLoughran)
+
+# Tips for older versions of darcs
+
+## Script to improve 'darcs annotate' output (before version 2.8)
+
+[darcs-reannotate](http://cakoose.com/darcs/darcs-reannotate/darcs-reannotate).
+A small Python program that converts the output of "darcs annotate" into
+a more readable format.
+
+## darcs remove (before version 2.4)
+
+First of all, don't forget that if you do `rm -rf directory_in_question`
+darcs will automatically detect the remove.
+
+Still, if you want to recursively darcs remove a directory without
+actually getting rid of it in your darcs directory
+
+    darcs show files | grep directory_in_question | xargs darcs remove
+
+If you accidentally 'darcs remove' a file you can do a 'darcs add' to
+the same file and it will essentially undo the erroneous remove.
+
+In darcs 2.4 and later, you can simply do `darcs remove --recursive`.
+
+## No stupid find tricks (for old-fashioned repositories)
+
+Watch out for operations which work recursively on your directory. For
+example, something like this will definitely cause inconsistencies in
+darcs if you're using an old-fashioned repository format:
+
+    for i in ``find . -name '*.lhs'``; do
+       sed -e 's/^import Foo/import Bar.Foo/' $i > $i.2; mv $i.2 $i
+    done
+
+In darcs 1, the problem was that this command would also affect the
+files in \_darcs/pristine. Darcs 2 makes this unlikely if you use either
+the hashed format (which is compatible with darcs 1) or the new darcs 2
+format.
+
+# Dump from DRoundy
+
+Some text from the LaTeX manual didn't really fit anymore during a
+rewrite, and I'm reluctant to delete it outright. Therefore, I am moving
+it here.
+
+## darcs apply --reply
+
+The `--reply` feature of apply is intended primarily for two uses. When
+used by itself, it is handy for when you want to apply patches sent to
+you by other developers so that they will know when their patch has been
+applied. For example, in my `.muttrc` (the config file for my mailer) I
+have:
+
+    macro pager A "<pipe-entry>darcs apply --verbose \
+            --reply droundy@abridgegame.org --repodir ~/darcs
+
+which allows me to apply a patch to darcs directly from my mailer, with
+the originator of that patch being sent a confirmation when the patch is
+successfully applied. NOTE: In an attempt to make sure no one else can
+read your email, mutt seems to set the umask such that patches created
+with the above macro are not world-readable, so use it with care.
+
+When used in combination with the `--verify` option, the `--reply`
+option allows for a nice pushable repository. When these two options are
+used together, any patches that don't pass the verify will be forwarded
+to the `FROM` address of the `--reply` option. This allows you to set up
+a repository so that anyone who is authorized can push to it and have it
+automatically applied, but if a stranger pushes to it, the patch will be
+forwarded to you. Please (for your own sake) be certain that the
+`--reply FROM` address is different from the one used to send patches to
+a pushable repository, since otherwise an unsigned patch will be
+forwarded to the repository in an infinite loop.
+
+If you use `darcs apply --verify PUBRING --reply` to create a pushable
+repository by applying patches automatically as they are received by
+email, you will also want to use the `--dont-allow-conflicts` option.
+
+
+# Best Practices for Darcs
+
+## When should you branch?
+
+In darcs, each repository is a branch.
+
+You can create a branch anytime you want independent lines of
+development; on one branch you might work on a bug fix, on another you
+might work on a feature. Or you might implement different features on
+different branches, or you might even try implementing the same feature
+in different ways on different branches. You might want a separate
+branch for maintenance updates to the "1.0" series, while you work on
+the "2.0" series elsewhere.
+
+Once you've created a branch, changes are merged back and forth by use
+of `darcs pull` and `darcs push`.
+
+## How to create a branch?
+
+In darcs, every repository that shares common ancestry of patches with
+another can be considered a branch. Its commands don't talk about
+branches specifically, but simply about repositories and patches. So the
+short answer is "use the same commands you would for creating a new
+repository and moving patches back and forth to it."
+
+One feature of branches in other source control systems is the ability
+to save disk space by not totally duplicating the storage of the source
+between the trunk and its branches. darcs can help with this by creating
+hard links to branches that exist on the same file system. When creating
+a new repo on the same file system, `darcs clone` will create hard links.
+Otherwise, you can use:
+
+    darcs optimize relink --sibling /repo/dir
+
+after the fact. But if both branches are pushed to two repositories on
+another machine, the hard link is not recreated on the new machine. See
+the docs for those commands for more details.
+
+Besides this, darcs does not do any kind of branch management. Since a
+repository is exactly one branch, it is not possible for a single
+"server" repository published at a given URL to contain multiple
+branches. Discovery of the various branches in a published project must
+be done by other means.
+
+## How should you copy working directories between machines?
+
+If you've recorded all your changes, just use darcs push/pull.
+
+If you have unrecorded changes, you can record them, then push/pull, and
+then unrecord them on both machines after the synchronisation.
+
+Some people use [unison](RelatedSoftware/Unison) to propagate unrecorded
+changes between machines. If you do that, make sure that you never copy
+any of the files under `_darcs`. You should also make sure that Darcs
+itself is not accessing the repositories at the same time (Unison is
+oblivious of the locks that Darcs uses). `rsync` or `cp -a` could also
+be used, with similar caveats. (See, however, the page about unison for
+some more hints about using Unison with Darcs.)
+
+## What is the best way to name patches?
+
+In general, any approach that works for you can be used.
+
+Typical usage is to by default use a one-line description of the change,
+and use a longer comment for patches that are particularly worthy of
+more detailed description.
+
+It's common to prefix patch names with a support ticket identifier
+(e.g., a bug ID number from Bugzilla). This is convenient because you
+can isolate changes relavent to a specific bug via regex-matches using
+`darcs log -p` for example.
+
+## How should you handle version numbering and releasing?
+
+Tag your repository with the version number of your release. Use
+whatever numbering scheme you feel comfortable with; darcs stores
+version numbers as plain-text strings anyway.
+
+Run "darcs dist" to create a source tarball.
+
+If you forget what the last tag name was, you can use the following
+recipe to find out: `darcs show tags | head -1`. If you wish to see all
+the tagged versions, you can leave off the `head` command. If you want
+to see the dates associated with each tag as well, you can use
+`darcs log|grep -B 1 tagged`.
+
+Another way to list all tags, with date and author, is:
+`darcs log -t .` The period is a regexp that matches all tags. You
+could for example list all rc tags with `darcs log -t rc`. The very
+useful command `darcs log --from-tag .` shows the last tag and all
+"extra" patches not tagged by it.
+
+## What do you do when you've got lots of patches and releases in a repository?
+
+To get a repository without copying the whole history, use
+`darcs clone --lazy`. The patches will then be downloaded on demand.
+(To get the rest of the patches into a lazy repository, use `darcs log -v`).
+
+If you want to support older versions in a limited fashion (security
+updates, bug fixes) you want to create branches of the old version.
+
+## How to reduce size of patch bundles created by "darcs send"?
+
+If both local and target repositories have tags in common, run
+`darcs optimize reorder` in the local repository before running
+`darcs send` to take advantage of tags and reduce the context in the
+bundles.
+
+Tagging repositories on a regular basis helps ensuring that bundles
+remain small.
+
+Since Darcs 2.10 bundles are automatically minimized so you can just
+relax.
+
+# Avoiding Trouble
+
+Following these suggestions may help to minimize frustrations with
+darcs.
+
+## Avoid very large files
+
+darcs has trouble dealing with very large patches. If you have very
+large files that you absolutely want to store in the repository
+(corpora, etc); it may often be useful to gzip them first. I managed to
+reduce an 8M text file into 1M, for example.
+
+See <http://bugs.darcs.net/issue80>.
+
+## Run `darcs optimize clean` every few months
+
+This is to garbage collect individual repositories.
+
+## Avoid external merges when pulling unresolved conflicts
+
+Avoid using --external-merge when pulling patches containing unresolved
+conflicts from a repository since information may be lost in this
+scenario. The existing conflicts in the remote repository will not be
+passed to the external merge tool since doing this at the same time as
+passing conflicts with the local repository is either impossible or too
+complicated. Instead the version of the file from the remote repository
+will be passed to the external merge tool in its pre-conflict state.
+
+## Don't change patches that have left your working repo
+
+Once a patch has left your working repo, it could cause confusion if you
+then `unrecord` or `amend-record` that patch. Instead, create a new
+patch to resolve the issue.
+
+## Setting up a secure repo on the Internet
+
+Say you have a server on the Internet, and you want to put a darcs repo
+there for several people to contribute to. If they all have accounts on
+the machine and can SSH to it, then no problem. But what if they don't
+have accounts on the machine? This recipe is for you!
+
+See [SSH]().
+
+# Recovering from conflicts
+
+If you discover a conflict between patches, it is not immediately
+obvious to a beginner how to retrieve the situation. Let's say you made
+some local changes that you forgot to record before pulling from another
+repo, and that you would like to resolve the conflict by discarding your
+unrecorded local changes. Here is the way to do it:
+
+-   darcs revert \# removes conflict-markers in the files
+-   darcs unpull \# unpull enough patches till before your 'pull'
+-   darcs pull \# re-pull all the patches again
+
+

@@ -1,0 +1,159 @@
+# News and discussions
+
+1.  Reinier announced the first beta of Darcs 2.5:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-July/024459.html](http://lists.osuosl.org/pipermail/darcs-users/2010-July/024459.html)
+
+2.  The next darcs sprint will happen in October in Orleans, France:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-July/024429.html](http://lists.osuosl.org/pipermail/darcs-users/2010-July/024429.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-July/024430.html](http://lists.osuosl.org/pipermail/darcs-users/2010-July/024430.html)
+
+# Issues resolved in the last week (6)
+
+issue1288 Ganesh Sittampalam
+  ~ -   the main darcs code now compiles and runs with witnesses
+    -   [http://bugs.darcs.net/issue1288](http://bugs.darcs.net/issue1288)
+
+issue1726 David Markvica
+  ~ -   Files with \_darcs prefix are always boring
+    -   [http://bugs.darcs.net/issue1726](http://bugs.darcs.net/issue1726)
+
+issue1825 Petr Rockai
+  ~ -   do not omit important prims in unrecordedChanges w/ files.
+    -   [http://bugs.darcs.net/issue1825](http://bugs.darcs.net/issue1825)
+
+issue1845 Petr Rockai
+  ~ -   fix "darcs record f" for f a removed, version-tracked file.
+    -   [http://bugs.darcs.net/issue1845](http://bugs.darcs.net/issue1845)
+
+issue1865 Petr Rockai
+  ~ -   make scanBundle produce a well-formed PatchSet.
+    -   [http://bugs.darcs.net/issue1865](http://bugs.darcs.net/issue1865)
+
+issue1871 Petr Rockai
+  ~ -   announceFiles should not give empty list for ".".
+    -   [http://bugs.darcs.net/issue1871](http://bugs.darcs.net/issue1871)
+
+# Patches applied in the last week (83)
+
+2010-07-11 Thorkil Naur
+  ~ -   Fix test issue1865-get-context.sh
+
+2010-07-09 Petr Rockai
+  ~ -   Resolve issue1865: make scanBundle produce a well-formed
+        PatchSet.
+
+2010-07-09 Ganesh Sittampalam
+  ~ -   remove redundant and accidentally checked in definition
+    -   remove dead code
+    -   fix warning
+    -   standardize GHC options
+    -   fix unused variable warning
+    -   fix name shadowing warning
+    -   rename field names to avoid shadowing warnings
+    -   fix unused code warning
+    -   fix shadowing warnings
+    -   fix warning
+    -   fix warning
+    -   remove dead code
+    -   add comment about why we're using a deprecated option
+    -   stop using Control.OldException in Setup.lhs + deps
+    -   Resolve issue1288: the main darcs code now compiles and runs
+        with witnesses
+    -   remove final bits of witness conditionalisation
+    -   fix witnesses in resolveConflicts
+    -   add witnesses to glump09
+    -   add witnesses to actualMerge
+    -   make mapPrimFL work with witnesses
+    -   reduce scope of GADT\_WITNESSES guard
+    -   add a comment
+    -   move unsafeFL definition to its one remaining use site
+    -   rename unsafeUnflippedseal for consistency
+    -   remove witnesses conditionalisation from unravel
+    -   add witnesses to get\_supers
+    -   drop GADT\_WITNESSES conditionalisation of
+        [other\_]commute\_recursive\_merger
+    -   drop redundant part of testcases
+
+2010-07-07 Petr Rockai
+  ~ -   Don't pipe stuff into a process that never reads it.
+    -   Fail more verbosely in network/issue1503 test.
+    -   Enable pipefail globally in tests.
+
+2010-04-20 Ganesh Sittampalam
+  ~ -   drop headFL
+    -   drop GADT\_WITNESSES conditionalisation of new\_ur
+    -   drop GADT\_WITNESSES conditionalisation of unwind
+    -   drop GADT\_WITNESSES conditionalisation of merger\_commute
+    -   drop GADT\_WITNESSES conditionalisation in Darcs.Patch.Read
+    -   add dummy implementation of merger
+    -   push witnesses error from public\_unravel into unravel
+    -   move instance to Darcs.Witnesses
+    -   drop headRL
+    -   add type signature for actual\_merge'
+    -   drop spurious semicolon
+    -   drop GADT\_WITNESSES conditionalisation of commute\_no\_merger
+    -   remove some GADT\_WITNESSES conditionalisation
+    -   GHC 6.10 build fix: don't use GADT records
+    -   change test to not remove directories afterwards
+    -   add unsafeCoercePStart/End
+    -   export unsafeUnseal etc with GADT\_WITNESSES
+    -   a couple more MyEq instances
+    -   use packStringLetters Show hack for RepoModel
+    -   move Show2 Patch instance to Darcs.Patch.Show
+    -   rework Show<n\> classes to be more flexible
+    -   packStringLetters Show hack needs to use Char8
+    -   drop a few unsafeFL uses
+    -   drop some unused unsafe functions
+    -   switch Darcs.Test.Patch.QuickCheck to use Origin type
+    -   add Darcs.Test.Patch.QuickCheck to witnesses build
+    -   remove unused instance
+    -   replace 'assert' function with equivalent 'guard' from
+        Control.Monad
+    -   don't re-export unravel/merger in Darcs.Patch
+    -   remove conditionalisation of imports on GADT\_WITNESSES for
+        simplicity
+    -   push GADT\_WITNESSES conditionalisation down into actual\_merge
+        definition
+    -   drop GADT\_WITNESSES conditionalisation for clever\_commute
+    -   drop GADT\_WITNESSES conditionalisation in modernizePatch
+
+2010-06-25 David Markvica
+  ~ -   Resolve issue1726: Files with \_darcs prefix are always boring
+
+2010-06-28 Petr Rockai
+  ~ -   Resolve issue1825: do not omit important prims in
+        unrecordedChanges w/ files.
+    -   Avoid explicit add of an utf8-encoded file in issue1763 test.
+    -   Add a number of missing --test parameters to the testsuite.
+
+2010-06-02 Eric Kow
+  ~ -   Make --no-test default for record, amend and check.
+    -   Better darcs-specific mailing list for update\_roundup.pl.
+
+2010-06-28 Petr Rockai
+  ~ -   Resolve issue1845: fix "darcs record f" for f a removed,
+        version-tracked file.
+    -   Resolve issue1871: announceFiles should not give empty list for
+        ".".
+
+2010-06-26 Ganesh Sittampalam
+  ~ -   stop using impredicativity
+
+2009-11-14 Jonathan Daugherty
+  ~ -   Docstring typo fix
+
+2010-04-26 Eric Kow
+  ~ -   Remove apparant trailing noise in documentation on sources.
+    -   Remove advice to create a global cache (we create one by
+        default).
+
+2010-06-28 Alexey Levan
+  ~ -   Use temporary files in doOptimizeHTTP
+    -   Add support for lazy getting a packed repository
+    -   Don't use packs when getting a local repository
+    -   Fix warning in Darcs.Repository
+    -   Decrease memory consumption while packing a repo
+
+

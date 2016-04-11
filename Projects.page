@@ -1,0 +1,201 @@
+This page compiles projects ideas for people (eg students) who are looking for
+medium-to-large projects to work on Darcs. These ideas can be also useful for
+a [Google Summer of Code project](GSoC).
+
+## HTTP system overhaul
+
+Currently Darcs depends by default on the C library curl to handle file download
+by HTTP. Alternatively, it can depend on the Haskell library [HTTP](http://hackage.haskell.org/package/HTTP).
+
+We would like to experiment switching to [wreq](http://www.serpentine.com/wreq/).
+This would involve having wreq as the default download system. We might keep the current libcurl and HTTP
+code for benchmarking purposes, but given its rather complex interface it may be simply better to replace it entirely and benchmark against darcs pre-replacement.
+
+It might make sense to deliver this as an independent "download manager" library. This would encourage a clean design that's not too coupled with darcs, and potentially be of benefit to the Haskell community as a whole.
+
+The benefits would be:
+
+* [licensing issues to distribute (static) darcs binaries](http://comments.gmane.org/gmane.comp.version-control.darcs.user/5437)
+* https support under windows (somehow we can't have libcurl under windows?)
+    * note that we can have https support also with [http-client-tls](http://hackage.haskell.org/package/http-client-tls)
+    * the problem is to know how to use the Windows certificate store
+
+Deliverables (apart from the code itself):
+
+* HTTP benchmarks (wreq vs libcurl vs HTTP)
+* testing that pipelining actually works
+* testing under windows / linux
+
+Darcs does not currently send any file by HTTP but if we enable HTTP push
+it would be nice to benchmark HTTP send anyway.
+
+## Friendlier Darcsden
+
+Darcsden is the repository hosting software that runs on <http://hub.darcs.net>.
+
+We have various targets to make Darcsden easier to install and use.
+
+* unauthenticated patch submission via darcs send and http:
+    * can/should be unauthenticated or require an account on darcsden?
+    * how should submitted bundles be presented to the repository owner?
+    * how does darcs detect that it should send to darcsden instead of doing a regular send?
+    * desired outcome: easier way to contribute to a darcs project without
+      having to configure sendmail
+* http push (to darcsden):
+    * specify how darcs could push to a dumb server (without remote darcs), for instance via ssh
+    * pushing to a dumb server requires changes in the working of push. this requires local darcs to download more files and do the merging work locally.
+    * it would be useful to measure the tranfer costs of pushing to dumb server vs. pushing to server with remote darcs vs. pushing to a repository inside of a locally mounted sshfs folder vs the dumb way (clone local, pull from remote patches from it, delete remote repo, clone merged repo to
+* enhancing easiness of retrieving source code from darcsden without having darcs:
+    * automatic creation of git mirrors? (stretch goal)
+
+See also the [list of issues of Darcsden on hub.darcs.net](http://hub.darcs.net/simon/darcsden/issues).
+
+## Better conflicts handling/UI
+
+Proposed by/willing to mentor: Ganesh, Guillaume
+
+- Improve the representation of local conflict markers in the working directory - e.g. make it possible to obliterate the patch causing the conflict and get back to the original local changes
+
+- <http://bugs.darcs.net/issue1912>: avoid invisible conflicts
+- <http://bugs.darcs.net/issue1911>: easy way to find out which patches conflict with which
+- <http://bugs.darcs.net/issue2330>: more precise conflict reporting
+- [Unresolved conflicts-related issues in the bug tracker](http://bugs.darcs.net/issue?%40search_text=&title=&%40columns=title&topic=8&id=&%40columns=id&creation=&creator=&activity=&%40columns=activity&%40sort=activity&actor=&nosy=&priority=&%40group=priority&milestone=&status=-1%2C1%2C2%2C3%2C4%2C5%2C6%2C16%2C17&%40columns=status&resolvedin=&assignedto=&%40columns=assignedto&%40pagesize=50&%40startwith=0&%40queryname=&%40old-queryname=&%40action=search)
+
+
+Survey: How can we enhance conflict handling within the limits of the current Darcs
+repository format / specification ?
+
+What about darcs-1 semantics?
+
+See also [page 10 of Ganesh's talk](http://darcs.net/Talks/state-of-darcs-2011.pdf)
+
+## Faithful fast-export
+
+Improve fast-export with regard to conflicting patches.
+Because of how darcs handles conflicts, some information can be lost with
+the current way of creating incremenal mirrors to git (with `convert export`).
+An approach to address this would be to only resume exporting when the source
+repo is in a non-conflicting state (to at least have a history log that is faithful
+to the source repo). We could warn users about conflicts.
+Or maybe we can export all conflicting patches in some way, into the
+git mirror repository (branches?).
+See previous discussions on this topic:
+
+* <http://irclog.perlgeek.de/darcs/2014-04-02#i_8530756>
+* <http://irclog.perlgeek.de/darcs/2014-04-20#i_8615052>
+* Alternatively: can we export conflicting patches as branches, with a merge
+  representing the merge patch? Does the fast-export protocol support that?
+* Alternatively 2: when detecting that we export a patch with a conflictor,
+  paste the contents of the conflictor into the commit log message
+  (at least the information is stored somewhere).
+
+Also fast-export is not faithful with respect to dirty tags.
+
+We probably need some "calculate patch dependency graph" computation (see recet getDeps patch in darcs)
+to export a darcs history as a branching one. Do we need to export branches as much as possible or only
+branch in presence of tags and conflicts?
+
+## Use darcs as a conflict-resolution tool for any VCS
+
+Proposed by/Willing to mentor: Ganesh
+
+Resolving conflicts during a merge in any VCS involves (at least implicitly) reconstructing the semantic intent of the changes on each side, and then applying them on top of each other.
+
+Darcs patches are a great way of expressing semantic intent explicitly. Build a tool based on darcs patches where the user can reconstruct the changes for both sides of the conflict as a chain of darcs patches, and then use the darcs merge result to actually resolve the conflict (or at least cut it down). As well as the existing darcs patch types, this offers a lot of scope for adding new types just for the tool, as we won't need to worry about the usual backwards compatibility concerns - for example it might try to parse the changes as source code. The tool can also try to automatically infer the patches as well as allowing the user to enter them explicitly.
+
+## Distributed issue tracking for darcsden
+
+Proposed by/willing to mentor: Ganesh
+
+Change the darcsden issue tracker to store the issues themselves in a separate darcs repository. Other people have tried distributed issue tracking before so this also involves investigating previous solutions.
+
+## Better patch dependencies
+
+Proposed by: Florent, Ganesh, Guillaume, Owen
+
+- show on `whatsnew` and `record` on which changes do the unrecorded changes sit
+- automatically discover patch dependencies (`amend --ask-deps`)
+  when given test fails without them
+- visualization of patch dependencies
+
+## Survey: short, secure, fast version identifiers
+
+See <http://bugs.darcs.net/issue992>.
+
+Do a survey of what Darcs could use as short, secure, fast version indentifiers.
+Compare Darcs vs Git in this aspect. Estimate costs of implementing a system above
+the existing.
+
+## Memory profiling and optimizations
+
+See <https://github.com/meiersi/HaskellerZ/tree/master/meetups/20150531-ZuriHac2015_Johan_Tibell-Performance>.
+
+Benchmark memory consumption of Darcs and optimize its most memory hungry functions.
+
+See in particular:
+
+* cloning
+* diff
+* local pull
+* optimize reorder
+* record (watch out for <http://bugs.darcs.net/issue80>)
+* pull --reorder
+
+See also:
+
+* [Neil Mitchell's "Leaking Space" article](https://queue.acm.org/detail.cfm?id=2538488)
+* [detecting space leaks](http://neilmitchell.blogspot.com.ar/2015/09/detecting-space-leaks.html)
+
+## Remove "tentative" files whenever we can
+
+See <http://bugs.darcs.net/issue1556>.
+
+## Bucketed repositories
+
+Recently (in version 2.10), darcs' global cache got bucketed, ie, hashed files were
+stored in subdirectories ./00/ , ./01/, ./02/ , etc. instead of a single big directory
+(thus dividing file # by 256 which concretely is more manageable by many filesystems).
+
+What are the costs of doing the same at the repository level? What about existing repositories?
+What about current Darcs versions versus new bucketes repositories?
+
+Can darcsden be made compatible with old darcs clients, by means of HTTP redirections?
+
+Is it worth it?
+
+## Darcs under windows
+
+Review Darcs under windows, how can it be made easier to install and use?
+
+## Survey: darcs on a dumb server
+
+How can we improve this use case? What's the state of darcs on sshfs now?
+
+## Survey exception use in Darcs
+
+Watch out for catch, catchall and such.
+
+## File similarity
+
+Detecting file similarity and detect files moves and hunk moves.
+See <http://lists.osuosl.org/pipermail/darcs-users/2013-August/026929.html>
+
+## Darcs support for existing GUI
+
+Add a darcs support to an existing GUI, for instance <http://rabbitvcs.org/> (Python)
+or <http://qct.sourceforge.net/> (proposed in <http://darcs.net/Ideas/GraphicalInterface>).
+
+## A manual
+
+We still don't have a manual for Darcs >= 2.10. Want to help us?
+
+## An in-browser javascript client
+
+Obviously not an Haskell project. See [JSClient](Ideas/JSClient).
+
+## Other projects
+
+Keep in mind that you could always propose an project with a whole
+different set of ideas. Be creative! :-)
+
+

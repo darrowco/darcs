@@ -1,0 +1,223 @@
+# News and discussions
+
+1.  First pre-release of darcs 2.0.3. This version of darcs has some
+    very nice bug fixes on offer. A few more user-friendliness tweaks
+    are planned for the actual release.
+    -   [http://www.darcs.net/darcs-2.0.3pre1.tar.gz](http://www.darcs.net/darcs-2.0.3pre1.tar.gz)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-September/013839.html](http://lists.osuosl.org/pipermail/darcs-users/2008-September/013839.html)
+
+2.  Third venue confirmed for darcs hacking sprint, 25-26 October.
+    Brighton, Portland and now Paris are all CONFIRMED. Come hack with
+    us!
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-September/013710.html](http://lists.osuosl.org/pipermail/darcs-users/2008-September/013710.html)
+
+3.  code.haskell.org upgrades to darcs 2! /usr/bin/darcs is now darcs
+    2.0.2 on this server. No action is needed on the user's part.
+    -   [http://article.gmane.org/gmane.comp.lang.haskell.general/16419](http://article.gmane.org/gmane.comp.lang.haskell.general/16419)
+
+4.  Retiring GHC 6.4. Nobody seems to be using GHC 6.4 to compile darcs
+    after all, so we shall be dropping support for it.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-September/013731.html](http://lists.osuosl.org/pipermail/darcs-users/2008-September/013731.html)
+
+# Reviewers
+
+Thanks to our patch reviewers for this week for giving David a hand!
+
+-   Jason Dagit
+-   Nathan Gray
+-   Trent W. Buck
+
+# Issues resolved in the last week (6)
+
+issue691 Dmitry Kurochkin
+  ~ -   distinguish between NoArg and ReqArg in defaults parser.
+    -   [http://bugs.darcs.net/issue691](http://bugs.darcs.net/issue691)
+
+issue709 David Roundy
+  ~ -   avoid adding changes to pending in rmpend when possible.
+    -   [http://bugs.darcs.net/issue709](http://bugs.darcs.net/issue709)
+
+issue885 David Roundy
+  ~ -   fix patchSetToRepository to work with hashed.
+    -   [http://bugs.darcs.net/issue885](http://bugs.darcs.net/issue885)
+
+issue1012 David Roundy
+  ~ -   it seems to be fixed by the fix for issue709.
+    -   [http://bugs.darcs.net/issue1012](http://bugs.darcs.net/issue1012)
+
+issue1054 Dmitry Kurochkin
+  ~ -   --no-cache option to ignore patch caches.
+    -   [http://bugs.darcs.net/issue1054](http://bugs.darcs.net/issue1054)
+
+issue1057 David Roundy
+  ~ -   this was fixed in the previous patch.
+    -   [http://bugs.darcs.net/issue1057](http://bugs.darcs.net/issue1057)
+
+# Patches applied in the last week (86)
+
+2008-09-18 Eric Kow
+  ~ -   TAG 2.0.3pre1
+    -   Bump version number to 2.0.3pre1.
+    -   Canonize Florent Becker, Matthias Killian, Trent Buck, Thorkil
+        Naur
+    -   ChangeLog entries for darcs 2.0.3pre1 again.
+
+2008-09-17 Judah Jacobson
+  ~ -   Re-enable haskeline by default. Require haskeline\>=0.3.1 which
+        fixes issue1050.
+    -   Throw an error when haskeline returns an EOF/EOT.
+
+2008-09-17 Eric Kow
+  ~ -   Disable more record\_editor tests under Windows.
+
+2008-09-17 David Roundy
+  ~ -   add a couple of tests of unrecord.
+    -   add a few (passing) tests of pending handling in obliterate and
+        unrecord.
+
+2008-09-16 Dmitry Kurochkin
+  ~ -   Use putStrLn for "Cancelled." message.
+
+2008-09-16 David Roundy
+  ~ -   remove now-unused is\_addrmfile and is\_addrmdir.
+    -   resolve issue1012: it seems to be fixed by the fix for issue709.
+    -   resolve issue885: fix patchSetToRepository to work with hashed.
+    -   resolve issue709: avoid adding changes to pending in rmpend when
+        possible.
+    -   first-stage fix for issue709.
+    -   add new test that we don't do anything when repairing a clean
+        repo.
+    -   whitespace change in prepend.
+    -   make shell\_harness print summary of passing tests when running
+        bugs tests.
+    -   trailing whitespace cleanup in Repository.Internal.
+    -   tiny refactor in Internal.lhs.
+    -   simplify issue965 test (which took quite a while for me to
+        figure out).
+
+2008-09-16 Dmitry Kurochkin
+  ~ -   Test for issue691.
+
+2008-09-16 Eric Kow
+  ~ -   Make match.pl test understand Windows dates.
+    -   Disable some tests that don't work under Windows.
+    -   Translate get.pl test into shell.
+
+2008-09-15 Dmitry Kurochkin
+  ~ -   Resolve issue691: distinguish between NoArg and ReqArg in
+        defaults parser.
+    -   Move get\_default\_flag type to definition.
+
+2008-09-15 David Roundy
+  ~ -   reverse overly-invasive haddocking.
+
+2008-09-14 Dmitry Kurochkin
+  ~ -   In darcs send if POST fails try sendmail.
+    -   Grammar in Darcs.Commands.Send.
+    -   Print "Successfully sent patch bundle to" only when we really
+        sent something.
+
+2008-09-15 Eric Kow
+  ~ -   Fix overzealous escaping in haddock.
+
+2008-09-13
+[florent.becker@ens-lyon.org](mailto:florent.becker@ens-lyon.org)
+  ~ -   Haddock documentation for English.lhs
+    -   Haddock documentation for PrintPatch
+    -   Haddock documentation for Flags
+    -   Haddock documentation for Motd
+    -   Haddock string for TheCommands
+
+2008-09-14 Dmitry Kurochkin
+  ~ -   Run testing in temp directories to avoid collosions, fail if
+        DarcsURL header is not found.
+    -   Use tempfile() UNLINK option to automatically remove temp files
+        at exit.
+    -   Coding style in upload.cgi.
+    -   Stop after we found the first DarcsURL: in patch bundle.
+    -   Spaces in upload.cgi.
+
+2008-09-14 Eric Kow
+  ~ -   Really allow pull.sh test to pass on Windows.
+
+2008-09-13 David Roundy
+  ~ -   rewrite upload.cgi so it won't need any customization by
+        default.
+    -   when \_darcs/prefs/post is present, use \_darcs/prefs/post for
+        To: header.
+    -   sketchy documentation of \_darcs/prefs/post
+
+2008-09-14 Eric Kow
+  ~ -   ChangeLog entries for darcs 2.0.3pre1
+    -   Disable amend-cancelling test under Cygwin.
+    -   Make binary.sh test more portable (avoid copying an exe).
+
+2008-09-13 David Roundy
+  ~ -   set default upload.cgi to work on darcs-unstable.
+
+2008-09-12 Dmitry Kurochkin
+  ~ -   Improve upload.cgi.
+    -   Spaces and punctuation in upload.cgi.
+
+2008-09-13 David Roundy
+  ~ -   fix problem in Darcs.URL refactor pointed out by Eric.
+
+2008-09-12 Eric Kow
+  ~ -   Disable a pull.sh test under Windows.
+
+2008-09-12 David Roundy
+  ~ -   refactor Darcs.URL to eliminate use of Regexes.
+    -   change is\_file to return false on
+        [droundy@darcs.net](mailto:droundy@darcs.net):
+    -   clean up whitespace.
+    -   fix manual for optional arguments.
+    -   clean up whitespace.
+    -   add test for new --output-auto-name feature.
+
+2008-09-12 Dmitry Kurochkin
+  ~ -   Spaces in Darcs.Commands.Send module.
+    -   Make '--output-auto-name' accept optional directory argument.
+    -   Add DarcsOptAbsPathOption for options with optional path
+        argument.
+    -   Refactor Darcs.Repository.Prefs.getCaches.
+    -   Print warning when '--http-pipelining' option is used, but darcs
+        is compiled without HTTP pipelining support.
+    -   Do not download URL we have speculated before.
+    -   Spaces and parentheses in URL module.
+    -   Coding style in Darcs.Arguments.network\_options.
+    -   Resolve issue1054: --no-cache option to ignore patch caches.
+    -   Remove unused variable from configure.ac.
+    -   Comment in configure.ac.
+    -   Indentation fixes in configure.ac.
+
+2008-09-10 Steve Cotton
+  ~ -   insecure printfs - fix the two that I can currently hit
+
+2008-09-10 Dmitry Kurochkin
+  ~ -   Formating and minor refactoring in URL.urlThread.
+
+2008-09-10 David Roundy
+  ~ -   TAG this version works.
+
+2008-09-10 Dmitry Kurochkin
+  ~ -   Add '[DEFAULT]' to -[-no]-http-pipelining options.
+
+2008-09-10 David Roundy
+  ~ -   remove ugly unused function appendToPath.
+    -   remove buggy unused function combine.
+
+2008-09-10 Eric Kow
+  ~ -   Make issue1057 test run on Cygwin.
+
+2008-09-09 David Roundy
+  ~ -   resolve issue1057: this was fixed in the previous patch.
+    -   fix bug in file path handling.
+    -   move issue966 test to tests/ since it passes.
+    -   don't inline global variables in URL.
+
+2008-09-09 Dmitry Kurochkin
+  ~ -   Documentation for -[-no]-http-pipelining options.
+    -   Space in Darcs.Arguments module.
+    -   Move network related options to network\_options.
+
+

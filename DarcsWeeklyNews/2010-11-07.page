@@ -1,0 +1,55 @@
+# News and discussions
+
+1.  Simon Michael worked on adding support for darcs repositories for
+    ohloh.net and called for volunteers:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-November/025621.html](http://lists.osuosl.org/pipermail/darcs-users/2010-November/025621.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-November/025637.html](http://lists.osuosl.org/pipermail/darcs-users/2010-November/025637.html)
+
+2.  Christian Maeder asked how to apply a darcs patch to a non-darcs
+    source tree:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-November/025617.html](http://lists.osuosl.org/pipermail/darcs-users/2010-November/025617.html)
+
+# Issues resolved in the last week (2)
+
+issue1266 Alexey Levan
+  ~ -   add a warning about nested repositories
+    -   [http://bugs.darcs.net/issue1266](http://bugs.darcs.net/issue1266)
+
+issue1984 Dmitry Tsygankov
+  ~ -   better error message for 'darcs convert'
+    -   [http://bugs.darcs.net/issue1984](http://bugs.darcs.net/issue1984)
+
+# Patches applied in the last week (14)
+
+2010-10-17 Guillaume Hoffmann
+  ~ -   redundant use of when inside of an else
+
+2010-10-24 Dmitry Tsygankov
+  ~ -   resolve issue1984: better error message for 'darcs convert'
+
+2010-10-15 Alexey Levan
+  ~ -   Resolve issue1266: add a warning about nested repositories
+
+2010-10-20 Eric Kow
+  ~ -   Improve issue1465 test (portability, tidiness).
+    -   Require absolute path for darcs-test --darcs.
+    -   Avoid 'Defined but not used' error in darcs-test.
+    -   Avoid accidentally running darcs-test on installed darcs.
+    -   Optional --test-dir for darcs-test (for troubleshooting failed
+        tests).
+    -   Tidier announcement for subcommute unit tests.
+    -   Mark sections in test.hs.
+
+2010-10-17 Florent Becker
+  ~ -   make progress message in pull less silly looking
+
+2010-11-01 Ganesh Sittampalam
+  ~ -   Re-conditionalise setEnvCautiously
+
+2010-10-01 Simon Michael
+  ~ -   hook env vars: rename defineChanges/definePatches for clarity
+    -   hook env vars: clarify some conditional code
+
+

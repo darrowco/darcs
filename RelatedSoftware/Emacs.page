@@ -1,0 +1,128 @@
+# Emacs modes for darcs
+
+Material on Emacs and darcs is collected at the [Emacs wiki](http://www.emacswiki.org/emacs/DaRcs).
+
+You will probably be interested in [DarcsumMode](DarcsumMode) and/or VC
+integration. Darcsum is a darcs-specific mode, somewhat analogous to the
+PCL-CVS mode for CVS, but with a neat treatment of changes available for
+selective recording.
+
+There are two implementations of VC integration, differing in
+implementation and somewhat in their handling of "revisions":
+
+-   [http://www.pps.jussieu.fr/\~jch/software/repos/vc-darcs](http://www.pps.jussieu.fr/~jch/software/repos/vc-darcs)/
+-   [http://hub.darcs.net/fx/vc-darcs](http://hub.darcs.net/fx/vc-darcs)
+
+The latter supports the relevant features of VC in Emacs 21 and above,
+and may still work with darcs 1. The former has more limited support.
+See the commentary in both versions for more details and discussion of
+the issues supporting a patch-based system in VC.
+
+There is support for \`programmable completion
+[http://sacha.free.net.ph/notebook/emacs/pcmpl-darcs.el](http://sacha.free.net.ph/notebook/emacs/pcmpl-darcs.el)\`
+in the Emacs shell.
+
+# Use Emacs as an external merge tool for darcs
+
+(There's a more comprehensive example in the manual for darcs 1.0.5.)
+
+Create the following wrapper script:
+
+    #!/bin/sh
+    #
+    # 3 way merge using emacs from the command line
+
+    emacs --eval="(ediff-merge-files-with-ancestor \"$1\" \"$2\" \"$3\" nil \"$4\")"
+
+then invoke darcs pull as follows:
+
+    $ darcs pull --external-merge='/path/to/the/wrapper/script.sh %1 %2 %a %o'
+
+or just put the following line into `~/.darcs/defaults`:
+
+    ALL external-merge /path/to/the/wrapper/script.sh %1 %2 %a %o
+
+* * * * *
+
+# Protect against accidentally editing files in \_darcs/current
+
+[This isn't relevant for modern-format repositories.]
+
+More than once I found myself making an edit in the \_darcs/current copy
+of a file; probably due to an accident with find-dired.
+
+J.Ch's version of vc-darcs.el will automatically prevent you from making
+this mistake. If for some reason you don't want to use vc-darcs, you may
+use the folowing code:
+
+Add the following to your .emacs:
+
+    (add-hook 'find-file-hooks 'warn-if-darcs-file)
+    (defun warn-if-darcs-file()
+      (let ((f (buffer-file-name (current-buffer))))
+        (and f (string-match "_darcs" f)
+             (if (y-or-n-p "This is a _darcs file, open the real file? ")
+                 (jump-to-real-file-from-darcs)
+               (push '(:propertize "_DARCS-FILE:" face font-lock-warning-face)
+                     mode-line-buffer-identification)))))
+    (defun jump-to-real-file-from-darcs()
+      (interactive)
+      (let* ((f (buffer-file-name (current-buffer)))
+             (match (string-match "_darcs/current" f)))
+        (and f match
+             (find-alternate-file
+              (concat (substring f 0 (match-beginning 0))
+                      (substring f (match-end 0)))))))
+
+I have included some code inspired by his in vc-darcs.el; I'd like to
+credit the original author, please drop me a line. --
+[JCh](People/JuliuszChroboczek)
+
+The above code is a nuisance when using darcsum-ediff. Also, the warning
+label is lost at the end of the ediff. I prefer it as follows. -- trb
+
+    ; prevent accidental editing of files in darcs repository
+    (add-hook 'find-file-hooks 'label-darcs-file-with-warning)
+    ;; warn against accidental writing to a _darcs file
+    (add-hook 'write-file-hooks 'warn-writing-darcs-file)
+    ; affix a warning label to any _darcs file buffer
+    (defun label-darcs-file-with-warning()
+      (let ((f (buffer-file-name (current-buffer))))
+        (and f (string-match "_darcs" f)
+             (rename-buffer (concat "_DARCS-FILE:" (buffer-name)) t))))
+    ; prevent accidental writing of files in darcs repository
+    (defun warn-writing-darcs-file()
+      (let ((f (buffer-file-name (current-buffer))))
+        (and f (string-match "_darcs" f)
+             (if (not (y-or-n-p "WARNING: YOU ARE ABOUT TO WRITE TO an _darcs file, are you sure you want to do this? "))
+               (keyboard-quit)))))
+
+There is a general facility for preventing unintentional writes at [http://hub.darcs.net/fx/emacs-misc/browse/protect-files.el](http://hub.darcs.net/fx/emacs-misc/browse/protect-files.el).
+
+* * * * *
+
+# Wishlists
+
+People have created wishlists of what an "ideal" darcs mode for emacs
+would require.
+
+-   There's one in DarcsumMode.
+
+-   Why not use DVC? Darcs will become a backend to the emacs
+    Distributed Version Control mode
+    ([http://wiki.gnuarch.org/xtla\#DVC](http://wiki.gnuarch.org/xtla#DVC))
+    DVC people begin the darcs backend:
+    [https://mail.gna.org/public/xtla-el-dev/2006-03/msg00087.html](https://mail.gna.org/public/xtla-el-dev/2006-03/msg00087.html)
+
+-   I'm thinking the same. Yesterday found out about DVC and saw at
+    [http://download.gna.org/dvc](http://download.gna.org/dvc)/ that
+    darcs back-end is not advancing nicely. Maybe the effort could be
+    directed towards DVC back-end. It would be nice having common DVC
+    interface for people that have to work with several distributed rcs.
+    However, I'm not (yet) familiar with darcsum.el so cannot
+    judge/compare its interface with DVC.
+
+    [I had a shufti at DVC a while ago and couldn't make much sense of
+    it -- Dave Love]
+
+

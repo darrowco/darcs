@@ -1,0 +1,5 @@
+# Easy overview of set of branches (with something like gitk/tig)
+
+This could be done with an external tool that would aggregate data from selected known darcs repos and present them as a tree.
+
+Then darcs could still live without an additional concept of branch, just by relying on dirs as branches. --Ivan Z.

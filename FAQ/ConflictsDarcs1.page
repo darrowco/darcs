@@ -1,0 +1,835 @@
+---
+title: Frequently Asked Questions (Darcs1 Conflicts)
+...
+
+This page covers a known problem with the old repository format. If you
+are using a recent repository format, see [ConflictsFAQ](FAQ/Conflicts).
+
+# Everyday conflicts
+
+Conflicts typically happen when the same part of the file is edited in
+two (or more) repositories independently. This occurs all too frequently
+when working with many developers. In this section, we show the basic
+techniques for dealing with so-called *everyday conflicts*. See the next
+section for a discussion on the more tricky *nested conflicts* which
+triggers darcs 1.x's notorious exponential time behaviour.
+
+## Pulling or applying conflicting patches
+
+When pulling patches that conflict each other (e.g., change the same
+part of the file) Darcs detects the conflict and marks it in the
+repository content. It then lets the user resolve the problem.
+
+    R1 $ darcs pull ../R2
+    Pulling from "../R2"...
+    Fri Oct 26 00:09:09 EEST 2007  pessi@invalid
+      * P1
+    Shall I pull this patch? (1/1)  [ynWvpxqadjk], or ? for help: y
+    We have conflicts in the following files:
+    ./text
+    Finished pulling and applying.
+    R1 $ darcs whatsnew
+    {
+    hunk ./text 3
+    -3 a
+    +v v v v v v v
+    +3a a
+    +3b second
+    +*************
+    +3a the
+    +3b third
+    +^ ^ ^ ^ ^ ^ ^
+    }
+    R1 $
+
+The other Darcs commands adding patches to repositories ({{{darcs
+push}}} or `darcs apply`) do not allow conflicting patches by default.
+You can use `--allow-conflicts` or `--mark-conflicts` options with
+`darcs apply`, however.
+
+You can push a conflicting patch if you also push a patch resolving the
+conflict at the same time. (But see [HiddenConflicts](HiddenConflicts).)
+
+## How do conflicts behave?
+
+When you pull patches that conflict with patches in your local
+repository, Darcs marks them for you as shown above. The command
+`darcs revert` will remove the conflict marking and back up to state
+before conflicting patches:
+
+    R1 $ darcs revert --all
+    Finished reverting.
+    R1 $ cat text
+    1 This
+    2 is
+    3 a
+    4 test
+    R1 $
+
+The conflict is not resolved after `darcs revert` command, however, it
+is just not marked.
+
+As you might have noticed from behavior of `darcs revert` Darcs does not
+let the conflicting patches to change the state of the repository. The
+conflicting parts of the patches are commuted so that they have *no
+effect* on the repository state.
+
+    R1 $ darcs push ../R2
+    Wed Oct 24 19:11:03 EEST 2007  Martti.Mela@org.invalid
+      * P1
+    Shall I push this patch? (1/1)  [ynWvpxqadjk], or ? for help: y
+    darcs failed:  Refusing to apply patches leading to conflicts.
+    If you would rather apply the patch and mark the conflicts,
+    use the --mark-conflicts option to apply.
+    There are conflicts in the following files:
+    ./text
+    R1 $
+
+The confusing output suggesting `--mark-conflicts` option is because
+`darcs push` consists internally of the `darcs send` command run in
+source repository and the `darcs apply` command run in target
+repository.
+
+-   *The confusing output is considered a [user interface
+    bug](http://bugs.darcs.net/issue551) and will be fixed in a future
+    version of darcs.*
+    -   EYK
+
+## I've reverted or edited the conflict markers away! How do I find the
+conflicts now?
+
+The `darcs mark-conflicts` command ({{{darcs resolve}}} in darcs 1.0.9
+or earlier) can be used to search and mark the existing unresolved
+conflicts:
+
+    R1 $ darcs mark-conflicts
+    This will trash any unrecorded changes in the working directory.
+    Are you sure?  [yn]y
+    Finished marking conflicts.
+    R1 $ darcs whatsnew
+    {
+    hunk ./text 3
+    -3 a
+    +v v v v v v v
+    +3a a
+    +3b second
+    +*************
+    +3a the
+    +3b third
+    +^ ^ ^ ^ ^ ^ ^
+    }
+    R1 $
+
+Please note that `darcs mark-conflicts` will revert all unrecorded
+changes before marking - just like `darcs revert --all` but **without
+possibility to unrevert your changes**. If you have your own unrecorded
+changes run `darcs revert` before running `darcs mark-conflicts`.
+
+Conflicts are also stored in the patch files, and they can be seen on
+darcs changes -v output. The conflict is marked with `merger 0.0 {`}.
+
+    R1 $ darcs changes -v
+    Fri Oct 26 00:09:09 EEST 2007  pessi@invalid
+      * P1
+        merger 0.0 (
+        hunk ./text 3
+        -3 a
+        +3a a
+        +3b second
+        hunk ./text 3
+        -3 a
+        +3a the
+        +3b third
+        )
+    Fri Oct 26 00:07:44 EEST 2007  mela@invalid
+      * M1
+        hunk ./text 3
+        -3 a
+        +3a a
+        +3b second
+    Fri Oct 26 00:07:15 EEST 2007  mela@invalid
+      * P0
+        addfile ./text
+        hunk ./text 1
+        +1 This
+        +2 is
+        +3 a
+        +4 test
+    R1 $
+
+The `darcs changes -s` output also indicates the named patches and files
+that have conflicts with exclamation mark:
+
+    Fri Oct 26 00:09:09 EEST 2007  pessi@invalid
+      * P1
+        M! ./text -2 +1
+    Fri Oct 26 00:07:44 EEST 2007  mela@invalid
+      * M1
+        M ./text -1 +2
+    R1 $
+
+The `darcs changes -s` is buggy (in Darcs 1.1 and earlier). With bad
+enough conflicts, it does not always show the conflicting files at all.
+
+Unfortunately, you have to figure out which are the other patches
+involved in the conflict by yourself. This can be pretty hard if the
+conflicting patch is deeply nested and its hunks are commuted. The
+`darcs changes -v` output helps you but please note that, e.g., the line
+numbers change when other patches are commuted with the conflicting one.
+
+## How can I resolve conflicts? The general case
+
+When you are merging two public repositories, the usual way to resolve
+conflicts is by creating a resolution patch that depends on the
+conflicting patches. It's important to propagate the resolution patch to
+all the other branches, in order to avoid creating a conflict fight
+(described below), to which Darcs is particularly susceptible.
+
+    R1 $ cat text
+    1 This
+    2 is
+    3a the
+    3b fourth
+    4 test
+    R1 $ darcs record -m M2 --all
+    Finished recording patch 'M2'
+    R1 $ darcs push
+    Pushing to "../R2"...
+    Fri Oct 26 00:36:34 EEST 2007  mela@invalid
+      * M2
+    Shall I push this patch? (1/1)  [ynWvpxqadjk], or ? for help: y
+    Finished applying...
+    R1 $ darcs changes -v --last 2
+    Fri Oct 26 00:36:34 EEST 2007  mela@invalid
+      * M2
+        hunk ./text 3
+        -3 a
+        +3a the
+        +3b fourth
+    Fri Oct 26 00:09:09 EEST 2007  pessi@invalid
+      * P1
+        merger 0.0 (
+        hunk ./text 3
+        -3 a
+        +3a a
+        +3b second
+        hunk ./text 3
+        -3 a
+        +3a the
+        +3b third
+        )
+    R1 $
+
+Be careful when tagging while there are live conflicts in your
+repository. When you create a tag, Darcs assumes you have resolved any
+conflicts. A tag depends on all the patches in the repository, even if
+they are conflicting. However, tags can be useful by preventing
+conflicts from propagating. If the new patch depends on the tag (in the
+context of the new patch), it won't propagate the conflict.
+
+Also:
+
+-   {X} Do not try to resolve your conflicts without all the possible
+    patches present in your local repository. That would leave to
+    *conflict fight* and other problems described below.
+-   {X} Do not try to undo some conflicting changes with new patches
+    locally **before** pulling conflicting patches. With Darcs 1.x that
+    would invite the [HiddenConflicts](HiddenConflicts) bug to haunt
+    your and your repository.
+
+## Rewriting history (private repositories only)
+
+If you are only working with one-off, private repositories and you are
+sure that there is no risk of confusion, you could also try 'rewriting
+history', that is, modifying patches in such a way that the conflict
+never even existed in the first place. This is about as naughty as using
+amend-record and may not work as well when merging long chains of
+conflicting patches.
+
+### Rewriting history with unrecord
+
+You can unrecord the conflicting patch, edit the files and then
+re-record it:
+
+    R1 $ darcs unrecord
+    Fri Oct 26 00:09:09 EEST 2007  pessi@invalid
+      * P1
+    Shall I unrecord this patch? (1/3)  [ynWvpxqadjk], or ? for help: n
+    Fri Oct 26 00:07:44 EEST 2007  mela@invalid
+      * M1
+    Shall I unrecord this patch? (2/3)  [ynWvpxqadjk], or ? for help: y
+    This operation will make unrevert impossible!
+    Proceed? [yn]y
+    Finished unrecording.
+    R1 $ cat text
+    1 This
+    2 is
+    v v v v v v v
+    3a a
+    3b second
+    *************
+    3a the
+    3b third
+    ^ ^ ^ ^ ^ ^ ^
+    4 test
+    R1 $ $EDITOR text
+    R1 $ darcs record -m M1+P1
+    hunk ./text 4
+    -3b third
+    +3b second and third
+    Shall I record this change? (1/?)  [ynWsfqadjkc], or ? for help: y
+    Finished recording patch 'M1+P1'
+    R1 $
+
+### Rewriting history with amend-record
+
+Alternatively, you can resolve conflicts and then amend the local patch:
+
+    R1 $ darcs mark
+    Finished marking conflicts.
+    R1 $ $EDITOR text
+    R1 $ darcs amend-record
+    Fri Oct 26 00:09:09 EEST 2007  pessi@invalid
+      * P1
+    Shall I amend this patch? [yNvpq], or ? for help: n
+    Fri Oct 26 00:07:44 EEST 2007  mela@invalid
+      * M1
+    Shall I amend this patch? [yNvpq], or ? for help: y
+    hunk ./text 3
+    -3 a
+    +3a a
+    +3b second and third
+    Shall I add this change? (1/?)  [ynWsfqadjkc], or ? for help: y
+    Finished amending patch:
+    Fri Oct 26 00:28:50 EEST 2007  mela@invalid
+      * M1
+    R1 $ darcs changes -v --last 2
+    Fri Oct 26 00:28:50 EEST 2007  mela@invalid
+      * M1
+        hunk ./text 3
+        -3a the
+        -3b third
+        +3a a
+        +3b second and third
+    Fri Oct 26 00:09:09 EEST 2007  pessi@invalid
+      * P1
+        hunk ./text 3
+        -3 a
+        +3a the
+        +3b third
+    R1 $
+
+Note that the new patches (M1+P1 or M1 with new date) have new name and
+hash. They are in conflict with the original patches (M1), too. So make
+sure you have obliterated all original conflicting patches from all the
+repositories.
+
+### Rewriting history with diff, obliterate and patch
+
+*TODO*.
+
+## Using rollback to resolve conflicts
+
+Rollback - or UNDO patches - is a way to resolve conflicts in Darcs 1.X.
+The *rollback* command created a new patch which had the inverse effect
+of the patch you were rolling back. The problem is that the identity of
+the new rollback patch is derived from the identity of the original
+patch, but rollback commands issued with or without conflicts may end up
+with two patches with different effect. Darcs does not cope well with
+patches with same identity but different effect.
+
+Therefore, darcs rollback command can be used to resolve the conflict
+and undo the effect of one of the conflicting patches, but because of
+numerous bugs, using it is a bit dangerous, however.
+
+Be careful when trying to resolve conflict by rolling any conflicting
+patches back with `darcs rollback`. Careless use of rollback is sure way
+to create [HiddenConflicts](HiddenConflicts) and trigger other, more
+immediate bugs in darcs.
+
+If possible, see if you could get away with `darcs unrecord`,
+`darcs amend-record` or `darcs obliterate`, which remove the patch
+altogether. If the patch is present in other repositories, it has to be
+obliterated there as well. :(
+
+If you really do want to use rollback, it seems that you are safe if you
+follow the rules below:
+
+1.  Move the patch that you want to rollback latest in repository. That
+    probably involves creating a temporary repository, obliterating the
+    patch from there, creating a tag, pulling the offending patch back
+    and then doing `darcs rollback`.
+
+2.  Make sure that your patch-rollback does not change anything. Compare
+    the files involving in the conflict with the files from repository
+    without both patch and its rollback patch.
+
+3.  When pushing the patches to public repository, make sure the
+    rollback is immediately following the original patch. Reorder the
+    patches there if needed (using `darcs optimize --reorder --tag` and
+    the tag created above)
+4.  {X} Never rollback two nesting patches. See
+    [HiddenConflicts](HiddenConflicts) for details.
+5.  {X} Never rollback without presence of all conflicting patches. See
+    [HiddenConflicts](HiddenConflicts) for details.
+6.  {X} Never try to obliterate patches which are before the
+    patch-rollback pair.
+7.  {X} Never rollback same patch twice in different repositories. The
+    contents and effect of the rollback patch depend on the context it
+    is done. While the two rollback patches have same name and hash they
+    may have different effect on repository.
+
+* * * * *
+
+# Problems with conflicts
+
+The Darcs 1 has problems with handling complex conflict cases when there
+are other patches depending on the conflicting one. Darcs 2 speeds up
+handling of simple conflict cases, it does not handle conflict fight
+gracefully yet.
+
+## What the big conflicts bug?
+
+The time needed to resolve or detect conflicts grows exponentially with
+depth of conflict nesting.
+
+## Darcs is really slow! Is this the big conflicts bug in action?
+
+Not necessarily. There could be simpler scaling problems at work, such
+as delays in grabbing patches over a network, or loading lots of patch
+files into memory. You could rule out some of these simpler performance
+issues with a bit of basic troubleshooting:
+
+-   Is darcs significantly faster locally, than over a network?
+-   Does `darcs tag` followed by `darcs optimize` help? See the
+    [FrequentlyAskedQuestions](FrequentlyAskedQuestions)
+-   Does `darcs optimize --reorder-patches` help? [darcs 1 format]
+-   What do you see when you pass the `--verbose` switch to
+    `darcs pull`?
+
+## Okay, then how do I know I've been bitten by it?
+
+One classic symptom [before darcs 2] is when you do a `darcs pull -v`
+and it says `Diffing dir...` for a very long time (darcs 2 has more
+informative output, which should give you a clearer signal).
+
+## What triggers it in darcs 1?
+
+In short, nested conflicts. A conflict is nested when the applied or
+pulled patch depends on another patch that is in conflict.
+
+For example, consider two branches. Branch A contains patches AX, A1 A2,
+A3, A4 and A5 where A1 depends on AX, A2 depends on A1 and so on. Branch
+B contains patch BX, which is in conflict with AX:
+
+    M AX A1 A2 A3 A4 A5
+    M BX
+
+Now patches A1..A5 are in nested conflict with BX. The *nesting depth*
+refers to the maximum depth of patch tree depending on the conflicting
+patch. (A new patch depending on A4 but not on A5 does not increase
+nesting depth.)
+
+If the patches from branch A are pulled to the branch B the time needed
+to pull them grows exponentially by the depth of nesting. The Darcs
+commuting algorithm has O(e*^N^*) complexity in respect to the nesting
+depth, each new patch that depends on AX roughly doubles the time
+required to pull the patches from A.
+
+If there is nesting on both repositories, the pull/apply time grows
+exponentially in respect to both nesting depths. It seems that the Darcs
+commuting algorithm has O(e*^NM^*) complexity where *N* and *M* are
+nesting depths of the conflicting branches.
+
+For example, consider the following situation. The branch B has patches
+B1...B5 depending on the conflicting patch BX. The exponential growth
+means that pulling each new patch from A takes some 32 times longer than
+pulling the previous patch:
+
+    M AX A1 A2 A3 A4 A5
+    M BX B1 B2 B3 B4 B5
+
+Please note that resolving the conflict in one branch only does not
+help. The resolution patch must also be propagated to the other
+branches; otherwise, any future development in those branches will
+conflict with the resolution and the patch resolving the conflict in one
+branch (but not in others) will just make the nesting of the conflict
+deeper!
+
+In order to cut the exponential nesting all the conflicting branches
+must be **joined** with a patch resolving the conflict. Below, the patch
+R is common in both repositories and depending on all the conflicting
+patches. When the development is continued in the branches, the new
+patches like A6 or B6 depends on all the patches AX, A1..A5, BX, B1..B5
+and R.
+
+    M AX A1 A2 A3 A4 A5 BX B1 B2 B3 B4 B5 R A6
+    M BX B1 B2 B3 B4 B5 AX A1 A2 A3 A4 A5 R B6
+
+### Special case: doppelganger patches
+
+Doppelganger patches are two different darcs patches which are identical
+with respect to the changes they make. For example, if you applied a
+textual change using the Unix "patch" command, or if you applied a
+textual change by copying a file from someone, and then you later try to
+pull patches from a darcs repository where that change is already
+present, then darcs can hang like this.
+
+## What triggers it in darcs 2?
+
+In short, recursive conflicts (as known as **conflict fight**). A
+conflict fight occurs when conflict is one-sidedly resolved at one
+branch only.
+
+For example, consider two branches. After M, branch A contains patch A0
+and branch B contains patch B0, which is in conflict with A0:
+
+    M A0
+    M B0
+
+B pulls patch A0 from A and resolves conflict with B1. A does get B0 nor
+resolution patch B1, but creates new patch, A1:
+
+    M A0 A1
+    M B0 A0 B1
+
+Again, B pulls A1, gets a conflict and resolves it with B2. A does get
+any patches from B, but creates new patch, A2:
+
+    M A0 A1 A2
+    M B0 A0* B1 A2* B2 
+
+This is repeated a couple of times:
+
+    M A0 A1 A2 A3 A4 A5 
+    M B0 A0* B1 A2* B2 A3* B3 A4* B4 A5* B5
+
+Each time A adds a new patch depending on A0 and B pulls it, and records
+a new patch resolving the conflict only on B's side, the recursion gets
+deeper and deeper. The time needed to pull the patches from A grows
+exponentially by the depth of recursion. The commuting algorithm in
+Darcs 2 has O(e*^N^*) complexity in respect to the recursion depth, each
+new patch that depends on A0...An roughly quadruples the time required
+to pull the patches from A.
+
+Please note that resolving the conflict in one branch only does not
+help. The resolution patch must also be propagated to the other
+branches; otherwise, any future development in those branches will
+conflict with the resolution and the patch resolving the conflict in one
+branch (but not in others) will just make the nesting of the conflict
+deeper!
+
+In order to cut the exponential nesting all the conflicting branches
+must be **joined** with a patch resolving the conflict. Below, the patch
+R is common in both repositories and depending on all the conflicting
+patches. When the development is continued in the branches, the new
+patches like A6 or B6 depends on all the patches AX, A1..A5, BX, B1..B5
+and R.
+
+    M AX A1 A2 A3 A4 A5 BX B1 B2 B3 B4 B5 R A6
+    M BX B1 B2 B3 B4 B5 AX A1 A2 A3 A4 A5 R B6
+
+### The typical conflict fight
+
+From Tommy Pettersson's [2007-10-18
+mail](http://lists.osuosl.org/pipermail/darcs-users/2007-October/011299.html)
+on darcs-users, here is one way to trigger the exponential conflicts
+problem:
+
+You just simply keep feeding conflicts to the root of a beginning
+exponential explosion, and resolve them at the top of it. This means
+each new conflicting patch from the bottom will have the same complexity
+as its presider when it reaches the latest resolve patch, and then
+double in complexity when conflicting with it. Add a new resolve patch
+on top of that and repeat... (There might be other ways too.)
+
+It can be thought of as a fight where the "conflict supplier" doesn't
+want the original conflicting seed at the bottom of the exponential
+explosion. His changes will continue to be unaware of the deviation in
+the exploding repo, and every time the receiver tries to "fix" it with a
+resolving patch the new conflicts from the supplier will just grow
+worse.
+
+This is why darcs currently doesn't always works so well for keeping a
+"local branch" of some source. The local deviations are likely to cause
+exponential conflicts after time. Local deviations must either be
+isolated in some way (kept in separate files) so they never conflict, or
+changes from upstream needs to be merged in "by hand" and recorded as
+local patches that doesn't conflict with the local changes.
+
+If you are aware of how and when darcs breaks down it is not very hard
+to avoid it, but that is a rather dark side of darcs' otherwise being
+extremely easy to use.
+
+*Could this situation be avoided by unrecording the local conflict
+resolution patch at each time? -- [EricKow](EricKow)*
+
+## How can I avoid it?
+
+### Join your branches early and often
+
+Resolve conflicts early and **join** conflicting branches instead of
+**merging** one to another. In other words, after you have resolved the
+conflict, be sure to propagate patch resolving it to all the branches.
+
+The most destructive practice is to merge only one branch to another and
+then record a resolution patch only in one branch (i.e. to start a
+conflict fight).
+
+For example, consider branch repositories A and B with patches A1 and B1
+conflicting:
+
+    A: P1 P2 P3 A1 A2
+    B: P1 P2 P3 B1 B2
+
+Patches from A are pulled to B and a conflict is detected:
+
+    A: P1 P2 P3 A1 A2
+    B: P1 P2 P3 B1 B2 A1' A2'
+
+The conflict is resolved and a resolution patch R recorded:
+
+    A: P1 P2 P3 A1 A2
+    B: P1 P2 P3 B1 B2 A1' A2' R
+
+The branch in repository B has now been *merged* with branch with A.
+
+However, if the development continues individually in repository A, each
+new patch depending on A1 re-creates the conflict on B side with even
+deeper nesting.
+
+In order to avoid the further conflicts, the conflicting patches and
+resolution patch must be applied also in the repository A:
+
+    A: P1 P2 P3 A1 A2 B1' B2' R
+    B: P1 P2 P3 B1 B2 A1' A2' R
+
+Both branches are now *joined*.
+
+### Isolate sources of conflicts
+
+When merging early and often is not an option, you should attempt to
+isolate potential sources of conflicts, for example, by working in
+separate files for the likely conflicting parts of each development
+branch. This isn't very nice, because it means doing a lot more merging
+by hand (Unix diff) instead of by darcs, but at least it avoids running
+into the time explosion.
+
+## I have an exponential time conflict! How do I work around it?
+
+Upgrading all the repositories for your project to use darcs 2 and the
+darcs-2 repository format may fix it. See [DarcsTwo](DarcsTwo) for
+details.
+
+Unfortunately, the only solution so far with darcs 1 is to merge
+conflicting patches by hand, outside of darcs. In other words, you use
+darcs diff to generate a Unix diff for one of the conflicting branches
+and apply them to the repository via the 'patch' program. This
+effectively rebases the changes on one of the conflicting branches. One
+negative consequence of this is that the rebased branch will have to be
+discarded afterwards.
+
+### Step 1: check for local changes
+
+It may be that you're seeing a conflict with unrecorded changes. Try
+running `darcs whatsnew --summary` on the target repository to see if
+there are any local changes. If it's a push-only repository, there
+shouldn't be any local changes. It would be a very good idea to record
+any such changes, or revert them before starting the process.
+
+### Step 2: determine the cause of the conflict
+
+To find out which patches are causing the conflicts, you can try pulling
+one patch at a time, or use this handy Unix script:
+
+    for PATCH in _darcs/patches/*; do MERGERS=`zgrep -c "^merger" $PATCH` ; if [ 1 = $(( $MERGERS > 1 )) ]; then echo $MERGERS in $PATCH  ;fi   ; done | sort -g -r
+
+The patches with the most instances of the string "merger" in them are
+probably the problematic ones. To see what else is in the patch, view it
+with `gzcat` or `darcs changes -v`.
+
+### Step 3: simplify! simplify!
+
+-   If you had a conflicts fight, you might consider simplifying the
+    situation by postponing all conflict resolutions until the end of
+    the of both branches (if possible). This will give you somewhat
+    simpler mergers.
+-   Try merging in as many patches as you can, i.e. the ones which are
+    not involved in conflicts. Cherry picking may be useful here. You
+    may have some patches which occur after one of the conflicting
+    patches, but which actually commute past them. Pull in as many of
+    these from both branches as you can.
+
+### Step 4: merge by hand (diff/patch)
+
+The usual scenario is as follows. You have three repositories, the
+trunk, the big branch and the small branch.
+
+    darcs get small-branch backup-small-branch
+    cd small-branch
+    darcs diff --from-patch 'last-patch-on-trunk' > /tmp/small_changes.diff
+    darcs obliterate --from-patch 'last-patch-on-trunk'
+    darcs pull ../big-branch
+    patch < /tmp/small_changes.diff
+
+### Step 4 (alternate): edit patch bundle by hand
+
+*Not for the faint of heart!*
+
+This is another approach to rebasing a patch on top of one of your
+branches. It is useful when there are non-trivial changes which merge
+cleanly combined with some relatively minor changes that provoke the
+conflict. This technique can also be used with doppelganger patches
+(just edit the context on one of the branches).
+
+The usual scenario is as follows. You have three repositories, the
+trunk, the big branch and the small branch.
+
+1.  for the small branch: generate a patch bundle
+
+        cd small-branch
+        darcs send ../trunk -o /tmp/small.dpatch
+        cp /tmp/small.dpatch /tmp/small2.dpatch
+        cd ..
+
+2.  for the big branch: create a context file
+
+        cd big-branch
+        darcs changes --context --last=42 > /tmp/big-context
+        cd ..
+
+3.  edit the patch bundle `/tmp/small2.dpatch` by hand
+4.  remove the patch bundle hash (it looks like the following)
+
+        Patch bundle hash: afbdfe7bc5db199ac9e041df336ae345dddddaae
+
+5.  insert the new context from /tmp/big-context right after the line
+    `Context:`
+
+-   edit away the mergers... be careful
+-   remove any patch that may depend on changes in the originally
+    conflicted patch (you can do the same editing trick later if you are
+    really sure you know what you are doing)
+-   pull in changes from the big branch, then apply the modified patch
+    bundle
+
+        darcs get trunk test-trunk
+        cd test-trunk
+        darcs pull ../big-branch
+        darcs apply --interactive /tmp/small2.dpatch
+
+-   make some changes, i.e. the trivial stuff that you wanted to merge
+    by hand and record
+
+# Hidden Conflicts
+
+## What are Hidden Conflicts?
+
+If a conflict involves a third patch that reverses the effect of one of
+the conflicting patches, darcs considers conflict resolved and does not
+apply any of the conflicting patches.
+
+See a small example that we use in our testsuite:
+
+    rm -rf temp1 temp2
+    mkdir temp1
+    cd temp1
+    darcs init --hashed
+    echo first > a
+    darcs add a
+    darcs record -am first
+    Finished recording patch 'first'
+    cd ..
+    darcs get temp1 temp2
+    Copying patches, to get lazy repository hit ctrl-C...
+    Finished getting.
+
+    cd temp1
+    echo second > a
+    darcs record -am 'first to second'
+    Finished recording patch 'first to second'
+    echo first > a
+    darcs record -am 'second back to first'
+    Finished recording patch 'second back to first'
+    cd ..
+
+    cd temp2
+    echo third > a
+    darcs record -am 'first to third'
+    Finished recording patch 'first to third'
+    cd ..
+
+    cd temp1
+    darcs pull -a ../temp2
+
+At the last step, darcs does not say there is a conflict, while it there
+should be one. Worse, the file "a" in the working copy still contains
+"first" and not "third". It has no conflict marker, the patch "first to
+third" is present in the history (`darcs log`) but has no effect on
+the working copy.
+
+## Why Hidden Conflicts Matter?
+
+The hidden conflicts lead to data loss.
+
+The problem is most acute with the `darcs rollback` command as rollback
+is designed to create the inverse patches. However, it is not limited to
+rollback. As explained above, the inverses can be created by accident or
+worse yet, maliciously.
+
+## How to Avoid Hidden Conflicts?
+
+Be careful when trying to resolve conflict by rolling any conflicting
+patches back while all the conflicting patches are not present in the
+repository. That is sure way to create hidden conflicts. However, note
+that rolling back conflicting patches trigger other, more immediate bugs
+in darcs.
+
+## How to Detect Hidden Conflicts?
+
+*Explain how to find out that you repository has hidden conflicts*
+
+Unpull patches until the topmost patch contains merger but
+`darcs resolve` does not report conflict.
+
+The conflict is not hidden if the topmost patch is a rollback (UNDO) and
+it contains the rollback of the conflict (aka. `regrem`) and depend on
+all the conflicting patches.
+
+## How to Recover From Hidden Conflict?
+
+*Explain how to reliably recover from hidden conflict and prevent their
+propagation.*
+
+# Darcs 2.0
+
+## How does darcs 2.0 solve these problems?
+
+Darcs 2.0 solves the some of the conflict problems, and is the current
+stable release; we recommend upgrading to it. From the user's
+perspective, darcs 2.0 feels very much like darcs 1.x. Due to extensive
+optimizations, the darcs 2 is much faster in conflict cases. In addition
+doppelganger patches (identical patches) no longer conflict. When using
+the new darcs-2 repository format, darcs 2 is able to avoid the
+exponential time/space use if you follow the basic precautions explained
+above.
+
+Recursive conflicts exhibit the exponential time/memory usage in Darcs
+2, too. Make sure to propagate patches resolving the conflicts.
+
+A new conflict-resolution command will be introduced later to help you
+resolve conflicts in other ways:
+
+-   rollback will become a very useful command, indeed an ideal way to
+    fix conflicts (since a patch and its inverse will not conflict with
+    any other patch, you can use rollback to completely eliminate one of
+    the conflicting changes)
+
+# See also
+
+-   [http://bugs.darcs.net/issue81](http://bugs.darcs.net/issue81)
+    - doppelganger patches
+-   [http://bugs.darcs.net/issue194](http://bugs.darcs.net/issue194)
+    -   problems reconciling unwindings
+
+

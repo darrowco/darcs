@@ -1,0 +1,38 @@
+# News and discussions
+
+1.  Darcs 2.4 beta 1 was released:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-January/022719.html](http://lists.osuosl.org/pipermail/darcs-users/2010-January/022719.html)
+
+2.  Eric Kow launched the second fundraising call to prepare the
+    incoming hacking sprint in March ($2000 by 15 feb):
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-January/022755.html](http://lists.osuosl.org/pipermail/darcs-users/2010-January/022755.html)
+    -   [http://darcs.net/donations.html](http://darcs.net/donations.html)
+
+# Issues resolved in the last week (2)
+
+issue121 Ganesh Sittampalam
+  ~ -   add --ask-deps support to amend-record
+    -   [http://bugs.darcs.net/issue121](http://bugs.darcs.net/issue121)
+
+issue1720 Dave Love
+  ~ -   Fix cabal haddock problem.
+    -   [http://bugs.darcs.net/issue1720](http://bugs.darcs.net/issue1720)
+
+# Patches applied in the last week (5)
+
+2010-01-06 Dave Love
+  ~ -   Resolve issue1720: Fix cabal haddock problem.
+
+2009-12-28 Ganesh Sittampalam
+  ~ -   Resolve issue121: add --ask-deps support to amend-record
+    -   list recently added modules in .cabal file
+
+2009-12-29 Florent Becker
+  ~ -   remove utf-8 message-spam
+
+2009-12-14 Ganesh Sittampalam
+  ~ -   fill out witnesses.hs
+
+

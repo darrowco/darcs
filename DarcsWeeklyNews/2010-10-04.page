@@ -1,0 +1,28 @@
+# News and discussions
+
+1.  Reinier updated us about the state of darcs 2.5:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-October/025408.html](http://lists.osuosl.org/pipermail/darcs-users/2010-October/025408.html)
+
+2.  Eric proposed a way to reduce non-user related traffic on the
+    darcs-users mailing list:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-September/025380.html](http://lists.osuosl.org/pipermail/darcs-users/2010-September/025380.html)
+
+3.  Ganesh tried to build darcs 2.5 with GHC 7.0:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-September/025374.html](http://lists.osuosl.org/pipermail/darcs-users/2010-September/025374.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-October/025407.html](http://lists.osuosl.org/pipermail/darcs-users/2010-October/025407.html)
+
+# Issues resolved in the last week (0)
+
+# Patches applied in the last week (3)
+
+2010-09-25 Eric Kow
+  ~ -   More explicit punctuation to avoid ambiguity.
+    -   Update Makefile target for patch theory doc.
+
+2010-09-16 Joachim Breitner
+  ~ -   Add commandProgramName field to DarcsCommand
+
+

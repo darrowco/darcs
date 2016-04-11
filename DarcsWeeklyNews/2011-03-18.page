@@ -1,0 +1,28 @@
+# News and discussions
+
+1.  Darcs 2.5.2 was released:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2011-March/026041.html](http://lists.osuosl.org/pipermail/darcs-users/2011-March/026041.html)
+
+2.  Version 0.3.3 of the Jenkins-Darcs plugin was released:
+
+    -   [https://github.com/Weltraumschaf/jenkins-darcs/downloads](https://github.com/Weltraumschaf/jenkins-darcs/downloads)
+
+# Issues resolved in the last week (0)
+
+# Patches applied in the last week (8)
+
+2011-03-06 Guillaume Hoffmann
+  ~ -   manual: reduce parts of it and remove use of first person
+    -   manual: sort commands, add fetch and put convert last with info
+        on formats
+    -   manual: better pdf by reducing margins and making it one-sided
+    -   manual: no longer include theory of patches appendix
+    -   no longer generate a postscript manual
+    -   manual: remove out of place gzcrcs flags
+    -   Rewrite darcs diff help
+
+2011-03-14 Ganesh Sittampalam
+  ~ -   update website for 2.5.2
+
+

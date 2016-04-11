@@ -1,0 +1,412 @@
+Patch index is an internal optimization in darcs. darcs uses patch index to
+quickly identify the patches that modified a given file. This is especially
+ useful for the commands `log` and `annotate`.
+
+Patch index is created when running `log` and `annotate`, and can be
+created explicitely by passing the flag `--with-patch-index` to the commands
+`init`, `clone` and `convert`. It can also be created explicitely by running
+`darcs optimize enable-patch-index`.
+
+To disable patch index creation when using `log` or `annotate`, pass
+the flag `--no-patch-index`.
+
+Every time patch index is created, the user can hit Ctrl-C, which will
+interrupt its creation and disable its automatic creation in the future
+(unless `optimize enable-patch-index` is explicitely run).
+
+If patch index is enabled, it is automatically updated and used.
+
+Patch index tries to be as invisible as possible to the user. To this end,
+creating/using/modifying patch index is almost invisible to the end user.
+
+There are however, some commands which lets the user glean the state of
+patch index. They are primarily meant for debugging.
+
+  - `show patch-index-status` returns information on whether patch index is
+    not created/out of date/in sync.
+  - `show patch-index-test` tests the patch index in the repository with some
+    logical consistency properties.
+  - `show patch-index-all` dumps the patch index
+  - `show patch-index-files` displays the files tracked by patch index
+    (This has to be same as the files tracked by darcs)
+
+# Patch Index internal representation
+
+Patch index defines two data-types.
+
+##PatchId
+
+This hash is actually defined elsewhere in the darcs source code.
+It is the hash we see in darcs 2.10 when running `darcs log`.
+
+1) Uniquely identifies a patch
+2) Stores [patch hash](Hashes) of the patch 
+
+example:
+
+    29561b8cad0e1c33e44e7c135cb7753667a67856
+
+##FileId
+
+1) Uniquely identifies a file
+2) Persistent to file move (ie, FileId does not change if the file is moved)
+3) Stores the name with which the file is created,
+   along with the count on the number of times files had this name
+
+example:
+
+    2#./tools/upload.cgi
+    (identifies the second file created with the FileName ./tools/upload.cgi)
+
+# Files and corresponding Data Structures
+
+Path Index is stored in files repo_state, fid_map, fp_map, touch_map
+
+##repo_state
+
+- Type: `(Int8,String)`
+- Stores:
+    - the patch index on-disk format version
+    - the inventory hash 
+- Use:
+    - the inventory hash is used to check that patch index is in sync with
+      the repository
+- Note:
+    - two repositories with same patches but different ordering, have different
+      inventory hashes.
+
+example:
+
+    Version: 1
+    Inventory hash: a6e4db850b1174d8dd782c52068c6917af9b62b6e8e4d51f5955e9959359ea9a
+
+## patch_ids
+
+- Type: `[PatchId]`
+- Stores:
+    - the patch hashes of the repository patches(order is preserved)
+- Use:
+    - the patches hashes explicitly specify the ordering used in fp_map, fid_map.
+- Note:
+    - two repositories with same patches but different ordering, have different
+      patch indexes.
+
+example:
+
+    Patches: 29561b8cad0e1c33e44e7c135cb7753667a67856, adf7a83591a9d9217ae6a982ee76065798cb5105, f230974d0257048c330c29bd91307d2fe90dbc6e
+
+##touch_map (also known as info_map)
+
+- Type: `Map FileId (Bool, Set Word32)`
+- Stores:
+    - identifies the path to be a directory or a file
+    - the set of patches that modified a file. We only store the first Word32 of the hashes,
+      which Makes this Map smaller but it can have false positives and we can't remove patches from it
+      (it works like a Bloom filter).
+- Use:
+    - Serves the main purpose of patch index. It stores the correlation between
+      a file and the set of patches that modified it.
+    - Stores whether a FileId is a file or directory because `log` and `annotate`
+      need different selection of patches based on whether a path is a directory
+      or file.
+
+example:
+
+    1#./src -> False
+    1#./src -> 819275be
+    1#./src -> d20e6633
+
+    1#./Map.hs -> True
+    1#./Map.hs -> 3c861fbb
+    1#./Map.hs -> 770ef6f3
+
+##fid_map
+
+- Type: `Map FileName [(FileId, PatchId, Maybe PatchId)]`
+- file name fn corresponds to file id fid from patch id pid1(inclusive)
+  to patch id pid2(exclusive)
+- If a file has a span ending in Nothing (ie. pid2 is "-"), it means that
+  the fn-fid mapping is still correct even after applying the last patch,
+  in other words that it exists in pristine
+- the patches are ordered according to the order stored in repo_state
+- fid_map is used to identify the FileId with the given FileName, at any
+  point in the repository state.
+
+example:
+
+    ./A -> 2#./A from pid1 to pid2
+    ./A -> 1#./A from pid3 to pid1
+
+(./A no longer exists in pristine)
+(recall each pidN is a patch hash like `29561b8cad0e1c33e44e7c135cb7753667a67856#`)
+
+##fp_map
+
+- Type: `Map FileId [(FileName, PatchId, Maybe PatchId)]`
+- file id fid has file name fn from patch id pid1(inclusive) to patch
+  id pid2(exclusive)
+- If a file has a span ending in Nothing (ie. pid2 is "-"), it means that the
+  fn-fid mapping is still correct even after applying the last patch, in other
+  words that it exists in pristine
+- the patches are ordered by the ordering in repo_state
+- fp_map is used to identify the FileName with the given FileId, at any point
+  in the repository state.
+
+example:
+
+    1#./A -> ./D/B from pid1 to -
+    1#./A -> ./B from pid2 to pid1
+    1#./A -> ./A from pid3 to pid2
+
+(./A exists in pristine)
+
+# A complete example
+
+## Creating a repository
+
+        mkdir R
+        darcs init --repo R
+        cd R
+
+Patch index:
+
+       repo_state : (inventory_hash1, [])
+
+       fid_spans : Map [ ]
+   
+       fp_spans: Map [ ]
+   
+       info_map: Map [ ]
+
+## Adding directories and a file
+
+        mkdir d e
+        echo "f1" > d/f
+        darcs record -lam 'p1'
+
+Patch index:
+
+       repo_state : (inventory_hash2, [p1])
+
+       fid_spans : Map [ ./d   -> [(1#./d,   pid1, Nothing)],
+                         ./d/f -> [(1#./d/f, pid1, Nothing)],
+                         ./e   -> [(1#./e,   pid1, Nothing)] ]
+   
+       fp_spans: Map [ 1#./d   -> [(./d,   pid1, Nothing)],
+                       1#./d/f -> [(./d/f, pid1, Nothing)],
+                       1#./e   -> [(./e,   pid1, Nothing)] ]
+   
+       info_map: Map [ 1#./d  -> (False, {pid1}),
+                       1#./d/f -> (True,  {pid1}),
+                       1#./e  -> (False, {pid1}) ]
+
+## Moving a directory
+
+        darcs move d d2
+        mkdir d
+        echo "f2" > d/f
+        darcs record -lam 'p2'
+
+
+Patch index:
+
+       repo_state : (inventory_hash3, [p1, p2])
+
+       fid_spans : Map [ ./d   -> [(2#./d,   pid2, Nothing), (1#./d,   pid1, Just pid2)],
+                         ./d/f -> [(2#./d/f, pid2, Nothing), (1#./d/f, pid1, Just pid2)],
+                         ./e   -> [(1#./e,   pid1, Nothing)],
+                         ./d2  -> [(1#./d,   pid2, Nothing)],
+                         ./d2/f -> [(1#./d/f, pid2, Nothing)] ]
+   
+       fp_spans: Map [ 1#./d   -> [(./d2, pid2, Nothing), (./d,   pid1, Just pid2)],
+                       2#./d   -> [(./d,  pid2, Nothing)],
+                       1#./d/f -> [(./d2/f, pid2, Nothing), (./d/f, pid1, Just pid2)],
+                       2#./d/f -> [(./d/f, pid2, Nothing)],
+                       1#./e   -> [(./e,   pid1, Nothing)] ]
+   
+       info_map: Map [ 1#./d  -> (False, {pid1}),
+                       2#./d  -> (False, {pid2}),
+                       1#./d/f -> (True,  {pid1, pid2}),
+                       2#./d/f -> (True,  {pid2}),
+                       1#./e  -> (False, {pid1}) ]
+
+#How patch index identifies patches that modified a file
+
+  - the user enters a command, say `darcs log FILE`
+  - the file id of FILE, fid1 is identified using fid_map. 
+  - the patches corresponding to fid1 are identified using info_map
+
+# Automatic update
+
+Patch Index is kept in sync with the patches in the repository.
+
+The synchronization of patch index is tested by computing the hash of inventory,
+and comparing it with the hash of inventory stored in repo_state.  This test
+is run whenever patch index is used (by some command that modifies the repository).
+If the patch index is not in sync, patch index is updated.
+
+Patch index is automatically updated whenever the repository state changes.
+Automatic update was tested to be working upon apply, record, push, pull,
+amend-record, obliterate, unrecord, tag.
+
+# Automatic Creation
+
+Patch index could be created at:
+
+- clone
+- init
+- when darcs modifies the patches of an existing repository
+
+A user interrupt using Ctrl-C at `clone` or on existing repositories is caught,
+and patch index gets disabled.
+
+# Algorithm for creation of patch index
+
+The algorithm first looks through each patch in the repository, and associates
+every patch to "changes" made to files.
+The change could be Touch, CreateFile, CreateDir, Remove, Rename, Invalid,
+DuplicateTouch.
+
+For example, a patch p with primitives "addfile f", "hunk f" and "move g h"
+has changes CreateFile f, Touch f, Rename g h.
+
+The conversion from a primitive-patch to a change is mostly a straightforward
+one-to-one mapping. However a directory move primitive-patch can have multiple
+Rename changes. A directory move will have renames for the directory and all
+files in that directory.
+
+The end result of this pass will be a list of patch id's, each patch id being
+associated with some changes.
+
+The patch index is recursively build using this result. Let there be a patch
+index pi { repo_state, fid_map, fp_map, touch_map } build with all patches
+until a patch with id pid. pid has some changes associated with it:
+
+  - Touch f: Let the file id of file f, be fid. touch_map will be updated,
+    such that fid will have pid associated with it.
+  - CreateFile f: New spans will be started on fid_map, and fp_map.
+    pid will be associated with fid in touch_map. touch map will indicate
+    that f is a file.
+  - CreateDir f:  New spans will be started on fid_map, and fp_map.
+    pid will be associated with fid in touch_map. touch map will indicate
+    that f is a directory.
+  - Remove f: The span associated with fp in fid_map, and fid in fp_map
+    will end. pid will be associated with fid in touch map.
+  - Rename f1 f2: The old spans in fid_map and fp_map will end, and new
+    spans will be started. pid will be associated with fid in touch map.
+  - Invalid : is ignored
+  - DuplicateTouch f: Is treated the same way as Touch
+
+# Algorithm for patch index update
+
+The algorithm first finds the common prefix and the dissimilar suffixes
+between the patches in the repository and the patches tracked by patch index.
+The patch index of the common prefix is computed by undoing the dissimilar
+suffix of the patch index. The suffix of the repository is applied on the
+intermediate patch index, giving the updated patch index.
+
+The undo works as follows: The spans in fp_map and fid_map with the start
+patch and the end patch both in the prefix will not be changed. The spans
+which have the start patch and the end patch in the suffix will be removed.
+The span with start patch in prefix and end patch in suffix will be modified
+to not have an end patch. In info_map, the patches in the suffix will be removed.
+If the patches corresponding to a fid become empty, the fid entry is removed.
+
+
+# Performance
+
+Note: these figures are from 2013 and PI format and performance has changed since
+then, so they should probably be run again. (2014-11)
+
+## `log` and `annotate`
+
+The time taken by `log` or `annotate` varies a lot. It depends on:
+
+- The number of patches that modified the repository
+- The number of patches that modified the file
+- The content of the disk cache
+
+The implication of this is that the speed up differs from repository to repository, file to file, execution to execution. In general, the greater the number of patches in the repository, the sparser the patches of the relevant files, the greater the speedup.
+
+Patch index has been tested on three different repositories. They are darcs, ghc, xmonad. The best and worst case for each file of these repositories has been measured.
+
+The machine spec is:
+
+spec               detail
+-----------------  ------------
+operating system   ubuntu 12.04
+CPU                Intel Core i5 M 480 @ 2.67GHz × 4
+RAM                4GB
+hardisk            320GB 7200 RPM
+purchased          early 2011
+
+### darcs
+
+`log` used to take 4.6sec(best case) to 17sec(worst case) on average.
+With patch index, it has been brought down to 0.34sec(best case) to
+3.6sec(worst case) on average. This is a speed up of 78-92%.
+
+`annotate` used to take 5.5sec(best case) to 18.5sec(worst case) on
+average. With patch index, it has been brought down to 0.3sec(best case)
+to 2.5sec(worst case) on average. This is a speed up of 86-94%.
+
+It takes 6sec(best case) to 1min(worst case) to build patch index on darcs.
+
+### ghc
+
+`log` used to take 15sec(best case) to 80sec(worst case) on average.
+With patch index, it has been brought down to 1sec(best case) to
+4sec(worst case) on average. This is a speed up of 93-95%.
+
+`annotate` used to take 18sec(best case) to 89sec(worst case) on
+average. With patch index, it has been brought down to 1sec(best case)
+to 4sec(worst case) on average. This is a speed up of 94-95%.
+
+It takes 2sec(best case) to build patch index on ghc. However, building
+patch index fails in worst case, due to exceeding memory limit. To build patch
+index, create a copy of the repository, and immediately build patch index on
+the new repository. Alternatively, configure cabal with rts enabled, run
+optimize --patch-index +RTS -K100M -RTS. Worst case build time is 2min24sec.
+
+`log`: http://docs.google.com/spreadsheet/ccc?key=0AtdxF5AhJcuwdGpFRmdxdzlMRl9xMWQyLUFfakZTaVE
+`annotate`: http://docs.google.com/spreadsheet/ccc?key=0AtdxF5AhJcuwdHVXNEs4YXQzaUh0RGNHekg4V1N0UXc
+
+### xmonad
+
+`log` used to take 0.5sec(best case) to 3sec(worst case) on average.
+With patch index, it has been brought down to 0.1sec(best case) to
+1.8sec(worst case) on average. This is a speed up of 45-78%.
+
+`annotate` used to take 0.75sec(best case) to 4.75sec(worst case) on average.
+With patch index, it has been brought down to 0.2sec(best case) to 1.7sec(worst case)
+on average. This is a speed up of 63-74%.
+
+It takes 1.3sec(best case) to 6.3sec(worst case) to build patch index on xmonad.
+
+## `add`, `record`, `amend` and `obliterate`
+
+We check that the cost of maintaining the patch index is acceptable.
+We have [a benchmark here](http://hub.darcs.net/gh/bench) that runs `add`, `record`,
+`amend` and `obliterate` on a big (random) repository. Here are the figures obtained with
+the screened branch from April 29th. In particular this branch has these [two](http://bugs.darcs.net/patch1058)
+[patches](http://bugs.darcs.net/patch1027).
+
+* (desktop) intel i5-3330, RAM 8 GB, hard drive buffered read speed 130 MB/sec,
+  cached read speed 11300 MB/sec (Total running time: about 5 minutes).
+
+                 Without PI  With PI
+     ----------  ----------  -------
+     add               0.25     0.27
+     amend            14.08    17.74
+     obliterate       11.94    15.26
+     record           81.57   102.62
+
+* (laptop) intel i3 U 380, RAM 2GB, hard drive buffered read speed 80 MB/sec,
+  cached read speed 2100 MB/sec (Total running time: about 30 minutes)
+
+                 Without PI  With PI
+     ----------  ----------  -------
+     add               2.19     2.36
+     amend            56.06   198.26
+     obliterate       48.44   182.65
+     record          242.70   977.58

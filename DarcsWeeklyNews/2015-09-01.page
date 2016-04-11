@@ -1,0 +1,324 @@
+# News and discussions
+
+1.  The next Darcs Sprint will take place in Paris on September 18-20th.
+    Please add yourself to the wiki page if you're going!
+
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2015-August/027134.html>
+    -   <http://darcs.net/Sprints/2015-09>
+
+2.  Darcs 2.10.1 was released (bugfixes, dependency versions bump):
+
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2015-July/027130.html>
+
+# Issues resolved (19)
+
+issue2102 Guillaume Hoffmann
+  ~ -   document packs in help of clone and optimize http
+    -   <http://bugs.darcs.net/issue2102>
+
+issue2307 Daniil Frumin
+  ~ -   Add information about 'darcs help manpage' and 'darcs help markdown'
+    -   <http://bugs.darcs.net/issue2307>
+
+issue2308 Ben Franksen
+  ~ -   use command agnostic comment for changes summary
+    -   <http://bugs.darcs.net/issue2308>
+
+issue2327 Alain91
+  ~ -   ask user to keep trying if locking fails
+    -   <http://bugs.darcs.net/issue2327>
+
+issue2420 Ben Franksen
+  ~ -   commandGetArgPossibilities for apply should not list all files in the repo
+    -   <http://bugs.darcs.net/issue2420>
+
+issue2421 Guillaume Hoffmann
+  ~ -   don't fail if caches are not writeable
+    -   <http://bugs.darcs.net/issue2421>
+
+issue2423 Alain91
+  ~ -   fix diff only respecting --diff-command when a diff.exe is present 
+    -   <http://bugs.darcs.net/issue2423>
+
+issue2433 Guillaume Hoffmann
+  ~ -   fix help strings of send and fetch
+    -   <http://bugs.darcs.net/issue2433>
+
+issue2438 Guillaume Hoffmann
+  ~ -   no longer build patch index by default on cloning
+    -   <http://bugs.darcs.net/issue2438>
+
+issue2444 Ben Franksen
+  ~ -   added default interactivity parameter to isInteractive
+    -   <http://bugs.darcs.net/issue2444>
+
+issue2446 Guillaume Hoffmann
+  ~ -   in fast-export delete dirs before dumping contents
+    -   <http://bugs.darcs.net/issue2446>
+
+issue2447 Ben Franksen
+  ~ -   by using getNonrangeMatch as in ShowFiles
+    -   <http://bugs.darcs.net/issue2447>
+
+issue2448 Gian Piero Carrubba
+  ~ -   enable -h/--hash flag for the diff command
+    -   <http://bugs.darcs.net/issue2448>
+
+issue2449 Ganesh Sittampalam
+  ~ -   use new hook in shelly to handle test output as binary
+    -   <http://bugs.darcs.net/issue2449>
+
+issue2451 Ben Franksen
+  ~ -   allow terminfo 0.4.*
+    -   <http://bugs.darcs.net/issue2451>
+
+issue2457 Ben Franksen
+  ~ -   fix darcs-test command line options
+    -   <http://bugs.darcs.net/issue2457>
+
+issue2461 Ben Franksen
+  ~ -   this time also when no file names are specified
+    -   <http://bugs.darcs.net/issue2461>
+
+issue2461 Ben Franksen
+  ~ -   darcs log --repo=remoterepo creates and populates _darcs
+    -   <http://bugs.darcs.net/issue2461>
+
+issue2463 Joachim Breitner
+  ~ -   building darcs on powerpc
+    -   <http://bugs.darcs.net/issue2463>
+
+
+# Patches applied (145)
+
+2015-06-28 Ben Franksen
+  ~ -   removed cleaning of _darcs/patches before getting patches pack
+
+2015-07-30 Guillaume Hoffmann
+  ~ -   require text>=1.2.1.3 if using ghc 7.10
+    -   require text>=1.2.1.2 if using ghc 7.10
+
+2015-07-04 Ben Franksen
+  ~ -   extended network/log.sh test (repeat without any filename arguments)
+
+2015-07-16 Joachim Breitner
+  ~ -   resolve issue2463: building darcs on powerpc
+
+2015-07-02 Ben Franksen
+  ~ -   simplified code in D.R.Ssh by using withMVar
+    -   use transferModeHeader from D.R.Ssh in D.U.C.TransferMode
+    -   made connection caching in Darcs.Repository.Ssh thread safe
+
+2015-07-17 Sergei Trofimovich
+  ~ -   Add missing file for 'renames.sh' test
+
+2015-06-28 Ben Franksen
+  ~ -   cleanup in Darcs.Util.URL
+    -   cleanup: break up an over long code line D.R.Clone
+    -   cleanup: removed unnecessary LANGUAGE CPP pragma from D.U.C.TransferMode
+    -   cleanup: removed an unused export from Darcs.UI.Options.Matching
+    -   Darcs.Repository.Clone: removed useless haddocks for createRepository
+    -   Darcs.Repository.Clone: moved cleanDir to the top level
+    -   renamed option matchOne to matchUpToOne
+    -   refactored Darcs.Repository
+    -   resolve issue2457
+    -   fixed comment: ammend does not use the matchOne option
+    -   added a test for issue2378 (no longer fails)
+
+2015-07-09 Guillaume Hoffmann
+  ~ -   please hackage adding 'manual: True' to the warn-as-error flag
+
+2015-06-22 Ben Franksen
+  ~ -   fix precondition violation in hashed-storage tests
+    -   resolve issue2461, this time also when no file names are specified
+    -   resolve issue2461: darcs log --repo=remoterepo creates and populates _darcs
+    -   extend network/log.sh test for things mentioned in issue2461
+
+2015-07-03 Ganesh Sittampalam
+  ~ -   rollback issue2455 test - issue now resolved as invalid
+
+2015-06-21 Ben Franksen
+  ~ -   accept issue2455: darcs record -la does not see a rmfile change
+
+2015-06-28 Ganesh Sittampalam
+  ~ -   stop test being sensitive to runner's umask
+
+2015-06-17 Ben Franksen
+  ~ -   renamed no longer failing test for issue2086
+    -   removed Darcs.Patch.Prim.V3 from unit tests
+    -   removed no longer needed Darcs.Patch.CommuteRev
+    -   Darcs.Patch.V1.Commute: replaced :< with :>
+    -   Darcs.Test.Patch.Properties.V1Set1: replaced :< with :>
+    -   Darcs.Test.Patch.Examples.Set1: replaced :< with :>
+    -   Darcs.Patch.Prim.V1.Coalesce: replaced :< with :>
+    -   Darcs.Patch.Prim.V1.Commute: replaced :< with :>
+    -   Darcs.Patch.Depends: replaced :< with :>
+
+2015-06-13 Ganesh Sittampalam
+  ~ -   retire the (:<) type following the change in (:<:)'s argument order
+    -   Drop GHC 7.4 support, introduce 'Darcs.Prelude' to abstract over changes 
+
+2015-06-19 Ben Franksen
+  ~ -   refactored 'show files' command
+    -   refactored annotate command implementation
+    -   removed firstMatch handling from dist command
+    -   cleanup: removed unused function from Darcs.Repository.Match
+    -   resolve issue2447 by using getNonrangeMatch as in ShowFiles
+    -   expandTo must unconditionally expand tree along the given path
+    -   pull the --index=N case into Darcs.Reporitory.Match.getNonrangeMatch
+    -   haveNonrangeMatch: return False for index ranges 
+    -   renamed no longer failing test for issue2447
+    -   added a test to show that show files is not affected by issue2447
+    -   added test for issue2447
+    -   removed test for issue2308
+    -   resolve issue2308: use command agnostic comment for changes summary
+    -   renamed non-failing test for irreprodicible issue2242
+    -   renamed no longer failing test for issue1632
+    -   renamed no longer failing test for issue1928
+    -   renamed no longer failing test for resolved issue612
+    -   renamed no longer failing test for resolved issue2380
+    -   renamed no longer failing test for resolved issue1332
+    -   resolve issue2327: ask user to keep trying if locking fails
+
+2015-05-31 Ganesh Sittampalam
+  ~ -   fix warnings
+
+2015-06-17 Owen Stephens
+  ~ -   Issue 68 test no longer fails (also rework for a more efficient test)
+    -   Skip failing test 1829 on hashed repos, since its a problem with Conflictors
+    -   failing issue1401 test should be skipped on hashed repos, not fail
+    -   Failing issue2017 test now passes
+
+2015-05-31 Ganesh Sittampalam
+  ~ -   remove the "diff algorithm" choice from the NameHack class
+
+2015-06-15 Ben Franksen
+  ~ -   cleanup: removed obsolete comment
+
+2015-06-13 Daniil Frumin
+  ~ -   resolve issue2307: Add information about 'darcs help manpage' and 'darcs help markdown'
+
+2015-06-11 Ben Franksen
+  ~ -   remove a parameter from locally defined isInteractive (amend, record)
+    -   resolve issue2444: added default interactivity parameter to isInteractive
+    -   tests/network/clone.sh: don't remove test repos, let the framework do that
+    -   resolve issue2423
+    -   added clarifying comment to toobig (in function setEnvCautiously)
+
+2015-06-12 Guillaume Hoffmann
+  ~ -   require containers 0.5 and remove local copy of it
+
+2015-06-16 Ben Franksen
+  ~ -   re-add fastRemoveRL and use it in removeFromPatchSet
+    -   added / re-worded comments in Darcs.Patch.Depends
+    -   changed the argument order of PatchSet and backward operators
+    -   simplified HashedRepo.removeFromTentativeInventory
+
+2015-05-31 Ganesh Sittampalam
+  ~ -   fix warning
+    -   refactor updatePatchHeader a bit
+    -   move getLog into Darcs.UI.PatchHeader
+    -   extract updatePatchHeader into a separate module
+
+2015-06-11 Ben Franksen
+  ~ -   resolve issue2451: allow terminfo 0.4.*
+
+2015-05-29 Ganesh Sittampalam
+  ~ -   support network 2.5 and 2.6
+    -   support zlib 0.6
+
+2015-06-11 Ben Franksen
+  ~ -   cleanup: fixed previous whitespace change
+    -   cleanup: extra whitespace in import
+    -   cleanup: renamed Darcs.UI.Commands.formatPath to Darcs.Util.Text.quote
+    -   use die instead of fail in Darcs.UI.RunCommand
+    -   added die action to Darcs.Util.Exception as a replacement for fail
+    -   Darcs.UI.Defaults: upper case initial letter in error messages
+    -   purify Darcs.UI.Defaults, fixing two problems on the way
+
+2015-05-08 Daniil Frumin
+  ~ -   Fix error messages for V1/V2 jobs in Darcs.Repository.Job
+
+2015-02-13 Ben Franksen
+  ~ -   beautified error messages for command line and default files
+    -   move PatchFormat from Options to Repository (and use it there)
+    -   adapted tests/disable.sh to improved help completion
+    -   errorDoc now prints a stack trace (if profiling was enabled)
+    -   added debugDocLn to Darcs.Util.Printer
+
+2015-06-08 Ganesh Sittampalam
+  ~ -   fix warning
+
+2015-06-07 Daniil Frumin
+  ~ -   Fix the previous doFastZip patch
+    -   Generalize Darcs.UI.Commands.Dist.doFastZip
+
+2015-05-30 Ganesh Sittampalam
+  ~ -   rename dist.sh to dist-compare.sh to make it easier to pick out
+    -   support QuickCheck 2.8
+    -   bump attoparsec dependency
+
+2015-05-01 Guillaume Hoffmann
+  ~ -   remove permission workaround in release.sh
+
+2015-05-03 Ganesh Sittampalam
+  ~ -   resolve issue2449: use new hook in shelly to handle test output as binary
+
+2015-04-19 Guillaume Hoffmann
+  ~ -   TAG 2.10.0
+    -   hashed-storage: replace C SHA256 bindings with external libraries
+    -   fix test flags in release script
+    -   add missing hashed-storage extra files
+    -   NEWS for darcs 2.10.0
+    -   resolve issue2102: document packs in help of clone and optimize http
+    -   port test harness to cmdargs and shelly
+
+2015-04-06 Gian Piero Carrubba
+  ~ -   resolve issue2448: enable -h/--hash flag for the diff command
+    -   Add --from-hash/--to-hash options
+
+2015-04-16 Guillaume Hoffmann
+  ~ -   mention a couple of `convert export` limitations in help string
+    -   correctly take advantage of read-only cache locations
+    -   add debug messages and comments to Darcs.Repository.Cache
+    -   resolve issue2421: don't fail if caches are not writeable
+    -   enable creating parent dirs so that copyFileUsingCache fails less often
+    -   fix cloning with --lazy --tag .
+    -   faster network clone test using smaller repo
+    -   resolve issue2446: in fast-export delete dirs before dumping contents
+
+2015-03-03 Ganesh Sittampalam
+  ~ -   silence warning (ghc<7.8) about the MINIMAL pragma
+    -   remove a few unneeded -fno-warn-incomplete-patterns
+    -   MINIMAL pragma for Effect class
+
+2015-03-24 Guillaume Hoffmann
+  ~ -   remove unused color flag in darcs.cabal
+    -   fast-export: rewriting single dots in tags was unneeded
+    -   resolve issue2433: fix help strings of send and fetch
+    -   clarify rollback help string
+
+2015-03-10 Ben Franksen
+  ~ -   resolve issue2420: commandGetArgPossibilities for apply should not list all files in the repo
+
+2015-03-08 Guillaume Hoffmann
+  ~ -   allow flag to prevent patch index creation with log and annotate
+    -   fix patch-index tests after defaults change
+    -   resolve issue2438: no longer build patch index by default on cloning
+    -   in annotate command, push call to withRepository deeper
+    -   replace old command names in network tests (get, put, changes)
+    -   reintroduce put command as deprecated
+
+2015-02-13 Ben Franksen
+  ~ -   deprecate the --hashed option in a more systematic manner
+    -   add generic support for deprecated options
+
+2015-03-04 Ganesh Sittampalam
+  ~ -   replace pointless import of Control.Monad.Except
+    -   Turn off deprecation warning for use of 'parseTime' for now
+    -   fix GHC 7.10 warning: explicitly quantify variables in type alias
+    -   ErrorT is deprecated, switch to ExceptT
+    -   export a couple of things needed by darcsden
+    -   add bounds to all dependencies
+    -   bump utf8-string upper bound
+

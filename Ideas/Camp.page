@@ -1,0 +1,9 @@
+[Camp](http://projects.haskell.org/camp/) is a separate project to Darcs.
+
+We expect ideas from Camp to feed into Darcs 3 but there's no current plan that Camp would actually become Darcs 3.
+
+Significant points about Camp:
+
+   * [repository format](http://projects.haskell.org/camp/repository)
+   * proofs/axiomatization
+   * better implementation of conflictors

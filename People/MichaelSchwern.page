@@ -1,0 +1,33 @@
+Michael Schwern is, apparently, ambivalent about Darcs.
+
+Compared to CVS, SVN and SVK, Michael particularly likes:
+
+-   one step repository creation (darcs init);
+-   one step repository mirroring (darcs get);
+-   very easy to send patches back to the maintainer and even get to
+    pick which ones (darcs send); and
+-   able to take a bunch of changes and commit them as multiple
+    different changes. Handy for when you code up several changes at the
+    same time and then want to pull them apart (darcs record).
+
+Things he hates about it include:
+
+-   The darcs annotate format is difficult to read compared to
+    CVS/SVN/SVK style.
+
+-   The native patch/diff format is difficult to read compared to diff
+    -u. Not enough distinction between code and meta lines and between
+    files. This goes beyond simply the diff/whatsnew commands and into
+    things like record.
+
+-   \_darcs gets in the way. Repo meta files should be hidden. Should be
+    .darcs or both allowed.
+
+-   The command "darcs changes" should be called "darcs log", to avoid
+    an unnecessary difference with CVS and Subversion. Why not make an
+    alias?
+
+-   unit test takes too damned long. An hour on my iBook! A slow test is
+    a test which doesn't get run.
+
+

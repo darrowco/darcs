@@ -1,0 +1,152 @@
+# News and discussions
+
+1. Darcs Sprint \#2 has ended. Eric Kow wrote a report on these three
+  ~ days of darcs love:
+
+> -   [http://blog.darcs.net/2009/04/darcs-hacking-sprint-2-report.html](http://blog.darcs.net/2009/04/darcs-hacking-sprint-2-report.html)
+
+2. Petr Ročkai's project about optimising darcs has been accepted
+  ~ for Haskell GSoC:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-April/019383.html](http://lists.osuosl.org/pipermail/darcs-users/2009-April/019383.html)
+
+3. Lele Gaifax announced that the next version of his darcs plugin for
+trac
+  ~ will handle multiple repositories for a given project:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-April/019498.html](http://lists.osuosl.org/pipermail/darcs-users/2009-April/019498.html)
+
+4. Rob Hoelz kept us informed about his progress on hunk editing:
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-April/019537.html](http://lists.osuosl.org/pipermail/darcs-users/2009-April/019537.html)
+
+# Issues resolved in the last week (6)
+
+issue1186 Dmitry Kurochkin
+  ~ -   give a chance to abort if user did not edit description file.
+    -   [http://bugs.darcs.net/issue1186](http://bugs.darcs.net/issue1186)
+
+issue1430 Dmitry Kurochkin
+  ~ -   lazy pattern matching in (-:-) from Changes command module.
+    -   [http://bugs.darcs.net/issue1430](http://bugs.darcs.net/issue1430)
+
+issue1432 Trent W. Buck
+  ~ -   refer to %APPDATA%, not %USERPROFILE%.
+    -   [http://bugs.darcs.net/issue1432](http://bugs.darcs.net/issue1432)
+
+issue1434 Trent W. Buck
+  ~ -   refactor example test.
+    -   [http://bugs.darcs.net/issue1434](http://bugs.darcs.net/issue1434)
+
+issue1437 Eric Kow
+  ~ -   Implement darcs changes --max-count.
+    -   [http://bugs.darcs.net/issue1437](http://bugs.darcs.net/issue1437)
+
+issue1446 Dmitry Kurochkin
+  ~ -   make amend-record -m foo replace only the patch name.
+    -   [http://bugs.darcs.net/issue1446](http://bugs.darcs.net/issue1446)
+
+# Patches applied in the last week (47)
+
+2009-03-26 Trent W. Buck
+  ~ -   Remove obsolete -DHAVE\_SIGNALS from Cabal.
+
+2008-11-14 David Roundy
+  ~ -   eliminate HAVE\_SIGNALS.
+
+2009-04-24 Dmitry Kurochkin
+  ~ -   Resolve issue1446: make amend-record -m foo replace only the
+        patch name.
+    -   Accept issue1446: amend-record -m foo destroys long description
+        without warning.
+
+2009-04-24 Benedikt Schmidt
+  ~ -   don't get unrecorded if filelist is empty
+    -   fix comment
+    -   shorten comment
+    -   change parseData in OldDate and IsoDate to use ByteStrings
+
+2009-04-23 Dmitry Kurochkin
+  ~ -   Remove unused import in Darcs.Patch.Check.
+
+2009-04-19 Reinier Lamers
+  ~ -   Rewrite superdirs\_exist with System.FilePath
+    -   Replace indexed lists by map in PatchCheck
+
+2009-04-19 Eric Kow
+  ~ -   Haddock the Darcs.Patch.Effect class.
+    -   Haddock in Darcs.Patch.Non: NonPatch and unNon.
+    -   Haddock Darcs.Patch.Permutations.removeFL and related functions.
+    -   Add an explanation of headPermutationsFL and friends.
+
+2009-04-23 Dmitry Kurochkin
+  ~ -   Resolve issue1186: give a chance to abort if user did not edit
+        description file.
+    -   Explain why we do read\_repo twice instead of using previous
+        patchset in Changes.
+    -   Fix changes --max-count with no files given.
+    -   Fix 'changes --only-to-files' to work with renames.
+
+2009-04-23 Trent W. Buck
+  ~ -   Resolve issue1432: refer to %APPDATA%, not %USERPROFILE%.
+    -   Resolve issue1434: refactor example test.
+    -   Avoid GNUism (grep --count).
+
+2009-04-23 Dmitry Kurochkin
+  ~ -   Comment lazy pattern matching in (-:-) from Changes module.
+    -   Remove world\_readable\_temp files at exit.
+
+2009-04-12 Eric Kow
+  ~ -   style tweak: Remove a use of fromJust with pattern-matching.
+
+2009-04-21 Dmitry Kurochkin
+  ~ -   Resolve issue1430: lazy pattern matching in (-:-) from Changes
+        command module.
+    -   Add newline after description and indent changes when
+        --only-to-files used.
+    -   Make 'darcs changes --summary --only-to-files' print renames.
+    -   Do not count patch number in view\_changes unless requested.
+    -   Do not filter patches in view\_changes.
+
+2009-03-21 David Roundy
+  ~ -   fix memory leak in check/repair
+
+2009-04-18 Eric Kow
+  ~ -   Add darcs whatsnew --no-cache.
+    -   Refactor no-cache flag.
+
+2009-04-19 Petr Rockai
+  ~ -   Haddock filter\_patches\_by\_name, sort of.
+    -   Push the max-count handling into filter\_patches\_by\_names to
+        allow for laziness.
+
+2009-04-17 Eric Kow
+  ~ -   resolve issue1437: Implement darcs changes --max-count.
+    -   Add a --max-count switch (no implementation).
+    -   Minor refactor in Darcs.Arguments.
+
+2009-04-18 Trent W. Buck
+  ~ -   Advertise help --match in "darcs help".
+
+2009-04-13 Eric Kow
+  ~ -   Refactor English patch/patches in darcs get.
+
+2009-04-09 Nicolas Pouillard
+  ~ -   resolved issue1339: No longer use the color printer for the
+        rollback log
+
+2009-04-18 Trent W. Buck
+  ~ -   Refactor "darcs convert" help.
+    -   Accept issue1442: expect noop = decode . encode.
+
+2009-04-19 Petr Rockai
+  ~ -   Fix "cabal haddock" by calling the right hook bits in Setup.
+
+2009-04-18 Simon Michael
+  ~ -   don't hide other kinds of error when removing Context.hs
+    -   Remove autoconf's Context.hs when cabal building, cabal build
+        can't parse it
+
+2009-04-19 Petr Rockai
+  ~ -   Bump version to 2.3 alpha 0.
+
+

@@ -1,0 +1,53 @@
+# Prioritisation
+
+These topics allow us to add some more qualitative ideas to the notion
+of a priority. For example, an easy bug may not be very high up on the
+list, but it's good to know it's there because we can use it to ease
+folks into darcs hacking.
+
+-   ProbablyEasy - good for Darcs hacking newbies
+-   Regression
+-   Target-X.X - latest target for the bug (may increment)
+-   Provisional - not convinced this is a good idea, but patches
+    welcome?
+
+# Broad areas
+
+General areas of Darcs development
+
+-   BugTracker
+-   Community - eg. fundraising, blogs, hackathons, contests
+-   Core - patch-theory-level code
+-   Devel - build infrastructure, test suite
+-   Documentation
+-   UI - Note that darcs-users can help a lot with this
+
+# Technical themes
+
+These usually refer to particularly problematic areas in Darcs, things
+that we gets lots of bugs on. It's useful to have a topic for these so
+that we can see them all at a glance and perhaps get an idea if there is
+something in common between them.
+
+-   Conflicts
+-   Control-C - Possibly incorrect handling of Control-C (Ctrl-C, C-c)
+-   Hashed - Anything specifically about hashed format (eg cache, lazy)
+-   HTTP
+-   Git - things to learn from Git
+-   Matchers
+-   Partial
+-   Performance
+-   SSH
+-   ThePendingPatch
+-   FilePath - manipulating file or repository paths
+-   Darcs2 - anything *specifically* about darcs 2; nowadays used only
+    for darcs 2 semantics, not client
+
+# Platforms
+
+These are bugs that seem exclusive to certain platforms.
+
+-   Mac
+-   SunOS
+-   Windows
+

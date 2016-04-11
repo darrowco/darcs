@@ -1,0 +1,17 @@
+Since it is not always very easy to merge using **Darcs** default
+method, one may want to use third-party merge-tool for that. This page
+is about making **Darcs** use open-source free tool KDiff3 as a merge
+tool.
+
+# How to
+
+Fortunately, there is a convenient way to make **Darcs** use your own
+merge GUI. Usually you would like to customize this setting for your
+local user. So edit (or create) the file *\`\~/.darcs/defaults\`* adding
+the following line to it:
+
+>     ALL external-merge kdiff3 --output %o %a %1 %2
+
+That is all. Now if there is any conflicts, you will have KDiff3 started
+instead of just being informed of having *\`v v v\`* and *\`\^ \^ \^\`*
+lines in files.

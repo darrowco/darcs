@@ -1,0 +1,62 @@
+# News and discussions
+
+1. Petr Rockai announced the feature freeze of the darcs 2.3 branch:
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-June/020232.html](http://lists.osuosl.org/pipermail/darcs-users/2009-June/020232.html)
+
+2. A few darcs hackers asked Neil Mitchell to augment hlint with
+  ~ darcs-specific rules:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-June/020222.html](http://lists.osuosl.org/pipermail/darcs-users/2009-June/020222.html)
+
+3. Petr Rockai's Soc Progress \#4 :
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-June/020191.html](http://lists.osuosl.org/pipermail/darcs-users/2009-June/020191.html)
+    -   [http://web.mornfall.net/blog/soc\_progress\_4.html](http://web.mornfall.net/blog/soc_progress_4.html)
+
+# Issues resolved in the last week (0)
+
+# Patches applied in the last week (27)
+
+2009-06-18 Petr Rockai
+  ~ -   Use TreeIO alias in instance declarations (do not spell out the
+        type).
+    -   Also curse haskell\_policy in Czech.
+    -   Bump version to 2.2.97.2 and hashed-storage dep to 0.3.3.1.
+    -   Also provide "darcs show pristine" to go with darcs show index.
+    -   Unfold has been renamed to 'expand' in Storage.Hashed.Tree.
+    -   Update to reflect Index API change, provide darcs-specific
+        readIndex in Gorsvet.
+    -   Import darcsFormatHash from Storage.Hashed.Darcs.
+    -   Clean up unused bits in Darcs.Gorsvet.
+    -   Bump the hashed-storage dependency to 0.3.3.
+    -   Basic "show index" implementation.
+    -   Optimise the file existence checking in whatsnew <files\>.
+    -   Explicit import list for Storage.Hashed.Monad in Gorsvet.
+    -   Use local pendingChanges instead of read\_pending, in
+        readRecordedAndPending.
+    -   The hashed-storage index functions take a filename now.
+    -   Bump the hashed-storage dependency to \>= 0.3.2.
+    -   Fix index invalidation in the move command.
+    -   We need to unfold the pristine Tree before rebuilding the index.
+    -   TreeIO is smart enough now to unfold as needed.
+
+2009-06-16 Reinier Lamers
+  ~ -   Remove thoroughCheck function from Darcs.Patch.QuickCheck
+    -   Make simpleConditionalCheck work with test-framework, and rename
+        accordingly
+    -   Eliminate custom simpleCheck function in favor of test-framework
+        runner
+
+2009-05-31 Trent W. Buck
+  ~ -   Advertise "darcs help environment".
+    -   Migrate DARCS\_PROXYUSERPWD to environmentHelp.
+    -   Churn: refactor syncSlurpy.
+    -   Churn: hlint my recent code.
+
+2009-06-12 Reinier Lamers
+  ~ -   Fix autotools build because test-framework and mmap dependencies
+        broke it
+
+2009-06-12 Trent W. Buck
+  ~ -   Remove GHC 6.6 compatibility.
+
+

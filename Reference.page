@@ -1,0 +1,190 @@
+# Environment variables
+
+## HOME, APPDATA
+
+Per-user preferences are set in $HOME/.darcs (on Unix) or
+%APPDATA%/darcs (on Windows).  This is also the default location of
+the cache.
+
+## DARCS_EDITOR, DARCSEDITOR, VISUAL, EDITOR
+
+To edit a patch description of email comment, Darcs will invoke an
+external editor.  Your preferred editor can be set as any of the
+environment variables $DARCS_EDITOR, $DARCSEDITOR, $VISUAL or $EDITOR.
+If none of these are set, vi(1) is used.  If vi crashes or is not
+found in your PATH, emacs, emacs -nw, nano and (on Windows) edit are
+each tried in turn.
+
+## DARCS_PAGER, PAGER
+
+Darcs will sometimes invoke a pager if it deems output to be too long
+to fit onscreen.  Darcs will use the pager specified by $DARCS_PAGER
+or $PAGER.  If neither are set, `less' will be used.
+
+## DARCS_DONT_COLOR, DARCS_ALWAYS_COLOR, DARCS_ALTERNATIVE_COLOR, DARCS_DO_COLOR_LINES
+
+If the terminal understands ANSI color escape sequences, darcs will
+highlight certain keywords and delimiters when printing patches. This
+can be turned off by setting the environment variable DARCS_DONT_COLOR
+to 1. If you use a pager that happens to understand ANSI colors, like
+less -R, darcs can be forced always to highlight the output by setting
+DARCS_ALWAYS_COLOR to 1. If you can't see colors you can set
+DARCS_ALTERNATIVE_COLOR to 1, and darcs will use ANSI codes for bold
+and reverse video instead of colors. In addition, there is an
+extra-colorful mode, which is not enabled by default, which can be
+activated with DARCS_DO_COLOR_LINES
+
+## DARCS_DONT_ESCAPE_TRAILING_SPACES, DARCS_DONT_ESCAPE_TRAILING_CR
+
+By default darcs will escape (by highlighting if possible) any kind
+of spaces at the end of lines when showing patch contents.
+If you don't want this you can turn it off by setting
+DARCS_DONT_ESCAPE_TRAILING_SPACES to 1. A special case exists
+for only carriage returns: DARCS_DONT_ESCAPE_TRAILING_CR
+
+## DARCS_DONT_ESCAPE_ANYTHING, DARCS_DONT_ESCAPE_ISPRINT, DARCS_DONT_ESCAPE_8BIT, DARCS_DONT_ESCAPE_EXTRA, DARCS_ESCAPE_EXTRA
+
+Darcs needs to escape certain characters when printing patch contents to
+a terminal. Characters like backspace can otherwise hide patch content
+from the user, and other character sequences can even in some cases
+redirect commands to the shell if the terminal allows it.
+
+By default darcs will only allow printable 7-bit ASCII
+characters (including space), and the two control characters tab and
+newline. All other octets are printed in quoted form (as ^<control letter>
+or \<hex code>).
+
+Darcs has some limited support for locales. If the system's locale is a 
+single-byte character encoding, like the Latin encodings, you can set the
+environment variable DARCS_DONT_ESCAPE_ISPRINT to 1 and darcs will display
+all the printables in the current system locale instead of just the ASCII
+ones. NOTE: This curently does not work on some architectures if darcs
+is compiled with GHC 6.4 or later. Some non-ASCII control characters might
+be printed and can possibly spoof the terminal.
+
+For multi-byte character encodings things are less smooth. UTF-8 will
+work if you set DARCS_DONT_ESCAPE_8BIT to 1, but non-printables outside
+the 7-bit ASCII range are no longer escaped. E.g., the extra control
+characters from Latin-1 might leave your terminal at the mercy of the
+patch contents. Space characters outside the 7-bit ASCII range are no
+longer recognized and will not be properly escaped at line endings.
+
+As a last resort you can set DARCS_DONT_ESCAPE_ANYTHING to 1. Then
+everything that doesn't flip code sets should work, and so will all the
+bells and whistles in your terminal. This environment variable can also
+be handy if you pipe the output to a pager or external filter that knows
+better than darcs how to handle your encoding. Note that all escaping,
+including the special escaping of any line ending spaces, will be turned
+off by this setting.
+
+There are two environment variables you can set to explicitly tell darcs
+to not escape or escape octets. They are DARCS_DONT_ESCAPE_EXTRA and
+DARCS_ESCAPE_EXTRA. Their values should be strings consisting of the
+verbatim octets in question. The do-escapes take precedence over the
+dont-escapes. Space characters are still escaped at line endings though.
+The special environment variable DARCS_DONT_ESCAPE_TRAILING_CR turns off
+escaping of carriage return last on the line (DOS style).
+
+## DARCS_TMPDIR, TMPDIR
+
+Darcs often creates temporary directories.  For example, the `darcs
+diff' command creates two for the working trees to be diffed.  By
+default temporary directories are created in /tmp, or if that doesn't
+exist, in _darcs (within the current repo).  This can be overridden by
+specifying some other directory in the file _darcs/prefs/tmpdir or the
+environment variable $DARCS_TMPDIR or $TMPDIR.
+
+## DARCS_KEEP_TMPDIR
+
+If the environment variable DARCS_KEEP_TMPDIR is defined, darcs will
+not remove the temporary directories it creates.  This is intended
+primarily for debugging Darcs itself, but it can also be useful, for
+example, to determine why your test preference (see `darcs setpref')
+is failing when you run `darcs record', but working when run manually.
+
+## DARCS_EMAIL, EMAIL
+
+Each patch is attributed to its author, usually by email address (for
+example, `Fred Bloggs <fred@example.net>`).  Darcs looks in several
+places for this author string: the `--author` option, the files
+`_darcs/prefs/author` (in the repository) and `~/.darcs/author` (in your
+home directory), and the environment variables `$DARCS_EMAIL` and
+`$EMAIL`.  If none of those exist, Darcs will prompt you for an author
+string and write it to `_darcs/prefs/author`.  Note that if if you have more
+than one email address, note that you can put them all in `~/.darcs/author`,
+one author per line.  Darcs will still prompt you for an author, but it
+allows you to select from the list, or to type in an alternative.
+
+## SENDMAIL
+
+On Unix, the `darcs send' command relies on sendmail(8).  The
+`--sendmail-command' or $SENDMAIL environment variable can be used to
+provide an explicit path to this program; otherwise the standard
+locations /usr/sbin/sendmail and /usr/lib/sendmail will be tried.
+
+## DARCS_SSH
+
+Repositories of the form [user@]host:[dir] are taken to be remote
+repositories, which Darcs accesses with the external program ssh(1).
+
+The environment variable $DARCS_SSH can be used to specify an
+alternative SSH client.  Arguments may be included, separated by
+whitespace.  The value is not interpreted by a shell, so shell
+constructs cannot be used; in particular, it is not possible for the
+program name to contain whitespace by using quoting or escaping.
+
+## DARCS_SCP, DARCS_SFTP
+
+When reading from a remote repository, Darcs will attempt to run
+`darcs transfer-mode' on the remote host.  This will fail if the
+remote host only has Darcs 1 installed, doesn't have Darcs installed
+at all, or only allows SFTP.
+
+If transfer-mode fails, Darcs will fall back on scp(1) and sftp(1).
+The commands invoked can be customized with the environment variables
+$DARCS_SCP and $DARCS_SFTP respectively, which behave like $DARCS_SSH.
+If the remote end allows only sftp, try setting DARCS_SCP=sftp.
+
+## SSH_PORT
+
+If this environment variable is set, it will be used as the port
+number for all SSH calls made by Darcs (when accessing remote
+repositories over SSH).  This is useful if your SSH server does not
+run on the default port, and your SSH client does not support
+ssh_config(5).  OpenSSH users will probably prefer to put something
+like `Host *.example.net Port 443' into their ~/.ssh/config file.
+
+## HTTP_PROXY, HTTPS_PROXY, FTP_PROXY, ALL_PROXY, NO_PROXY
+
+If Darcs was built with libcurl, the environment variables
+HTTP_PROXY, HTTPS_PROXY and FTP_PROXY can be set to the URL of a
+proxy in the form
+
+  [protocol://]<host>[:port]
+
+In which case libcurl will use the proxy for the associated protocol
+(HTTP, HTTPS and FTP). The environment variable ALL_PROXY can be used
+to set a single proxy for all libcurl requests.
+
+If the environment variable NO_PROXY is a comma-separated list of
+host names, access to those hosts will bypass proxies defined by the
+above variables. For example, it is quite common to avoid proxying
+requests to machines on the local network with
+
+  NO_PROXY=localhost,*.localdomain
+
+For compatibility with lynx et al, lowercase equivalents of these
+environment variables (e.g. $http_proxy) are also understood and are
+used in preference to the uppercase versions.
+
+If Darcs was not built with libcurl, all these environment variables
+are silently ignored, and there is no way to use a web proxy.
+
+## DARCS_PROXYUSERPWD
+
+If Darcs was built with libcurl, and you are using a web proxy that
+requires authentication, you can set the $DARCS_PROXYUSERPWD
+environment variable to the username and password expected by the
+proxy, separated by a colon.  This environment variable is silently
+ignored if Darcs was not built with libcurl.
+

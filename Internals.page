@@ -1,0 +1,97 @@
+---
+categories: Development 
+...
+
+Attempting to compile a field guide to the darcs source code. Please
+explain stuff and fill this page in.
+
+# Code hierarchy
+
+Did you know we have API documentation too? See
+<http://darcs.net/api-doc> or combined with
+hoogle
+<http://joyful.com/repos/darcs-unstable/api-doc>
+
+-   src - generic code, could likely be spun off (see
+    [DarcsLibraries](/Development/DarcsLibraries))
+-   Darcs - general darcs-y stuff
+-   Darcs.UI - the outer shell of darcs, its user interface
+-   Darcs.Repository - what goes on in \_darcs , for example prefs
+-   Darcs.Patch - properties of patches, how they commute, etc (see
+    [Patches](Internals/Patches))
+
+# High level documentation
+
+Overview of commands:
+
+-   [darcs record](Internals/Record)
+
+<br/>
+Big picture notes:
+
+-   [complexity of various operations](Internals/Complexity)
+
+<br/>
+Repository internals:
+
+-   [Repository](Internals/Repository): inside of `_darcs`
+-   [RepoFormat](http://article.gmane.org/gmane.comp.version-control.darcs.devel/5393)
+-   [Hashes](Internals/Hashes)
+-   [HashedPristine](Internals/HashedPristine)
+-   [NamedPatch](/Internals/NamedPatch) - how do patches look like
+    inside? how do those hashes get computed?
+-   The infamous [pending patch](/Internals/PendingPatch) *stub*
+-   (See also the [optimisations](#optimisations) below)
+
+<br/>
+Working with the outside world:
+
+-   [SSH](Internals/SSH)
+
+# Internal subsystems/concepts
+
+## Key patch theory concepts
+
+-   [Patch theory](/Theory)
+-   [Commuting](/Commuting)
+-   [Conflictors](/Theory/Conflictors) - darcs 2 conflict representation
+-   [PrimsV3](Internals/PrimsV3)
+
+## More internal concepts
+
+-   [(Colour)Printers](http://lists.osuosl.org/pipermail/darcs-devel/2007-November/006441.html)
+-   [ConflictMarking](/ConflictMarking)
+-   Selecting patches
+
+    -   [Patch selection](Internals/PatchSelection)
+    -   [Calculating patch
+        dependencies](http://lists.osuosl.org/pipermail/darcs-devel/2007-August/006161.html)
+    -   see especially Tommy's ball-on-wire explanation that follows
+    -   [Pending patch and sifting](Internals/PendingPatch)
+
+## Optimisations
+
+- [Lazy repositories](http://lists.osuosl.org/pipermail/darcs-devel/2007-April/005540.html)
+- [Timestamp index](Internals/TimeStampIndex)
+- [Caches system](Internals/CacheSystem)
+- [Patch index](Internals/PatchIndex)
+- [Packs](Internals/Packs)
+
+# Quality assurance
+
+-   [Type witnesses](Internals/Witnesses)
+-   [UnitTests](/Development/UnitTests)
+
+# Bits and pieces of code
+
+-   <http://darcs.net/api-doc>
+-   [headPermutationsFL](http://article.gmane.org/gmane.comp.version-control.darcs.devel/6373/match=head_permutations)
+-   [Clever
+    commute](http://lists.osuosl.org/pipermail/darcs-devel/2007-October/006355.html)
+    (near bottom)
+
+# See also
+
+-   [Glossary](/Glossary)
+-   [Development FAQ](/Development/FAQ)
+-   [PatchTheory](/PatchTheory)

@@ -1,0 +1,65 @@
+The timestamp index (_darcs/index) should not be confused with the [patch index](PatchIndex).
+It was introduced in Petr Ročkai's [2009 Google Summer of Code project](/GSoC/2009-Hashed)
+and made its way into Darcs around Darcs 2.3.1 or so (TODO: check history). José Neder added
+information about the inode numbers of the files in the [2013 Google Summer of Code project](/GSoC/2013-BetterRecord).
+
+## Background
+
+Darcs tries and save space and make copying faster by hard-linking certain
+files (this is safe because the files are internal ones that darcs knows
+will not change).  Unfortunately, this hardlinking is a potential source of
+confusion, because Darcs relies on timestamps to know if it should diff a
+file for whatsnew or not.
+
+The index is a binary file that overlays a hashed tree over the working copy.
+This means that every working file and directory has an entry in the index,
+that contains its path, hash and fileid, and validity data. The validity data
+is a timestamp plus the file size. The file hashes are sha256's of the file's content.
+
+It is used by Darcs to keep track of timestamps rather than trusting the filesystem.
+This means Darcs doesn't get confused so easily and start trying to diff files
+left and right.  It is also used to keep track of files renames tracking files by his fileid.
+
+## UI
+
+You can query the index with the `darcs show index` command
+
+## Format
+
+There are two entry types, a file entry and a directory entry.
+Both have a common binary format.
+
+For each file, the index has a copy of the file's last modification timestamp
+taken at the instant when the hash has been computed. This means that when file
+size and timestamp of a file in working copy matches those in the index, we
+assume that the hash stored in the index for given file is valid. These hashes
+are then exposed in the resulting 'Tree' object, and can be leveraged by eg.
+'diffTrees' to compare many files quickly.
+
+You may have noticed that we also keep hashes of directories. These are assumed
+to be valid whenever the complete subtree has been valid. At any point, as soon
+as a size or timestamp mismatch is found, the working file in question is opened,
+its hash (and timestamp and size) is recomputed and updated in-place in the index
+file (everything lives at a fixed offset and is fixed size, so this isn't an issue).
+This is also true of directories: when a file in a directory changes hash, this
+triggers recomputation of all of its parent directory hashes; moreover this is
+done efficiently -- each directory is updated at most once during an update run.
+
+## On-disk Format
+
+The Index is organised into \"lines\" where each line describes a single indexed item.
+Cf. 'Item'.
+
+The first word on the index \"line\" is the length of the file path (which is the
+only variable-length part of the line). Then comes the path itself, then
+fixed-length hash (sha256) of the file in question, then three words, one for
+size, one for "aux", which is used differently for directories and for files,
+and one for the fileid(inode or fhandle depending on the operating system) of the file.
+
+With directories, this aux holds the offset of the next sibling line in the index,
+so we can efficiently skip reading the whole subtree starting at a given directory
+(by just seeking aux bytes forward). The lines are pre-ordered with respect to
+directory structure -- the directory comes first and after it come all its items.
+Cf. 'readIndex''.
+
+For files, the aux field holds a timestamp.

@@ -1,0 +1,95 @@
+# At a glance
+
+-   Ticket: [issue555](http://bugs.darcs.net/issue555)
+
+# Case for local branches
+
+From Alberto's email
+
+-   Easier to find out what's in the branch (compared to another?)
+-   Easy overview of set of branches (with something like gitk/tig)
+-   One command to create a branch (cf. cd ..; get, cd new-branch or cd
+    old-branch)
+-   Diff across tags in different branches (eg. branch-1.5 vs branch-1.6
+    and diffing (1.5.18 with 1.6.3)
+
+# Case for remote branches
+
+One scenario (quoting Stephen Turnbull)
+
+> That is the case where bootstrapping your project is very expensive.
+> The workflow here is to create a repository in one of the usual ways,
+> and bootstrap it. Now, if you want to test someone's changes, instead
+> of cloning their branch (moderately to very expensive in a big tree)
+> and bootstrapping (very expensive), you simply pull the delta to their
+> branch into your "build&test" working tree and remake the changed
+> files.
+
+EYK: how would this be any different from pulling from a remote
+repository?
+
+> I use git to synchronize multibranch repositories across several hosts
+> all the time, and I just don't see a problem, as long as I don't
+> rebase. In fact, in a couple of cases I've had several wildly
+> divergent versions, and I just pull the branches into one repo from
+> wherever they might be, and mix and match with cherry-picks and merges
+> until I've achieved a set of sane up-to-date branches. I see no reason
+> at all why Darcs shouldn't be even more efficient for this kind of
+> thing.
+
+# TODO summary of Max/Grant discussion
+
+# Random Eric thoughts
+
+Introducing a lot of new operations and concepts that make Darcs hard to
+use, for example distinctions between operations that only affect a
+branch vs operations that affect a set of branches.
+
+Ideas:
+
+-   implement a branch addressing mechanism as Grant suggests (?), eg.
+
+        darcs get /foo/bar:b2 quux     get branch b2 from /foo/bar into quux (with only a branch b2)
+        darcs push :b3                 push into branch :b3 of default repo
+
+-   want to preserve the illusion that branches are repos are
+    directories (?) are sets of patches
+-   branches should have a defaultrepo (including branch address)
+-   introduce darcs branch family of commands
+
+        darcs branch get-all      get all missing branches from current branch's defaultrepo, stripping branch
+        darcs branch push-all     for each branch, push to defaultrepo of that branch
+        darcs branch pull-all     for each branch, pull from defaultrepo of that branch
+        darcs branch list         list all branches
+        darcs branch switch :b3   switch to local branch :b3
+
+# Random Ganesh thoughts
+
+A minimal(?) implementation would support multiple branches in one repo,
+but no addressing of branches remotely.
+
+    darcs branch create b3    create new branch as a clone of current head (and switch to it?)
+    darcs branch switch b3    switch to b3 (require no unrecorded changes?)
+    darcs push local://b3     "remote" operation on in-repo branch
+
+What should head be named, and should it just be a pointer? What does
+existing repo correspond to in the multi-head world?
+
+Implementation should be on hashed repos only and should be fairly
+straightforward given the single atomic pointer represented by
+hashed-pristine. Need to clarify how garbage collection works now (if at
+all) and how it will work.
+
+# Random Owen thoughts
+
+I want to be able to do something similar in style to a \`git fetch\`.
+I.e. fetch remote changes, but not apply them. I could then diff/review
+the patches and decide whether or not to apply them, perhaps at a later
+date.
+
+Currently, it would require multiple network connections to "decide and
+fetch now, then apply, without the chance to decide later", rather than
+"fetch them all, then decide later".
+
+\> This is what "darcs fetch" does for one branch, but it could be
+expanded to several branches (darcs fetch repo:\*)

@@ -1,0 +1,71 @@
+# News and discussions
+
+1. Darcs 2.2.1 has been released, with most changes affecting the user
+manual
+  ~ and the interface:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-February/017834.html](http://lists.osuosl.org/pipermail/darcs-users/2009-February/017834.html)
+  ~ -   Changelog:
+        [http://lists.osuosl.org/pipermail/darcs-users/2009-February/017528.html](http://lists.osuosl.org/pipermail/darcs-users/2009-February/017528.html)
+
+2. Gorsvet 0.1 has been released by Petr Rockai. Gorsvet is an
+alternative
+  ~ read-only client for darcs based on hashed-storage and darcslib,
+    that enables noticeably faster whatsnew and diff commands by using
+    an optimised repository format:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-February/017822.html](http://lists.osuosl.org/pipermail/darcs-users/2009-February/017822.html)
+
+3. More discussion about the upcoming Google Summer Of Code:
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-February/017865.html](http://lists.osuosl.org/pipermail/darcs-users/2009-February/017865.html)
+    -   [http://wiki.darcs.net/index.html/GoogleSummerOfCode](http://wiki.darcs.net/index.html/GoogleSummerOfCode)
+
+4. First darcs fundraising! We aim to raise 1000$ to help people pay for
+  ~ travel to the sprint (Utrecht, 17-19 April):
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-February/017816.html](http://lists.osuosl.org/pipermail/darcs-users/2009-February/017816.html)
+
+# Issues resolved in the last week (1)
+
+issue1361 Reinier Lamers
+  ~ -   specify required includes for curl in cabal file
+    -   [http://bugs.darcs.net/issue1361](http://bugs.darcs.net/issue1361)
+
+# Patches applied in the last week (12)
+
+2009-02-21 Eric Kow
+  ~ -   Explain \#ifdef HAVE\_HTTP in check for \_darcs/prefs/post.
+
+2009-02-20 Christian Kellermann
+  ~ -   show patch names on push/pull only when using 'l'
+
+2009-02-20 Trent W. Buck
+  ~ -   Remove "unused import/definition" warnings with -fzlib.
+    -   Only import things if they are needed.
+    -   Typo: have\_HTTP should be HAVE\_HTTP.
+
+2009-02-04 Eric Kow
+  ~ -   Add a sunset notice to our UTF8 module
+
+2009-02-19 Trent W. Buck
+  ~ -   Replace Autoconf.hs with consistent use of CPP.
+
+2009-02-18 Eric Kow
+  ~ -   Replace our (///) function with filepath's (</\>) in
+        Darcs.Resolution
+
+2009-02-14 Petr Rockai
+  ~ -   Remove unused Slurpy parameter from with\_selected\_\*.
+
+2009-02-15 Reinier Lamers
+  ~ -   resolve issue1361: specify required includes for curl in cabal
+        file
+
+2009-02-13 Eric Kow
+  ~ -   Explain why readFile is in the haskell policy test.
+
+2009-02-12 Simon Michael
+  ~ -   add suggested fix to readFile policy warning
+
+

@@ -1,0 +1,55 @@
+---
+categories : Development 
+...
+
+# Recommendations from Sprint 2010-03
+
+Here is our list of recommendations. Any comments?
+
+## Retain
+
+-   --no-set-scripts-executable
+
+    -   Detecting scripts is problematic [consider Windows].
+    -   Setting permissions may have some kind of undesirable
+        interaction with ACLs [not sure if I understood discussion]
+
+## New defaults for Darcs 2.8
+
+*this was left as an open question in 2010-03; we finally got around to it in 2012*
+
+-   check --no-test
+
+    -   add a darcs test command
+    -   darcs trackdown to renamed to darcs test --linear
+
+## New defaults for Darcs 2.5
+
+-   pull/push/send --no-set-default
+
+    -   ... but add an online reminder whenever you interact with a
+        non-default repo about how to set the default
+
+-   send --edit-description
+
+-   record --no-test
+
+
+
+## Undecided
+
+The problem with the below is that it may interfere with scripts or
+people using redirection on their shells. Our next step is to do
+research on whether we can do reliable terminal detection on Windows
+(already easy on \*nix) and then re-open the discussion.
+
+-   apply --interactive
+-   check --interactive
+
+## Other notes
+
+Salvatore pointed out that we should add some sort of mechanism for the
+darcs command line to have a frozen behaviour (eg. for scripts). This
+would let us change the command line UI at will, with scripts doing
+something like DARCS\_BEHAVIOUR=frozen-2.5 darcs foo
+

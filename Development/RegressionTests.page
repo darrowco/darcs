@@ -1,0 +1,170 @@
+This page is about the darcs test suite.
+
+# Overview of types of tests
+
+Darcs has tests in two formats.  Unit tests that directly test Haskell
+functions are written in Haskell and live in modules under src/Darcs/Test.
+Functional tests that test the darcs binary are written as Bash shell scripts   and live in tests/.
+
+## Haskell tests
+
+These are QuickCheck and HUnit tests primarily testing the Darcs core. The
+Haskell modules containing these tests are under Darcs.Test in the module
+hierarchy. They are called from src/unit.lhs using the test-framework package
+from Hackage.
+
+More about the Haskell tests can be found on the [Unit Tests page](Development/UnitTests).
+
+## Shell tests
+
+Shell tests are useful because they are easy to create from a copy/paste of
+actual shell commands executed. They are considered successful if no bad
+exit codes are returned from the commands in the script. If the name of the
+script file starts with 'failing-' however, the script is expected to return
+a bad exit code. If such a script returns a bad exit code, this will not be
+treated as a test suite failure. This is useful to document bugs and to-do
+items.
+
+# Contributing a test to Darcs as a shell script
+
+Contributing a test to Darcs is easy-- no Haskell is required, just a bash shell script which you can base on the actual commands you used to trigger an issue.
+
+Here's how to get started:
+
+    darcs get --lazy http://darcs.net
+    cp tests/EXAMPLE.sh tests/failing-issueXXXX_your-test.sh
+    # edit away
+    darcs record
+    darcs send
+
+Regression tests are just shell scripts that fail on the first command
+that returns with a non-zero exit status (nb: `exit 200` is special, see
+below)
+
+See `tests/EXAMPLE.sh` to get a template for writing these tests. Note
+also the `tests/lib` for things you should be able to invoke from your
+test or `tests/toolbox.sh` for little tricks you can copy and paste.
+
+NB. If you're not actually expecting your test to fail, then remove
+'failing-' from the name.
+
+## Tips for writing a darcs test as a shell script
+
+-   Name your patch `Accept issueNNNN: (short description)`
+-   Just let `darcs send` do the thinking (no arguments or flags
+    needed). The darcs repository will automatically specify what email
+    address to send the patch to (one which will cause a patch tracker
+    ticket to be created for your patch).
+-   Exit status 200 gets special treatment; you can use it to skip tests
+    that aren't appropriate for a particular situation (for example they
+    only make sense in darcs-2 repos and not darcs-1 repos)
+
+## Things to avoid to keep your shell scripts portable
+
+1.  cp -a (BSD)
+2.  sed -r (BSD)
+3.  sed -i (BSD)
+4.  yes | (doesn't terminate on OpenBSD when SIGPIPE is ignored by the
+    shell, could be fixed by trap - PIPE in the script)
+5.  find ... -exec ... {} + (Not supported on OpenBSD)
+6.  grep -F (use fgrep instead)
+7.   /bin/{true,false} (use true/false instead; MacOS X)
+8.   using a shell script as a command for darcs to execute (e.g. as an editor): it doesn't work on Windows. Try a short haskell program instead, see e.g. issue2204-send-mail.sh
+
+If in doubt, look it up at
+<http://www.opengroup.org/bookstore/catalog/c082.htm>,
+but be aware that not all systems are conforming to the latest SUS.
+
+# How to run tests
+
+## Run just the unit tests
+
+To build the unit tests, pass the "-ftest" flag to "cabal configure" and then
+do "cabal build". To run them, do "dist/build/darcs-test/darcs-test --shell=no". They take a while.
+Output like "[OK]" and "[OK, passed 100 tests]" is good. Output like
+"Arguments exhausted after 33 tests" is a shortage of QuickCheck test
+cases, not a test failure.
+
+## Run just the shell tests
+
+You can just the shell tests like this:
+
+    dist/build/darcs-test/darcs-test --unit=no
+
+If you have multiple cores on your machine, set the `-j` flag to your number
+of cores to speed it up:
+
+    dist/build/darcs-test/darcs-test --unit=no -j 2
+
+If you just want to run one test through the harness, there's a `--tests` flag for that (also available as `-t`):
+
+    dist/build/darcs-test/darcs-test --tests issue1234.sh
+
+## Running the failing tests and network tests
+
+Darcs also includes some tests which aren't run by default. Some
+known-failing tests may be present because developers have included failing
+tests in advance of a fix being prepared. These tests are named
+tests/failing-*. To run those:
+
+    dist/build/darcs-test/darcs-test --failing=yes
+
+Darcs does not also run tests that use that network by default, since the network may be unavailable or unreliable. To turn the network tests:
+
+    dist/build/darcs-test/darcs-test --network=yes
+
+# Tips for writing and (and reading) tests
+
+-   Avoid including a repo format type to "darcs init" This insures that all
+    repo formats will be tested (currently: `--darcs-1` and `--darcs-2`, which
+    are both hashed).  However, if you know that the test
+    only passes under some repo formats, *do* explicitly include a format
+    option to "darcs init".
+
+-   Simply call darcs using "darcs" as you would in the shell.  It is the
+    responsibility of the test harness to ensure that the darcs we are
+    testing is first in the path.
+
+-   Always use Bash explicitly - this improves the portability of our tests.
+
+-   There is a utility script intended for factoring out common calls and
+    functions, called 'lib'. It can be invoked by adding a line like '. lib'
+    to your shell script. lib provides 'set -ev', a common definition of
+    'not', and 'abort_windows' for use in scripts which shouldn't run under
+    Windows.  You don't have to use lib if you don't want to, or if it
+    causes problems.
+
+-   If you don't use 'lib', always add this near the top of the script:
+        set -ev
+    The "v" causes the contents of the script to be printed as part of the
+    run, which is helpful for debugging.  The "e" causes the script to exit
+    as soon as there is an error.
+
+-   Try to avoid defining functions where possible.  This makes them harder
+    to run and generally harder to use.  There are certainly cases where it
+    is appropriate to define a function, but please do not do this just to
+    avoid a little duplication.
+
+-   Also try to be careful using certain utilities; 'yes' is prohibited
+    since it can cause infinite loops on Mac OS X; 'find' can be very
+    useful, but options and behavior can differ from GNU find to the BSD
+    finds to Solaris's find and so on. In general, stick to POSIX flags and
+    functionality.
+
+-   If you need to skip a test for any reason, the darcs-specific
+    convention is to "exit 200".  This alerts the shell harness that the
+    test was explicitly skipped and not passed.
+
+-   You can use the trap feature from bash to make ensure that darcs
+    executes some command even if the test fails. Trapping ERR lets you have
+    your last word just before a test fails. Trapping EXIT lets you do the
+    same before any sort of explicit exit (such as the explicit 'exit 1' in
+    the 'not' helper function).  For more details, see the bash man page or
+    just grep trap in the test suite.
+
+-   By default shell tests are ran only with darcs-2 patch semantics, and
+    with the patience diff algorithm. To have a shell test running with
+    different settings, use the pragma notation:
+
+        #pragma repo-format darcs-2, darcs-1
+        #pragma diff-algorithm patience, myers

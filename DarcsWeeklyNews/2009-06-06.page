@@ -1,0 +1,95 @@
+# News and discussions
+
+1. Juliusz Chroboczek released a new stable version of vc-darcs.el,
+  ~ a darcs plugin for Emacs:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-June/020042.html](http://lists.osuosl.org/pipermail/darcs-users/2009-June/020042.html)
+
+2. An update from Petr Rockai's Summer of Code :
+  ~ \`\`The hashed-storage patches have started to trickle into mainline
+    darcs"
+
+> -   [http://web.mornfall.net/blog/soc\_progress\_2.html](http://web.mornfall.net/blog/soc_progress_2.html)
+
+3. Eric Kow launched a call for volunteers to help reviewing the
+  ~ hashed-storage module developed by Pietr during his SoC work:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-June/020052.html](http://lists.osuosl.org/pipermail/darcs-users/2009-June/020052.html)
+
+# Issues resolved in the last week (2)
+
+issue1343 Trent W. Buck
+  ~ -   mention darcs-users is subscriber-only, use --from.
+    -   [http://bugs.darcs.net/issue1343](http://bugs.darcs.net/issue1343)
+
+issue1465 Trent W. Buck
+  ~ -   ortryrunning should check error code.
+    -   [http://bugs.darcs.net/issue1465](http://bugs.darcs.net/issue1465)
+
+# Patches applied in the last week (35)
+
+2009-06-01 Petr Rockai
+  ~ -   Remove tentativelyMerge from Gorsvet, as it's unused and
+        confusing.
+
+2009-05-25 Trent W. Buck
+  ~ -   Churn: appease hlint.
+
+2009-06-01 Petr Rockai
+  ~ -   Drop extra parens.
+    -   Also invalidateIndex in Revert and Remove.
+
+2009-06-01 Eric Kow
+  ~ -   Check for hashed-storage in autoconf build.
+
+2009-06-01 Petr Rockai
+  ~ -   Fix witnesses in Darcs.Gorsvet.
+    -   Take a list of paths in unrecordedChanges instead of Tree
+        transform.
+    -   Fix Tree restriction in various cases of unrecordedChanges.
+    -   Provide a restrictBoring (like restrictSubpaths) in
+        Darcs.Gorsvet.
+    -   Factor out a separate boring\_regexps in Darcs.Repository.Prefs.
+    -   Fix the path restriction versus pending renames in
+        unrecordedChanges.
+    -   Pass options to unrecordedChanges and handle LookForAdds and
+        IgnoreTimes.
+    -   Use index for diffing in the basic whatsnew scenario.
+    -   Invalidate index at key positions in relevant
+        (pristine-modifying) commands.
+
+2009-05-31 Reinier Lamers
+  ~ -   Add options for QuickCheck replaying and test selection to unit
+    -   Resolve conflict with Trent's help fix
+    -   Split Test.Runner into a backend and a driver module
+    -   Move argument parsing and interaction from unit.lhs to
+        Test.Runner
+
+2009-05-23 Trent W. Buck
+  ~ -   Resolve issue1343: mention darcs-users is subscriber-only, use
+        --from.
+    -   Resolve issue1465: ortryrunning should check error code.
+
+2009-05-29 Florian Gilcher
+  ~ -   Test for Issue 1473 (darcs annotate misbehaves)
+
+2009-05-29 Petr Rockai
+  ~ -   Version the build dependency on hashed-storage.
+    -   Build the list of diffs in one go in treeDiff (and sort rmdirs
+        correctly).
+    -   Fix the (fiddly) empty file diffing business in treeDiff.
+    -   Clean up imports in Darcs.Gorsvet a little.
+    -   Add a copyright header to Darcs.Gorsvet.
+    -   Bomb out from unrecordedChanges when pending is buggy.
+    -   Implement basic index maintenance functionality.
+    -   Disable restriction in unrecordedChanges for now (less efficient
+        but correct).
+    -   Appease haskell\_policy. (Sigh.)
+    -   Make the trailing newline shuffling in treeDiff a little less
+        fragile.
+    -   Convenience wrapper for restrict\_paths for use in Darcs.
+    -   Kill a bunch of unused imports.
+    -   Handle adds and removals in treeDiff.
+    -   Import relevant bits of gorsvet, for now under Darcs.Gorsvet.
+
+

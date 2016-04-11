@@ -1,0 +1,80 @@
+The standard darcs benchmarks can be obtained by
+
+    cabal update && cabal install darcs-benchmark
+    cd /tmp/ && mkdir bench && cd bench
+    darcs-benchmark get
+    darcs-benchmark run darcs_binary1 darcs_binary2
+
+The current darcs repository lives [on
+hub.darcs.net](http://hub.darcs.net/kowey/darcs-benchmark) (please darcs send
+patches).
+
+See also [Benchmarks](../Benchmarks) for the current list of published
+benchmarks.
+
+# Improvements needed (help wanted!)
+
+Benchmarks to add:
+
+-   obliterate
+
+Note that these are all very small jobs...
+
+-   Make it possible to toggle profiling from the config file
+-   Make it possible to run just the latest version of darcs (and then
+    compare with stored performance numbers for older darcs)
+-   Use (Table (BetterOrWorse String)) instead of (Table String) so that
+    we can configure the HTML renderer to mark regressions red
+-   Implement a timeout mechanism to kill darcs after some fixed amount
+    of time
+-   Determine which graph-producing library to use (need something
+    fairly portable, easy to install)
+-   Write code to produce shootout-like visualisation of results (maybe
+    hsparklines to produce at-a-glance-overview)
+-   Verbose mode so that we can get at the .prof files for fine grained
+    performance data.
+
+General tasks
+
+-   RND: what are blktrace and seekwatcher, and how can they help us?
+-   RND:
+    <http://bugs.darcs.net/issue1631>
+    could criterion by useful?
+
+# Test repositories
+
+We are looking for repositories that have particularly interesting
+characteristics or behaviours.
+
+-   <http://ftp.frugalware.org/pub/archive/other/darcs/frugalware-current2.tar>
+-   GHC
+-   darcs add -r linux kernel sources
+-   darcs annotate in GHC
+
+## Characteristics
+
+-   many files in one patch
+-   many files
+-   huge files
+-   many contributors
+-   many patches
+-   ...on a branch (conflicts?)
+
+# In the future
+
+-   benchmarking against other revision control systems
+    [issue1538](http://projects.haskell.org/camp/benchmarking/get.shtml)
+-   use of <https://hackage.haskell.org/package/maybench>
+    to get darcs scalability benchmarks (showing how darcs performance
+    degrades as N increases)
+
+# Ideas for tracking usage
+
+-   use [test memory suite](http://bugs.darcs.net/issue99) to get mmap
+    statistics. We can bake this into darcs and use a reporting
+    technique like ghc uses. Print "<<mmap: bytes allocated :mmap\>\>"
+    to stderr when --track-mmap is passed to darcs.
+-   Working with special case repositories above will give us a faster
+    turn around on having a useful test suite. Measuring scalability is
+    less important than measuring regressions on known hard cases.
+

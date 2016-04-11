@@ -1,0 +1,200 @@
+# News and discussions
+
+1.  The Darcs 2.8 line has been branched for a tentative release in
+    August:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2011-June/026206.html](http://lists.osuosl.org/pipermail/darcs-users/2011-June/026206.html)
+
+2.  To catch up with Owen's Summer of Code on git-darcs bridging:
+
+    -   [http://blog.owenstephens.co.uk/201105/gsoc-darcs-bridge-week-0](http://blog.owenstephens.co.uk/201105/gsoc-darcs-bridge-week-0)
+    -   [http://blog.owenstephens.co.uk/201106/gsoc-darcs-bridge-week-2](http://blog.owenstephens.co.uk/201106/gsoc-darcs-bridge-week-2)
+    -   [http://blog.owenstephens.co.uk/201106/gsoc-darcs-bridge-week-3](http://blog.owenstephens.co.uk/201106/gsoc-darcs-bridge-week-3)
+    -   [http://blog.owenstephens.co.uk/201106/gsoc-first-simple-merging-branches-git-import](http://blog.owenstephens.co.uk/201106/gsoc-first-simple-merging-branches-git-import)
+    -   [http://blog.owenstephens.co.uk/201106/gsoc-darcs-bridge-week-45](http://blog.owenstephens.co.uk/201106/gsoc-darcs-bridge-week-45)
+    -   [http://blog.owenstephens.co.uk/201107/gsoc-darcs-bridge-%E2%80%93-week-678](http://blog.owenstephens.co.uk/201107/gsoc-darcs-bridge-–-week-678)
+    -   [http://blog.owenstephens.co.uk/201107/gsoc-darcs-bridge-%E2%80%93-detecting-merges](http://blog.owenstephens.co.uk/201107/gsoc-darcs-bridge-–-detecting-merges)
+
+3.  To catch up with Petr's Summer of Code on Prim3 patches:
+
+    -   [http://web.mornfall.net/blog/soc\_reloaded:\_darcs\_primitive\_patches\_version\_3.html](http://web.mornfall.net/blog/soc_reloaded:_darcs_primitive_patches_version_3.html)
+    -   [http://web.mornfall.net/blog/soc\_reloaded:\_progress\_1.html](http://web.mornfall.net/blog/soc_reloaded:_progress_1.html)
+
+# Issues resolved in the last week (10)
+
+issue1473 Florent Becker
+  ~ -   : annotate --repodir works now
+    -   [http://bugs.darcs.net/issue1473](http://bugs.darcs.net/issue1473)
+
+issue1714 Florent Becker
+  ~ -   make --no-{pre,post}hook and --{pre,post}hook interact sensibly
+    -   [http://bugs.darcs.net/issue1714](http://bugs.darcs.net/issue1714)
+
+issue1727 Florent Becker
+  ~ -   forbid moving the root of the repository
+    -   [http://bugs.darcs.net/issue1727](http://bugs.darcs.net/issue1727)
+
+issue1740 Florent Becker
+  ~ -   handle post-hoc darcs mv for directories correctly
+    -   [http://bugs.darcs.net/issue1740](http://bugs.darcs.net/issue1740)
+
+issue2021 Florent Becker
+  ~ -   2021: make escaping not split strings too much
+    -   [http://bugs.darcs.net/issue2021](http://bugs.darcs.net/issue2021)
+
+issue2054 Scott Lawrence
+  ~ -   option --boring does not work with self-made boringfile
+    -   [http://bugs.darcs.net/issue2054](http://bugs.darcs.net/issue2054)
+
+issue2066 Andreas Brandt
+  ~ -   file does not exist when recording deleted file
+    -   [http://bugs.darcs.net/issue2066](http://bugs.darcs.net/issue2066)
+
+issue2067 Florent Becker
+  ~ -   inexsitant files result in empty lines in darcs
+    -   [http://bugs.darcs.net/issue2067](http://bugs.darcs.net/issue2067)
+
+issue2076 Florent Becker
+  ~ -   2076: handle post-hoc move into an non-added directory
+    -   [http://bugs.darcs.net/issue2076](http://bugs.darcs.net/issue2076)
+
+issue2079 Florent Becker
+  ~ -   2079: don't set default repository by default in put
+    -   [http://bugs.darcs.net/issue2079](http://bugs.darcs.net/issue2079)
+
+# Patches applied in the last week (69)
+
+2011-07-10 Eric Kow
+  ~ -   Accept issue2086: darcs forgets \_darcs/index permissions.
+
+2011-07-01 Florent Becker
+  ~ -   More appropriate explanation for hunk-editing in revert
+    -   TAG 2.9.0
+
+2011-06-28 Petr Rockai
+  ~ -   Disable part of Patch tests in GHC<7 (requires GHC7-style
+        impredicativity).
+    -   Add a couple of extra constraints required by GHC6.
+    -   Remove unneeded LANGUAGE pragmas from Examples.Set2Unwitnessed.
+    -   Replace FunctionalDependencies with TypeFamilies in new test
+        code.
+    -   Implement V3Model and rudimentary V3.Prim Arbitrary instances.
+    -   Lift RepoModel into a class and rename the implementation to
+        V1Model.
+    -   Wibble the V3 Prim skeleton a bit.
+    -   Add a forgotten Properties.Check module to Test.Patch.
+    -   Replace tMergeSwapMerge with Properties.Generic mergeEitherWay.
+    -   Replace tCommuteRecommute with recommute from
+        Properties.Generic.
+    -   Further restructuring of QC properties of patches.
+    -   Slightly restructure and expand the Prim Arbitrary instances.
+    -   Print detailed diagnostic in patchAndInverseCommute.
+    -   Split Test.Patch.Test into Properties.Check and
+        Arbitrary.PatchV1.
+    -   Generalise a bunch of merge/commute properties over the patch
+        type & generator.
+    -   Generalise the V1.Prim Arbitrary instance based on Tree to any
+        PrimPatch.
+    -   Reorganise the Patch tests further.
+    -   Remove redundant imports in Darcs.Repository.Internal.
+    -   Make (V1) Prim an instance of PrimPatchBase/FromPrim.
+    -   Add a Show1 instance for (:\>).
+    -   Merge Set2, Set2Unwitnessed and Set3Unwitnessed in
+        Test.Patch.Examples.
+    -   Cut down the initial Prim V3 code to +/- compilable minimum.
+    -   Bootstrap the V3 Prim patches as a clone of V1.
+
+2011-06-27 Owen Stephens
+  ~ -   Add missing PrimClassify functions for all PrimConstruct
+        functions
+    -   Export new readRepoUsingSpecificInventory function.
+
+2011-06-14 Cedric Girard
+  ~ -   Avoid alias on grep
+
+2011-06-15 Florent Becker
+  ~ -   make 'k' available in amend-record's selection
+    -   acknowledge put --no-set-default as default in tests
+    -   resolve issue 2079: don't set default repository by default in
+        put
+    -   Resolve issue 2076: handle post-hoc move into an non-added
+        directory
+    -   resolve issue1473 : annotate --repodir works now
+    -   Refuse to add unreadable files
+    -   resolve issue1727: forbid moving the root of the repository
+    -   resolve issue1740: handle post-hoc darcs mv for directories
+        correctly
+    -   resolve issue1714: make --no-{pre,post}hook and --{pre,post}hook
+        interact sensibly
+
+2011-06-10 Trent W. Buck
+  ~ -   Accept issue1714: ALL mutex + foo no-mutex shouldn't reduce to
+        foo mutex.
+
+2011-06-06 Florent Becker
+  ~ -   aknowledge status of issue1848
+    -   correct haddock in Printer
+
+2011-06-05 Petr Rockai
+  ~ -   Bump the HTTP dependency to \>= 4000.0.8, which introduced
+        setCheckForProxy.
+    -   Update contrib/install-deps.sh.
+
+2011-04-24 Florent Becker
+  ~ -   Support init/get --no-working-dir and pseudo-applying to wd-less
+        repos
+    -   Resolve issue 2021: make escaping not split strings too much
+
+2011-05-22 Andreas Brandt
+  ~ -   resolve issue2066: file does not exist when recording deleted
+        file
+    -   Accept issue2066: file does not exist when recording deleted
+        file
+
+2011-06-02 Lennart Kolmodin
+  ~ -   Accept issue2076: "darcs mv file dir" confuses darcs
+
+2011-06-01 Petr Rockai
+  ~ -   Fix up test group labels.
+    -   Fix a number of warnings, making the tests compile with
+        -fwarn-as-error.
+    -   Move the test list from Properties.V1Set2 to Darcs.Test.Patch.
+    -   Merge Darcs.Test.Patch.Prim.V1 into
+        Darcs.Test.Patch.Arbitrary.PrimV1.
+    -   Explode Darcs.Test.Patch.Unit2 and Darcs.Test.Patch.QuickCheck.
+    -   Explode Darcs.Test.Patch.Unit into example/property sets + WSub.
+    -   Add flag to avoid building darcs executable (-f-executable, like
+        -f-library).
+    -   Shuffle the PropertiesN and ExamplesN test modules into a
+        hierarchy.
+    -   Make Darcs.Test.Patch.Properties independent of (V1) Prim
+        implementation.
+    -   Break out Properties3 out of Darcs.Test.Patch.Examples, split up
+        test groups.
+
+2011-05-09 Owen Stephens
+  ~ -   Bump regex-posix and regex-compat dependencies to use
+        segfault-free version.
+    -   Fix test using incorrect grep pattern for failed add.
+    -   Make no changes if any to-be-added file errors.
+
+2011-05-21 Ganesh Sittampalam
+  ~ -   build fix for win32
+
+2011-05-09 Scott Lawrence
+  ~ -   Ignore files in darcsdir, even with --boring
+    -   Fix warnings in new unrecordedChanges code via slight
+        refactoring
+    -   Resolve issue2054: option --boring does not work with self-made
+        boringfile
+
+2011-05-05 Florent Becker
+  ~ -   Make check a read-only operation
+    -   Resolve issue2067: inexsitant files result in empty lines in
+        darcs
+
+2011-04-05 Iago Abal
+  ~ -   Improve resolution of issue1611 by avoiding unnecessary warnings
+    -   Regression test for issue1611
+
+

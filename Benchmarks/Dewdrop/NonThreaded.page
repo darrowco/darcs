@@ -1,0 +1,154 @@
+(See parent page for machine specifications)
+
+# How to read these tables
+
+About the Darcs versions
+
+-   npgc was darcs-2.4.98.2 +RTS -qg -qb -RTS $@ (which tripped up darcs
+    record, why?)
+-   nt was built cabal configure -f-threaded
+
+NB: times are reported as mean + 1 std deviation
+
+-   ?x = less than 5 runs used
+-   \~x = less than 20 runs used
+-   sdev = std deviation
+-   op = optimize --pristine variant
+
+# Timing Graphs
+
+## GHC
+
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9fa&chtt=wh+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,60.998905&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:495&chtt=wh+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,245.48502&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:931&chtt=wh+-l+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,147.6586&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:7A9&chtt=record+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,767.6762&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:m9p&chtt=revert+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,494.96515&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:Y9Y&chtt=(un)revert+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,2065.1003&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9qq&chtt=get+(full)+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,1550.1741&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9ik&chtt=get+(lazy)+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,57.551235&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9mi&chtt=pull+100+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,12.397311&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9oo&chtt=pull+1000+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,119.42245&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:90y&chtt=check+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,304.33627&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:975&chtt=repair+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,267.14087&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:___&chtt=annotate+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,0.0&chbh=23,5,20)
+## Tahoe LAFS
+
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:89m&chtt=wh+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,35.83509&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:l9j&chtt=wh+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,226.25409&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:938&chtt=wh+-l+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,82.5841&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9A4&chtt=record+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,325.55377&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:79x&chtt=revert+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,194.41039&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:m9y&chtt=(un)revert+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,717.6379&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:696&chtt=get+(full)+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,140.10138&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:29r&chtt=get+(lazy)+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,6.723302&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:869&chtt=pull+100+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,8.736642&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:649&chtt=pull+1000+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,65.98536&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:593&chtt=check+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,25.39578&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:988&chtt=repair+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,20.737072&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:988&chtt=annotate+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,18.96007&chbh=23,5,20)
+## darcs
+
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:89i&chtt=wh+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,40.399727&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9wx&chtt=wh+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,176.65866&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:91w&chtt=wh+-l+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,81.22393&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9A4&chtt=record+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,842.0295&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:897&chtt=revert+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,196.08926&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:579&chtt=(un)revert+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,525.9273&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:985&chtt=get+(full)+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,284.59326&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:694&chtt=get+(lazy)+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,8.240493&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:895&chtt=pull+100+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,3.9039826&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:689&chtt=pull+1000+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,29.870459&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:797&chtt=check+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,22.391657&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:965&chtt=repair+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,28.451317&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:___&chtt=annotate+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,0.0&chbh=23,5,20)
+## tabular
+
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:z93&chtt=wh+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,35.992844&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9z7&chtt=wh+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,53.316895&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9r1&chtt=wh+-l+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,59.557438&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9A7&chtt=record+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,146.69269&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:u9x&chtt=revert+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,75.92829&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:296&chtt=(un)revert+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,176.56375&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:fJ9&chtt=get+(full)+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,1173.7142&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:rY9&chtt=get+(lazy)+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,309.84225&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9W5&chtt=pull+100+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,1981.867&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:YR9&chtt=pull+1000+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,2804.6233&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:59v&chtt=check+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,101.147766&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:98p&chtt=repair+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,104.47187&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:19r&chtt=annotate+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cbase%7Cnpgc%7Cnt&chxr=1,0.0,169.43889&chbh=23,5,20)
+# Timings
+
+## GHC
+
+                   op 2.4.98.2   sdev        op npgc      sdev        op nt       sdev
+  ---------------- ------------- ----------- ------------ ----------- ----------- ----------
+  wh               61.0ms        (21.9ms)    31.7ms       (1.5ms)     26.0ms      (0.7ms)
+  wh mod           228.6ms       (8.3ms)     245.5ms      (33.7ms)    232.9ms     (29.9ms)
+  wh -l            147.7ms       (3.3ms)     133.5ms      (4.0ms)     129.6ms     (4.0ms)
+  record mod       \~743.8ms     (78.0ms)    -            -           \~767.7ms   (51.4ms)
+  revert mod       309.3ms       (7.1ms)     495.0ms      (126.6ms)   339.1ms     (16.8ms)
+  (un)revert mod   \~819.6ms     (48.0ms)    \~2065.1ms   (557.0ms)   \~822.7ms   (28.4ms)
+  get (full)       ?25m50.2s     (4m47.1s)   ?18m5.0s     (9.0s)      ?18m7.5s    (5.2s)
+  get (lazy)       ?57.6s        (3.7s)      ?33.0s       (1.3s)      ?34.3s      (1.7s)
+  pull 100         ?12.4s        (0.6s)      ?7.7s        (0.4s)      ?7.0s       (0.1s)
+  pull 1000        ?1m59.4s      (10.8s)     ?1m18.5s     (2.6s)      ?1m19.1s    (2.7s)
+  check            ?5m4.3s       (37.6s)     ?4m20.3s     (10.1s)     ?4m14.3s    (8.1s)
+  repair           ?4m27.1s      (16.8s)     ?4m19.0s     (10.5s)     ?4m13.0s    (8.8s)
+  annotate         -             -           -            -           -           -
+
+## Tahoe LAFS
+
+                   op 2.4.98.2   sdev       op npgc    sdev        op nt      sdev
+  ---------------- ------------- ---------- ---------- ----------- ---------- -----------
+  wh               35.6ms        (7.7ms)    35.8ms     (6.2ms)     22.5ms     (1.5ms)
+  wh mod           137.3ms       (11.7ms)   226.3ms    (71.4ms)    129.8ms    (28.3ms)
+  wh -l            82.6ms        (9.8ms)    75.1ms     (9.3ms)     81.5ms     (17.7ms)
+  record mod       325.6ms       (41.0ms)   -          -           302.1ms    (28.0ms)
+  revert mod       188.8ms       (18.9ms)   194.4ms    (42.5ms)    156.6ms    (9.8ms)
+  (un)revert mod   453.1ms       (39.1ms)   717.6ms    (214.9ms)   594.7ms    (171.7ms)
+  get (full)       ?2m15.2s      (2.9s)     ?2m20.1s   (5.7s)      ?2m14.4s   (1.9s)
+  get (lazy)       ?6.0s         (0.7s)     ?6.7s      (1.3s)      ?4.8s      (0.2s)
+  pull 100         ?8.6s         (0.2s)     ?8.4s      (0.1s)      ?8.7s      (0.2s)
+  pull 1000        ?1m3.4s       (3.9s)     ?1m0.8s    (1.1s)      ?1m6.0s    (5.7s)
+  check            ?24.0s        (2.1s)     ?25.4s     (3.0s)      ?23.2s     (1.8s)
+  repair           ?20.7s        (0.1s)     ?20.7s     (0.1s)      ?20.6s     (0.1s)
+  annotate         ?19.0s        (0.1s)     ?19.0s     (0.1s)      ?19.0s     (0.1s)
+
+## darcs
+
+                   op 2.4.98.2   sdev       op npgc    sdev       op nt       sdev
+  ---------------- ------------- ---------- ---------- ---------- ----------- ----------
+  wh               40.0ms        (8.5ms)    40.4ms     (8.7ms)    22.8ms      (1.9ms)
+  wh mod           176.7ms       (15.2ms)   140.9ms    (12.4ms)   142.9ms     (23.4ms)
+  wh -l            81.2ms        (12.5ms)   71.2ms     (3.9ms)    64.0ms      (2.9ms)
+  record mod       \~842.0ms     (57.3ms)   -          -          \~779.5ms   (34.3ms)
+  revert mod       194.4ms       (12.9ms)   196.1ms    (17.5ms)   190.8ms     (15.4ms)
+  (un)revert mod   498.9ms       (39.6ms)   513.2ms    (50.8ms)   525.9ms     (65.8ms)
+  get (full)       ?4m44.6s      (10.0s)    ?4m40.3s   (8.0s)     ?4m29.6s    (1.5s)
+  get (lazy)       ?7.9s         (0.8s)     ?8.2s      (0.7s)     ?7.6s       (0.5s)
+  pull 100         ?3.9s         (0.2s)     ?3.9s      (0.1s)     ?3.7s       (0.0s)
+  pull 1000        ?28.7s        (2.8s)     ?29.4s     (2.2s)     ?29.9s      (3.9s)
+  check            ?21.7s        (0.1s)     ?22.4s     (0.5s)     ?21.7s      (0.3s)
+  repair           ?28.5s        (3.8s)     ?27.4s     (2.7s)     ?27.0s      (2.7s)
+  annotate         -             -          -          -          -           -
+
+## tabular
+
+                   op 2.4.98.2   sdev        op npgc     sdev       op nt        sdev
+  ---------------- ------------- ----------- ----------- ---------- ------------ ------------
+  wh               30.5ms        (9.3ms)     36.0ms      (8.4ms)    32.8ms       (10.1ms)
+  wh mod           53.3ms        (21.4ms)    44.9ms      (9.0ms)    52.1ms       (19.8ms)
+  wh -l            59.6ms        (23.4ms)    42.9ms      (8.7ms)    51.8ms       (20.4ms)
+  record mod       146.7ms       (24.3ms)    -           -          142.5ms      (23.6ms)
+  revert mod       58.3ms        (7.7ms)     75.9ms      (13.0ms)   61.2ms       (16.2ms)
+  (un)revert mod   158.9ms       (12.8ms)    176.6ms     (11.2ms)   168.6ms      (33.3ms)
+  get (full)       598.8ms       (316.2ms)   179.3ms     (14.5ms)   \~1173.7ms   (542.4ms)
+  get (lazy)       220.8ms       (93.6ms)    123.8ms     (29.9ms)   309.8ms      (168.8ms)
+  pull 100         \~1981.9ms    (638.4ms)   \~736.6ms   (19.4ms)   \~1863.0ms   (707.2ms)
+  pull 1000        \~1148.5ms    (340.1ms)   \~786.4ms   (56.5ms)   \~2804.6ms   (1125.9ms)
+  check            95.5ms        (10.3ms)    101.1ms     (11.0ms)   79.1ms       (8.5ms)
+  repair           104.5ms       (15.4ms)    103.6ms     (10.6ms)   71.8ms       (1.1ms)
+  annotate         148.7ms       (9.6ms)     169.4ms     (14.9ms)   120.3ms      (2.0ms)
+
+

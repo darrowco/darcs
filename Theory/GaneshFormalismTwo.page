@@ -1,0 +1,13 @@
+[An attempt at some formalisation, and a nearly finished proof of n-way
+permutivity](http://urchin.earth.li/darcs/ganesh/darcs-patch-theory/theory/formal.pdf)
+
+Ganesh notes:
+
+A vague memory of a chat with Andres Loeh: He pointed me at (I think)
+group presentations; the fact that S\_n has a group presentation in
+terms of a set of generators that are adjacent transpositions nearly
+gives us the n-way permutivity proof (TODO: reconstruct the reasoning).
+However that doesn't take account of the fact that in patch theory some
+transpositions may be illegal (commute failure). It bears further
+investigation though. I was recently reminded of this by reading
+<http://haskellformaths.blogspot.com/2010/10/word-length-in-symmetric-group.html>

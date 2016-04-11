@@ -1,0 +1,152 @@
+Otherwise known as "what are all these `wX`, `wY` type variables about and why the **** do they stop my code compiling?"
+
+# Background
+
+The "big idea" of darcs is that "patches" are first-class objects and
+that reordering (commuting) and merging them are fundamental operations.
+
+This is reflected in the code where it's very common to take an value
+representing a patch and commute/merge it so that it applies in a different
+context in the repository.
+
+When a patch is commuted or merged, its "identity" - the `PatchInfo` part -
+is preserved, but the representation of the patch might change. For example,
+suppose we have two patches `A` and `B` that start out in sequence with `B` coming
+after `A`. Assume `A` adds 2 lines to a file starting at line 3,
+and `B` adds 3 lines to the file starting at line 8. Then if we commute `B` to come before `A`,
+the offsets need to be adjusted so that the lines in `B` are now added starting at line 6.
+
+Conceptually, the context is just the set of all the patches physically
+"before" the patch being worked with - but we only rarely pass this around
+explicitly.
+
+If we try to apply a specific representation of a patch in the wrong context,
+we can easily end up with repository corruption. The goal of "type witnesseses" is
+to reduce the number of coding errors of this kind.
+
+# Overview
+
+The basic idea of type witnesses is to use phantom types to track the context in which
+a specific patch value applies. Then if we try to apply it in the wrong context,
+we will hopefully get a type error telling us that the type variables - i.e.
+the contexts - don't match. The phantom types tracking the contexts are the type variables
+`wX`, `wY` etc - the `w` prefix is just a convention. The name "type witnesses" arises
+from the idea that the phantom types are "witnesses" for the actual contexts.
+
+This isn't foolproof. There are times when we either have to assert to the type checker
+that the contexts really are the same even when it can't see that (`unsafeCoerceP`), or
+where we are constructing primitive patch values and the type checker allows us to specify
+any context we like, so we have to be careful to pick the right one.
+
+Ideally there would be a "trusted" low-level API to handle this and higher-level code
+that could never do anything unsafe. At the moment there isn't a clear separation like this.
+
+# Core concepts
+
+We often see type witnesses in pairs. For example,
+
+    patch :: Patch wX wY
+
+is a patch whose starting context is `wX` and whose ending context is `wY`. [In reality there are lots of
+different patch types in the darcs code, and we will often see a type variable `p` instead of a concrete
+patch type.]
+
+Another common place to see witnesses is on the repository type, where they come in threes:
+
+    repo :: Repository p wR wU wT
+
+This is a repository object (containing patches of type `p`), where the "recorded" state of the repository is `wR`, the "unrecorded" state is `wU`, and the "tentative" state is `wT`. "Tentative" is used to give darcs operations transactional semantics: during a single transaction, the tentative state starts out as the recorded state, is incrementally updated, and once we are ready to commit
+the transaction, the recorded state is overwritten on disk with the tentative state in a single atomic operation (a file move).
+
+Because a `Repository` represents an on-disk object (whereas individual patches are passed around solely in memory), the safety of the witness abstraction is somewhat weaker for repositories. For example if we have a function
+
+    addPatch :: p wT1 wT2 -> Repository p wR wU wT1 -> IO (Repository p wR wU wT2)
+
+that updates the (on-disk) tentative state with an extra patch, there is nothing to stop the calling function continuing to use
+the original repository object with the now-incorrect tentative state `wT1`.
+
+## Origin
+
+The `Origin` witness type is a special type witness that represents the "beginning" context, i.e. an empty repository state
+with no patches. It's defined in `Darcs.Patch.Set`.
+
+## FL vs RL
+
+One of the biggest inconveniences of type witnesses is that they often prevent us from using "standard" Haskell container types.
+
+For example, while `[Patch wX wY]` is a perfectly valid type, it isn't very useful: it's the type of a list of patches, *all* of which have the same starting and ending contexts `wX` and `wY`.
+
+Much more common is to want a list of patches that apply in sequence, so that the ending context of one patch is the starting
+context of the next.
+
+One type we can use for this is `FL`, defined in `Darcs.Patch.Witnesses.Ordered`:
+
+    -- | Forward lists
+    data FL p wX wZ where
+        (:>:) :: p wX wY -> FL p wY wZ -> FL p wX wZ
+        NilFL :: FL p wX wX
+
+If you ignore the type witnesses, this is exactly the same as the normal Haskell list type - the two constructors `(:>:)` and `NilFL` correspond to `(:)` and `[]`.
+
+So what extra do the type witnesses tell us? Let's start with `NilFL`:
+
+    NilFL :: FL p wX wX
+
+In other words, the starting and ending contexts for an empty list of patches must be the same - because if you don't have any patches, the context can't change.
+
+Now "cons":
+
+    (:>:) :: p wX wY -> FL p wY wZ -> FL p wX wZ
+
+Given an existing `FL p`, this constructor adds a single patch to the *beginning* of the list - i.e. earlier in "time"/patch application order. The ending context of the single patch is the starting context of the rest of the list.
+
+Contrast this with `RL`:
+
+    -- | Reverse lists
+    data RL p wX wZ where
+        (:<:) :: RL p wX wY -> p wY wZ -> RL p wX wZ
+        NilRL :: RL p wX wX
+
+Here `NilRL` has the same type as `NilFL`, but for `(:<:)`, the *starting* context of the single patch is the *ending* context of the rest of the list.
+
+The difference between `FL` and `RL` is akin to the difference between "cons" and "snoc" lists, but because of the type witnesses, the two types are not isomorphic. 
+
+The structure of the two types means that `FL` is well-suited when you want fast access to the patches in the list that are earlier in time, whereas `RL` is appropriate when you want fast access to the patches that are later in time.
+
+## Sealing
+
+## Gaps
+
+## IsEq
+
+## unsafeCoerce
+
+# What do I do with?
+
+
+# Fragments of explanations
+
+Here are little fragments from our past that point in that direction. We
+need a proper comprehensive document in the long run.
+
+-   Sealing patches:
+
+    -   [Seal and
+        FlippedSeal](http://lists.osuosl.org/pipermail/darcs-users/2008-November/015617.html)
+    -   "when you seal a patch, you agree to lose information about it"
+
+-   [Phantom Types, Existentials and Controlling
+    Unification](http://blog.codersbase.com/2008/11/phantom-types-existentials-and-controlling-unification-part-1/)
+-   [the point of
+    IsEq](http://lists.osuosl.org/pipermail/darcs-users/2008-December/016738.html)
+
+> -   see thread parent for the context, and an example of why you'd
+>     want something like IsEq
+
+-   [Talk about use of GADTs to provide witnesses](200801-ganesh-gadts.pdf)
+
+# See also
+
+-   [Jason Dagit's Master's
+    Thesis](http://blog.codersbase.com/2009/03/type-correct-changes-safe-approach-to.html)
+    - probably the most comprehensive document you'll find for now

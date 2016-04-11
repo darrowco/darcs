@@ -1,0 +1,107 @@
+# News and discussions
+
+1.  Darcs received funding for two Google Summer of Code students, Owen
+    Stephens and Petr Rockai:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2011-April/026103.html](http://lists.osuosl.org/pipermail/darcs-users/2011-April/026103.html)
+    -   [http://blog.owenstephens.co.uk/201104/gsoc-project-accepted](http://blog.owenstephens.co.uk/201104/gsoc-project-accepted)
+    -   [http://socghop.appspot.com/gsoc/proposal/review/google/gsoc2011/mornfall/1](http://socghop.appspot.com/gsoc/proposal/review/google/gsoc2011/mornfall/1)
+
+2.  Andrew Pennebaker built and put online Windows installers for Darcs
+    2.5.2:
+
+    -   [http://www.yellosoft.us/helpers](http://www.yellosoft.us/helpers)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2011-April/026113.html](http://lists.osuosl.org/pipermail/darcs-users/2011-April/026113.html)
+
+3.  We are looking for a new issue manager:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2011-May/026130.html](http://lists.osuosl.org/pipermail/darcs-users/2011-May/026130.html)
+
+4.  And here is the report of last month's darcs sprint (Paris) in case
+    you missed it:
+
+    -   [http://blog.darcs.net/2011/04/darcs-hacking-sprint-6-report.html](http://blog.darcs.net/2011/04/darcs-hacking-sprint-6-report.html)
+
+# Issues resolved in the last week (5)
+
+issue1640 Radoslav Dorcik
+  ~ -   darcs apply --verbose without args mentions stdin.
+    -   [http://bugs.darcs.net/issue1640](http://bugs.darcs.net/issue1640)
+
+issue1661 Scott Lawrence
+  ~ -   make add --quiet quieter
+    -   [http://bugs.darcs.net/issue1661](http://bugs.darcs.net/issue1661)
+
+issue1665 Chris Trompette
+  ~ -   wrong default suggestions for Windows
+    -   [http://bugs.darcs.net/issue1665](http://bugs.darcs.net/issue1665)
+
+issue1804 Eric Kow
+  ~ -   friendlier message when adding missing files.
+    -   [http://bugs.darcs.net/issue1804](http://bugs.darcs.net/issue1804)
+
+issue2052 Owen Stephens
+  ~ -   Implicitly use unified diff, unless told not to.
+    -   [http://bugs.darcs.net/issue2052](http://bugs.darcs.net/issue2052)
+
+# Patches applied in the last week (27)
+
+2011-04-24 Radoslav Dorcik
+  ~ -   Resolve issue1640: darcs apply --verbose without args mentions
+        stdin.
+    -   Test for issue1640: darcs apply --verbose without args mentions
+        stdin.
+
+2011-04-22 Scott Lawrence
+  ~ -   Resolve issue1661: make add --quiet quieter
+
+2011-04-07 Eric Kow
+  ~ -   Resolve issue1804: friendlier message when adding missing files.
+    -   Friendlier exceptions when a file does not exist.
+
+2011-04-18 David Caldwell
+  ~ -   Add a failing test for issue2066.
+
+2011-04-27 Petr Rockai
+  ~ -   Fix remaining warnings in the new annotate code.
+
+2011-04-23 Iago Abal
+  ~ -   Fix how 'Prim' patches generator creates patches
+
+2011-04-06 Guillaume Hoffmann
+  ~ -   make optimize garbage collect pristine before any other
+        optimization
+    -   remove two exported unused functions from Darcs.Externals
+    -   no longer use init's advanced options for get
+
+2011-04-17 Owen Stephens
+  ~ -   Remove unneeded parsePatches function, slightly refactor
+        parseBundle to better describe intent.
+    -   Tidy up, and add most Haddocks for Darcs/Patch/Bundle.hs
+    -   Remove unused parameter from hashBundle function.
+    -   Fixup failing diff tests, due to fix for issue 2052.
+    -   Add regression test for issue 2052.
+    -   resolve issue2052: Implicitly use unified diff, unless told not
+        to.
+
+2011-04-06 Chris Trompette
+  ~ -   resolve issue1665: wrong default suggestions for Windows
+
+2011-04-15 Ganesh Sittampalam
+  ~ -   drop unneeded MonadPlus AnnotatedM instance
+
+2011-04-01 Owen Stephens
+  ~ -   Ignore thisrepo source.
+
+2011-04-09 Petr Rockai
+  ~ -   Forward-port a darcs show contents optimisation.
+    -   Forward-port ApplyMonad.
+    -   Fix a couple of shadowing warnings in Darcs.Annotate.
+    -   Slash unused Population code.
+    -   Forward-port of a new annotate implementation.
+
+2011-04-06 Guillaume Hoffmann
+  ~ -   add test for get --verbose reporting getting packed repository
+    -   make get --verbose report getting packed repository
+
+

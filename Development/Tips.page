@@ -1,0 +1,237 @@
+# Review tools
+
+[Darcs-roundup-watch](http://urchin.earth.li/darcs/ganesh/darcs-roundup-watch/)
+See where your repositories differ with the state of the darcs patch
+tracker
+
+A tip from Eric, when patches involve a lot of hunk-moving, it is
+helpful to use:
+
+    darcs diff --diff-command="mv %1 %2 /tmp" --last=1
+    darcs changes --summary --last=1
+    cd /tmp
+    meld old-patch484/src/foo.hs new-patch484/src/bar.hs
+
+# Reading darcs
+
+See also
+<http://www.haskell.org/haskellwiki/How_to_read_Haskell>
+
+## Helper functions
+
+Ever wonder what functions like `wspfr` and `jn` do? Here's a hint:
+helper functions in the darcs code are often just named by taking the
+first letter of the function they are supposed to help. So, for example,
+`wspfr` is just a helper function to
+`with_selected_patches_from_repository`.
+
+## fmap
+
+Darcs uses `fmap` a lot. In fact, darcs hacking is how I eventually
+managed to understand what they do. Here's a hint: the following three
+bits of code do the same thing:
+
+    -- using do notation
+    do foo <- someMonadicThing
+       return (myFn foo)
+
+    -- using fmap
+    fmap myFn someMonadicThing
+
+    -- using fmap as an operator
+    myFn `fmap` someMonadicThing
+
+I like that third one; it helps me think of `fmap` as a monadic `$`
+
+# Testing and Debugging
+
+Darcs includes a regression testing framework. Individual tests are in
+`tests/*.sh`(tests that should succeed), `tests/network/*.sh`(tests that
+should succeed and require network access) and `bugs/*.sh` (tests that
+should fail). Use `cabal test`, `cabal test network` and
+`cabal test bugs` respectively to run the different kinds of tests.
+
+Below are hints to help you get the most out of the test framework.
+
+## Faster edit-compile cycle
+
+You can disable optimisations (to get faster compile) with cabal
+configure -fnoopt. Using ghci is even faster, here is the commandline
+that works on my system
+`ghci -cpp  -I. -DHAVE_CURSES -DHAVE_CURL  -package parsec -optl- lcurl -optl-lssl -optl-lcrypto -optl-lz -optl-lcurses  darcs.lhs maybe_relink.o atomic_create.o hscurl.o umask.o c_compat.o fpstring.o Crypt/sha2.o`
+You can use e.g. `:main pull --set-default` for testing.
+
+''Note that on a Mac you will have to run
+'CFLAGS=-mmacosx-version-min=10.4 ./configure' before running ghci in
+order to properly transform the symbols.''
+
+## Running a subset of tests
+
+Sometimes you just want to see if a small handful of tests are working.
+You can use `cabal test name_of_test1 test2`.
+
+## Dealing with different filesystems
+
+''These are written for a Mac, but I'm sure the equivalent techniques
+exist under linux''.
+
+Say you're on a Mac, and you want to see how darcs would behave with a
+case sensitive file system like what Linux has. More precisely, you want
+to run darcs's regression tests but on a different filesystem. Here is a
+trick I use:
+
+1.  create and mount disk image
+
+        hdiutil create -size 3M -fs UFS -volname darcsTest darcsTest
+        open darcsTest.dmg
+
+2.  set up the test image
+
+        cd /Volumes/darcsTest
+        # link the darcs binary
+        ln -s YOUR_CODING_DIR/darcs darcs
+        mkdir test
+
+3.  you might consider unmounting and backing up the dmg for future
+    use... remount it...
+4.  move away your tests directory (save your test files first! close
+    your text editor!)
+
+        cd YOUR_CODING_DIR
+        mv test orig_tests
+        ln -s /Volumes/darcsTest/tests tests
+
+5.  test away!
+
+        cp -R orig_tests/* tests
+        make test
+
+Note: if you plan on switching back and forth alot, don't bother mv'ing
+orig\_tests back to tests; just make a symlink
+`rm tests; ln -s orig_tests tests`. Another trick to prevent confusion
+is to always edit your tests in `orig_tests` and copy them over. It
+helps me from confusing myself because I always know that `orig_tests`
+is the correct copy.
+
+## Profiling
+
+-   Configure darcs with `--enable-profiling`
+-   [See ghc's profiling
+    guide](http://www.haskell.org/ghc/docs/latest/html/users_guide/profiling.html)
+-   Time profile: +RTS -p -RTS, gets you a `darcs.prof` file in your
+    current working directory
+-   Heap profile: +RTS -hc -RTS, gets you a `darcs.hp` file which you
+    can make into `.ps` with `hp2ps -c`
+-   Heap profiles work even if you interrupt darcs, time profiles don't.
+
+-   -hc and -hr go together nice \# see what garbage collector is doing
+    `+RTS -sstderr`
+
+## Empty disk cache
+
+-   \# read some huge file (hint: to create a big file
+    `dd if=/dev/zero of=foo bs=1m count=500` - FIXME)
+
+# Playing around with your darcs
+
+I like to have my development darcs in the command line, so for example,
+in my .cshrc, I have something like
+
+    alias mydarcs ${HOME}/darcsHacking/darcs
+
+I guess the equivalent in bash would be
+
+    alias mydarcs=${HOME}/darcsHacking/darcs
+
+# Keeping track of branches
+
+It's often useful to have at least two branches on your computer, one
+for unstable, and one for your own use. Here's how mine is set up for
+easy pulling and reduced disk usage.
+
+    cd ~/darcsHacking
+    darcs clone http://www.darcs.net/repos/unstable
+    darcs clone unstable me-darcs
+    cd unstable/_darcs/prefs
+    wget http://www.darcs.net/repos/unstable/_darcs/prefs/email
+
+This way, when you do a darcs send from `me-darcs`, it tries to send to
+your local `unstable` and succesfully finds out which email address to
+sends it to. Occasionally I do a `darcs pull` from `unstable`, and then
+a `darcs pull` from `me-darcs` to propagate the patch.
+
+# Keep some sample repositories around
+
+One thing you might notice yourself doing a lot is creating lots of
+foobar repositories for testing simple darcs properties. It may save you
+a bit of time to create those repositories once and use them for further
+playing around
+
+    d=~/darcsHacking/examples/foobar
+    darcs initialize --repodir $d
+    touch $d/foo
+    darcs record --repodir $d -lam foo foo
+    # etc etc
+
+And then in the future, you can just do
+
+    cd /tmp
+    darcs clone ~/darcsHacking/examples/foobar
+
+# Bugs and tests
+
+## Distilling test cases
+
+Sometimes really helpful people submit buggy repos to the tracker along
+with a patch bundle they couldn't apply. Tricks
+
+-   Remove the patch bundle hash
+-   Edit the hunks by hand; delete as much superfluous stuff as you can,
+    but go slow and save your work
+-   Use trial and error, progressively minimising the bundle as much as
+    possible
+-   Ideally, you would get to a point where you can just run the bundle
+    on an empty repository (and reproduce the bug); if you, it's time to
+    cook up a test case
+
+# Testing SSH stuff
+
+Testing SSH stuff can be tricky to automate (although I might have one
+or two ideas up my sleeves). Below are some ideas to ease the pain of
+manual testing. Some more notes can be found at [SSHNotes](SSHNotes)
+
+## Setting up SSH stuff
+
+1.  Avoid SSH passphrase stuff - you want to simulate a regular user
+    interacting with the underlying ssh command. Add an entry to your
+    `.ssh/config` which disables public key authentication for a
+    specific host that you invent. For example, I have a host `foo.pw`
+    which is really configured to connect to `foo.com` without public
+    key authentication and with fewer password retries. This lets me do
+    stuff like `darcs get me@foo.pw:sampleRepo`:
+
+        Host foo.pw
+        HostName foo.com
+            PasswordAuthentication yes
+            PubkeyAuthentication no
+            NumberOfPasswordPrompts 2
+
+2.  Use a shell script to automate setting up of repositories that you
+    need. See `tests/ssh_test`
+
+## Log your ssh calls
+
+1.  Create the scripts /tmp/chattyssh, /tmp/chattyscp, /tmp/chattysftp:
+
+        #!/bin/sh
+        SCMD=ssh
+        echo ${SCMD} "$@" >> /tmp/ssh-log
+        ${SCMD} "$@"
+
+2.  Tell darcs to use chatty sshes
+
+        export DARCS_SSH=/tmp/chattyssh
+        export DARCS_SCP=/tmp/chattyscp
+        export DARCS_SFTP=/tmp/chattysftp
+
+

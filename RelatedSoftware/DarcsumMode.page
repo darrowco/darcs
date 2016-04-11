@@ -1,0 +1,59 @@
+This is a page about darcsum-mode in Emacs.
+
+# Getting Started
+
+Download darcsum-mode from its repository at
+<http://hub.darcs.net/simon/darcsum>.
+
+## Installation and Loading
+
+To use darcsum-mode, you must first download darcsum.el and put it
+somewhere on your Emacs load path. Then load it into Emacs by running
+`(require 'darcsum)`. You may want to load it from your Emacs
+initialization file (`.emacs`)
+
+## Viewing Changes
+
+Once darcsum mode is loaded, run `M-x darcsum-whatsnew`. You will be
+prompted for the directory in which to run, defaulting to your current
+directory. Like darcs, you need only run on a directory that is in a
+repository, not necessarily the repository root. If there are changes,
+you will get a `*darcs*` buffer showing all of the changes in the
+repository.
+
+## Manipulating Patches
+
+In order to perform operations on patches, you must select some patches.
+darcsum-mode will operate on all patches that are showing if no patches
+are selected.
+
+If your cursor is on a patch, you can toggle the selection of a patch
+with the m key.
+
+To record the selected patches, use R.
+
+As always, a good resource is `M-x describe-mode`.
+
+# Problems
+
+darcsum is not yet widely used, so there may be problems that have not
+been discovered. Add them here.
+
+Known issues (actually with a previous version, that may not apply to
+the current one) include:
+
+-   If you try to commit a patch which removes a directory, darcsum gets
+    stuck (if you look at the " \*darcs record\*" buffer, you will see
+    that darcs is asking whether the directory should be removed, and
+    apparently darcsum doesn't provide an answer to that question).
+-   If you have preferences in your `.darcs/defaults` that change the
+    output of darcs, the parser may get confused. Specifically be
+    careful of `ALL verbose`.
+-   If there is an error (or other unexpected output) when recording,
+    there is no feedback.
+-   darcsum sometimes does nothing, and sometimes leaves cpu-hogging
+    darcs processes running. This seems to happen more in large repos.
+
+* * * * *
+
+[Emacs]()

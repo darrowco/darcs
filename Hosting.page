@@ -1,0 +1,12 @@
+Where can I find hosting for my darcs project?
+
+patch-tag.com and darcsden.com were early darcs hosting sites, now retired.
+Today, Darcs hub (<http://hub.darcs.net>) is the place to host darcs projects.
+It is an evolution of darcsden and provides public and private hosting.
+
+To self-host, there are several options:
+
+-   [darcsden](http://hub.darcs.net/simon/darcsden), the same software darcs hub uses (requires Redis and CouchDB)
+-   [Darcsweb](http://blitiri.com.ar/p/darcsweb/)
+-   [Trac with the Darcs plugin](RelatedSoftware/Trac)
+

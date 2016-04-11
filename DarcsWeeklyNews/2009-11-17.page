@@ -1,0 +1,142 @@
+# News and discussions
+
+1.  The third darcs hacking sprint happened last weekend in Vienna and
+    Portland! An extensive report will be posted here soon. As a teaser
+    of all the work done, here is a draft implementation of trackdown
+    --bisect written in Vienna by Matthias Fischmann:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-November/022251.html](http://lists.osuosl.org/pipermail/darcs-users/2009-November/022251.html)
+    -   [http://wiki.darcs.net/Sprints/2009-11](http://wiki.darcs.net/Sprints/2009-11)
+
+2.  Eric proposed to add Florent Becker to the review team:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-November/022270.html](http://lists.osuosl.org/pipermail/darcs-users/2009-November/022270.html)
+
+3.  Still working on making patch metadata in UTF8 happen, Reinier is
+    dealing with haskell package version issues for the 2.4 release:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-November/022283.html](http://lists.osuosl.org/pipermail/darcs-users/2009-November/022283.html)
+
+# Issues resolved in the last week (6)
+
+issue540 [quiark@centrum.cz](mailto:quiark@centrum.cz)
+  ~ -   darcs remove --recursive
+    -   [http://bugs.darcs.net/issue540](http://bugs.darcs.net/issue540)
+
+issue1122 David Markvica
+  ~ -   get --complete should not offer to create a lazy repository
+    -   [http://bugs.darcs.net/issue1122](http://bugs.darcs.net/issue1122)
+
+issue1224
+[caitt@users.sourceforge.net](mailto:caitt@users.sourceforge.net)
+  ~ -   refuse to convert a repo that's already in darcs-2 format.
+    -   [http://bugs.darcs.net/issue1224](http://bugs.darcs.net/issue1224)
+
+issue1636 Kamil Dworakowski
+  ~ -   match hunk
+    -   [http://bugs.darcs.net/issue1636](http://bugs.darcs.net/issue1636)
+
+issue1643 Christian Berrer
+  ~ -   optimize --upgrade should do optimize
+    -   [http://bugs.darcs.net/issue1643](http://bugs.darcs.net/issue1643)
+
+issue1659 Petr Rockai
+  ~ -   Make restrictBoring take recorded state into account.
+    -   [http://bugs.darcs.net/issue1659](http://bugs.darcs.net/issue1659)
+
+# Patches applied in the last week (34)
+
+2009-11-16 Petr Rockai
+  ~ -   Drop Commands.Remove from witnesses for now.
+
+2009-11-03 Eric Kow
+  ~ -   Updates to thank-you page: ilbot, donors, tweaks.
+
+2009-11-15 [quiark@centrum.cz](mailto:quiark@centrum.cz)
+  ~ -   Resolve issue540: darcs remove --recursive
+    -   Remove does not fail only warns on already removed or not added
+        files.
+
+2009-11-15 Joachim Breitner
+  ~ -   hlint error: Use first instead of *\**
+
+2009-11-15 Christian Berrer
+  ~ -   resolve issue1643: optimize --upgrade should do optimize
+
+2009-11-15 David Markvica
+  ~ -   resolve issue1122: get --complete should not offer to create a
+        lazy repository
+
+2009-11-15 Petr Rockai
+  ~ -   Fix a missing import after rushing a push of a hlint fix.
+
+2009-11-15 Joachim Breitner
+  ~ -   hlint warning: Use isPrefixOf
+    -   hlint: span instead of break
+
+2009-11-15 Eric Kow
+  ~ -   Rollback Kim's test harness improvements. :-(
+
+2009-11-14 Kim Wallmark
+  ~ -   Annotate long-running tests to make optimization easier.
+
+2009-11-15 Eric Kow
+  ~ -   Add a section title to distinguish darcs stuff from standard
+        boring.
+
+2009-11-14 Petr Rockai
+  ~ -   Use a custom boring file to get rid of tests-\* and friends.
+
+2009-11-14 Luca Molteni
+  ~ -   little fix with hlint - changed map to all
+
+2009-11-15 Petr Rockai
+  ~ -   Add a comment to the performGC workaround in amNotInRepository
+        function.
+
+2009-11-14 Salvatore Insalaco
+  ~ -   Workaround a System.Directory.createDirectory issue.
+
+2009-11-14
+[caitt@users.sourceforge.net](mailto:caitt@users.sourceforge.net)
+  ~ -   Resolve issue1224: refuse to convert a repo that's already in
+        darcs-2 format.
+
+2009-11-14 Petr Rockai
+  ~ -   Bump the hashed-storage dependency to \>= 0.4.2.
+
+2009-11-14 Benedikt Schmidt
+  ~ -   fix -Wall warnings
+
+2009-11-14 [quiark@centrum.cz](mailto:quiark@centrum.cz)
+  ~ -   Issue 1500: Providing more informative message about the nature
+        of progress numbers.
+
+2009-11-14 Kamil Dworakowski
+  ~ -   test fix for OSX
+
+2009-11-14 Benedikt Huber
+  ~ -   HLint test: new comment syntax, new ignored warnings
+
+2009-10-25 Kamil Dworakowski
+  ~ -   resolve issue1636: match hunk
+    -   accept issue1636 match hunk
+    -   remove trailing whitespace
+
+2009-11-05 Petr Rockai
+  ~ -   Resolve issue1659: Make restrictBoring take recorded state into
+        account.
+
+2009-10-31 Eric Kow
+  ~ -   Camel-case functions exported by Darcs.Repository.Prefs (and
+        some more).
+    -   Haddock Darcs.Patch.Non addP and addPs.
+    -   Haddock the Darcs.Patch.Commute class a little bit.
+
+2009-10-24 Petr Rockai
+  ~ -   Obliterate replacePristineFromSlurpy (prefer replacePristine).
+    -   Fix a number of unused import warnings.
+    -   Leverage replacePristine in optimize --pristine implementation.
+    -   Fix replacePristine implementation on hashed repositories.
+
+

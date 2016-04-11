@@ -1,0 +1,59 @@
+# Hashed pristine format
+
+(or my understanding thereof).
+
+The file `_darcs/tentative_pristine` contains a pointer to the "pristine
+root", in form of a hash reference, like this... (Actually, there is a
+reference to pristine root in `_darcs/hashed_inventory` as well. I
+currently do not understand the difference, but there surely is some.)
+
+(Sidenote on `tentative_pristine`: this file seems to contain a "not-yet
+live" root pointer into pristine.hashed.
+[HashedRepo](HashedRepo).`revertTentativeChanges` will take the
+pointer from `_darcs/hashed_inventory` and write it over
+`_darcs/tentative_pristine`. Likewise,
+[HashedRepo](HashedRepo).`finalizeTentativeChanges` seems to take
+what's in `_darcs/tentative_hashed_inventory` and
+`_darcs/tentative_pristine` and write it over `_darcs/hashed_inventory`
+(atomically))
+
+    04:43:50 | morn@eri:~/dev/darcs/mainline -> cat _darcs/tentative_pristine 
+    pristine:0000001784-5853cb1b7025f159eed27dc8a2dd81f519171bc4aa85cc7ca01c44fded99315e
+
+If you look the referenced file, you will see something like this:
+
+    04:44:23 | morn@eri:~/dev/darcs/mainline -> zcat _darcs/pristine.hashed/0000001784-5853cb1b7025f159eed27dc8a2dd81f519171bc4aa85cc7ca01c44fded99315e | head
+    file:
+    hpc.README
+    0000001139-9b29de9930f2e19ab1ef4042919a34c24dfc44bc544ef6fc9c1b20a2d0b6bf32
+    directory:
+    bugs
+    0000000887-7b74bd1cf418f0c82f9af9f50ddfa0a9bb10a075de02403e05b058d5fb2074b0
+    directory:
+    release
+    0000000484-24a4464e3e1f9a56e39247cafcd9e359575bd60cfcacad6ccc766341291ceb05
+
+Basically, this is a directory listing, with filenames accompanied by
+their pristine hashes. It is rather simple and somewhat git-ish (if you
+know git, the above object looks like a "tree" git object...). Peeking
+inside a "file" (git would say blob) object:
+
+    04:45:50 | morn@eri:~/dev/darcs/mainline -> zcat _darcs/pristine.hashed/0000001139-9b29de9930f2e19ab1ef4042919a34c24dfc44bc544ef6fc9c1b20a2d0b6bf32 | head
+    #!/bin/bash
+
+    # To use hpc (Haskell Program Coverage) with darcs you need at least
+    # ghc 6.8.3.
+
+    # You can build darcs with hpc support using --enable-hpc
+    [snip]
+
+## Cleanup
+
+When a new root pointer is written, some files under
+`_darcs/pristine.hashed` may become unreachable.
+[HashedRepo](HashedRepo).`cleanPristine` takes care of that. It calls
+`HashedIO.listHashedContents` which *seems* (not really checked) to
+compute reachability on the hashed.pristine from a given root and give a
+flat list of reachable files. (Okey, that's probably fairly obvious.)
+
+See also [Petr's page "Designing Storage For Darcs"](https://web.archive.org/web/20120401090511/http://web.mornfall.net/blog/designing_storage_for_darcs.html).

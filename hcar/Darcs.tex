@@ -1,0 +1,39 @@
+% Darcs-ED.tex
+\begin{hcarentry}[updated]{Darcs}
+\label{darcs}
+\report{Eric Kow}%05/13
+\participants{darcs-users list}
+\status{active development}
+\makeheader
+
+Darcs is a distributed revision control system written in Haskell. In
+Darcs, every copy of your source code is a full repository, which allows for
+full operation in a disconnected environment, and also allows anyone with
+read access to a Darcs repository to easily create their own branch and
+modify it with the full power of Darcs' revision control. Darcs is based on
+an underlying theory of patches, which allows for safe reordering and
+merging of patches even in complex scenarios. For all its power, Darcs
+remains a very easy to use tool for every day use because it follows the
+principle of keeping simple things simple.
+
+After three years of development, we have released Darcs 2.10 (April
+2015). This new major release includes the new \verb!darcs rebase!
+command (for merging and amending patches that would be hard to do with
+patch theory alone), numerous optimisations and performance
+improvements, a \verb!darcs convert! command for switching to and from
+Git, as well as general improvements to the user interface.
+
+\paragraph{SFC and donations}
+
+Darcs is free software licensed under the GNU GPL (version 2 or
+greater).  Darcs is a proud
+member of the Software Freedom Conservancy, a US tax-exempt 501(c)(3)
+organization.  We accept donations at
+\url{http://darcs.net/donations.html}.
+
+\FurtherReading
+\begin{itemize}
+\item \url{http://darcs.net}
+\item \url{http://darcs.net/Releases/2.10}
+\end{itemize}
+\end{hcarentry}

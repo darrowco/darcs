@@ -1,0 +1,95 @@
+---
+toc: no
+...
+
+# Some Key Features
+
+-   **Offline mode**.
+    Darcs is distributed.
+    This means your own working directory is a repository in its own right.
+    You can quickly record your work even if you're on the road
+    with no access to the server or with a bad network connection. 
+    When you get home, you do a `darcs push` to transmit it to the public server.
+-   **Local preparation**.
+    Darcs enables you to modify patches before sending them to a remote repository,
+    or even to throw them away completely and start over.
+-   **Easy branching and merging**.
+    Every repository is a branch.
+    There is no branch administration except pushing and pulling between repositories.
+-   **Easy collaboration by e-mail**.
+    If you want to add a feature or bugfix to some project,
+    you can make a local clone, apply your changes,
+    then send the patches by email (`darcs send`).
+    The project's maintainers can decide whether to accept or reject the patches.
+    This way, you do not need commit privileges to contribute.
+-   **Parallel development**.
+    Let's say you follow the development of an open-source project,
+    and you have some controversial patches
+    that aren't accepted by the official maintainers.
+    No problem -- make your changes and publish your own repository.
+    It's a fork, of sorts, but it's still connected to the mainline.
+    Whenever the official project makes changes,
+    you can do a `darcs pull` to get them, and resolve any conflicts.
+    This way, your fork is kept up to date.
+-   **Cherry-picking**.
+    If you've ever worked on a team,
+    you will know that somebody often has a change you want,
+    but which can't be committed to the trunk yet.
+    With Darcs you can grab just the one change
+    by pulling it into your repository.
+-   **Interactivity**.
+    Darcs enables you to be precise
+    and say "yes" or "no" to every change that you can include in your patch.
+    Thus you can really create minimal patches,
+    or separate your work in several patches,
+    each one doing a consistent change.
+    Other commands, like `darcs pull` and `darcs push`, behave the same.
+-   **Hosting**.
+    You can host your repositories with [hub.darcs.net](http://hub.darcs.net/)
+    or [darcsweb](https://blitiri.com.ar/p/darcsweb/)
+    and share them to the world!
+
+# The Darcs way of (non-)branching
+
+In version control systems, branching enable to work on parallel tasks
+without disturbing a main line of work. In distributed systems like Git
+or Mercurial, branches are explicitely created and merged (`branch`, `merge`).
+
+With Darcs, with or without working in separate repositories,
+you can consider any (set of) patch(es) as a branch.
+
+For instance say you are working on a task that has a ticket in a bug tracking
+system, with a ticket number of '123'. You need to make 3 separate but
+related patches to resolve this ticket. You name your 'records' for
+those patches like this:
+
+    RT#123 Update Documentation
+    RT#123 Fix bug
+    RT#123 Really fix bug
+
+The consistent and unique names here allow this set of patches to be seen as a
+spontaneous branch. darcs has lots of options for working with this
+set of patches very easily:
+
+    # Merge the branch into a central repo:
+    $ darcs push -p 'RT#123'
+
+    # launch just this branch into the production copy
+    $ darcs pull -p 'RT#123'
+
+    # mail this branch to remote repo
+    $ darcs send -p 'RT#123'
+
+    # Review which patches are in this branch
+    $ darcs log -p 'RT#123'
+
+This is an extremely easy to use and powerful feature which is
+especially helpful when the order you need to deliver changes is not the
+order in which you are able to start on them.
+
+# Related Pages
+
+-   [The Darcs model](Using/Model)
+-   [DifferencesFromGit]()
+-   [DifferencesFromSubversion]()
+

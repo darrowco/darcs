@@ -1,0 +1,81 @@
+# News and discussions
+
+1.  Darcs will be participating to this year's Google Summer of Code under
+    the umbrella of Haskell.org! If you are interested please consult the ideas
+    page and contact us:
+
+    -   <http://darcs.net/GSoC>
+
+2.  Sebastian Fischer implemented `darcs-history`, a program to be used as
+    darcs posthook and that tracks patch movements inside of a repository:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-devel/2013-February/014754.html>
+    -   <http://lists.osuosl.org/pipermail/darcs-devel/2013-February/014898.html>
+    -   <http://www.informatik.uni-kiel.de/~sebf/darcs/darcs-history/README.html>
+
+3.  Sebastian also suggested the possibility for darcs to easily split and
+    merge patches that are depended upon:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-devel/2013-March/014965.html>
+
+4.  Piyush P Kurur was also interested in some special kinds of deep
+    `amend-record`:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2013-March/026838.html>
+
+# Issues resolved in the last week (1)
+
+issue2274 Guillaume Hoffmann
+  ~ -   create patch index only with commands that take a lock
+    -   <http://bugs.darcs.net/issue2274>
+
+
+# Patches applied in the last week (27)
+
+2013-02-15 Ganesh Sittampalam
+  ~ -   rename iconv functions imported from haskeline to avoid name clash
+    -   accept issue2293: patch index update reads too much of the repo
+    -   switch from sleep to threadDelay to fix warning
+
+2013-02-22 Guillaume Hoffmann
+  ~ -   set timeout to 1 second in expire-unused-caches test
+
+2013-02-25 Ganesh Sittampalam
+  ~ -   make --no-interactive an alias for --all
+
+2013-02-21 Florent Becker
+  ~ -   Make darcs changes interactive by default (darcs log is non-interactive)
+    -   Mark issue1105 as failing again
+
+2013-01-02 Ganesh Sittampalam
+  ~ -   test for issue2286: make sure we can read repos with non-UTF8 metadata
+
+2013-02-22 Guillaume Hoffmann
+  ~ -   warn earlier when DARCS_CONNECTION_TIMEOUT is not a number
+    -   correctly set curl connection timeout
+    -   no longer enable changes and annotate to create patch index
+    -   Resolve issue2274: create patch index only with commands that take a lock
+    -   improve output of get with and without --verbose
+    -   enable get --packs by default again
+    -   remove trackdown-bisect.sh long tests
+    -   less confusing apply --skip-conflicts message when everything conflicts
+
+2013-01-01 Ganesh Sittampalam
+  ~ -   We can use chcp to switch encodings on Windows
+    -   unsetting DARCS_TEST_PREFS_DIR in utf8 test doesn't seem to be necessary
+    -   improve diagnostics when utf8 test fails
+    -   windows test fix: replace shell script with a Haskell program
+    -   disable join tests on Prim.V3 patches as it doesn't support join yet
+    -   remove a couple of quickCheck tests that can never work
+    -   bump cryptohash dependency
+
+2013-04-10 Owen Stephens
+  ~ -   accept issue1577 - revert deletes new files
+
+2013-02-16 Ganesh Sittampalam
+  ~ -   simplify test case
+
+2013-03-01 Owen Stephens
+  ~ -   accept issue2310: rollback rmfile doesnt re-add in pending
+    -   Accept issue2308
+

@@ -1,0 +1,52 @@
+# News and discussions
+
+1.  The darcs team discussed the inclusion of Dave Love's darcs Emacs
+    plugin into the contrib directory of darcs:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-December/022518.html](http://lists.osuosl.org/pipermail/darcs-users/2009-December/022518.html)
+
+2.  Ganesh submitted a patch (based on a previous one by Sergei
+    Trofimovich) making darcs compilable with GHC 6.12:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-December/022540.html](http://lists.osuosl.org/pipermail/darcs-users/2009-December/022540.html)
+
+3.  Cabal 1.8 and cabal-install 0.8 were released, which will enable
+    non-redundant compilation of darcs and libdarcs:
+
+    -   [http://hackage.haskell.org/package/Cabal-1.8.0.2](http://hackage.haskell.org/package/Cabal-1.8.0.2)
+    -   [http://hackage.haskell.org/package/cabal-install-0.8.0](http://hackage.haskell.org/package/cabal-install-0.8.0)
+
+# Issues resolved in the last week (2)
+
+issue835 Luca Molteni
+  ~ -   show file with file directory arguments
+    -   [http://bugs.darcs.net/issue835](http://bugs.darcs.net/issue835)
+
+issue1712 Luca Molteni
+  ~ -   darcs over-reports number of patches to pull
+    -   [http://bugs.darcs.net/issue1712](http://bugs.darcs.net/issue1712)
+
+# Patches applied in the last week (9)
+
+2009-12-19 Ganesh Sittampalam
+  ~ -   fix the witnesses in prePushChatter
+
+2009-12-16 Luca Molteni
+  ~ -   Resolve issue1712: darcs over-reports number of patches to pull
+
+2009-12-13 Ganesh Sittampalam
+  ~ -   remove unnecessary OPTIONS\_GHC from Darcs/Commands/Record
+    -   add ImpredicativeTypes to extensions
+    -   add GADTs to witnesses build
+    -   bump dependency upper bounds for GHC 6.12
+
+2009-12-08 Eric Kow
+  ~ -   Fix regression in interactive UI patch summary.
+
+2009-12-13 Ganesh Sittampalam
+  ~ -   resolve conflict
+
+2009-12-09 Luca Molteni
+  ~ -   resolve issue835 show file with file directory arguments
+
+

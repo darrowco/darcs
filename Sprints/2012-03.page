@@ -1,0 +1,161 @@
+# Report
+
+<http://blog.darcs.net/2012/04/darcs-hacking-sprint-7-report.html>
+
+# When and where
+
+-   Sprint Americas
+
+    -   When: Friday 9 March
+    -   Where: Argentina, Cordoba (FaMAF, Universidad Nacional de
+        Córdoba)
+
+-   Sprint Europe
+
+    -   When: Friday 30 March - Sunday 1 April
+    -   Where: UK, Southampton (University ECS department, building 59
+        (The 'Zepler Building') ground floor, seminar room 1)
+
+        > -   [directions to
+        >     ECS](http://www.ecs.soton.ac.uk/about/getto.php)
+        > -   [public transit "Unilink"
+        >     routemap](http://www.buscms.com/uploadedfiles/BlueStar/pdfs/u1routemap.pdf)
+        > -   [Unilink bus
+        >     times](http://www.buscms.com/uploadedfiles/BlueStar/pdfs/u1.pdf)
+        >       ~ The "Highfield interchange" stop is on campus, very
+        >         close to the Zepler building - on the ECS map above,
+        >         it's sort-of in the space between buildings [6,4,67]
+        >         just above the confusingly labeled "Winchester Campus"
+        >         on [this map](http://g.co/maps/juc86)
+        >
+        > -   If arriving by train, you'll want to catch the U1A bus,
+        >     from outside the platform 4 side of Central Train Station.
+        >     A "day return" ticket is £3 and gives you unlimited travel
+        >     on the buses, so is probably best.
+        > -   we've booked a [7 person
+        >     house](http://www.town-or-country.co.uk/Westgate.html) (4
+        >     bedrooms) and we still have room for 4 people
+
+# Who
+
+Americas:
+
+-   Guillaume Hoffmann
+-   Mathias Etcheverry
+-   Miguel Pagano
+
+Europe:
+
+-   Eric Kow [Westgate] - infrastructure, look at GSoC 2011
+-   Owen Stephens - conflictors
+-   Florent Becker [Westgate] - 2.8
+-   BSRK Aditya [Westgate] -
+-   Ganesh Sittampalam [Westgate] - 2.8, rebase
+
+# What
+
+Starter tasks for new developers:
+
+> -   [http://darcs.net/report.html](http://darcs.net/report.html)
+> -   style cleanup
+>     [https://github.com/tibbe/haskell-style-guide](https://github.com/tibbe/haskell-style-guide)
+
+Medium difficulty:
+
+> -   windows bug
+>     [http://bugs.darcs.net/issue1606](http://bugs.darcs.net/issue1606)
+> -   better error message when posthook fails
+>     [http://bugs.darcs.net/issue1806](http://bugs.darcs.net/issue1806)
+> -   put log file in tempdir
+>     [http://bugs.darcs.net/issue1416](http://bugs.darcs.net/issue1416)
+> -   darcs show patch
+>     [http://bugs.darcs.net/issue1495](http://bugs.darcs.net/issue1495)
+> -   dist --export-command
+>     [http://bugs.darcs.net/issue57](http://bugs.darcs.net/issue57)
+> -   whatsnew -i
+>     [http://bugs.darcs.net/issue851](http://bugs.darcs.net/issue851)
+> -   more:
+>     [http://tinyurl.com/darcs-probablyeasy2](http://tinyurl.com/darcs-probablyeasy2)
+
+Infrastructure/etc discussions:
+
+-   GSoC 2012
+-   GSoC after Haskell.org
+-   Mission statement? “To build an easy to use version control system
+    based on a theory of patches”
+
+Technical discussions:
+
+-   Petr's pathlib?
+-   Packs
+-   2.8
+-   Local branches
+-   Diff/newline stuff
+
+# Discussion results
+
+## Friday
+
+-   Ganesh and Florent: discussing 2.8 release (what patches to grab
+    from mainland)
+-   Eric: cleaning up mailing lists, bts templates, discussing GSoC 2012
+-   Aditya: discussing GSoC 2012, grokking matchers
+-   Owen: thinking about conflictors
+
+Report:
+
+-   Eric: updates to mailing lists, BTS template and milestones, [GSoC
+    2012](/GSoC/2012-PatchIndex), some light screening/reviewing
+-   Aditya: how to bring patch-index into darcs changes, discussing
+    proposal, studying matchers code and changes code
+-   Ganesh: 2.8-release argh, charsets! Unicode, argh!
+-   Florent: 2.8, PatchSelectChoices for real-time dependency feedback
+    (interactive), and darcs diff interactive
+-   Owen: invconflictor/duplicate
+-   Ian: camp stuff, talking about filename encoding.
+-   Simon (remote): irc commit bot, contributor setup troubleshooting,
+    making utf8 shell test easier to run
+
+## Saturday
+
+Strategy discussion (hunker down, no “grand soir”)
+
+- No more 5 yr Plan, No Big Push (cf. 2008 push for performance) - keep chipping away at the problem, cleaning things, making new features, eventually moving towards better
+- Still we try to communicate our strategy/priorities.  The main emphasis these days is on [cleaning Darcs up](Development/Cleanup).
+- Hosting is important to us.
+
+    - Development of hosting+GUIs will be focusing on library code that makes that work better, though may include actually writing code that uses that library to prove it works
+    - GUIs seen as a subset of hosting for now
+
+- Emphasis on cleaning/reworking existing Darcs rather than any big bang wholesale replacements. Gradual progress.
+- Darcs 3 aim mainly to get conflicts right.  Let's not hit that Second System effect
+- GSoC 2013 mainly GUIs and Hosting (of course open to student suggestions)
+
+Report:
+
+* Aditya: presented patch index, implementation of changes w/ index
+* Eric: patch774 and patch775, updated wiki to use markdown
+* Florent
+* Ganesh: Unicode progress!
+* Ian: more proofs (eg. commute two patches: always same answer)
+* Owen
+
+# How: Darcs hacking quick start
+
+You'll have more fun if you can hit the ground running, so please make
+sure you can do all of these things:
+
+1.  darcs get --lazy [http://darcs.net](http://darcs.net)
+2.  cabal configure; cabal build
+3.  darcs send (your patch should wind up on the tracker)
+
+    a.  create a test patch (see
+        [http://darcs.net/report.html](http://darcs.net/report.html) )
+    b.  see [Msmtp](/Using/Send) for easiest setup or configure your MTA if
+        you know how
+    c.  darcs send
+    d.  wait 10 minutes
+    e.  check the patch tracker
+        [http://bugs.darcs.net](http://bugs.darcs.net) (Patches \> Show
+        Open)
+

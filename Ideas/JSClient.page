@@ -1,0 +1,50 @@
+The idea would be to propose a minimal darcs client written in
+javascript, to solve the problem of grabbing a basic repository.
+
+Ideally I'd like to see it eventually integrated to hub.darcs.net,
+something like a "download zip" button.
+
+
+
+
+
+# Questions
+
+* is it better than a server-side generation of tar.gz?
+  after all darcsden uses darcs.
+
+The aim is to make it easy for someone to send a bugfix to a project.
+
+The idea is to have a small and easily maintainable program. Hence, it
+has to be reduced to the most vital features.
+
+Maybe fancy commands like log (without flags, hence without -v) and
+whatsnew could be added in a non-initial version.
+
+# Roadmap
+
+1.  get a working copy (from a local repository or http)
+2.  get a complete clone of a darcs repository (local or http)
+3.  log, ie, display the list of patches of the
+    current repo
+5.  whatsnew, ie, display changes between working copy and pristine
+6.  revert -a, ie, reset working copy to pristine
+7.  makebundle, ie, do a record -a and send -O
+
+Bonus points for writing the test scripts alongside with the actual
+code.
+
+# To see
+
+To generate a file on the fly in javascript so that the browser
+can download it:
+
+1. grab pristine hash
+2. generate zip file in javascript in browser
+3. create blob/base64 URI
+4. pass it to browser to download as single file
+
+Tools to do this:
+
+* <https://github.com/eligrey/FileSaver.js>
+* <https://developer.mozilla.org/en-US/docs/Web/API/File>

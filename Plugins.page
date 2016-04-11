@@ -1,0 +1,27 @@
+# Tracker links
+
+Now you can refer to issue489 and patch398 without and have links
+without any fuss.
+
+# Graphviz
+
+~~~~ {.sourceCode .dot}
+digraph G {Hello->World}
+~~~~
+
+# Ditaa
+
+[Plugin](http://blog.omega-prime.co.uk/?p=70) by Max Bolingbroke.
+Thanks, Max!
+
+~~~~ {.sourceCode .ditaa}
++--------+   +-------+    +-------+
+|        | --+ ditaa +--> |       |
+|  Text  |   +-------+    |diagram|
+|Document|   |!magic!|    |       |
+|     {d}|   |       |    |       |
++---+----+   +-------+    +-------+
+    :                         ^
+    |       Lots of work      |
+    +-------------------------+
+~~~~

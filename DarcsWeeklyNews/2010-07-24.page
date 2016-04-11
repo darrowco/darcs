@@ -1,0 +1,109 @@
+# News and discussions
+
+1.  \`\`darcs stash'' was discussed, with different possible
+    implementations and UI proposed, and some example workflows evoked:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-July/024499.html](http://lists.osuosl.org/pipermail/darcs-users/2010-July/024499.html)
+
+2.  Reinier listed the release blockers for darcs 2.5:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-July/024603.html](http://lists.osuosl.org/pipermail/darcs-users/2010-July/024603.html)
+
+# Issues resolved in the last week (4)
+
+issue1716 Reinier Lamers
+  ~ -   allow mail header lines of all whitespace in test
+    -   [http://bugs.darcs.net/issue1716](http://bugs.darcs.net/issue1716)
+
+issue1883 Eric Kow
+  ~ -   rename --patch-name option to --name.
+    -   [http://bugs.darcs.net/issue1883](http://bugs.darcs.net/issue1883)
+
+issue1887 Petr Rockai
+  ~ -   add a missing newline to --list-options output.
+    -   [http://bugs.darcs.net/issue1887](http://bugs.darcs.net/issue1887)
+
+issue1893 Ganesh Sittampalam
+  ~ -   move fields of conditional builds within scope of condition
+    -   [http://bugs.darcs.net/issue1893](http://bugs.darcs.net/issue1893)
+
+# Patches applied in the last week (42)
+
+2010-07-22 Reinier Lamers
+  ~ -   resolve issue1716: allow mail header lines of all whitespace in
+        test
+
+2010-07-23 Jason Dagit
+  ~ -   rename readPatchIds to better describe what it does
+    -   move readPatchIds to Darcs.Patch.Info
+    -   remove duplicate code, readPatchIds
+
+2010-07-22 Petr Rockai
+  ~ -   Slightly fix context generation in Setup.
+    -   Fix "head: empty list" bug in Darcs.Flags.RemoteDarcs.
+    -   Remove [DarcsFlag] usage from Darcs.Patch.Bundle.
+    -   Use Compression more widely, suppressing further [DarcsFlag]
+        uses.
+    -   Replace some [DarcsFlag] uses with newly introduced RemoteDarcs.
+    -   Remove --nolinks, since its scope and usefulness is very
+        limited.
+
+2010-07-16 Ganesh Sittampalam
+  ~ -   resolve issue1893: move fields of conditional builds within
+        scope of condition
+
+2010-07-17 Eric Kow
+  ~ -   Restore set-scripts-executable in trackdown --bisect.
+
+2010-07-15 Petr Rockai
+  ~ -   Remove [DarcsFlag] parameters from apply.
+    -   Remove [DarcsFlag] argument from unrecordedChanges.
+    -   Fix up tests to refer to --name instead of --patch-name.
+
+2010-07-15 Eric Kow
+  ~ -   Resolve issue1883: rename --patch-name option to --name.
+    -   Update link to Darcs repository browser.
+
+2010-07-12 Ganesh Sittampalam
+  ~ -   get rid of join\_patches
+    -   stop using join\_patches in Darcs.Test.Unit
+    -   move main unit testing code into module with proper name (not
+        Main)
+
+2010-07-12 Eric Kow
+  ~ -   Fix haddock error.
+    -   Avoid a haddock parse error.
+
+2010-07-11 Reinier Lamers
+  ~ -   Include minimal-darcs-2.4.tgz in distribution
+
+2010-07-11 Petr Rockai
+  ~ -   Resolve issue1887: add a missing newline to --list-options
+        output.
+
+2010-07-12 Eric Kow
+  ~ -   Fix conflict in Distribution.ShellHarness.
+
+2010-07-08 Petr Rockai
+  ~ -   Fix tests in light of recent default flag changes.
+    -   Correctly handle conflicts arising from DarcsMutuallyExclusive
+        options.
+    -   Avoid adding noCache twice to parameter lists.
+
+2010-07-01 Eric Kow
+  ~ -   Make --no-cache an advanced option in all commands.
+    -   Do not set default repo by default in push, pull, send, fetch.
+    -   Express --{no-,}set-default as a mutually exclusive option.
+    -   Make --edit-description the default.
+    -   Express --{no-,}edit-description as a mutually exclusive option.
+    -   Add a notion of mutually exclusive options with a default.
+    -   General purpose function for setting defaults.
+    -   Fix use of atomicOptions in Darcs.ArgumentDefaults.
+    -   Update optimizeHTTP for new two-layer DarcsOption.
+    -   Refactor traversal of atomic options in DarcsOption.
+    -   Better use of Data.Maybe helpers in Darcs.Arguments.
+    -   Flatten DarcsOption type.
+    -   Fix missing type signature.
+    -   Rename optionFromDarcsoption to optionFromDarcsOption.
+
+

@@ -1,0 +1,38 @@
+---
+title: Reporting Bugs in Darcs
+...
+
+# Basics
+
+To report a bug in Darcs, just send an email to
+[bugs@darcs.net](mailto:bugs@darcs.net) describing the problem. It will
+appear as an unread bug on
+[http://bugs.darcs.net/](http://bugs.darcs.net/).
+
+If you have never reported a Darcs bug before, your message will be held
+in a quarantine area until a human confirms that it's not spam. But this
+is only for the first time; future bug reports from you will go
+automatically to our tracker.
+
+# Advanced bug-reporting-fu
+
+We appreciate the feedback or bug reports that you send us, thanks! Got
+a little extra energy to make things easier on us? Here's the sort of
+thing we love to see.
+
+1.  A concise subject that expresses the issue:
+
+    -   :-( - bug report (*too vague*)
+    -   :-) - darcs clone doesn't work over sshfs (*better*)
+
+2.  The exact Darcs version (darcs --exact-version)
+
+3.  Platform information (what OS, usually)
+
+4.  Simple reproduction steps (ideally, a block of commands that we can
+    copy and paste into a terminal)
+
+5.  A Darcs repository URL, and or if you have a broken repository,
+    download links for tarballs or zip files.
+
+

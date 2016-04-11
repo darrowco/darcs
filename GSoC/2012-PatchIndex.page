@@ -1,0 +1,457 @@
+#Abstract
+ 
+The goal of this project is to speed up the darcs changes and darcs annotate commands using a cache called “patch index”.
+
+# At a glance
+
+* [Darcs repository](http://darcsden.com/bsrkaditya/darcs-patch-index-rebase-2012-06-17/):
+
+          darcs get --lazy http://darcsden.com/bsrkaditya/darcs-patch-index-rebase-2012-06-17
+
+* [Blog](http://bsrkaditya.blogspot.com/search/label/darcs)
+
+*   Meetings: (irc.freenode.net #darcs)
+
+    - Friday  16:00 UTC (kowey/bsrkaditya: admin stuff)
+    - Sundays 06:30 UTC (beschmi/bsrkaditya: techie stuff)
+
+*   Key outcomes
+
+    - [code (darcs branch)](http://hub.darcs.net/Aditya/darcs-pi)
+    - [user documentation](/Using/PatchIndex)
+    - [high level developer doc](/Internals/PatchIndex)
+    - project/design document (not done)
+    - [library documentation (haddock)](http://hub.darcs.net/Aditya/darcs-pi/browse/src/Darcs/Repository/FileMod.hs) (for now, link to FileMod source)
+    - [UI discussion](http://article.gmane.org/gmane.comp.version-control.darcs.user/26441)
+    - [performance test results](/PatchIndexPerformance)
+
+# Timeline (Mon to Sun)
+
+## Community bonding
+
+- [admin meeting](http://irclog.perlgeek.de/darcs/2012-05-20#i_5615455)
+- recap: worked on patch index automation, ie. figured out where is appropriate place to put them, and restructuring code accordingly "pretty much done"
+- next week: finish testing patch index automation, documentation; start working on annotate implementation
+
+## week 1 (21-27 May) [**project start 24 May!**]
+
+- [blog](http://bsrkaditya.blogspot.co.uk/2012/05/gsoc-patch-index-week-1.html), [meeting](http://irclog.perlgeek.de/darcs/2012-05-25#i_5637103), self-assessment: **:-)**
+- recap: tests (for automation, not correctness), some docs, and an annotate prototype that's 5x faster than original, but missing non range match and directories, also no witnesses 
+
+    - **doc** [patch index structures](/Internals/PatchIndex)
+    - **doc** patch index automation (later consolidated with structures doc)
+    - prototype annotate
+   
+- Eric todo: read both documents and provide feedback
+- next week: style cleanups and comments as suggested by owst; add missing functionality to PI changes/annotate (non-range matching and directory support)
+
+## week 2 (28 May to 3 June)
+
+[blog](http://bsrkaditya.blogspot.co.uk/2012/06/gsoc-patch-index-week-2.html), [meeting](http://irclog.perlgeek.de/darcs/2012-06-01#i_5668360), self-assessment **:-|**
+
+goals for this week:
+
+- revise documentation as per Eric's feedback
+- reimplement match function as per Owst suggestion [done]
+- reimplement match to return a FL?
+- implement annotate over a directory [done]
+- reimplement isPatchIndexInSync [done]
+- non-range matchers **not done** (*EYK: which is absolutely fine; I just think it's useful to note so you can have an idea how estimating things works… or doesn't*)
+questions:
+- when annotating over a directory, what's the right behaviour when file names get used more than once (ie. for two different files at different points in history)? http://irclog.perlgeek.de/darcs/2012-06-01#i_5668801
+
+outcomes: (in case we have anything concrete to link to)
+
+- faster darcs changes (as a result of reimplementing match and isPatchIndexInSync)
+- commitment: blog post before 1600 UTC every Sunday
+
+next week:
+- overall: feature parity between patch-index-changes,patch-index-annotate and changes,annotate.
+
+- some things we noticed:
+
+    * figure out what the gap between patch-index/non version
+    * changes on multiple files
+    * non-range matchers
+
+- other ideas:
+
+    * test for the filename problem mentioned above?
+    * --no-patch-index
+
+
+## week 3 (4 June to 10 June)
+
+No meeting (Eric away)
+
+## week 4 (11 June to 17 June)
+
+Aditya no-show :-(
+
+[Blog](http://bsrkaditya.blogspot.in/2012/06/gsoc-patch-index-week-3-4.html)
+
+progress [meeting at end of week 5]:
+
+- all options in changes/annotate supported
+- multiple files in darcs changes
+- non-range matchers work
+
+## week 5 (18 June to 24 June)
+
+[Blog](http://bsrkaditya.blogspot.in/2012/06/gsoc-patch-index-week-5.html), [meeting](http://irclog.perlgeek.de/darcs/2012-06-22#i_5749234),
+self-assessment: :-)
+
+progress:
+
+- see above for last two weeks
+- changes on directories
+- studied commands for differences between PI and non-PI versions
+
+outcomes:
+
+- a diff between PI changes and non-PI changes is that PI changes will omit patches if historically speaking there have been more than one instance of a file in the current directory.  Regular darcs will show all patches affecting files with that name (at some point in their history); PI darcs will only show the ones affecting the current version. http://hpaste.org/70305
+- observation: PI is best on files (ie. it gives the same output as regular darcs, only faster)
+- observation: on directories PI is slower (than on files, still faster than regular darcs), and the output may differ
+- [during meeting] Eric accidentally uncovered a bug in automatic update, see http://hpaste.org/70305
+
+needs:
+
+- Aditya needs to have a clearer idea on what patches should/should not be there.  He thinks it would be helpful to have some sort of specification on how darcs should behave wrt filenames in the working directory and how they map on to files which exist (or have existed?) in pristine.  For example, identifying how darcs behaves when files are renamed or deleted.
+
+
+goals for next week:
+
+## week 6 (25 June to 1 July)
+
+~~no-show :-(~~ (just late)
+
+**notes**
+
+* [Blog](http://bsrkaditya.blogspot.in/2012/07/gsoc-patch-index-week-6.html)
+* [Meeting](http://irclog.perlgeek.de/darcs/2012-06-29#i_5768946)
+* Self-assessment
+
+**progress**
+
+* two flags --patch-index [default] --no-patch-index, all relevant commands
+* fixed bug from last week
+* refactors suggested by Benedikt and Ganesh
+* sync test extended to run all commands
+* pi annotate moved to Darcs.UI.Commands.Annotate
+
+**outcomes**
+
+**needs**
+
+**goals for next week**
+
+* improve safety of patch dropping code
+* changes on directories
+* review for goal 1
+* more formal timing tests
+* more rigorous annotate testing (on directories)
+
+## week 7 (2 July to 8 July)
+
+**notes**
+
+* [Blog](http://bsrkaditya.blogspot.in/2012/07/gsoc-patch-index-week-7.html)
+* [Meeting](http://irclog.perlgeek.de/darcs/2012-07-06#i_5791129)
+
+**progress**
+
+- improve safety of patch dropping code (finished before monday)
+- changes on directories (finished before monday)
+- more formal timing tests (finished before monday)
+- review for goal 1 (ganesh done, bendikt pending)
+- more rigorous annotate testing (on directories) (done during the week)
+
+**outcomes**
+
+**needs**
+
+- question about multi-parameter typeclasses (state ~ ObjectMap, why editFoo still needed?)
+- 3 discrepancies in annotate behaviour on dirs
+ 
+**goals for next week**
+
+- Benedikt suggestions(if they are any)
+- failing lazy test
+- discussion about default flags
+- darcs-benchmark (low priority for now)
+- annotate fix (screened)
+
+## week 8 (9 July to 15 July) [**midterms Thursday 12 July!**]
+
+**notes**
+
+* [Blog](http://bsrkaditya.blogspot.in/2012/07/gsoc-patch-index-week-8.html)
+* [Meeting](http://irclog.perlgeek.de/darcs/2012-07-13#i_5811288)
+
+**progress**
+
+- Benedikt suggestions(done before monday)
+- failing lazy test (done after monday)
+- discussion about default flags (we discussed, and I implemented a solution)
+- darcs-benchmark (nothing much done)
+- annotate fix (I wrote a patch) (issue2207)
+
+**outcomes**
+
+**needs**
+
+
+**goals for next week**
+
+- more testing of pi internals
+- look at darcs-benchmark, make it build, etc
+- annotate fix (get it through review)
+- darcs-users discussion on pi design
+- timing tests with cold cache
+
+## week 9 (16 July to 22 July)
+
+**notes**
+
+* [Blog](http://bsrkaditya.blogspot.in/2012/07/gsoc-patch-index-week-9.html)
+* [Meeting](http://irclog.perlgeek.de/darcs/2012-07-20#i_5830646)
+
+**progress**
+
+- annotate fix: patch882 waiting for review (Aditya could maybe be more proactive about this)
+- some darcs pi discussion with mentors
+- timing tests for darcs pi usage with hot/cold cache, [changes](https://docs.google.com/spreadsheet/ccc?key=0AtdxF5AhJcuwdHFlMm0xd1poeTROYW1KN0ZGR2U0enc) and [annotate](https://docs.google.com/spreadsheet/ccc?key=0AtdxF5AhJcuwdGdrT2lLMGZXbktZblFxWmhxNkxXRVE)
+- some tests written for fid_map and fp_map
+
+
+**outcomes**
+
+- timing tests for darcs pi usage with hot/cold cache, [changes](https://docs.google.com/spreadsheet/ccc?key=0AtdxF5AhJcuwdHFlMm0xd1poeTROYW1KN0ZGR2U0enc) and [annotate](https://docs.google.com/spreadsheet/ccc?key=0AtdxF5AhJcuwdGdrT2lLMGZXbktZblFxWmhxNkxXRVE)
+
+**needs**
+
+
+**goals for next week**
+
+- UI email out by weekend
+- flesh out documentation and tests
+- document the timing tests
+
+## week 10 (23 July to 29 July)
+
+**notes**
+
+* [Blog](http://bsrkaditya.blogspot.in/2012/07/gsoc-patch-index-week-10.html)
+* [Meeting](http://irclog.perlgeek.de/darcs/2012-07-27#i_5851942)
+
+**progress**
+
+- UI email out by weekend - email sent, some responses
+- flesh out documentation and tests - timing tests completed, google docs updated (quite positive about PI being a gain)
+- document the timing tests - some docs started
+
+**outcomes**
+
+As before, just updated:
+
+- timing tests for darcs pi usage with hot/cold cache, [changes](https://docs.google.com/spreadsheet/ccc?key=0AtdxF5AhJcuwdHFlMm0xd1poeTROYW1KN0ZGR2U0enc) and [annotate](https://docs.google.com/spreadsheet/ccc?key=0AtdxF5AhJcuwdGdrT2lLMGZXbktZblFxWmhxNkxXRVE) 
+
+
+**needs**
+
+
+**goals for next week**
+
+- finish up documentation
+- implement suggestions from Benedikt's reviews
+- respond back to the users post.
+
+## week 11 (30 July to 6 August)
+
+**notes**
+
+* [Blog](http://bsrkaditya.blogspot.in/2012/08/gsoc-patch-index-week-12.html)
+* [Meeting](http://irclog.perlgeek.de/darcs/2012-08-03#i_5871834)
+
+**progress**
+
+- implemented C-c handling on darcs pi creation
+- cleaned up timing script
+- extending timing test to xmonad
+- fleshed out documentation a bit
+
+**outcomes**
+
+**needs**
+
+
+**goals for next week**
+
+- I want to complete up the wiki+haddock documentation
+- benchmark on GHC/Agda
+- submit patches to darcs
+
+## week 12 (7 August to 12 August)
+
+**notes**
+
+* Blog
+* [Meeting](http://irclog.perlgeek.de/darcs/2012-08-10#i_5889722)
+
+**progress**
+
+- expansion to a few tests, some new tests, WF review
+- some more haddocks, solved some technical issues
+- benchmarking GHC (in progress), not Agda yet
+- waiting till end of project to submit patches
+
+**outcomes**
+
+- fleshed out [devel doc](/Internals/PatchIndex) a bit
+- some [user doc](/Using/PatchIndex)
+
+**needs**
+
+
+**goals for next week**
+
+## week 13 (13 August to Thursday 16 August) [**FIRM pencils down**]
+
+**notes**
+
+* Blog
+* [Meeting](http://irclog.perlgeek.de/darcs/2012-08-17#i_5904953)
+
+**progress**
+
+**outcomes**
+
+* Some updates to the internals doc
+* [Patch index performance summary](/PatchIndexPerformance)
+
+**takehomes**
+
+# Goals
+
+1.  Automatic update of patch-index
+      - Develop mechanism to tell if the patch index is up to date or not. [done]
+      - Ensure that small user changes to the repository will not require a large rebuild of patch index. [done]
+      - Ensure that the patch index is to date before running changes, annotate, or show patch-index. [done]
+      - Create patch index on darcs get and initialize. [done]
+      - Update the patch index whenever the repository changes. [done]
+           - record [works]
+           - pull [works]
+           - apply [works]
+           - push [works]
+           - init [works]
+           - amend-record [works]
+           - get [works]
+           - unrecord [works]
+           - tag [works]
+      - If an patch-index disabled darcs binary modified the repository,
+        The next time the patch-index enabled binary is run, the patch-index
+        should be updated.
+      - Create flags --patch-index, --no-patch-index, and add support to all commands [done]
+2.  Adapt darcs changes and annotate to make use of the patch index [done]
+      - Prototype implementation of changes and annotate [done]
+      - Add support for flags [done]
+      - Tests say that pi gives same output for changes/annotate on files/directories. [done]
+        (tests for annotate on directories is assuming that patch882 gets accepted)
+
+3.  Improve maintainability, and documentation of patch-index code [ongoing]
+      - A Wiki page on patch-index structures [ongoing]
+      - A Wiki page explaining the create/update process [ongoing]
+      - A Wiki page answering common questions on patch-index [ongoing]
+      - A Wiki on the performance of patch-index [ongoing]
+
+4.  Tests for patch-index [done]
+      - Create commands/sub-commands which show only specific portions of patch-index
+          - For enabling bash script testing
+      - Create a function which test logical integrity of patch-index structures [done]
+      - Shell scripts on patch-index [done]
+      - Test the output of patch-index commands [done]
+      - Test patch-index automation [done]
+
+------
+#Original proposal
+
+##Abstract
+ 
+The goal of this project is to speed up the darcs changes and darcs annotate commands using a cache called “patch index”.
+
+##About the project
+
+The [Patch Index](http://wiki.darcs.net/Ideas/PatchIndex) is a long promised optimization to speed up changes and annotate. The slow speed
+of these commands is one of the major user grievance in [darcs](http://hackage.haskell.org/trac/ghc/wiki/DarcsEvaluation).
+ Patch-Index data structures can quickly identify the patches that modified a given file.
+ 
+Code for creating patch index data structures was originally written by Benedikt Schmidt around 2010. However, it was built atop a very old darcs state, which made it hard to apply on top of more recent darcs. I have [ported](http://bugs.darcs.net/patch173) forward the code, so that it can be applied atop of current darcs repository.
+
+I also written a prototype changes command that uses patch index. The results were promising, giving a speedup from 3.2sec to 0.34sec(in darcs changes ./src/Darcs/Commands/Annotate.hs), and from 4.98sec to 0.61sec(in darcs changes ./src/GNUmakefile). Both of these files are in current darcs repository.
+
+Prototype annotate has a speed up of 5.5sec to 1sec for src/GNUmakefile.
+
+##Goals
+
+1.  Automatic update of patch-index
+      - Develop mechanism to tell if the patch index is up to date or not.
+      - Ensure that small user changes to the repository will not require a large rebuild of patch index.
+      - Ensure that the patch index is to date before running changes, annotate, or show patch-index.
+      - Create patch index on darcs get and initialize.
+      - Update the patch index whenever the repository changes.
+      - If an patch-index disabled darcs binary modified the repository,
+        The next time the patch-index enabled binary is run, the patch-index
+        should be updated.
+2.  Adapt darcs changes and annotate to make use of the patch index
+      - The commands should not waste time on patches that will not be shown.
+          - Patch-index filters out the patches that do not modify a file
+          - Additional filters like --last, --from-patch, --to-patch must be taken advantage of
+3.  Improve maintainability, and documentation of patch-index code
+      - A Wiki page on patch-index structures
+      - A Wiki page explaining the create/update process
+      - A Wiki page answering common questions on patch-index
+      - A Wiki on the performance of patch-index
+
+4.  Tests for patch-index
+      - Create commands/sub-commands which show only specific portions of patch-index
+          - For enabling bash script testing
+      - Create commands for testing logical integrity of patch-index structures
+      - Shell scripts on patch-index
+      - Test the output of patch-index commands
+      - Test patch-index automation
+
+##Project Design
+
+ The details on patch index internals are [here](http://wiki.darcs.net/Ideas/PatchIndex).
+
+ Patch index enables darcs to retrieve the patches that modified a given file quickly. This is especially
+ useful in the implementation of annotate and changes, as they print only some of the patches that modified a given file.
+
+ The current implementation lacks automatic patch index maintenance.
+
+ Patch-index is built locally on each repositories. It takes around 4s to build the patch-index on Darcs current repository. Darcs should automatically create the patch index at initialize and get, and update it whenever the repository state changes. It should also ensure that the patch index is current whenever commands that read the patch index are called.
+
+ I have implemented a prototype changes, and also studied the existing changes implementation. The prototype, while listing out all patches that modify a given file, does not allow the user to refine the results further with additional flags. The patches that get shown to the user in changes are reduced dramatically by the additional arguments that are passed.
+
+ I intend to write test specific for patch-index automation, darcs changes & annotate commands during their alloted weeks.
+ Tests using shell scripts, and tests on integrity of patch-index data structures will be done at a later period. 
+
+##Timeline
+
+- Week 1-2: automate patch index maintenance 
+- Week 3-7: write patch-index versions of changes and annotate commands, with all the flags working
+- Week 7-9: Benchmark patch-index
+- Week 10-12: Test patch-index 
+
+##Benefits to the community
+
+ Darcs is an interesting and useful VCS written in Haskell. Speeding up these commands will improve Darcs
+ usability for large projects. This project aims to be one of the stepping stones to make
+ Darcs a compelling alternative to traditional version control systems.
+
+##About Me
+
+ I am a third year student of a Bachelors degree in Information and Communication Technology.
+I have been interested in Darcs for over an year, and have made several small contributions to it.
+I have made some progress in the project already, and I believe that I will be able to successfully
+complete the project over the summer.

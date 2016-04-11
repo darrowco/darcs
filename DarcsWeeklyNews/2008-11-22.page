@@ -1,0 +1,158 @@
+# News and discussions
+
+1.  Announcing darcs 2.1.2. Eric has released darcs 2.1.2. You can also
+    find darcs 2.1.2 on hackage.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/015915.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/015915.html)
+    -   [http://hackage.haskell.org/cgi-bin/hackage-scripts/package/darcs](http://hackage.haskell.org/cgi-bin/hackage-scripts/package/darcs)
+
+2.  Character-based patch type. Andrew Robbins is developing a library
+    for character level diffs that would allow for indentation and word
+    patches as well as other fine granularity patches.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/015976.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/015976.html)
+
+3.  Digital Fountain Codes for Patch Distribution. Tom Hawkins has a
+    proposal for using Digital Fountain Codes as a fast distributed
+    protocol for transfering data between darcs repositories.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/016016.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/016016.html)
+
+4.  Camp Update. Ian Lynagh has started an irregular news letter about
+    Camp. Looks like he's accomplished a lot. Take a look at Camp today.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/016044.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/016044.html)
+
+5.  Darcs Oversight Committee (Software Freedom Conservancy). Eric has
+    proposed we create an oversight committee as part of joining the
+    Software Freedom Conservancy.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/016107.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/016107.html)
+
+# Reviewers
+
+Thanks to our patch reviewers this week!
+
+-   Christian Kellermann
+-   Eric Kow
+-   Dmitry Kurochkin
+-   Trent W. Buck
+
+Want to receive recognition for helping with Darcs? Add yourself to the
+patch review team today so that Eric knows to send patches your way.
+
+-   [http://wiki.darcs.net/DarcsWiki/DarcsTeam](http://wiki.darcs.net/DarcsWiki/DarcsTeam)
+
+# Issues resolved in the last week (3)
+
+issue1043 David Roundy
+  ~ -   avoid use of sort\_coalesceFL in Patch.Real.
+    -   [http://bugs.darcs.net/issue1043](http://bugs.darcs.net/issue1043)
+
+issue1101 Christian Kellermann
+  ~ -   also display cc'ed recipients
+    -   [http://bugs.darcs.net/issue1101](http://bugs.darcs.net/issue1101)
+
+issue1117 Christian Kellermann
+  ~ -   warn if file does not exist in whatsnew
+    -   [http://bugs.darcs.net/issue1117](http://bugs.darcs.net/issue1117)
+
+# Patches applied in the last week (44)
+
+2008-11-22 Eric Kow
+  ~ -   Point to new shorter URL for binaries wiki page.
+    -   Rollback IFS removal
+
+2008-11-21 Jason Dagit
+  ~ -   Appease ghc-6.10 witnesses in Real.hs.
+    -   Appease ghc-6.10 witnesses in Prim.lhs.
+
+2008-11-21 [gwern0@gmail.com](mailto:gwern0@gmail.com)
+  ~ -   tests/\*.sh: rm vitiated IFS variable
+
+2008-11-21 Eric Kow
+  ~ -   documentation/website: Fix bigpage compilation.
+
+2008-11-20 Dmitry Kurochkin
+  ~ -   Use let to avoid duplication in Darcs.Patch.Real.
+
+2008-11-19 Eric Kow
+  ~ -   Make darcs.pdf just a copy of darcs\_print.pdf and likewise for
+        darcs.ps
+    -   Remove seemingly unused ps/pdf targets
+
+2008-11-20 Thorkil Naur
+  ~ -   Remove OPTIONS\_GHC that GHC-6.10.1 warns as "deprecated"
+
+2008-11-20 Christian Kellermann
+  ~ -   add newlines to the default entries so we don't break the file
+
+2008-11-20 Jason Dagit
+  ~ -   bump package version number for hackage
+    -   correctly add Distribution/ShellHarness.hs to darcs.cabal
+    -   sdist errors on trying to move tests/shell\_harness
+    -   bump version number in darcs.cabal
+
+2008-11-20 Eric Kow
+  ~ -   issue1043b now also resolved by David
+
+2008-11-19 David Roundy
+  ~ -   resolve issue1043: avoid use of sort\_coalesceFL in Patch.Real.
+
+2008-10-25 Christian Kellermann
+  ~ -   code clarification
+    -   resolve issue1117: warn if file does not exist in whatsnew
+
+2008-11-18 Thorkil Naur
+  ~ -   shell\_harness.hs hSetBuffering stdout NoBuffering
+
+2008-11-18 Trent W. Buck
+  ~ -   Harden release/STATE munger.
+
+2008-11-15 Christian Kellermann
+  ~ -   resolve issue1101: also display cc'ed recipients
+
+2008-11-18 Dmitry Kurochkin
+  ~ -   Move make\_repo\_name after identifyRepoFormat in get.
+
+2008-11-18 Eric Kow
+  ~ -   Trivially extend unit test to work with Pavel's extended
+        make\_email.
+
+2008-11-17 [gwern0@gmail.com](mailto:gwern0@gmail.com)
+  ~ -   tests/README: add a section warning about use of 'yes' and
+        'find'
+    -   tests/\*: per kowey, replace all portable\_pwd with hspwd
+    -   tests/lib: scrap portable\_pwd definition for alias to hspwd
+
+2008-11-18 Trent W. Buck
+  ~ -   Replace workaround with fix (Windows' sort doesn't have -o).
+    -   Refactor Cabal package description.
+    -   Consistently punctuate cabal flag descriptions.
+
+2008-11-17 Pavel Shramov
+  ~ -   Test for darcs send with --in-reply-to option
+    -   Add --in-reply-to flag for send command
+
+2008-11-17 [zooko@zooko.com](mailto:zooko@zooko.com)
+  ~ -   in make file, quote the "$(DARCS\_VERSION\_WITH\_PATCHES)"
+        variable
+
+2008-11-17 Trent W. Buck
+  ~ -   Darcs works with regex-compat 0.92.
+
+2008-11-16 David Roundy
+  ~ -   don't run posthook if the command terminated with exitWith.
+
+2008-11-17 [gwern0@gmail.com](mailto:gwern0@gmail.com)
+  ~ -   tests/README.test\_maintainers.txt: add a section on the use of
+        lib
+    -   tests/\*.sh: remove "set -ev" from all callers of lib
+    -   tests/lib: rm shebang header
+    -   mv lib.sh -\> lib & update callers
+
+2008-11-17 Eric Kow
+  ~ -   Add --disable-unit to configure script
+
+2008-11-15 [gwern0@gmail.com](mailto:gwern0@gmail.com)
+  ~ -   tests/\*.sh: factor out windows abortion
+    -   tests/\*.sh: factour out \~61 of the 'not' definitions to lib.sh
+    -   tests/\*.sh: factor out definitions of portable\_pwd to lib.sh
+    -   +tests/lib.sh: library for test scripts
+
+

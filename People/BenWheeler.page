@@ -1,0 +1,28 @@
+# Ben Wheeler
+
+I've been using darcs for a few months, trying to figure out whether it
+is right for replacing CVS at my place of work. I find plenty to love
+about it but a few important things hold me back.
+
+-   I miss the concept of version numbers and RCS Keyword replacement,
+    though if the former were available, the latter could be worked
+    around.
+-   It needs more hooks. There should be a hook pre and post every
+    command that changes the repo.
+-   Needs to honour, or version, the x-bit, though I think the latter is
+    planned.
+-   I like the flexibility of patch names, but I don't like the
+    flexibility of patch names. :-) I would rather let darcs generate
+    the actual patch name, so I know it's unique, and allow searching
+    through the full text of patch descriptions for keywords such as Bug
+    IDs fixed etc -- I want people to describe in detail, and itemised,
+    the changes they have made in a particular patch, but the one-line
+    patch name thing encourages the opposite. I guess I could write a
+    wrapper script to ask what I think are the right questions, generate
+    a patch name myself, and feed this to 'darcs record --logfile', but
+    this would require asking the questions before asking which changes
+    to record.
+
+* * * * *
+
+[CategoryHomepage](CategoryHomepage)

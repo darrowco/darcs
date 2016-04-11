@@ -1,0 +1,125 @@
+# News and discussions
+
+1. Eric Kow provided us with an update about the expenditures of the
+funds
+  ~ raised before the sprint:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-May/019737.html](http://lists.osuosl.org/pipermail/darcs-users/2009-May/019737.html)
+
+2. Simon Marlow explained the current workflow of the GHC team with
+  ~ darcs and the needs of the developers, which lead to a discussion on
+    a darcs equivalent to git rebase and hg transplant:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-May/019748.html](http://lists.osuosl.org/pipermail/darcs-users/2009-May/019748.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-May/019777.html](http://lists.osuosl.org/pipermail/darcs-users/2009-May/019777.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-May/019778.html](http://lists.osuosl.org/pipermail/darcs-users/2009-May/019778.html)
+
+# Issues resolved in the last week (4)
+
+issue1173 Salvatore Insalaco
+  ~ -   support hard links on NTFS.
+    -   [http://bugs.darcs.net/issue1173](http://bugs.darcs.net/issue1173)
+
+issue1248 Ganesh Sittampalam
+  ~ -   1248: support compressed inventories for darcs-1 repos
+    -   [http://bugs.darcs.net/issue1248](http://bugs.darcs.net/issue1248)
+
+issue1351 Salvatore Insalaco
+  ~ -   fix repository path handling on Windows.
+    -   [http://bugs.darcs.net/issue1351](http://bugs.darcs.net/issue1351)
+
+issue1455 Trent W. Buck
+  ~ -   implement "darcs help environment".
+    -   [http://bugs.darcs.net/issue1455](http://bugs.darcs.net/issue1455)
+
+# Patches applied in the last week (47)
+
+2009-05-16 Trent W. Buck
+  ~ -   Demote one-paragraph sections into a definition list.
+    -   Rewrite "see also" sections of home page.
+    -   Point out up-front how dated LWN's recommendation is.
+    -   Don't abuse <table\> as presentational markup (use CSS instead).
+    -   Avoid patently unnecessary consing.
+    -   Capitalize Darcs' name.
+    -   Make index.html XHTML 1.0 Strict (was HTML 4).
+    -   Update hard link docs: NTFS is now supported.
+    -   Relicense tests/EXAMPLE.sh (from GPL2+ to MIT).
+
+2009-05-01 Eric Kow
+  ~ -   Haddock Darcs.Patch.Prim.commute\_no\_conflicts.
+
+2008-11-15 David Roundy
+  ~ -   make rollback smarter about breaking up changes.
+
+2009-05-09 Trent W. Buck
+  ~ -   Obviate DARCS\_TESTING\_HOME workaround by setting %APPDATA%
+        correctly.
+
+2009-05-02 Eric Kow
+  ~ -   Mention SFC membership on front page.
+    -   Update web page to account for mailing list merge.
+    -   Update donations page with SFC details.
+
+2009-05-13 Trent W. Buck
+  ~ -   Make tests/EXAMPLE.sh work when in bugs/.
+    -   Teach preproc how to find the environment variable help.
+    -   Naturalize some lists used in docs.
+    -   Teach src/English to generate a natural list from a Haskell
+        list.
+    -   Module haddock for English.
+
+2008-11-10 David Roundy
+  ~ -   remove unused darcs.nsi
+
+2009-05-13 Trent W. Buck
+  ~ -   Migrate SENDMAIL documentation to environmentHelp.
+    -   Migrate SSH\_PORT documentation to environmentHelp.
+    -   Fix make install.
+    -   Fix cabal sdist.
+
+2009-05-13 Ganesh Sittampalam
+  ~ -   make issue1248 script follow example template
+
+2009-05-03 Trent W. Buck
+  ~ -   Test "darcs apply f" as well as "darcs apply <f".
+
+2008-12-10 David Roundy
+  ~ -   fix error output (which leaked userError).
+    -   cut hardly-used type synonym.
+
+2009-05-13 Trent W. Buck
+  ~ -   Remove stale import.
+    -   Migrate environment variable documentation.
+    -   Add ENVIRONMENT section to manpage.
+    -   Move Darcs.Manpage into Darcs.Commands.Help.
+    -   Resolve issue1455: implement "darcs help environment".
+    -   Haddockize Darcs.Global.atexit.
+
+2009-05-12 Ganesh Sittampalam
+  ~ -   resolve issue 1248: support compressed inventories for darcs-1
+        repos
+    -   script for issue1248
+
+2009-05-10 Florian Weimer
+  ~ -   Update wiki URLs to point to wiki.darcs.net
+
+2009-05-01 Salvatore Insalaco
+  ~ -   Resolve issue1173: support hard links on NTFS.
+    -   Resolve issue1351: fix repository path handling on Windows.
+
+2009-05-02 [thomashartman1@gmail.com](mailto:thomashartman1@gmail.com)
+  ~ -   add back documentation on --patches, --from-patch, and
+        --to-patch
+
+2009-05-09 Salvatore Insalaco
+  ~ -   Remove unused function: Darcs.Patch.Prim.applyBinary
+
+2009-05-09 Trent W. Buck
+  ~ -   Refactor preproc to remove cascade.
+    -   Remove obsolete example{} support from preproc.
+    -   Make am\_html less stupid.
+    -   Typo: stray closing quote.
+    -   Move tools/ to contrib/.
+
+

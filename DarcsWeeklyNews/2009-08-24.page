@@ -1,0 +1,68 @@
+# News and discussions
+
+1.  Petr Rockai posted his last Summer of Code report, summing up the
+    work he did, the work left, and its integration into the official
+    darcs branch:
+
+> -   [http://web.mornfall.net/blog/soc\_final\_report.html](http://web.mornfall.net/blog/soc_final_report.html)
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-August/020900.html](http://lists.osuosl.org/pipermail/darcs-users/2009-August/020900.html)
+
+2.  A discussion occured about darcs continuing (or not) to support old
+    repositories formats, and users difficulties to switch from the
+    darcs-1 format:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-August/020906.html](http://lists.osuosl.org/pipermail/darcs-users/2009-August/020906.html)
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-August/020967.html](http://lists.osuosl.org/pipermail/darcs-users/2009-August/020967.html)
+
+3.  Eric Kow reported about his work on triaging bugs in the darcs bug
+    tracker:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-August/020951.html](http://lists.osuosl.org/pipermail/darcs-users/2009-August/020951.html)
+
+# Issues resolved in the last week (1)
+
+issue183 Eric Kow
+  ~ -   Do not sort changes --summary output.
+    -   [http://bugs.darcs.net/issue183](http://bugs.darcs.net/issue183)
+
+# Patches applied in the last week (17)
+
+2009-08-24 Eric Kow
+  ~ -   Mark issue1317 test as failing (and note issue number).
+
+2009-08-11 Marco Túlio Gontijo e Silva
+  ~ -   Regression test for issue1317.
+
+2009-08-24 Trent W. Buck
+  ~ -   Explain a slightly obtuse one-liner.
+
+2009-08-14 Eric Kow
+  ~ -   Support tests/failing-foo.sh convention for bugs.
+    -   Minor style tweaks in cabal test.
+
+2009-08-23 [joe@elem.com](mailto:joe@elem.com)
+  ~ -   Support command line arguments in PAGER or DARCS\_PAGER
+
+2009-08-18 Eric Kow
+  ~ -   Rename xml\_summary to xmlSummary and summarize to plainSummary.
+    -   Cut unused imports in Darcs.Patch.Viewing.
+    -   Simpler types for changes --summary.
+    -   Camel-case some Darcs.Patch.Viewing functions.
+    -   A tiny bit more separation of concerns in changes --summary
+        core.
+    -   Resolve issue183: Do not sort changes --summary output.
+    -   Refactor changes --summary core code.
+
+2009-08-15 Trent W. Buck
+  ~ -   Accept issue1472: "darcs record ./foo" shouldn't open ./bar.
+
+2009-08-09 Reinier Lamers
+  ~ -   Remove tabs from src/Exec.hs
+
+2009-08-11 Eric Kow
+  ~ -   Remove optimize --checkpoint cruft.
+
+2009-08-07 [gwern0@gmail.com](mailto:gwern0@gmail.com)
+  ~ -   darcs.cabal turn on -fwarn-tabs per dupree
+
+

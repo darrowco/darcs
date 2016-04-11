@@ -1,0 +1,50 @@
+---
+title: Complexity
+...
+
+# Overview
+
+Conventions:
+
+-   O(foo + bar) - likely most expensive first; but we include bar
+    anyway because it's not systematic
+-   fs - size of files in the pristine repository
+-   fn - number of files in the pristine repository
+-   ms, ns - size of patches in various repos
+-   m, n - number patches in various repos
+
+  ------------------------------------------------------------------------
+                  complexity         notes
+  --------------- ------------------ -------------------------------------
+  lazy fetching   O(fs + fn)         fetch just the pristine files packs
+  repo                               will bring this down to O(fs)
+
+  fetching repo   O(ns + n + fs +    fetch each patch file separately too
+                  fn)                packs will bring this down to O(ns +
+                                     fs)
+
+  getting ready                      TODO
+  for darcs pull                     
+
+  diffing working                    TODO
+  and recorded                       
+
+  basic merging   O(m n)             commute m patches on one side past n
+  without                            on other [merging]
+  conflicts                          
+
+  minimal context O(n\^2)            given patches (X1..XN P), any X\_n
+                                     patch you commute out has to go
+                                     through X\_n+m that P depends on
+                                     [min-context]
+
+  conflicts                          TODO
+  ------------------------------------------------------------------------
+
+# Notes
+
+-   fetching: fs and ns matter because of time to copy a file, fn and n
+    matter because of latency
+-   min-context:
+    <http://lists.osuosl.org/pipermail/darcs-users/2012-March/026406.html>
+

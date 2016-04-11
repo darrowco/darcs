@@ -1,0 +1,652 @@
+# Review status for darcs-hs/hashed-storage.
+
+The review started in these two threads:
+[http://lists.osuosl.org/pipermail/darcs-users/2009-August/020759.html](http://lists.osuosl.org/pipermail/darcs-users/2009-August/020759.html)
+[http://lists.osuosl.org/pipermail/darcs-users/2009-August/020780.html](http://lists.osuosl.org/pipermail/darcs-users/2009-August/020780.html)
+
+# Useful URLs
+
+> -   [http://repos.mornfall.net/hashed-storage](http://repos.mornfall.net/hashed-storage)/
+>     : HEAD of hashed-storage library
+> -   [http://repos.mornfall.net/darcs-hs](http://repos.mornfall.net/darcs-hs)/
+>     : HEAD of darcs-hs
+> -   [http://darcs.vm.spiny.org.uk/\~ganesh/gsoc-review-2009](http://darcs.vm.spiny.org.uk/~ganesh/gsoc-review-2009)
+>     : Various repos put together by Ganesh including a reasonable
+>     darcs baseline repo to diff against - it excludes the whatsnew
+>     patches that went into 2.3.0 so as remove Darcs.Gorsvet from the
+>     diff completely. It also includes the prototype abstraction over
+>     hash type that he is arguing for. Note that it's very much a
+>     hacked-up prototype and not exactly how any final solution along
+>     those lines would look.
+
+# Darcs-specific bits in Hashed Storage
+
+## Desiderata
+
+1.  Test suite: we want a way to write meaningful tests for
+    hashed-storage. This means we have to instantiate it with some kind
+    of format of which Darcs is the only one available.
+
+2.  Coherence : reading/writing to \_darcs should occur in the same
+    place. Place could be project, repo or package. Right now the
+    reading bits would live in hashed-storage package and the writing
+    bits live in the darcs package.
+
+3.  Transparency (white box \_darcs) : we are all keen for tools to be
+    able to read darcs repositories without having to use the reference
+    implementation.
+
+4.  Independence : hashed-storage has the potential to be a really
+    useful project in its own right, so we would like to minimise the
+    influence that darcs development has on hashed-storage. Consider
+    zlib. Occasionally we could ask Bob the future hashed-storage
+    maintainer for changes we need for darcs, but for the most part zlib
+    goes on its own path.
+
+5.  Immediate usefulness: We would like hashed-storage to ship with a
+    format that is immediately useful. For example, it should have
+    reasonable performance characteristics. This would require some
+    research.
+
+## Current darcs-specific bits to factor out
+
+-   the fact that there is a \_darcs directory
+
+-   the fact that size of file is stored with a 10 digit prefix
+    (discussion about performance effects of this)
+
+-   encoding of whitespace in darcs filenames (decode goes eg from
+    patches 'hunk foo bar' to internal)
+
+-   conventions like how each directory has an file index with entries
+    like \* file: name hash \* directory: name
+
+-   conventions like important filenames like
+      ~ \_darcs/hashed\_inventory \_darcs/pristine.hashed
+
+-   some experimental fetaures used for packed repositories
+
+## Potential uses for hashed-storage
+
+Darcs specific:
+  ~ -   Darcs branch-management tool,
+        [http://bugs.darcs.net/issue555](http://bugs.darcs.net/issue555)
+        We don't know if a separate tool really is the way to go for
+        branches but let's accept it for the sake of argument first.
+    -   mtools-like tool for darcs repositories
+
+Beyond darcs:
+  ~ -   Nicolas Pouillard: Or writing a program that needs massive
+        persistent data, like a mail client. I'm planning to use this
+        kind of library one day for a program like this, however maybe
+        hashed-storage would have to be more flexible.
+
+## Have you considered?
+
+-   [http://bugs.darcs.net/issue555](http://bugs.darcs.net/issue555) -
+    local branches
+-   [http://bugs.darcs.net/issue992](http://bugs.darcs.net/issue992) -
+    darcs get version-identifiers
+-   [http://bugs.darcs.net/issue1591](http://bugs.darcs.net/issue1591) -
+    more compact filenames for hashes
+
+## Moving this forward - rough calendar
+
+See
+[http://lists.osuosl.org/pipermail/darcs-users/2009-September/021533.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021533.html)
+
+# Questions
+
+2.  Safety of hash treatment
+
+    Ganesh: The way that hashes are treated in the library feels rather
+    dangerous to me. The hash encoding scheme allows for different or
+    missing hashes across an entire tree, and the hashes for directories
+    are calculated based on the hashes for each element of the
+    subdirectory without any checking that they are actually present.
+
+    It might be that it's enough just to check that the right hashes are
+    present whenever this actually matters; I'm not very confident that
+    this is the case, but it could be well be ok.
+
+    I've spent a bit of time exploring whether we can add the type of
+    the contained hash as a type parameter to Tree (etc). It's certainly
+    not easy, but it feels like it should be possible with some work.
+    The difficulties include the fact that in some situations we want to
+    accept that hashes should be thrown away from subtrees, but kept in
+    other places where they are still valid, and the fact that some
+    darcs code needs to work on both hashed and plain trees. One
+    advantage of doing this would be that the DarcsSHA256 representation
+    would no longer need to be present in hashed-storage.
+
+    > Petr's comments, written up in parallel to Ganesh's comments
+    > above:
+    >
+    > The Hash type: The problem is, that some functionality expects
+    > hashes to exist in a specific format (most notably darcsFormatDir
+    > needs DarcsSHA256 hashes to be present on all items).
+    >
+    > Part of the solution is to forego DarcsSHA256 altogether, and find
+    > an alternative way to serialize Trees. The "natural" formats (i.e.
+    > those that do not mention the size in the directory listing) do
+    > not care about sizes, and therefore would work with any hashes
+    > just fine. We would either lose the ability to write out
+    > current-darcs-style directory listings, or we would have to hack
+    > our way to get it with any efficiency (probably involves a "Map
+    > Hash Size" stashed somewhere, probably global, since I don't want
+    > another "finish" to happen). It is not a major problem to lose
+    > this however, since old darcs can read a no-sizes hashed pristine
+    > just fine.
+    >
+    > > Ganesh: There would still be a SHA1 versus SHA256 issue,
+    > > wouldn't there?
+    > >
+    > > In general hashing directories relies on the 'correct' hashes on
+    > > the files in that directory - it's not just a darcs-specific
+    > > thing.
+    >
+    > The rest of the problem is NoHash.
+    >
+    > Basically, there are three major uses of hashes: (1) addressing
+    > files, and this is no concern for Tree, since the pointers to
+    > files are embedded in the Blob, and don't have to be hashes at
+    > all. The remaining two are more important: (2) when writing the
+    > Tree to disk and (3) when diffing two trees. For (3), NoHash is a
+    > no-brainer: we don't care if the hash is not there.
+    >
+    > For (2), NoHash is both a bane and a boon. On the good, it allows
+    > us to not recompute missing hashes on things that have changed,
+    > but will change again soon: modifyTree leaves around NoHash on
+    > things that it touched. We can then recompute the hashes en-masse
+    > when we really need to.
+    >
+    > However, to write out a directory listing, we need to know hashes
+    > of everything below: here, a NoHash = problem. Moreover, the
+    > Index, to work most efficiently, needs to store hashes on
+    > directories, and these hashes have to match the hashes in
+    > pristine. This means the index needs a way to hash directories,
+    > and this in turn breaks on NoHash. But! The index does not care,
+    > if the directory hashes to NoHash. So to solve that bit, we can
+    > have a (Tree m -\> Hash) that gives NoHash when it runs into a
+    > NoHash in the Tree.
+    >
+    > > Ganesh: ok, so we get a runtime failure if we actually needed
+    > > the hash? That sounds ok.
+    > >
+    > > Ganesh (26/08/09): Hmm, actually I'm still a bit confused about
+    > > this, as when I changed the index code to always require the
+    > > hash to be there, nothing in the test suite failed. Is that just
+    > > a hole in the test suite?
+    >
+    > All in all, we are now down to a single problem: the code that
+    > dumps a Tree into some hashed storage. This naturally needs to
+    > serialize directory listings. However, this is going to live in
+    > IO, and when we are in IO, it is easy to compute the missing
+    > hashes. (Where I say IO, I mean the Tree's Monad, really.)
+    >
+    > Everything becomes safe (at least in the sense, that any failure
+    > modes are documented in the types of the functions involved) and
+    > we actually simplify the code.
+    >
+    > > Ganesh (26/08/09): I'm generally confused about how the "wrong"
+    > > kind of hash is handled. For example do SHA1s end up in the
+    > > index or in packs?
+
+3.  Safety of parallel writes to the filesystem
+
+    Ganesh: in Storage.Hashed.readPlainTree, there's a comment that it's
+    not safe to write to the filesystem in parallel with something else
+    happening. In general the user might do this, unless it only refers
+    to data in \_darcs/.
+
+    Petr: This refers to exactly readPlainTree -- the warning is there
+    for the users of this function. I should probably elaborate in the
+    comment though, since e.g. using the file contents just once is
+    acceptable. In darcs, we use it to read working for diffing, and to
+    read a plain pristine.
+
+4.  utility function naming
+
+    Ganesh (25/08/09): A few functions like read, lookup and filter have
+    rather confusing names for the relatively specialised job they do.
+    I'm sort of in favour of more qualified use of names where necessary
+    to resolve such conflicts, but in these cases I think the usage is a
+    bit too confusing.
+
+    Mornfall (12. 9. 2009): I have renamed read (to readBlob) which was
+    the most annoying. I'll look at the others later.
+
+5.  `treeDiff` should be called `unsafeTreeDiff`
+
+    Ganesh (14/09/09): It's just as unsafe with respect to witnesses as
+    the old one was - though perhaps we should use another prefix to
+    indicate witness unsafety as opposed to segfault unsafety.
+
+    > Petr (15.9.) I think using unsafe in this context is pretty
+    > stupid. Maybe half of darcs is unsafe... Patch/\* is full of
+    > unsafeFoos without a line of explanation. What does unsafeTreeDiff
+    > buy as in terms of clarity? Other than littering the code with yet
+    > more unexplained unsafes...
+    >
+    > Ganesh (15/09/09): You're changing enough stuff with these patches
+    > already, things that don't need to be changed should be left alone
+    > and discussed separately.
+
+6.  Why doesn't `writeDarcsHashed` update all hashes?
+
+    Ganesh (15/09/09): I wanted to do
+    `readPlainTree ... >>= writeDarcsHashed ...` to build a fresh hashed
+    tree and got "Maybe.fromJust: Nothing" because the hashes hadn't
+    been calculated.
+
+    Petr (3.10.2009): This is something to think about. I guess it won't
+    make writeDarcsHashed particularly more expesnive, so it would be
+    definitely an option. There's also some pending code that may help
+    with it.
+
+# Addressed
+
+1.  `treeDiff` vs `unsafeDiff` (handling of empty files and trailing
+    newlines)
+2.  `darcs check` for index (done)
+3.  `darcs repair` for index (pending)
+4.  Overloading Tree over the container/monad (done)
+
+5.  Storage.Hashed.Darcs.darcsUpdateHashes
+
+    Ganesh (21/08/09): Is this actually used anywhere?
+
+    Mornfall (12. 9. 2009): Only in some Packed tests. I have added a
+    comment to that effect.
+
+6.  Storage.Hashed.Utils.pokeBS
+
+    Ganesh (17/08/09): I think this should be named unsafePokeBS: it's
+    normal to name unsafe functions accordingly
+
+    Mornfall (12. 9. 2009): Renamed (I originally left it as pokeBS
+    since all the poke\* functions are unsafe, but I agree that the type
+    signature for poke (the Ptr) is much clearer than the BS one in
+    pokeBS).
+
+7.  API safety in readIndex (possibly done now, review pending)
+
+    Ganesh: I'm very dubious about semantics of finish - why doesn't
+    expandPath call it? Presumably the documented usage semantics of
+    readIndex have something to do with this, but it feels fragile, and
+    I only sort of understand the whole dirs\_changed/finish stuff in
+    readIndex'
+
+    Petr: You are right about being dubious. I however haven't found a
+    better way to reasonably implement index updates. In retrospect, it
+    may have been better to just provide a specialised "expand" for the
+    index tree, that would also do the update. I'll check if there's a
+    reason preventing that, and if no, I'll go for it in hashed-storage
+    0.4 and just get rid of finish.
+
+    Ganesh: That would definitely be an improvement, but readIndex would
+    still return a Tree that wasn't quite like normal Trees, which makes
+    me uncomfortable. We should discuss a bit more what it's trying to
+    achieve (perhaps on IRC).
+
+    Petr: This is now done as well. The readIndex function now gives a
+    pair: the Tree object, and an action to "update" it. I have
+    documented the new behaviour [1] in haddock. It is indeed a little
+    different from the usual Tree objects in the sense that it gives you
+    what is in the index file -- which may be out of date. It would
+    however be a waste to update all of the index every time (although
+    this may be what git does, IIUIC). To make it possible to update
+    only a part of the index, you can trim down the index Tree and then
+    update the result. It however wouldn't be much of a problem to also
+    provide a function that will always give you full, up-to-date index.
+    For darcs however, we need
+
+    Ganesh: OK, so now what you've got is an API with lots of
+    constraints on how it should be used and lots of ways to get it
+    wrong. How about an alternate type, e.g. IndexTree, with its own
+    filter operation, and functions to get at either the real Tree or
+    both the real Tree and the hash/mtime map (both of which force it)?
+    Under the covers IndexTree could just be a Tree with the current
+    implementation, but at least the API would be safe.
+
+    Petr: So I have thought about this, and what I finally did:
+
+    -   wrapped the Tree that comes from readIndex in a newtype (not
+        exporting its data constructor)
+    -   lifted filter into a type class, so it can be used on both usual
+        trees and the index newtype
+    -   if we find more operations that are both safe and meaningful on
+        IndexTree, we can lift them into a type class as well
+
+    The class is a little tricky [1], and I couldn't find a better
+    solution -- if you have one, shoot. This also prompted types like:
+
+    > restrictSubpaths :: (RepoPatch p) =\> Repository p C(r u t) -\>
+    > [SubPath]
+    >   ~ -\> IO (forall t m. FilterTree t m =\> t m -\> t m)
+    >
+    in darcs-hs, but I am reasonably content about needing this in
+    exchange for the safe API.
+
+    > Ganesh (17/08/09): The idea seems to be that readIndex gives you
+    > an Index and a function for turning that Index into a Tree. But,
+    > if the function is tied to the particular Index, then this is
+    > still rather unsafe (since you can accidentally use the wrong
+    > function on the wrong index), and if it's not, then it's
+    > pointless. As far as I can tell the function always either returns
+    > an emptyTree for cases where the index was empty, or calls
+    > updateIndex (whose name I don't understand). If optimising for the
+    > case of an empty index is important, then Index could be a
+    > discriminated union with an empty case, and the read function
+    > could always be updateIndex so there'd be no need for readIndex to
+    > return it.
+    >
+    > Petr (12. 9. 2009): The function is fixed (i.e. independent of the
+    > index given). This is an API relict from the time this was not the
+    > case. I'll fix that.
+
+8.  Darcs.Gorsvet needs to go
+
+    Ganesh: The naming of Darcs.Gorsvet is obscure and a barrier to
+    future understanding of the code.
+
+    Petr: Yes, the plan is to move everything to proper places
+    --Darcs.Repository, and probably elsewhere. The Gorsvet module
+    should go away, eventually -- it's there to clearly separate the
+    hashed-storage code from the rest (but this is now blurred in
+    darcs-hs, and I expect Gorsvet to start disappearing soon,
+    especially if we can start merging the code into mainline).
+
+9.  Clarify virtualTreeIO
+10. Split TreeMonad into a read-only and read-write part
+11. Performance of darcs record
+
+> See
+> [http://lists.osuosl.org/pipermail/darcs-users/2009-September/021352.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021352.html)
+>
+> Jason fixed this, and his patches are applied & pushed.
+
+12. How do you call `unrecordedChanges` to read all changes?
+
+> Ganesh (14/09/09): This is something that the old get\_unrecorded\_\*
+> interface used to do if you passed in an empty list, but now empty
+> list means "just read pending".
+>
+> Ganesh (15/09/09): Never mind, I got this wrong. But now I'm confused
+> about why add\_to\_pending adds all the unrecorded changes (which was
+> true before your changes too).
+>
+> Petr (27.9.2009): I think this is because of pending removals of files
+> that still exist in working copy -- darcs rm or so. The
+> sift\_for\_pending is supposed to sort out what goes into pending and
+> what not, IIRC.
+
+13. Missing copyright notice in Darcs.Diff
+
+14. Hashed filename format
+
+> Ganesh (14/09/09): We've discussed the removal of sizes from the
+> filename format before, but I'm still not entirely clear on why they
+> were introduced in the first place. Do you know why, and could you
+> write a brief justification for their removal? My general impression
+> is that size+hash is generally considered more robust than hash alone,
+> but that might be wrong/outdated. The ten digit limit is certainly a
+> bit silly.
+>
+> > Petr (15.9.) The reason for sizes was that the mtime comparison code
+> > also compared file sizes. Since the hashed pristine is compressed,
+> > there's no way to know the size of the pristine files in their
+> > unpacked form, without actually unpacking them. Therefore, the size
+> > was tacked into the hash, so the existing mtime-based code could
+> > continue to work. It's simply a hack, nothing to do with safety or
+> > robustness.
+
+15. Please add some haddock to unrecordedChanges
+
+> Ganesh (14/09/09): This is a pretty crucial function in the new world.
+
+16. Merge hashed-storage into darcs, or keep it separate?
+
+> Ganesh: My most important question is about the dividing line between
+> hashed-storage and darcs-hs. The biggest weakness of hashed-storage as
+> a separate package is that it has functions that are specific to Darcs
+> repositories. To my mind, it either needs to abandon this knowledge,
+> perhaps by abstracting it over a typeclass that is meaningful in
+> itself, or some or all of hashed-storage needs to move into the darcs
+> tree proper. Otherwise, changes to some parts of darcs will continue
+> to require lockstep changes to hashed-storage - which is ok when Petr
+> is developing the two together intensively on his own, but not really
+> when other people are involved or over a longer timeframe. One option
+> would be to move it all into the darcs tree but distribute it as a
+> separate cabal package with a more darcs-specific name.
+>
+> Petr: Well, I have done a bunch of work on separating the
+> darcs-specific bits. For now, they live in the library, because they
+> are an important testing resource. However, out of
+> Storage.Hashed.Darcs, there are only a few darcs-specific bits living
+> in Storage.Hashed. It also seems that abstracting the darcs-specific
+> bits is workable.
+>
+> I however expect this to be useful outside of darcs proper as well.
+> The lock-step development is a problem, but I am not sure how much it
+> can be eliminated. Probably something for further discussion.
+>
+> Ganesh: I guess the question is what the intended use cases for
+> hashed-storage outside darcs are. I can see two possibilities:
+>
+> \(a) General hash-structured storage library. It feels like it should
+> be generally useful but the only concrete idea I can think of would be
+> for reading git repos. In this situation hashed-storage really does
+> belong as an independent library.
+>
+> \(b) A way of reading darcs repos (and perhaps writing them, for the
+> brave). This would be an important step towards a stable darcs API,
+> and clearly should be a separate cabal package, but if it's just that,
+> I think it should be called something darcs-specific (darcs-storage?)
+> and live in the darcs tree.
+>
+> > Nicolas Pouillard: Or writing a program that needs massive
+> > persistent data, like a mail client. I'm planning to use this kind
+> > of library one day for a program like this, however maybe
+> > hashed-storage would have to be more flexible.
+>
+> I'm not saying that either of these use cases have to exist prior to
+> merging into mainline, just that it has to be understood (and
+> documented) what the expectations are.
+>
+> Ganesh: IMO, the emergence of a separate project using hashed-storage
+> clearly settles the question of whether hashed-storage should be an
+> independent library (the answer being that it should).
+>
+> What remains is to remove all the darcs-specific functionality from
+> it. I acknowledge that this is not a trivial problem, but I personally
+> consider it essential for proper decoupling of development work in the
+> future. Part of the separation might be aided by my new point about
+> "hash safety".
+>
+> > Ganesh (30/08/09): I've done some work myself to see if this is
+> > feasible, and the results are in
+> > [http://darcs.vm.spiny.org.uk/\~ganesh/gsoc-review-2009/ganesh/{hashed-storage,darcs-hs](http://darcs.vm.spiny.org.uk/~ganesh/gsoc-review-2009/ganesh/%7Bhashed-storage,darcs-hs)}
+> > I think it passes the same set of tests as the version of your code
+> > that I built on (though I had to make some changes to darcs-hs to
+> > get your version to build at all because I think you haven't pushed
+> > some patch to it).
+> >
+> > The result of my refactoring is that substantially less code is
+> > "darcs-specific", and the Storage.Hashed.Darcs module isn't a
+> > dependency for anything else in hashed-storage (and thus could and
+> > should easily be moved to darcs itself). It's not entirely ready to
+> > commit - there are a few outstanding issues to be discussed first -
+> > but it's nearly there.
+> >
+> > > Mornfall (30/08/09): I have checked out the hashed-storage
+> > > refactor. What I feel is a major problem with the approach is that
+> > > you tie in Tree serialisation into the Hash type. This also means
+> > > that for writing out a Tree under different serialisation, you
+> > > would have to convert from Tree h m to Tree h' m (with h and h'
+> > > often representing the same thing, but for different on-disk
+> > > formats). I tried to keep the Tree type format-neutral, it's just
+> > > the hash type that complicates matters here. Anyway, I have to go
+> > > now, more on this later.
+
+17. FIXME in Darcs.Repository.replacePristine
+
+> Ganesh (15/09/09): Obviously you already know about this, just making
+> sure it gets checked on before the merge happens. I don't actually
+> understand what the issue is, either.
+
+18. unsafe floatPath function from Storage.Hashed used in Darcs.Gorsvet
+
+> Ganesh: The floatPath function from Storage.Hashed is documented as
+> being unsafe and then used all over Darcs.Gorsvet. Needs an
+> explanation of what's unsafe and why it's ok to use it in
+> Darcs.Gorsvet.
+>
+> Petr: Yes. : The AnchoredPath is supposed to represent paths in
+> repository. Taking an arbitrary string and claiming it is a
+> repository-relative path is basically unsafe. I rely on darcs to only
+> pass the right kind of paths my way -- it's not optimal, and ideally,
+> there'd be only a single point where things pass through floatPath,
+> but that's currently not practical, as it would require extensive
+> changes to darcs path handling. I'll at least try to document this in
+> the meantime.
+>
+> Petr: I have documented the AnchoredPath bits a little more, removing
+> the extra-paranoid unsafety comments (replacing with less paranoid
+> version). I'll defer a proper solution to path handling on darcs side
+> to a later effort.
+
+# Deferred
+
+1.  magic numbers in Packed.hs
+
+    Ganesh (26/08/09): in particular in readPack
+
+2.  shouldn't Packed have magic bytes like Index?
+
+    Ganesh (26/08/09): or perhaps all the Packed stuff should be
+    deferred from this review
+
+3.  Deleting files on Windows.
+
+    Ganesh: Win32 removeFile workaround: not used consistently, should
+    be hidden behind some standard abstraction?
+
+    Petr: Definitely, I just tacked this on in the beta cycle for 2.3 to
+    make tests pass on windows.
+
+    Petr: I think it may be worthwhile to try coming up with a "unlink"
+    library that would handle removal of in-use files on windows
+    transparently for the application, somehow (and would just call
+    removeFile on POSIX). So far, I have thought about a small C lib
+    that would register atexit handler to clean up trash, come up with a
+    scheme to rename the to-be-removed files and also clean up any
+    pre-existing to-be-deleted files. This should cover all the bases,
+    although it's a little baroque way to unlink files. This assuming
+    that GHC RTS actually does exit() and not \_exit().
+
+    Ganesh: darcs already has atexit handlers (ick!)
+
+    Petr: Yes, but those require you to use main = withAtExit $ foo or
+    such, IIUIC. I.e. this won't work very well for a library. I'll
+    think about this, I guess it's not such a high priority (therefore,
+    deferring for now).
+
+4.  Renaming files to some fixed name (related to 3. above)
+
+    Ganesh: In various places (e.g. deleting on windows, corrupt pending
+    etc) a file gets renamed to a fixed different name, which could
+    cause problems if it already exists. There should be some standard
+    scheme to avoid collisions.
+
+    Petr: The corrupt pending behaviour is lifted from pre-existing
+    darcs code. For deleting on windows, this indeed needs a better
+    solution, but the current one mostly works for what its worth: if
+    the old file exists, it is quite unlikely to be in use. I have asked
+    elsewhere about disposing of files on win32, the only problem with
+    \_darcs/trash is that hashed-storage can't know about it.
+
+    Ganesh: We should defer the corrupt pending naming from this review.
+
+5.  `invalidateIndex` safety
+
+    Ganesh (14/09/09): It's quite dangerous to have to call this from
+    each relevant command. Can't the repository code track whether it's
+    needed?
+
+    > Petr (15.9.) Maybe it could, if the commands used the library in a
+    > consistent fashion. I think a full-scale review (and likely a
+    > refactor) of the commands is needed first. If all pristine
+    > manipulation goes through tentative, we can tack this into the
+    > commit phase. But we need to audit the code first. (The pending
+    > manipulation is already covered in the library and I checked all
+    > the paths.)
+    >
+    > Ganesh (15/09/09): OK, will defer this one, but I think it should
+    > be a priority area to look at soon (and I also agree commands are
+    > badly in need of a refactor).
+
+6.  Performance on old fashioned repos with plain pristine
+
+    Ganesh: As per the IRC conversation from 12th August, it turns out
+    that this work makes operations (just the ones that involve
+    diffing?) on plain repos much slower, because the hashed-storage
+    Tree structure doesn't track mtimes and so they can't be used as a
+    substitute for hash comparison.
+
+    If we are to introduce substantial slowdowns for plain repos, we
+    need to discuss and agree this more generally. Note that darcs 2.3
+    is already experiencing these slowdowns for whatsnew.
+
+    One option would be to keep around the old code (unsafeDiff/Slurpy
+    etc) for use with plain pristines. This would have the obvious
+    disadvantage of leaving us with two sets of filesystem abstraction
+    code to maintain.
+
+    Petr's suggestion is (I think) to superimpose a hashed index on
+    plain pristine, which would also add a level of robustness against
+    pristine corruption - darcs would at least be able to complain if
+    something messed up the plain files. This sounds like a good idea to
+    me, though I haven't thought about it in great detail yet.
+
+    Ganesh (17/08/09): From the discussion on the mailing list, perhaps
+    just accepting poor performance for un-hashed repos is ok. I'm not
+    too comfortable with it though, particularly given that there are a
+    number of darcs-1 repos out there that have history corruption and
+    as a result can't be converted to hashed format.
+
+7.  Why does the `Tree` structure have both `items` and `listImmediate`?
+
+    Ganesh (13/09/09): They seem to be kept in sync but having the list
+    seems redundant given that you can just do M.toList on the items. Is
+    there some efficiency or ordering concern?
+
+    Petr (27. 9. 2009): This is for performance. Back while I was
+    working on the Tree implementation, in a number of use-cases, only
+    one of the two is ever computed, depending on what you need to do.
+    For linear access, the list representation is more efficient while
+    for lookups the map is. IIRC, toList used to be pretty high on
+    profiles. Might be that things have changed since then (a lot of
+    work went into the index and other bits of code), so a re-evaluation
+    may be in place.
+
+    Petr (3.10.2009): I'll punt on this for now. We can re-evaluate this
+    later, a change there should have little to no effect on API.
+
+8.  Unsorted variants of `get_unrecorded` gone
+
+    Ganesh (14/09/09): The \_unsorted variants of get\_unrecorded\_\*
+    (now unrecordedChanges) have gone. They used to omit the
+    sort\_coalesceFL call where it wasn't needed. Have you checked on
+    the performance implications?
+
+    > Petr (15.9.) No, I just intuitively opted for simple. I doubt this
+    > has been properly profiled before. At least now if
+    > sort\_coalesceFL shows up high on profiles we know where to look
+    > and can also quantify the saving.
+    >
+    > Ganesh (15/09/09): OK
+    >
+    > Petr (3.10.2009): We can benchmark this later, I guess.
+
+

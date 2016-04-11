@@ -1,0 +1,88 @@
+# News and discussions
+
+1. Ganesh Sittampalam sent patches enabling a long-asked feature,
+edition of
+  ~ patches at record time. Review is underway:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-September/021452.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021452.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-September/021487.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021487.html)
+
+2. Eric Kow modified the roadmap for darcs 2.4, now focussing on
+handling
+  ~ hashed repositories efficiently and meeting the needs of the GHC
+    team:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-September/021357.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021357.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-September/021370.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021370.html)
+    -   [http://wiki.darcs.net/Roadmap](http://wiki.darcs.net/Roadmap)
+
+3. Eric also met researchers working into Operational Transformation,
+and
+  ~ wrote a report of this exchange, aiming at making people of
+    collaborative editing and revision control speak together and in a
+    common language:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-September/021382.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021382.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-September/021307.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021307.html)
+
+# Issues resolved in the last week (2)
+
+issue1300 Kamil Dworakowski
+  ~ -   logfile deleted on unsucessful record
+    -   [http://bugs.darcs.net/issue1300](http://bugs.darcs.net/issue1300)
+
+issue1582 Salvatore Insalaco
+  ~ -   bump required hashed-storage version to 0.3.8, to fix
+        Windows-related file deletion errors.
+    -   [http://bugs.darcs.net/issue1582](http://bugs.darcs.net/issue1582)
+
+# Patches applied in the last week (22)
+
+2009-09-19 Ganesh Sittampalam
+  ~ -   add canonization function for FL Prim
+    -   add substitution mechanism for PatchChoices
+    -   camelCase recently added functions
+    -   Add utility code for editing text
+    -   break out and export run\_editor utility function
+    -   add "parallel pairs"
+
+2009-09-17 Salvatore Insalaco
+  ~ -   Resolve issue1582: bump required hashed-storage version to
+        0.3.8, to fix Windows-related file deletion errors.
+
+2009-09-09 Ganesh Sittampalam
+  ~ -   change the type of gcau to reflect its behaviour
+    -   make type of checkUnrelatedRepos more general
+
+2009-09-17 Kamil Dworakowski
+  ~ -   resolve issue1300: logfile deleted on unsucessful record
+    -   modify issue1300 test to fail for the right reason
+
+2009-09-16 Eric Kow
+  ~ -   Accept issue1610: bug in get\_extra with darcs 1 semantics only.
+    -   Accept issue1609: Operational Transformations TP2 on conflict
+        marking.
+
+2009-09-15 Ganesh Sittampalam
+  ~ -   relicense Darcs.Commands.GZCRCs as BSD3
+
+2009-09-16 Petr Rockai
+  ~ -   Fix a (somewhat bogus) unused-module warning in Ssh.
+    -   Re-implement haskell\_policy in terms of hlint.
+
+2009-09-13 Kamil Dworakowski
+  ~ -   test that tentative leftover is cleared
+    -   extend issue1406 test
+    -   regression test for amend-record with failed test
+
+2009-09-06 Reinier Lamers
+  ~ -   Fix locale switching in emailformat.sh test
+    -   Remove home-grown UTF-8 decoder, use utf8-string instead
+
+2009-09-13 Trent W. Buck
+  ~ -   Fix a typo László reported months ago.
+
+

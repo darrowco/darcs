@@ -1,0 +1,100 @@
+# Blog Buzz
+
+As people discover and use darcs, a number are expressing their
+excitement in their blogs. Here's a sampling:
+
+-   [Git as a HIT](http://dlicata.web.wesleyan.edu/pubs/l13git/git.pdf)
+    (2013) discusses patches as a *h*igher *i*nductive *t*ype
+-   [Message-Passing Concurrency for Haskell using the CHP
+    library](http://chplib.wordpress.com/2010/01/14/darcs/) (2010) *"All
+    my Haskell code lives in darcs repositories, and this post is
+    intended to detail a little of how I use it."*
+-   [Darcs 2: A major
+    update](http://mark.stosberg.com/blog/2008/10/darcs-2-a-major-update.html)
+    (2008) *"The reality is that while some of the weaknesses of Darcs
+    1.0 were dealbreakers for some users, Darcs 2 is a solid, mature,
+    usable release that deserves a second look."*
+-   [allocPSA Source Code Workflow with
+    Darcs](http://allocpsa.com/blog/allocPSA_Source_Code_Workflow_with_Darcs.html)
+    (2008) *"Functionality that is usually considered to be an "add-on"
+    for most DVCS', we consider to be a necessary and fundamental part
+    of running a distributed development project."*
+-   [A User’s Guide to Darcs
+    2](http://blog.worldmaker.net/2008/aug/04/users-guide-darcs-2/)
+    (2008) *"Darcs 2 has some major new features and more importantly
+    some great new ways to get more performance out of darcs."*
+-   [Using darcs with FTP and without
+    SSH](http://www.riffraff.info/2007/6/5/using-darcs-with-ftp-and-without-ssh)
+    (2007)
+-   [Managing a Django project using
+    darcs](http://e-scribe.com/news/348) (2007) *"Most of what I say
+    below applies to any version control system -- it's just simpler (in
+    my opinion) with darcs."*
+-   [Simple Darcs
+    Tutorial](http://blog.interlinked.org/tutorials/darcs.html) (2006)
+-   [Darcs and Arch
+    revisited](http://www.findinglisp.com/blog/2005/03/darcs-and-arch-revisited.html)
+    (2005) *"When I say that darcs is simple, I really mean it."*
+-   [Ruby Buzz: Looking at
+    Darcs](http://www.artima.com/forums/flat.jsp?forum=123&thread=90259)
+    (2005) (or see [original
+    post](http://www.siaris.net/index.cgi/VersionControl/Darcs.rdoc), or
+    the movie on the [feedback
+    wiki](http://www.siaris.net/cgi-bin/siwiki.pl?FeedBack/DarcsVcs))
+    *"The number one feature I like is that it is damn easy to use
+    without sacrificing power."*
+-   [Darcs
+    infected](http://www.xoltar.org/2005/jan/20/darcs-infected.html)
+    (2005) *"You may want to use it even though you already have another
+    system."*
+-   [Benefits from a real world switch from CVS to
+    darcs](http://mark.stosberg.com/Tech/darcs/cvs_switch/easier.html)
+    (2005)
+-   <http://gintasm.blogspot.com/2005/06/europython-2005-report.html>
+    *"I use darcs for managing my code, and it has been great so far,
+    much more pleasant to use that Arch and much more powerful than
+    Subversion which I use at work."*
+-   [Integrals and Derivates: A discussion of Subversion, Arch and
+    Darcs](http://sourcefrog.net/weblog/software/vc/derivatives.html)
+    (2004) *"Working in terms of changesets, or at least having the
+    option to do so allows more powerful operation."*
+-   [Forgiveness in Version Control, by Martin
+    Pool](http://sourcefrog.net/weblog/software/vc/darcs/unrecord.html)
+    (2004) *"darcs gets a reasonably good balance between allowing
+    people to undo mistakes, and protecting them from accidentally
+    losing work."*
+
+# Version Control Comparisons
+
+Not necessary blogs:
+
+-   [Comparison of revision control
+    software](http://en.wikipedia.org/wiki/Comparison_of_revision_control_software),
+    Wikipedia article
+-   DVCS Roundup: One System to Rule Them All (2009) [part
+    2](http://ldn.linuxfoundation.org/article/dvcs-roundup-one-system-rule-them-all-part-2),
+    [part
+    3](http://ldn.linuxfoundation.org/article/dvcs-round-one-system-rule-them-all-part-3)
+-   [Better SCM Version Control Systems
+    Comparison](http://better-scm.berlios.de/comparison/comparison.html)
+    (2010)
+-   [Whose Distributed VCS Is The Most
+    Distributed?](http://changelog.complete.org/posts/528-Whose-Distributed-VCS-Is-The-Most-Distributed.html),
+    by John Goerzen (2006)
+
+# Darcs troubles
+
+-   [darcs: a study in communication
+    failure](https://lopsa.org/node/1656) (2008) *''The darcs revision
+    control system has all but lost out to git within the past few
+    months. A rather large part of the reason is a rushed and very
+    poorly worded release announcement, following a rather long (I'm
+    told 4 years; I haven't been aware of it that long, which itself is
+    perhaps ominous) post-1.0 silence from the darcs developers''*
+-   [Reexamining Darcs &
+    Mercurial](http://changelog.complete.org/posts/588-Re-Examining-Darcs-Mercurial.html)
+    (2007) *I continue to believe that it is the most distributed of the
+    distributed VCSs, which is a Good Thing. However, I have lately
+    started having trouble with Darcs hanging while working on my Debian
+    packages.*
+

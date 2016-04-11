@@ -1,0 +1,55 @@
+TODO this is outdated (2016-01)
+
+# The Unit Tests
+
+The unit tests are built into the darcs-test binary, which you can run
+by doing a `dist/build/darcs-test/darcs-test`.
+
+To run the tests as thoroughly as before the switch to test-framework,
+you do
+`dist/build/unit/unit --maximum-unsuitable-generated-tests=5000 && dist/build/unit/unit -t 'Checking again we can do merges using QuickCheck' -a 1000`.
+
+The `Main` module of the unit test executable is `src/test.hs`. This
+file imports the QuickCheck and HUnit test suites embedded into the
+various modules of the Darcs source code.
+
+The darcs unit tests use the
+[test-framework](http://batterseapower.github.com/test-framework/)
+package for executing the tests and handling command-line flags.
+
+## QuickCheck-based tests
+
+There are some QuickCheck-based tests in `src/unit.lhs`, which are
+converted to test-framework `Test`s by the `testProperty` function.
+
+## Non-QuickCheck tests
+
+There are also non-QuickCheck tests in the Darcs.Patch.Test hierarchy.
+Such a test has type `[String]`, counterintuitively. The test returns an
+empty list if it succeeds and strings explaining the failures if it
+fails. There is a `testStringList` to convert such tests to
+Test.Framework `Test` via HUnit.
+
+## Adding new tests
+
+If you want to add new tests, add them within the module you are
+testing, and make sure the module exports a `testSuite :: Test` function
+that calls all the tests for that module. The module `Darcs.Email` is an
+example of this approach.
+
+### Tests in Darcs.Patch.Test
+
+For the tests that reside in `src/Darcs/Patch/Test`, there are five
+modules:
+
+-   `Darcs.Patch.Test.Unit` contains the big list of test patches
+    (`patch_unit_tests`) and some properties
+-   `Darcs.Patch.Test.Properties` contains some properties
+-   `Darcs.Patch.Test.Util` contains generators and `Arbitrary`
+    instances for darcs's data types, and some properties.
+-   `Darcs.Patch.Test.QuickCheck` contains `Arbitrary` instances and
+    QuickCheck-related helper functions.
+-   `Darcs.Patch.Test.Check` contains the definition of a `PatchCheck`
+    state monad for tracking repository state, used by
+    `Darcs.Patch.Test`
+

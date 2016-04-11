@@ -1,0 +1,106 @@
+# News and discussions
+
+1.  Ganesh Sittampalam uploaded the second beta of darcs 2.8:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2012-January/026356.html](http://lists.osuosl.org/pipermail/darcs-users/2012-January/026356.html)
+
+2.  Zooko O'Whielacronx called for a new maintainer for darcsver:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2012-January/026350.html](http://lists.osuosl.org/pipermail/darcs-users/2012-January/026350.html)
+
+3.  Eric Kow summed up the recent issues of Darcs with regards to SSH:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2012-January/026340.html](http://lists.osuosl.org/pipermail/darcs-users/2012-January/026340.html)
+
+# Issues resolved in the last week (2)
+
+issue845 Eric Kow
+  ~ -   pass ssh stderr through.
+    -   [http://bugs.darcs.net/issue845](http://bugs.darcs.net/issue845)
+
+issue2090 Eric Kow
+  ~ -   correctly detect existing transfer-mode connection.
+    -   [http://bugs.darcs.net/issue2090](http://bugs.darcs.net/issue2090)
+
+# Patches applied in the last week (44)
+
+2012-01-15 Ganesh Sittampalam
+  ~ -   resolve conflicts in darcs.cabal with test\_stub.hs
+        reinstatement
+    -   complete rollback of test\_stub.hs removal for main branch
+    -   resolve conflicts in darcs.cabal with test\_stub.hs removal
+    -   rollback removal of build-tools constraints
+
+2011-06-22 Florent Becker
+  ~ -   TAG 2.7.98.1
+    -   Remove test\_stub.hs since it freaks cabal sdist out :-(
+    -   Change version to 2.7.98.1 (2.8 beta 1)
+
+2012-01-05 Ganesh Sittampalam
+  ~ -   make website requires darcs for preprocessing
+    -   remove dead cabal flag from release script
+    -   add some missing files to darcs.cabal
+
+2012-01-01 Eric Kow
+  ~ -   Drop SSH ControlMaster support.
+    -   Move ssh verbosity settings to Darcs.Global.
+    -   On Windows, prefer plink/pscp/psftp for ssh.
+
+2011-10-18 Ganesh Sittampalam
+  ~ -   fix harness.sh test on cygwin
+
+2012-01-01 Eric Kow
+  ~ -   Resolve issue2090: correctly detect existing transfer-mode
+        connection.
+    -   Fix scp invocation.
+    -   Fix ssh performance regression.
+    -   Expose a Darcs.Commands.ShowFiles.manifest for Darcs API users.
+    -   More readable helper functions in Darcs.Commands.ShowFiles.
+    -   Recast patch property comments in Unicode.
+    -   Accept issue2090: darcs transfer-mode connection not shared.
+    -   Move out useful lib code for ssh tests.
+    -   Update tests/network/ssh.sh to match last-regrets.
+    -   Fix some bitrot in tests/network/ssh.sh.
+    -   Remove Darcs.Ssh.runSSH (only used once).
+    -   Resolve issue845: pass ssh stderr through.
+    -   Flag that reports if we are on a Windows box.
+    -   Move ssh command detection to Global.
+    -   Rename Ssh to Darcs.Ssh
+    -   Improve debugging messanges for darcs transfer-mode
+    -   Refactor darcs help environment and make it support multiple
+        args.
+
+2012-01-01 Ganesh Sittampalam
+  ~ -   turn packs off by default due to outstanding bugs
+
+2010-01-02 Thomas Hartman
+  ~ -   make monad pipeline explicit
+
+2011-12-31 Ganesh Sittampalam
+  ~ -   use a flag to choose base\>=4.4
+    -   GHC 7.4 build fix
+    -   bump dep on process
+
+2011-12-24 Mark Wright
+  ~ -   ghc 7.4.1-rc1 build
+
+2011-08-12 Ganesh Sittampalam
+  ~ -   support GHC 7.2
+
+2011-12-31 Eric Kow
+  ~ -   Mark issue1819 test as failing and extend it a tiny bit.
+
+2010-04-18 Dave Love
+  ~ -   Accept issue1819: pull --dont-allow-conflicts doesn't work
+
+2009-06-28 Trent W. Buck
+  ~ -   Add optional specifier for "darcs help environment [VARIABLE]".
+
+2011-12-31 Eric Kow
+  ~ -   Slap a copyright header on the index argument test.
+    -   Rename --index tests to be a bit more specific.
+
+2011-12-28 Andreas Brandt
+  ~ -   Test case for argument handling
+
+

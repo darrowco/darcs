@@ -1,0 +1,77 @@
+---
+title: Old-fashioned repository upgrade instructions
+...
+
+There exist three Darcs repository formats: old-fashioned (OF), hashed and darcs-2.
+Versions 2.5.x of Darcs are the last one that ensure full support of OF
+repositories. From version 2.8 (2012) , this support is limited and
+users are invited to upgrade their OF repositories to hashed.
+
+The commands that can still be run on local OF repositories are:
+
+-   changes
+-   show
+-   optimize --upgrade
+-   whatsnew
+
+The commands that can be run against remote OF repositories are:
+
+-   clone
+-   pull
+-   send
+
+Moreover, it is possible to do a *remote* push to an OF repo, that is,
+pushing via ssh if the remote machine's Darcs binary is able to write
+into OF repositories.
+
+Checkpoints are no longer supported in Darcs 2.8 and later. That is,
+the `--partial` flag for cloning repositories is no longer available.
+
+# How to know the format of a repository
+
+Run the following command in a repository:
+
+    darcs show repo
+
+If you find the line:
+
+    Pristine: PlainPristine
+
+then you have an OF repository. If not, it should instead read:
+
+    Pristine: HashedPristine
+
+# Ensuring everyone is using Darcs 2
+
+Darcs 2 is required to work with hashed repositories. Hence, the hashed
+format is always safe on a "client" machine, but if you have other
+people pulling from your repo, or sending to it, then you have to make
+sure they have Darcs 2 before going hashed.
+
+See [Binaries]() for instructions on building Darcs and pre-built
+binaries.
+
+# Converting a repository to the hashed format
+
+With Darcs 2.4 and later, you can upgrade an existing repository
+in-place with a single command:
+
+    darcs optimize --upgrade
+
+With Darcs older than 2.4, you can use the following steps:
+
+    darcs get ./myrepo ./hashedrepo                        # make a hashed clone
+    cp ./myrepo/_darcs/prefs/*  ./hashedrepo/_darcs/prefs/ # copy local settings
+    mv ./myrepo ./oldrepo
+    mv ./hashedrepo ./myrepo
+
+Then `./oldrepo` is your OF backup and `./myrepo` is the hashed version.
+
+# Looking for help
+
+For any question related to upgrading to the hashed format:
+
+-   [users mailing
+    list](http://lists.osuosl.org/mailman/listinfo/darcs-users)
+-   IRC channel: \#darcs on freenode.net
+

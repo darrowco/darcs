@@ -1,0 +1,141 @@
+Questions that new darcs hackers may have...
+
+# Getting started
+
+## Where I can get the a copy of the darcs development repo?
+
+    darcs clone --lazy http://darcs.net/screened
+
+Release branches can be found under
+<http://darcs.net/releases>
+
+## How do I submit a patch for inclusion in Darcs?
+
+See [GettingStarted](GettingStarted)
+
+## I'm bored. Give me something to do.
+
+See [HowToHelp](../HowToHelp)
+
+# Patches
+
+## Is there a naming scheme for bugtracking related commits?
+
+See [GettingStarted](GettingStarted)
+
+## I sent a patch and got no response!
+
+We're very sorry to hear that! The most likely explanation is that we
+did not get your patch (we do try to respond to every patch we receive,
+and slip-ups are rare). Have a look at our [informal darcs send
+documentation](/Using/Send) some troubleshooting advice
+
+## Can I amend a patch I sent to the tracker?
+
+You can only amend a patch before it has been screened. Some tricks for
+finding out if the patch has been screened or not:
+
+    darcs log --repo http://darcs.net/screened --match 'author Bob' -i
+    darcs log --repo http://darcs.net/screened --match 'name foo'
+
+If your patch has not yet been screened, it should be fine to amend. If
+it already has been applied, you cannot amend, but must send a followup.
+
+## How can I replace a patch I already sent to the tracker?
+
+First, see the question above: has your patch already been screened?
+
+Our preferred way is just to send a reply to the original ticket. Check
+the [Getting Started](GettingStarted#sending-your-patches) guide (search
+for "send") for details.
+
+If you've already sent a new patch, no problem! Just mark the old as
+obsoleted and add the ticket number for the new patch in its superseder
+field.
+
+# Test suite
+
+## Do I really have to run all those tests?
+
+If you're pretty sure that your modification is ok, you could do a
+`darcs record --no-test`. A useful trick if you're working on many
+patches is to run `darcs trackdown` at the very end, when you're ready
+to test them out. Keep in mind that you can also use the
+`tests/tests_to_run` mechanism to select which tests you want to run
+whenever you do a `make test`.
+
+## Should I worry about tests unexpectedly succeeding?
+
+No. These are tests written for when certain wishlist features are
+implemented or bugs are corrected. If they unexpectedly succeed, it
+could either mean that the feature in question has been implemented (and
+that the test suite should be modified), or that darcs has
+system-specific behaviour or that there is something non-deterministic
+going on. (*FIXME: any comments?*)
+
+## How do I run a subset of tests?
+
+    ~ cabal test tests/foo.sh tests/bar.sh
+
+# Other infrastructure
+
+## How do I edit the documentation?
+
+The command `darcs help markdown` generates a reference made
+from the output of all commands `darcs help COMMAND`, plus reference
+about environment variables and patterns.
+
+If what you need to document is quite small, edit directly the help
+output of the command you are modifying. Otherwise edit this wiki instead.
+
+## How can I play around with darcs functions and commands in GHCi?
+
+    cabal repl
+
+# Code questions
+
+## What is the format of a patch bundle?
+
+1.  a blank line
+2.  "New patches:"
+3.  a blank line
+4.  The patches (see gzipped files in \_darcs/patches for format).
+5.  "Context:"
+6.  The context (see darcs changes --context for format).
+7.  "Patch bundle hash:"
+8.  Hex representation of the sha1-hash of the patches in (4) WITHOUT
+    "New patches", "Context:" **and without blank lines**. (Note that
+    I'm not a developer of darcs itself. These information is kind of
+    reverse-engineered.)
+
+## How does patch selection work?
+
+See [Patch Selection Mechanism](/DarcsInternals/PatchSelection)
+
+## What is the difference between a patch set and a patch bundle, a named patch and a composite patch, etc?
+
+See [Glossary](../Glossary)
+
+## What's the convention for variable names, camelCase or using\_underscores?
+
+camelCase (the underscores are from older code)
+
+## Darcs does not allow tabs in Haskell code, how do I disable them in my editor?
+
+If you use Emacs there are several ways according to Dave Love
+
+    (add-hook 'haskell-mode-hook '(lambda () (setq indent-tabs-mode nil)))
+
+or use
+<http://www.loveshack.ukfsn.org/emacs/dir-locals.el>
+or
+<http://www.loveshack.ukfsn.org/emacs/indent-tabs-maybe.el>
+to set indent-tabs-mode locally.
+
+# See also
+
+-   [DarcsInternals](/DarcsInternals)
+-   [Patch theory questions](../Theory/Questions)
+-   [Tips](Tips)
+-   [Glossary](../Glossary)
+

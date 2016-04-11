@@ -1,0 +1,56 @@
+Supporting a "copy" patch in darcs seems likely to be difficult. It's also not clear if we really need them.
+
+Alternatives to copy
+--------------------
+The classic use case for file copy is to split up the contents of a file into two files.
+
+This is probably better expressed with a "hunk move" patch which seems likely to be implementable with some work.
+
+Why implementing copy seems hard
+--------------------------------
+For a copy patch to be useful, it needs to merge nicely: if on one branch you change file X, and on another branch you copy file X to file Y, then merging the two should lead to the same change being made to files X and Y.
+
+So merging two patches (change X + copy X Y) would naturally lead to three patches (copy X Y;change X;change Y).
+
+In darcs, merges must be undoable (by a commute). So now we'll need some kind of commute rules that starts from /three/ patches instead of the usual two. This seems likely to get very complicated.
+
+An alternative approach might be to generalise all patches that change files so that they can apply the same change to each of a /set/ of files. Then (change X + copy X Y) becomes (copy X Y; change {X,Y}).
+
+This seems more plausible theoretically but I'm not sure if patches on multiple files would work very well in practice. They probably wouldn't commute with patches that operate on only some of the files, except perhaps if the commute didn't change the representation of the patch on the set of files (e.g. replace patches).
+
+
+Previous notes on copy patches
+------------------------------
+
+(This section contains the previous content of this page. It should be read with the difficulties above in mind.)
+
+A copy-patch records the copy operation of the file system.
+
+The patch may be denoted as: **copy** *from to*
+
+This is equivalent to: **addfile** *to*; **hunk** ''to 1 <content of
+from\>
+
+Its pro over the equivalent form is that it documents the connection of
+from and to.
+
+It commutes with all patches but
+
+-   hunk from ... this satisfies:
+-   hunk from X ; copy from to = copy from to; hunk to X; hunk from X
+-   copy from to ; hunk from X = hunk from X; copy from to; hunk to
+    X\_inverse
+-   addfile to
+-   addfile to ; copy from to = error
+-   copy from to ; addfile = error
+-   hunk to
+-   hunk to X ; copy from to = error
+-   copy from to ; hunk to X = hunk from X ; copy from to; hunk from
+    X\_inverse
+-   remove from
+-   remove from ; copy from to = error
+-   copy from to ; remove from = rename from to
+-   remove to
+-   remove to; copy from to = hunk to <remove all;insert content of
+    from\>
+-   copy from to; remove to = <nothing\>

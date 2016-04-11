@@ -1,0 +1,104 @@
+# Report
+
+<http://blog.darcs.net/2013/02/darcs-hacking-sprint-8-report.html>
+
+# When and where
+
+The sprint will be hosted in Paris, France on Feburary 15th, 16th and 17th
+(Friday to Sunday). We have access to a meeting room from 10h00 to 18h00
+each day.
+
+# How to come
+
+The sprint is kindly hosted by [IRILL](http://www.irill.org/), in the
+13th arrondissement or Paris, near the metro stop Place d'Italie.
+
+See
+[http://www.irill.org/about/access](http://www.irill.org/about/access)
+for more information.
+
+# Accomodation
+
+4 of us will stay in the hostel [Absolute Paris](http://www.absolute-paris.com/).
+If you join us for the sprint, you may want to stay in the same place.
+It costs approx. 30€/night/person.
+
+# Who
+
+-   Guillaume Hoffmann (gh) (arriving train station gare de l'est
+    Fri at 9:46, leaving Sun at 20:13)
+-   Owen Stephens (owst)
+-   Ganesh Sittampalam (Heffalump)
+-   Florent Becker (gal_bolle)
+-   Radoslav Dorcik (dixie)
+
+# What
+
+- TBC
+- Darcs bridge
+- 2.10 ?
+    - <http://lists.osuosl.org/pipermail/darcs-devel/2013-January/014726.html>
+- Priorities: <http://darcs.net/Development/Priorities>
+- Last sprint & summer of code review: <http://darcs.net/Sprints/2012-03>
+- Infrastructure/etc discussions:
+    - revive darcs-benchmarks for 2.10 release
+- Testing, testing, testing:
+    - patch index
+    - packs
+    - bare repositories
+    - rebase
+- Google Summer of Code 2013
+- What do with the trello board?
+- Technical discussions:
+
+# Sprint backlog
+
+# Friday
+
+## morning
+
+
+- correction for <http://bugs.darcs.net/issue1579> (dixie)
+- Discussion: Where is the manual?
+    - Guillaume removed it (with the website) from the repository (july 2012)
+    - darcs.net/manual is the last generated version from the reviewed repository
+    - darcs can generate a commands reference with `darcs help manpage`
+      (Groff output) and `darcs help markdown` (markdown, can be given to pandoc to
+      convert in many formats)
+    - the motivation of moving away from literate haskell and latex is to have
+      everything in markdown
+    - what we should ensure: 1) darcs.net/manual has something 2) this something
+      corresponds to the current stable branch of darcs (as of now 2.8), because
+      sometimes commands and flags change
+- Discussion: _darcs/inventories and _darcs/patches are not garbage collected
+
+
+## afternoon
+
+- accept patch that closes http://bugs.darcs.net/issue904 (gh)
+- sent a patch to solve http://bugs.darcs.net/issue2274 (gh)
+- fixing network test harness (gh)
+
+# saturday
+
+## morning
+
+- Discussion: GSoC 2013 projects. We will apply as independent organization
+  and ask for 2 slots. We have at least 3 posible projects.
+
+## afternoon
+
+- complete `darcs help markdown` so that it also outputs environment
+  variables help and patterns help (dixie, gh)
+
+# sunday
+
+- Discussion: 2.10 release timeline:
+    - we should have a beta by the time we apply as an organization for GSoC (ie, mid-March)
+    - also it would be cool to have 2.10 on April 9th celebrate the 10 years of
+      [the initial announcement of darcs](http://www.haskell.org/pipermail/haskell-cafe/2003-April/004139.html) :-)
+- Discussion: last regrets for 2.10:
+    - conclusion is we keep it at is, but with some documentation, and add Return as an alias for Space to pick the default option at any prompt
+    - some documentation being "did you know you can avoid the last question by pressing 'a' or 'd' when you're done?"
+    - With future fixes as we find them, including: "Did you mean to record nothing?" if you've said n to each "do you want to record this?"
+

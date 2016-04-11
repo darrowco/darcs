@@ -1,0 +1,321 @@
+# News and discussions
+
+1.  After 7 years of being the maintainer/Benevolent Dictator of Darcs,
+    Eric Kow stepped down and offered me (Guillaume Hoffmann) to take over,
+    which I accepted:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2015-October/027144.html>
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2015-October/027145.html>
+
+2.  The release process of Darcs 2.12 will start when GHC 8 is released:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2016-March/027185.html>
+
+3.  We had two new minor releases of Darcs 2.10, and in spite of being minor,
+    they contain a few interesting changes and optimizations:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2015-November/027151.html>
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2016-January/027182.html>
+
+4.  In a span of 4 months we had two sprints, one in Paris in September and another
+    another in Seville in January, check out the reports:
+
+    -   <http://blog.darcs.net/2015/09/darcs-hacking-sprint-9-report.html>
+    -   <http://blog.darcs.net/2016/01/darcs-hacking-sprint-10-report.html>
+
+5.  Finally, Pierre-Étienne Meunier announced a Pijul sprint in may in Finland.
+    Darcs hackers are welcome!
+
+    -    <http://pijul.org/2016/03/16/sprint.html>
+
+# Issues resolved (7)
+
+issue2269 Eric Kow
+  ~ -   push hijack test to suspend time
+    -   <http://bugs.darcs.net/issue2269>
+
+issue2276 Eric Kow
+  ~ -   Keep track of patch hijack decisions
+    -   <http://bugs.darcs.net/issue2276>
+
+issue2400 Ben Franksen
+  ~ -   use async package to keep track of unpack threads
+    -   <http://bugs.darcs.net/issue2400>
+
+issue2459 Ben Franksen
+  ~ -   fall back to writing the file if createLink fails
+    -   <http://bugs.darcs.net/issue2459>
+
+issue2479 Ben Franksen
+  ~ -   root dir most not be among the sources of a move
+    -   <http://bugs.darcs.net/issue2479>
+
+issue2481 Ganesh Sittampalam
+  ~ -   expose API for 'darcs diff' command
+    -   <http://bugs.darcs.net/issue2481>
+
+issue2489 Guillaume Hoffmann
+  ~ -   dequote filepaths while importing from git
+    -   <http://bugs.darcs.net/issue2489>
+
+
+# Patches applied (176)
+
+2016-03-26 Sergei Trofimovich
+  ~ -   allow zip-archive-0.3
+
+2016-03-22 Guillaume Hoffmann
+  ~ -   remove failing-issue1609 from testsuite as property we don't want
+
+2016-03-06 Ben Franksen
+  ~ -   move command: fixed punctuation of error messages and added a comment
+    -   use bug from impossible.h instead of error
+    -   cleanup in Darcs.Patch.Merge: use case instead of fromJust (do return ...)
+
+2016-02-12 Ganesh Sittampalam
+  ~ -   Get rid of the need for DummyPatch in Darcs.Patch.Match
+
+2016-03-05 Guillaume Hoffmann
+  ~ -   move runHLint.sh to root and update to run outside of testsuite
+
+2016-02-12 Ganesh Sittampalam
+  ~ -   drop re-exports from Darcs.Patch.Rebase
+    -   abstract out checking whether a Named is internal
+    -   add versions of simplifyPush[es] for Suspended
+    -   move addFixup to Rebase.Container and give it a clearer name
+    -   add Repair instance for Suspended
+    -   Ignore the rebase internal patch when showing dependencies
+    -   simplify instance ShowPatchBasic (RebaseSelect p)
+    -   break out PatchInspect instance for Suspended
+    -   rename mkSuspended to mkRebase and make it work on 'Suspended'
+    -   use Suspended instead of FL RebaseItem in take*Rebase*
+    -   break out RepairToFL instance for Suspended
+    -   break out ReadPatch instance for Suspended
+    -   break out Check instance for Suspended
+    -   break out Show instances for Suspended
+    -   break out Conflict instance for Suspended
+    -   break out Effect instance for Suspended
+    -   add PrimPatchBase instance for Suspended
+    -   break out ShowPatch instance for Suspended
+    -   break out Apply instance for Suspended
+    -   refactor instance ShowPatch Rebasing a bit
+    -   inline a couple of defaults to simplify future refactoring
+    -   abstract out an instance ShowPatchBasic Suspended
+    -   Introduce a 'Suspended' type to encapsulate 'FL RebaseItem'
+
+2016-03-18 Ben Franksen
+  ~ -   skip ssh tests if ssh server is down
+    -   made network ssh tests more robust by passing --skip-long-comment
+    -   fix ssh network tests so they work in the test harness
+    -   skip http network tests when server does not respond
+    -   run network tests by default
+    -   resolve issue2479: root dir most not be among the sources of a move
+    -   accept issue2479: bug descending in modifyTree
+
+2016-03-08 Guillaume Hoffmann
+  ~ -   update failing-issue2219
+    -   acknowledge that issue1196 is solved
+    -   acknowledge a working case in failing-index-argument.sh
+    -   merge HACKING into README.md
+
+2016-02-17 Ganesh Sittampalam
+  ~ -   get rid of a couple of trailing newlines
+
+2016-02-05 Guillaume Hoffmann
+  ~ -   remove unused executable and testsuite dependencies
+    -   comment in cabal file workaround
+    -   group all non-optional build-depends
+    -   remove unused darcs-test dependencies
+    -   comment use of flag REENTRANT
+    -   drop definition of HAVE_SIGINFO_H unused since 2009
+    -   hlint Darcs.Util.Diff.Patience
+    -   format patch names within 20 characters in dependencies output
+    -   show dependencies up to last tag by default
+    -   further merge hashed-storage code and tests into darcs code
+    -   bump second html dependency
+    -   darcs show dependencies
+    -   implement function getDeps
+
+2016-01-28 Ganesh Sittampalam
+  ~ -   fix git test involving deletions
+
+2016-01-25 Guillaume Hoffmann
+  ~ -   handle file moves and copies when importing from git
+    -   recommend using -M flag on git fast-export
+    -   tests related to git import of file moves
+    -   use F and T instead of From and To in whatsnew --machine-readable
+    -   bump dependencies lower bounds implied by requiring ghc 7.6
+    -   2.10.3 changelog
+
+2016-01-29 Ganesh Sittampalam
+  ~ -   support transformers-compat 0.5.x
+
+2016-01-25 Guillaume Hoffmann
+  ~ -   avoid irrefutable pattern when importing unnamed commit
+    -   test for deleting empty directories on git import
+    -   delete empty directories on git import
+    -   rollback filename dequoting on import since now done during parsing
+    -   quoting and escaping of filenames in convert export and import
+    -   test for checking filepaths consistency with git
+    -   resolve issue2489: dequote filepaths while importing from git
+
+2016-01-28 Ganesh Sittampalam
+  ~ -   fix tests that use "git commit"
+    -   applyToTree is just a specialisation of applyToState
+    -   drop unnecessary constraint
+    -   simplify type
+    -   drop unused (and never defined) putApplyState
+    -   move the ObjectMap related code to the FileUUID patch type
+    -   disentangle the state-specific ApplyMonad methods
+    -   swap argument order to ApplyMonad/ApplyMonadTrans
+    -   Rename Prim.V3 to Prim.FileUUID
+    -   move listConflictedFiles out of Conflict class
+    -   Get rid of default implementation of conflictedEffect
+    -   Add some tests for how conflicts are reported
+    -   Drop an unnecessary call to patchcontents in applyAndFix
+    -   Drop unnecessary use of patchcontents in hunkmatch and touchmatch
+
+2016-01-16 Guillaume Hoffmann
+  ~ -   rename Patch and RealPatch to RepoPatchV1 and RepoPatchV2 in harness
+    -   rename Patch and RealPatch to RepoPatchV1 and RepoPatchV2 in darcs code
+    -   do not open patches uselessly when no file restriction given
+    -   add Darcs.Test.Patch.Selection and one unit test
+    -   convert import should be a RepoJob, not a V2Job
+    -   replace TaggedPatch by LabelledPatch in a comment
+    -   whatsnew --machine-readable help string update on file moves
+    -   --machine-readable flag for more parseable whatsnew
+    -   fix code inside of a comment
+
+2016-01-16 Ganesh Sittampalam
+  ~ -   resolve conflicts between changes to splitters and to hijacking
+    -   capture diffAlgorithm in splitters instead of passing it to SelectChanges unconditionally
+    -   drop unneeded export
+    -   simplify the PatchInspect (Rebasing p) instance
+    -   implement hunkMatches for PatchInfoAnd
+    -   move Rebasing out into its own module
+    -   break RebaseItem out into its own file
+    -   bump async dependency
+    -   conditionalise a couple of orphan instances
+    -   resolve conflict in build-tools removal
+    -   drop build-tools restriction
+    -   Bump time, HTTP dependencies
+
+2016-01-15 Guillaume Hoffmann
+  ~ -   set use-time-1point5 flag default to True to please stack
+    -   disable interfering env variable in issue1739 test
+    -   rename README to README.md to get it properly rendered
+
+2016-01-15 Ganesh Sittampalam
+  ~ -   resolve conflict between binary version bump and containers dep
+    -   bump binary, transformers and tar upper bounds
+
+2016-01-14 Guillaume Hoffmann
+  ~ -   make commit an alias for record
+    -   implement repoXor and show it in "show repo" output as "Weak Hash"
+
+2015-12-28 Ganesh Sittampalam
+  ~ -   Portability fix - #type nl_item isn't always Int32
+    -   add test that lost deps during rebase are reported on
+    -   remove unused fmapPIAP
+
+2015-12-22 Guillaume Hoffmann
+  ~ -   fix repo upgrade help string
+
+2015-12-02 Ganesh Sittampalam
+  ~ -   resolve issue2481: expose API for 'darcs diff' command
+
+2015-11-20 Guillaume Hoffmann
+  ~ -   remove a flag needed only for GHC < 7
+    -   remove -fno-warn-dodgy-imports from modules that were still using it
+    -   no longer hide catch from Prelude since we require ghc>=7.6
+    -   acknowledge -fno-warn-dodgy-imports is always needed
+    -   merge Darcs.Patch.ConflictMarking into Darcs.Patch.Conflict
+
+2015-11-29 Ganesh Sittampalam
+  ~ -   bump dependencies on vector, process, HUnit
+    -   force grep to treat output of locale as text
+
+2015-11-20 Guillaume Hoffmann
+  ~ -   Rename Darcs.Repository.LowLevel to Darcs.Repository.Pending
+
+2012-08-09 Eric Kow
+  ~ -   Haddock the pending patch parts of Darcs.Repository.State.
+    -   Make Darcs.Repository.isSimple apply over a whole list.
+
+2015-11-09 Guillaume Hoffmann
+  ~ -   rename NEWS to CHANGELOG to please hackagedb
+    -   fix release date of 2.10.2
+    -   update NEWS for 2.10.1 and 2.10.2
+    -   fix two tests after stopping using the word changes in pull message
+    -   shorter README with quickstart instructions
+
+2015-11-06 Ganesh Sittampalam
+  ~ -   add comments about the rejected 'hasDuplicate' cases
+    -   "Fix" some intermittent QuickCheck failures
+    -   disambiguate imports in some test code
+    -   Add an option to control the number of QuickCheck iterations
+    -   make test-framework imports explicit
+
+2015-11-05 Guillaume Hoffmann
+  ~ -   refactor breakAfterNthNewline and breakBeforeNthNewline
+    -   refactor clone code
+    -   download patches pack asynchronously
+    -   ignore meta- files in packs when cloning
+    -   comment in doOptimizeHTTP
+
+2015-06-28 Ben Franksen
+  ~ -   remove race from D.R.Packs, further simplify the code
+
+2015-10-31 Guillaume Hoffmann
+  ~ -   replace changes by log in release.sh
+    -   remove darcs.spec.in file from 2008
+    -   replace changes by log in Setup.lhs
+    -   update upload.cgi with new command names
+    -   update buildbot-try.sh with new command names
+    -   update cygwin-wrapper file with new commands names and flags
+    -   remove annotate xml schema no longer needed
+    -   remove patch index correctness and timing scripts from contrib
+    -   adapt tests to using patches word instead of changes
+    -   update commands names in help strings
+
+2015-10-28 Ganesh Sittampalam
+  ~ -   split issue1932 test up into a network and non-network part
+    -   Avoid subshells in amend-unrecord test
+    -   disable issue2086 test on Windows - umasks don't really work there
+    -   using mmap on Windows was causing test failures
+    -   warn when suspending "hijacked" patches in rebase pull and apply
+    -   be a bit clearer about patch names in hijack test
+
+2015-09-20 Eric Kow
+  ~ -   resolve issue2269: push hijack test to suspend time
+    -   resolve issue2276: Keep track of patch hijack decisions
+    -   Generalise hijack warning to support use in other commands
+    -   Helper to capitalize a sentence
+
+2015-06-24 Ben Franksen
+  ~ -   resolve issue2459: fall back to writing the file if createLink fails
+    -   resolve issue2400: use async package to keep track of unpack threads
+    -   removed special handling of --to-match from cloneRepository
+
+2015-10-16 Guillaume Hoffmann
+  ~ -   remove redundant import
+
+2015-10-15 Ganesh Sittampalam
+  ~ -   drop sandi lower bound to support GHC 7.4 and add an upper bound
+
+2015-10-03 Daniil Frumin
+  ~ -   Switch from dataenc (deprecated) to sandi
+
+2015-10-09 Guillaume Hoffmann
+  ~ -   replace changes by log in two help strings
+
+2015-09-18 Eric Kow
+  ~ -   Refactor darcs send patch count text snippet
+    -   Tidy darcs send msg code (shorter lines)
+    -   Fix typo in darcs send message
+
+2015-09-19 Guillaume Hoffmann
+  ~ -   make patch selection lazier in presence of matchers
+    -   get rid of selectChanges
+    -   inline patchSetToPatches in the only place where it is used
+

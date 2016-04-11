@@ -1,0 +1,143 @@
+# News and discussions
+
+1.  Darcs has received two grants from the Google Summer of Code program,
+    as part of the umbrella organization Haskell.org.
+    Alejandro Gadea will work on history reordering:
+
+    -   <http://alegdarcs.blogspot.com.ar/2014/05/google-summer-of-code-2014-darcs.html>
+
+2.  Marcio Diaz will work on the cache system:
+
+    -   <http://marcioodiaz.blogspot.com.ar/2014/04/gsoc-project-accepted.html>
+    -   <http://marcioodiaz.blogspot.com.ar/2014/04/gsoc-progress-report-1-complete.html>
+
+3.  Repository cloning to remote ssh hosts has been present for years as
+    `darcs put`. This feature has now a more efficient implementation:
+
+    -   <http://hub.darcs.net/darcs/darcs-reviewed/patch/20140425060647-5ef8f>
+
+
+# Issues resolved (11)
+
+issue851 Dan Frumin
+  ~ -   interactive mode for whatsnew
+    -   <http://bugs.darcs.net/issue851>
+
+issue1066 Guillaume Hoffmann
+  ~ -   clone to ssh URL by locally cloning then copying by scp
+    -   <http://bugs.darcs.net/issue1066>
+
+issue1268 Guillaume Hoffmann
+  ~ -   enable to write darcs init x
+    -   <http://bugs.darcs.net/issue1268>
+
+issue1416 Ale Gadea
+  ~ -   put log files in tempdir instead of in working dir.
+    -   <http://bugs.darcs.net/issue1416>
+
+issue1987 Marcio Diaz
+  ~ -   Garbage collection for inventories and patches.
+    -   <http://bugs.darcs.net/issue1987>
+
+issue2263 Ale Gadea
+  ~ -   Option --set-scripts-executable is not properly documented
+    -   <http://bugs.darcs.net/issue2263>
+
+issue2345 Dan Frumin
+  ~ -   solution using cabal's checkForeignDeps
+    -   <http://bugs.darcs.net/issue2345>
+
+issue2357 Dan Frumin
+  ~ -   switching to regex-compat-tdfa for unicode support
+    -   <http://bugs.darcs.net/issue2357>
+
+issue2365 Guillaume Hoffmann
+  ~ -   correctly copy pristine in no-working-dir clones
+    -   <http://bugs.darcs.net/issue2365>
+
+issue2367 Guillaume Hoffmann
+  ~ -   rename amend-record to amend, make --unrecord more visible
+    -   <http://bugs.darcs.net/issue2367>
+
+issue2379 Guillaume Hoffmann
+  ~ -   only use packs to copy pristine when up-to-date
+    -   <http://bugs.darcs.net/issue2379>
+
+
+# Patches applied (41)
+
+2014-05-03 Owen Stephens
+  ~ -   Use custom replHook to fix cabal repl
+    -   Use DeriveFunctor instead of manual instance for PatchMod
+
+2014-04-25 Guillaume Hoffmann
+  ~ -   update packs tests to new strings
+    -   resolve issue1268: enable to write darcs init x
+    -   rename get to clone
+    -   remove Put since Get can clone to ssh destination faster
+    -   resolve issue1066: clone to ssh URL by locally cloning then copying by scp
+    -   do not tolerate ctrl+c when --complete is passed
+    -   do not print message twice when patches pack grabbing fails
+    -   create inventories subdir at darcs init
+
+2014-04-24 Ganesh Sittampalam
+  ~ -   TAG 2.9.9
+
+2014-04-22 Guillaume Hoffmann
+  ~ -   resolve issue2365: correctly copy pristine in no-working-dir clones
+    -   rename copyRepo to copyHashedInventory, separate copySources
+    -   only print once repository renaming message when cloning
+    -   maybeIdentifyRepository: report missing _darcs directory right away
+    -   no longer make put autocomplete on known repos
+    -   rename setDefaultrepo to addRepoSource and haddock it
+    -   resolve issue2379: only use packs to copy pristine when up-to-date
+
+2014-02-08 Dan Frumin
+  ~ -   A shell test for `whatsnew --interactive`
+    -   resolve issue851: interactive mode for whatsnew
+    -   Cleaning up the headers in WhatsNew and SelectChanges
+
+2014-04-23 Ganesh Sittampalam
+  ~ -   switch hashed-storage-test to be a proper test harness
+    -   dumb merge of hashed-storage.cabal etc into darcs.cabal
+    -   drop NoMonomorphismRestriction from hashed-storage
+    -   conditionally use local copy of Data.Map.Strict in Darcs.Repository.Util
+
+2014-02-14 Dan Frumin
+  ~ -   resolve issue2357: switching to regex-compat-tdfa for unicode support
+    -   resolve issue2345: solution using cabal's checkForeignDeps
+
+2014-04-22 Owen Stephens
+  ~ -   Add a test for all combinations of path status for darcs move
+
+2014-04-19 Ganesh Sittampalam
+  ~ -   don't advertise GHC 7.8 support until http://bugs.darcs.net/issue2364 is fixed
+
+2014-04-10 Guillaume Hoffmann
+  ~ -   resolve issue2367: rename amend-record to amend, make --unrecord more visible
+    -   Accept issue2365: whatsnew fails in repos made w get --no-working-dir
+
+2014-04-09 Marcio Diaz
+  ~ -   resolve issue1987: Garbage collection for inventories and patches.
+    -   Accept issue1987: regression tests for garbage collection for
+
+2014-04-08 Guillaume Hoffmann
+  ~ -   fix warning in Record
+
+2014-04-08 Ale Gadea
+  ~ -   Resolve Issue1416: put log files in tempdir instead of in working dir.
+
+2013-10-27 Guillaume Hoffmann
+  ~ -   TAG 2.9.8
+    -   bump version to 2.9.8
+
+2013-09-06 Petr Rockai
+  ~ -   Fix a bug in MIME encoding of bundles.
+
+2014-03-17 Guillaume Hoffmann
+  ~ -   eliminate withRepoReadLock obsolete since old-fashioned deprecation
+    -   polish help string on get --set-strings-executable
+
+2014-03-22 Ale Gadea
+  ~ -   Resolve Issue2263: Option --set-scripts-executable is not properly documented
+

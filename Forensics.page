@@ -1,0 +1,225 @@
+---categories : Development ...
+
+I hope to create some small scripts to facilitate this process. Please
+harass me (Eric Kow) if I have not done so and you want to use them:
+
+    darcs clone http://code.haskell.org/darcs/forensics
+
+# Creating minimal test cases
+
+If you have a reproducible test case, great! Reproducible test cases are
+very helpful. What would be even more helpful is to have *minimal*
+reproducible test cases, preferably in the form of a shell script that
+can be run as part of darcs' regression testing facilities.
+
+Now if you don't actually understand how to reproduce the error? That,
+you know that your repository exhibits the error, but you don't know
+exactly what the conditions are that led to it. Don't panic! It turns
+out that you can almost mechanically boil down your repository into such
+a test case. In this guide, we will walk you through the procedure for
+turning your repository into a minimal test case. This procedure has a
+few easily reachable milestones in it. Even if you don't go all the way
+into creating a regression test script, reaching one of these milestones
+would be a very good start.
+
+## Milestone 1: patch bundles
+
+Usually darcs bugs involve more than one repository, for example "I push
+my patches into X, and darcs blows up". If possible, a very useful first
+step is to convert these multi-repository bugs into single-repository +
+patch bundle cases.
+
+This is where the first milestone comes in. Our desired outcome here is
+to be able to (a) unpack a tarball (b) apply some patches to get the
+same error message.
+
+In the example below, I assume a single repository and its branch. This
+means we will be working with three repositories: the common repository
+(branch point), the branch itself, and the mainline.
+
+1.  Get both repositories (i.e. the branch and the mainline):
+
+        darcs clone http://example.com/mainline
+        darcs clone http://example.com/branch
+
+2.  Identify the patch in which the branch was first created:
+
+        cd branch; darcs log | less
+        cd ..
+        darcs clone mainline common --to-patch 'the patch in question'
+
+    Note: `darcs pull --intersect` might be useful for this.
+
+3.  Create patch bundles:
+
+        cd branch; darcs send -O ../common --match 'touch the/file/where/things/blow/up'
+        cd mainline; darcs send -O ../common --match 'touch the/file/where/things/blow/up'
+
+4.  Check your work. See if applying the patch bundles to a fresh copy
+    of the common repository causes the same problem. If so,
+    congratulations! You should consider making a tarball of the branch
+    point repository and the bundles. You've made it to your first
+    milestone.
+
+## Milestone 2: forgetting the past
+
+So you have successfully reduced a multi-repo bug into a bug with one
+repository plus patches. Now the next task is to rewrite history to
+consolidate irrelevant pieces of the past into a single initialisation
+state.
+
+1.  Create an empty repository (eliminating redundant history):
+
+        darcs clone common c-minimal
+        cd c-minimal
+        rm -rf _darcs
+        darcs init
+        darcs add -l -r *
+        darcs record -am 'from branch point'
+        darcs log --context > cxt
+
+2.  Replace the patch bundle contexts with that of your simplified
+    repository. (Please harass [Eric Kow](People/EricKow) for a simple
+    script to help you do this)
+
+## Milestone 3: the boil-down loop
+
+This is where the fun begins! The good news is that it is also very
+incremental, meaning that it's actually just a multitude of very tiny
+steps. The bad news is that the incremental nature of this work, and the
+corresponding reward structure can make it a little bit addictive.
+
+This "boil-down" process consists whittling the patch bundles and the
+initial repository to what is hopefully just a handful of lines and
+patches. The main purpose is to make the patch bundles (and history)
+small enough until you can understand the essence of the bug, i.e. the
+(almost) minimal set of criteria needed to make darcs blow up in this
+particular way.
+
+There are two kinds of simplifications you can make : removing
+irrelevant parts of the patch history, and simplifying the patches
+themselves. It is recommended you making very small changes at a time
+and check your work often.
+
+### Backup and check
+
+Each time you simplify something, you should check to make sure you
+still get roughly the same error message. I usually have a sequence of
+canned commands in my shell history that apply all relevant bundles (to
+hopefully generate the error). I also follow up by unpulling the
+patches, so that we can re-run the procedure on the next boil-down loop
+
+1.  Check your work! Re-apply bundles on the initial state
+
+        darcs apply --allow-conflicts 1.dpatch &&
+        darcs apply --allow-conflicts 2.dpatch
+        darcs unpull -p 'conflict A' -a
+
+2.  Backup often. I just make lots of little copies of the directory.
+    Ironic that we would be reluctant to version control our work in
+    progress :-)
+
+### Simplify the history
+
+Before entering the boildown loop, you have probably done the most
+important job in simplifying the repository history: replacing that
+history with an initialised repository at the same state as the fork
+point. Now your job is to simplify away any residual history that is
+expressed in the patch bundles, things which are dependencies of the
+bug-inducing patches, but not strictly relevant.
+
+1.  One trick is to unrecord a patch and amend record its predecessor,
+    coalescing the two patches in the process. You'll need to update the
+    patch bundles with the new context, though. Lots of cherry picking
+    is helpful here.
+2.  Note that simplifying the history will mean that the context behind
+    the patch bundles will change. So you will need to replace the
+    context in these bundles accordingly. The darcs forensics repo above
+    should include a small shell/sed script to do this for you.
+
+### Simplify the patches
+
+1.  The most important change you could make is remove irrelevant files
+    from your patch bundles. In Vim, I found it particularly helpful to
+    start from each hunk patch and delete lines up to a regexp match:{{{
+    d/\^\\(hunk\\|conflictor\\|\\[\\|\\]\\|:\\) }}} and then use '.' to
+    mindlessly repeat the last command. I basically just deleted changes
+    that did not affect the file I was interested in. (This could be
+    replaced by a dumb Perl script, please harass [Eric
+    Kow](People/EricKow) to make one)
+2.  If you have narrowed everything down to the minimum number of files,
+    you should consider simplifying their names and hierarchical
+    structure for your convenience `hunk ./src/bar/quux/etc` could just
+    become `hunk ./foo`. Note that you may have to make the
+    corresponding changes to the repository history as well.
+3.  Simplify irrelevant hunks. Hunks which do not seem involved in the
+    error should just replaced with blank lines. Later you coalesce the
+    blank lines and just remove them outright, but one thing at a time
+
+        hunk ./foo 4
+        +blah blah blah
+
+    could become
+
+        hunk ./foo 4
+        +
+
+4.  Coalesce irrelevant hunks
+
+        hunk ./foo 4
+        +
+        hunk ./foo 6
+        +
+        hunk ./foo 8
+        +
+
+    could become
+
+        hunk ./foo 4
+        +
+        +
+        +
+
+5.  Replace needless conflictors by their effects. Consider two parallel
+    conflicting patches A and B. If we apply A, and then B, B's
+    representation will be as a conflictor. Remember that in a conflict,
+    neither patch has any effect. If the conflictor is not relevant, you
+    could actually just outright replace it by the inverse of A and get
+    the same effect.
+
+        conflictor [
+        hunk ./foo 4
+        - bar
+        + quux
+        ]
+        :
+        ./hunk ./foo 4
+        + toto
+
+    could become
+
+        - quux
+        + bar
+
+6.  Remove extra lines (shifting hunk line numbers as needed). You
+    should generally do this in the later boil-down loops, when you have
+    very few hunks to modify.
+
+### Boil-down hints
+
+-   Mistakes happen. Sometimes in the midst of boiling things down, you
+    may modify patches so that they no longer apply cleanly. Is it to
+    late to go back? If so, you might go ahead and edit the patches so
+    they do apply cleanly. As long as you can still reproduce the error
+    message, you're in good shape.
+
+-   If you get a Malformed bundle error after editing line numbers, make
+    sure you didn't accidentally introduce any trailing whitespace.
+
+## Milestone 4: the test script
+
+After boiling your patch bundles, do you understand the problem better?
+If so, you should try turning your case into a test script. The test
+script uses only shell and darcs commands to re-create the situation
+described by your patches. See the `tests` and `bugs` directories for
+inspiration.

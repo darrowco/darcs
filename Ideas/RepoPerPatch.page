@@ -1,0 +1,24 @@
+Just collecting some notes on how darcs/patch-tracker integration might
+work. The objective is to simplify the task of reviewing patches. The
+rough idea is for each patch to provide a repository (much like in
+Gerrit), eg. darcs get
+[http://bugs.darcs.net/patch698](http://bugs.darcs.net/patch698)
+
+# context
+
+-   some white-listed (?) repositories: unstable, screened,
+    hashed-storage, fast-convert
+-   search for one of these keywords in Darcs-URL
+-   darcs get --context foo.dpatch url
+
+# follow-ups
+
+-   should it be one-repo-per-message? with symlinks to the latest
+    message? eg darcs get
+    [http://bugs.darcs.net/message39819](http://bugs.darcs.net/message39819),
+    with patch389 being a symlink to that
+-   what about patches that don't contain all the contents of prior?
+-   should also recognise darcs send
+    [http://bugs.darcs.net/patch387](http://bugs.darcs.net/patch387) -
+    perhaps append
+

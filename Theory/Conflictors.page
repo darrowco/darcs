@@ -1,0 +1,54 @@
+---
+title:Conflictors
+...
+
+# What are they?
+
+A special patch type that represents a conflict between primitive patches (used for Darcs2 repositories)
+
+# Why are they needed?
+
+Basic patch theory (addfile/hunk/move etc.) describes the merging two sets of primitive patches, by "filling in" the two missing sides of a commutation square, but what should happen if those changes cannot be merged? The answer is that we use a special patch-type to represent a conflict. The current data-type used for this purpose is called a "RepoPatchV2" ("RealPatch" before Darcs 2.12), and is referred to by darcs users/developers as a Conflictor (which is one of RepoPatchV2's data constructors).
+
+# What's the essence of the problem?
+
+The property of dependency/conflict between patches creates a hypothetical graphical structure. Conflictors are an attempt to encode, or flatten, this graphical structure down into a linear sequence of patches, such that we can later recover the structure (such that for example, patches become "unconflicted" -- flattening the conflict graph -- if we unpull a conflict-causing patch).
+
+We have two relations in play: 
+
+- *Conflicting* is a symmetric relation: A conflicting with B means that B must conflict with A.
+- *Dependency* is not a symmetric relation: B can depend on A, but A doesn't "know" anything about B. However, it is the case that: A \`conflictsWith\` B => B \`dependsOn\` (inverse A)
+
+# How do they work?
+
+Conflictors store 3 things:
+
+- The original primitive change that conflicts with another change in the repository, call it p.
+- The transitive-closure of the set of changes with which p conflicts, which do not conflict with anything else in the repo.
+- The set of changes with which p conflicts, but *do* conflict with another patch in the repo.
+
+The intuition behind these 3 objects is:
+
+- We need to know which patch the conflictor represents (so we can retrieve it, if all the patches it conflicts with are unpulled).
+- The effect of a Conflictor should be to "undo" the effect of the primitive patch, and all patches it conflicts with.
+- However, if another patch in the repo conflicts with a given patch, that patch will have been undone already - we don't want to attempt to undo the patch twice! But, if the Conflictor that undoes the conflicting patch is obliterated, we then need to undo the patch ourselves.
+
+So, given that Conflictors store this information, it makes sense that they must correctly track and update it, whenever the patch is modified through commutation. It is this tracking of information which apparently has bugs.
+
+# What is the design principle?
+
+Conflictors attempt to locally represent conflicts, within patch-theory itself (rather than with some other system, on top of "simple patch-theory" (i.e. without a concept of conflicting patches), which would handle/manage conflicts). That is, the patches in a repo using Conflictors includes all information to describe the conflicting status of the repo - they "encode" the dependency/conflictingness-DAG in the patches themselves. Darcs has a principle of "a repo is a set of patches", so obliterating patches or reordering patches should do The Right Thing (e.g. unpulling a conflicting patch should lead to the repo containing the original patch, which no longer conflicts).
+
+# What are Duplicates?
+
+A special type of conflict is the case where two duplicate primitive patches conflict (e.g. a file created with the same name, or a hunk making the same change). Duplicates could be handled without special treatment; however, when Darcs discovers a conflict, it "undoes" the effect of both conflicting changes, requiring the user to "resolve" the conflict.  The behaviour of Duplicates is to instead only disable one of the two duplicate changes.
+
+Duplicates exist because Darcs 1 users reported that it would be better if two identical patches did not conflict.  However it's not clear at present (2012-04) if this is more because a conflict between two identical patches is inherently confusing; or if it's more incidental problems (like the poor performance on so-called doppelgänger patches). Some archeological research may be helpful here. 
+
+**TODO** [add examples for duplicates](http://article.gmane.org/gmane.comp.version-control.darcs.user/26548)
+
+# Where do problems emerge?
+
+Duplicates are a big source of problems for conflictors (likely not the sole problems, though).
+
+For example, see [issue2047](http://bugs.darcs.net/issue2047). This is caused by the interaction between duplicates/conflictors; particularly, commuting a conflictor and a duplicate is not guaranteed to be invertible (by commuting the resulting patches again), which is exactly what the issue describes. When commuting a duplicate with a non-duplicate, the duplicate is changed but the non-duplicate is not, which loses information. (In fact, I think it's a problem with "Non"s which are used to give context to the duplicated prim...)

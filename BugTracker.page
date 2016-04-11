@@ -1,0 +1,176 @@
+This document is an on-going attempt to work out how best to use the
+Darcs [bug tracker](http://bugs.darcs.net)
+
+# Desiderata
+
+-   Simplicity: We want to make sure that the bug-tracker is transparent
+    and self-explanatory enough that anybody can step in and triage. No
+    complicated policies.
+
+-   Reproducibility: We still do need some kind of procedure, policy,
+    some fairly rigid system that helps us take all the uncertainty out
+    of bug-tracking, something to make it easy to know what to do with a
+    bug.
+
+# Overview of jobs
+
+The issue manager has basically three jobs
+
+1.  Customer service - very fast response. We need to respond to
+    incoming bugs as closely to instanteously as we can manage. The
+    priority here is to get people unstuck, find workarounds if
+    relevant.
+
+2.  [Triage](BugTracker/Triage) - fast response. Strike while the iron
+    is hot. This usually happens at the same time as customer service.
+    While the issue is still fresh, squeeze as much necessary
+    information as you can (eg. what version, etc).
+
+    Your main goal here is to turn the issue into some actionable. By
+    the end of triage you either want to be waiting on somebody to do
+    something or to be done. No more "huh?"
+
+3.  Maintenance - at leisure (goal: touch 3 old bugs every day). Check
+    up on those old need-\* statuses, chase up on people, check for
+    relevance. Re-do triage.
+
+# Maintenance tasks
+
+Maintenance can be done fairly quickly. You'll want to add a series of
+three canned queries (see the BTS web interface):
+
+0.  Need Triage
+1.  Maintenance
+2.  Assigned
+
+Note that the numbers are part of the query name so that they appear on
+the top of your query list.
+
+The Need Triage query alerts you to any issues with an "unknown" status;
+see the earlier parts of this document for details. Basically, no
+maintenance actions until you've finished triage.
+
+The Maintenance query sorts the tickets by the last activity. In other
+words, you will see the stalest tickets first. I recommended that you
+take a rigid First-In-First-Out approach to dealing with these; the
+goals here being to maximise throughput and fairness and also to ensure
+efficiency in the sense of preventing things from falling through the
+cracks and ensuring that the right information gets to the right people
+when they need it.
+
+For each ticket, determine if the current status and recommendations are
+still valid, and update accordingly. If things appear to be stuck, think
+about how to unstick them (re-assigning?). If everything is still in
+order, then just bump the ticket to the back of the queue. There's no
+way to bump tickets, so you'll have to do it manually either by making a
+comment (preferably saying something useful), or by changing some field
+(and maybe changing it back).
+
+The Assigned query is potentially useful for hacking sprints, when you
+can harass people in real life. :-)
+
+# Bugtracker conventions
+
+## Title
+
+Rough conventions (very informal! the goal is to make things easier to
+understand at a glance)
+
+-   'command =\> specific error message (darcs version)'
+-   wishlist/feature titles written in the positive (eg, what we want)
+    to avoid confusion
+
+## Priority and Status
+
+See [priority and status overview](BugTracker/PriorityStatus)
+
+## Topic
+
+Roundup has this handy notion of keywords/topics that helps us to
+classify bugs and understand relationships between them. See the [topics
+subpage](BugTracker/Topics) for a list of topics and their descriptions.
+
+# Tools
+
+## Initial response and discussion
+
+To ensure that recently entered issues and issues being discussed are
+suitably handled, these bug tracker queries are useful:
+
+-   [Unread issues, grouped by priority, oldest
+    first](http://bugs.darcs.net/issue?@sort=activity&@group=priority&@filter=status&status=unread)
+-   [Chatting issues, grouped by priority, oldest
+    first](http://bugs.darcs.net/issue?@sort=activity&@group=priority&@filter=status&status=chatting)
+-   [Unread or chatting issues, grouped by priority, oldest
+    first](http://bugs.darcs.net/issue?@sort=activity&@group=priority&@filter=status&status=unread,chatting)
+
+## Follow up on requests for further information and work
+
+To check progress on questions and requests to get some actual work
+done, this bug tracker query may be used:
+
+-   [Open issues, oldest
+    first](http://bugs.darcs.net/issue?@columns=title,topic,id,activity,status,assignedto&@sort=activity&@filter=status&@pagesize=50&@startwith=0&status=-1,1,2,3,4,5,6,16,17&@dispname=Maintenance)
+-   [Need-info or need-volunteer issues, grouped by priority, oldest
+    first](http://bugs.darcs.net/issue?@sort=activity&@group=priority&@filter=status&status=need-info,need-volunteer)
+
+Depending on the priority, issues should be allowed to remain
+outstanding in this list for a while. It should be clear from the
+messages on any issue who is expected to react. If further information
+is supplied, the issue may sensibly be put back into the `chatting`
+state for further discussion. Or a volunteer may take a `need-volunteer`
+issue to the `in-progress` state and start working on it. If an issue
+has reamined in this list for a while, one possible reaction is to
+remind people about the issue, by adding a message to the issue or using
+the mailing list. If a question (perhaps to the reporter on an issue)
+remains unanswered for a long time or an issue cannot be reproduced
+reliably, it may be a candidate for the `presumed-dead` status.
+
+## Checking in-progress issues
+
+The in-progress issues are:
+
+-   [In-progress issues, grouped by priority, oldest
+    first](http://bugs.darcs.net/issue?@sort=activity&@group=priority&@filter=status&status=in-progress)
+
+In-progress issues are assigned to a person who is responsible for the
+work and bringing the issue forward. When that person, very possibly in
+collaboration with reviewers and others, decides that the issue is
+resolved, that person changes the status to `resolved`. The exact state
+of affairs at this point can vary a lot, but the clear intention is that
+the responsible person should not need to be involved in further
+handling of the issue, such as ensuring that is gets reflected in a
+suitable release. This leaves some additional work outstanding, of
+course, but it seems hard to avoid.
+
+If an issue is in progress for a while, it may make sense to follow up
+on the status of the issue.
+
+# Other Activities Related to the Bug Tracker
+
+## When will a solution to a particular bug issue be released?
+
+Right now, issues are tagged with Target-X.X topics, which we will
+increment if we fail to meet the targets. In the future, we may add a
+milestone class to roundup.
+
+# See also
+
+-   [Automation and bulk-processing](BugTracker/Automation)
+-   The Rube Goldberg contraption:
+    [Infrastructure](BugTracker/Infrastructure)
+-   How we use the [priority and status](BugTracker/PriorityStatus)
+    fields
+-   How we use the [keywords/topics](BugTracker/Topics)
+-   [RegressionTests](Development/RegressionTests) (whenever asking for
+    tests)
+-   [Forensics]() - semi-mechanically transforming reproducible but
+    hard-to-understand failures into minimal tests
+
+-   [Notes on bug-tracker vs mailing lists](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021380.html)
+-   Search bugs.darcs.net for issues with "BTS training" in their text.
+    You'll see a paragraph or two explaining my thought process on the
+    relevant tickets. Could be useful as case studies, especially for
+    ones where I turn out to be wrong
+
+

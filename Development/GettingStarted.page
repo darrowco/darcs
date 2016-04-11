@@ -1,0 +1,314 @@
+# Getting the Source
+
+As a patch author, you are most likely interested in the **screened**
+repository, which you can fetch with
+`darcs clone --lazy http://darcs.net/screened`.
+
+# Updating, building and testing the code
+
+To keep up with the latest patches, you can run the following command
+sequence in your local mirror of darcs' repository:
+
+    cabal configure (only the first time)
+    cabal update
+    darcs pull
+    cabal build
+    cabal copy
+
+The impatient may prefer:
+
+    cabal update && darcs pull -a && cabal install
+
+If you want to run darcs in a sandbox and are running cabal 1.18 the
+following commands can be run to produce a contained darcs repository:
+
+    darcs clone --lazy http://darcs.net/screened
+    cd screened
+    cabal sandbox init
+    cabal install --only-dependencies --enable-tests
+    cabal configure --enable-tests
+    cabal build (or cabal test)
+
+We a small makefile for little helpers, right now, building tags:
+
+    make tags  ;# for vi
+    make TAGS  ;# for emacs, then use M-x visit-tags-file to load the TAGS file, then M-. to find identifiers in the code.
+
+In general `cabal test` will run the tests.
+
+To run a specific shell test, this might be useful:
+
+    dist/build/darcs-test/darcs-test -t testname
+
+If you are using 'cabal sandbox' then the darcs-test exe may be
+in a slightly different folder under ./dist.
+
+For performance-sensitive changes, some interesting targets are:
+
+-   `cabal install --enable-library-profiling --enable-executable-profiling`
+    lets you have profile builds (along with the normal ones) at the
+    cost of quadrupling compile time
+-   `cabal install -frts` is as fast as a regular compilation,
+    and enables to do simple
+    memory consumption measurings on the generated executable.
+
+# Preparing your patches
+
+**Conventions**
+
+-   Coding
+
+    -   See [CodingStyle]() for details
+
+-   Patches
+
+    -   Patch names and long comment lines should be 72 characters or less.
+    -   Did you resolve an issue? Prefix your patch name with `resolve issueNNN:`
+        This will be picked up automatically by our bugtracker integration
+
+-   Collaboration
+
+    -   Before spending a lot of time and effort on a new feature,
+        please discuss your ideas with us either on IRC at \#darcs on
+        freenode.net, on the [darcs-users mailing
+        list](http://lists.osuosl.org/mailman/listinfo/darcs-users) or
+        in the [bug tracker](http://bugs.darcs.net/).
+
+-   Communication
+
+    -   Check to make sure your computer is correctly configured to use
+        `darcs send` first. For more details, see the [darcs send
+        configuration info](../Using/Send).
+    -   In the body of your e-mail, please tell the following as it
+        will greatly increase the success of your contributions and
+        collaborations with us:
+        -   What your patch changes
+        -   Why your patch changes it
+        -   How you know your changes are correct
+        -   If you have future work in this line
+    -   If you are sending a new version of a patch, use
+        `darcs send --subject '[patchXXXX]'` where `XXXX` is the patch
+        number assigned by the patch tracker.
+
+**Prepare to be reviewed**
+
+All patches are reviewed by some other developers before being
+pushed to <http://darcs.net/reviewed>, so here is some advice.
+
+-   Friendly patch organisation
+
+    -   Please separate tidy-up and refactoring patches from patches
+        that actually change functionality
+    -   Test cases should go in separate patches from the actual
+        functionality (so that they can be accepted independently)
+    -   If you want to make a big change in darcs, please avoid
+        an all-or-nothing situation (where we either have to apply all
+        of your patch bundle or none of it). This isn't so
+        much a question of patch size, but of the logical organisation
+        behind your patches. We like partial credit.
+
+-   Test cases
+
+    -   If your patch adds new functionality, we would like you to write
+        some test cases for it. Please see the `tests` directory for
+        functional tests (see [RegressionTests]()),
+        or `harness/` for HUnit and Quickcheck tests.
+    -   If your patch resolves an issue, you should also mv the
+        corresponding functional test in `tests/` from `failing-issueXXXX.sh`
+        to `issueXXXX.sh`.
+
+-   Documentation
+
+    -   New functions should have API-style documentation written in the
+        [Haddock syntax](http://haskell.org/haddock/).
+        Use  **cabal haddock** to generates html reference documentation.
+    -   Please update the user manual at the same time as you are making
+        your patch
+
+-   `darcs replace` for superficial changes
+
+    -   If your changes can be expressed by a search and replace, please
+        use `darcs replace` as it is much easier to review and the
+        resulting patches will commute better (fewer conflicts).
+    -   You can also try `darcs record --look-for-replaces`.
+    -   On the other hand, *avoid* using `darcs replace` to change the
+        meaning of things (for example, to swap out one library with another one)
+    -   Try to avoid using the tokens `.` and `-` in your `darcs replace`
+        patches that affect Haskell files. The problem is that the `.`
+        can affect code like `lines.liftM`
+
+# Sending your patches
+
+Congratulations! You've written some lovely patches and now you
+want to get them into the mainline darcs.net. Here are some things you
+should know.
+
+Darcs uses a patch tracker, which can be found at
+<http://bugs.darcs.net/patch> . When you
+use `darcs send --mail` to submit your patches they will end up there
+automatically, waiting to be reviewed by another developer.
+
+The typical flow of patches is:
+
+1. created in your local repo
+2. then sent to the patch tracker (and copied to the darcs-devel mailing list)
+3. then pushed to screened
+4. then pushed to reviewed
+5. then finally pushed to the release branch.
+
+Here are the three repositories that we use for new Darcs development:
+
+  ------------------------------------------------------------------------
+  name           audience                 location
+  -------------- ------------------------ --------------------------------
+  screened       developers               <http://darcs.net/screened>
+
+  reviewed       developers,              <http://darcs.net/reviewed>
+                 alpha testers                  
+
+  release        developers, beta testers <http://darcs.net/releases/branch-2.10>
+  ------------------------------------------------------------------------
+
+We also have older release branches at <http://darcs.net/releases/>.
+
+You should consider your patch as having been accepted once it makes it into reviewed.
+This happens once it has been reviewed and pushed to that repository.
+
+**Keep in mind that the developers love being nagged. So, if your patch is not getting much attention, ask on the [darcs-devel](MailingLists) list or IRC**
+
+# Patch review
+
+In Darcs' developement, every contributed patch is supposed to be reviewed.
+This means the work you contribute should be presented in an understandable
+manner for it to be easily reviewed. Also this means one way to help Darcs
+development is to review other people's work.
+The [Core Team](/DarcsTeam#core-team) is responsible for pushing patches
+but everyone is welcome to do patch reviews.
+
+## Basic Process of Patch Submission and Acceptance
+
+The basic rules are:
+
+-   all patches go to the list first
+-   all patches have to be reviewed
+-   you never push your own patches to darcs.net (this is for the people
+    who have the priviledge to do so)
+
+Exceptions to these rules
+
+-   obviously trivial patches (eg. typos in the comment) (if in doubt,
+    it's not obvious enough)
+-   patches that do not require formal review [whitelist below]
+    -   contrib
+    -   distribution/packaging
+    -   build system
+    -   test cases
+
+-   the "hello, anybody? rule" : if a core team patch has not received
+    review in a week, the submitter can push it directly to reviewed.
+    Common-sense dictates that you avoid doing this if you think the
+    patch really needs review.
+
+## Workflow
+
+1.  Somebody sends a patch to
+    [patches@darcs.net](mailto:patches@darcs.net) The patch will have
+    status needs-screening on the patch tracker.
+
+"Screening" simply consists of checking that the patch is sane
+in principle, with no attempt at thorough review, and pushing it
+to <http://darcs.net/screened>.
+
+2.  If the submitter is on the core team, they can screen their own patch.
+    Patches from outside the core team should be screened by a core team
+    member. 
+
+3.  When a patch bundle has been screened, the patch tracker status
+    should be set to needs-review.
+
+4.  Somebody should review the patch and push it to
+    <http://darcs.net/reviewed>.
+
+5.  If you would like modifications to the bundle, say so and also set
+    the status to "followup-requested".
+    If the bundles has alrady been screened, we no longer
+    request patch amendments so much as follow on patches.
+
+6.  If you are happy with the patch bundle, you can push it to the
+    reviewed branch at
+    <http://darcs.net/reviewed>
+
+Note: we try to pay attention to who submitted the patch. The ideal is
+to gradually raise the bar of expectations. That means that first
+time submitters should have as easy a time as possible: can you the
+core team member just make the follow-up changes yourself and tell
+the submitter about them? Then just do it. But as people start
+submitting more patches, you can start to gradually raise your
+expectations about their patch standards.
+
+## Reviewing
+
+First, you need to find patches to review.
+
+-   For this, go to the [bugtracker](http://bugs.darcs.net), get an
+    account and login. Then, look in the [open
+    patches](http://bugs.darcs.net/patch?status=-1,1,2,3,13,14&@sort=-activity&@dispname=Show%20Unassigned&@filter=status&@group=status&@columns=id,creation,title,status,assignedto&@pagesize=50&@startwith=0)
+    section for unassigned patches which need review.
+-   Pick your favorite patch.
+    If the rewiew is going to take you some time, assign it to yourself
+    and set the status
+    to review-in-progress.
+-   Do the review proper: test and read the
+    patches; reply to the patch
+    interleaving your comments with the body of the patch. Either reply
+    via the patch-tracker's web interface, or reply to the mailing list
+    message. Your mail's to: should be
+    [bugs@darcs.net](mailto:bugs@darcs.net), and the list will
+    automatically get a copy of the message.
+    -   If you think the patch should be applied, and you are *not*
+        a Core Member, set the status to
+        **accepted-pending-tests** (if you reply by mail, add
+        [status=accepted-pending-tests] to the subject-line), and notify
+        in the body that you have not applied yet. Please point out that
+        you need a committer to push this patch.
+    -   If you are a Core Member, set the status to **accepted** and push it.
+    -   If you think the patch is inappropriate for darcs in a
+        definitive way, set the status to **rejected**.
+    -   If the patch should be changed before application, set the
+        status to **amend-requested**.
+
+The following tips are not be interpreted as policy but tricks for
+cutting down on unnecessary delays:
+
+-   discuss patches on IRC so you get immediate feedback, but be sure to
+    summarise and link the conversation afterwards
+-   if there are patches to amend, push the largest safe/acceptable
+    subset of the bundle you can
+-   do not let trivial amendments block a patch; instead, follow up by
+    pushing corrections on your own
+
+## Core team: Pushing Patches
+
+All people on the Core Team posses a "commit bit": they have the
+permission to push patches to darcs.net. When a member is satisfied
+with a patch, they can push it The best way is to maintain a 1:1 mirror of
+<http://darcs.net/screened> and <http://darcs.net/reviewed> on your local filesystem.
+To push a patch, apply or pull it into your local mirror, and then
+`darcs push darcs-unstable@darcs.net:screened` (or to review, release).
+
+Please also consult [BuildBot]() after pushing changes, and possibly
+take steps necessary to get it back to green if anything breaks (but
+don't panic, anyway).
+
+For help setting up your ssh keys, try [this
+guide](http://www.karan.org/blog/index.php/2009/08/25/multiple-ssh-private-keys),
+which explains how to manage multiple key identities per host.
+
+# Links
+
+-   See [Tips](Tips) for a loose collection of tips
+-   [DarcsInternals](/DarcsInternals).
+-   [Read Haskell](http://haskell.org/haskellwiki/How_to_read_Haskell)
+-   [api-doc with Haddock](http://haskell.org/haddock/)
+
+

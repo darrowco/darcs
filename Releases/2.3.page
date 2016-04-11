@@ -1,0 +1,201 @@
+# Darcs 2.3.1 announcement (2009-09-20): better docs, fewer bugs
+
+Dear Darcs users,
+
+The darcs team would like to announce the immediate availability of a
+new stable version of darcs, 2.3.1. This is a bugfix release. The
+user-visible changes are:
+
+> -   Fix bugs in optimizations in 2.3.0
+> -   Documentation improvements
+> -   Remove autoconf build system
+
+A more complete list of changes in this and older versions of darcs can
+be found at [http://www.darcs.net/NEWS](http://www.darcs.net/NEWS) .
+
+## Installing
+
+You can obtain the source tarball at the following address:
+
+> -   [http://darcs.net/releases/darcs-2.3.1.tar.gz](http://darcs.net/releases/darcs-2.3.1.tar.gz)
+
+The build instructions are available in the enclosed README file in
+those tarballs.
+
+Moreover, if you have cabal-install available, you can install latest
+stable release of darcs by issuing the following commands (no tarballs
+needed):
+
+    $ cabal update
+    $ cabal install darcs
+
+This should give you a darcs binary in \`\~/.cabal/bin\` -- you should
+probably add this to your PATH. More detailed instructions for
+installing on Windows are available near the end of this announcement.
+
+## Installing on Windows
+
+To install darcs on Windows systems from scratch, please download the
+Haskell Platform and MSYS:
+
+> -   [http://hackage.haskell.org/platform/2009.2.0.1/HaskellPlatform-2009.2.0.1-setup.exe](http://hackage.haskell.org/platform/2009.2.0.1/HaskellPlatform-2009.2.0.1-setup.exe)
+> -   [http://sourceforge.net/projects/mingw/files/MSYS+Base+System/MSYS-1.0.11-rc-1.exe/download](http://sourceforge.net/projects/mingw/files/MSYS+Base+System/MSYS-1.0.11-rc-1.exe/download)
+
+After installing both, you should have an "MSYS" icon: run MSYS and in
+the terminal window type (the \`$\` character denotes the prompt, do not
+repeat it):
+
+    $ cabal update
+    $ cabal install darcs -f-curl
+
+This should download, compile and install all required dependencies and
+also darcs itself. The resulting darcs executable will be placed into
+the Haskell Platform executables folder, and should be accessible from
+the MSYS shell (just type "darcs --version" to check).
+
+Yours,
+  ~ Reinier.
+
+# Darcs 2.3.0 announcement (2009-07-23)
+
+Hello!
+
+I'd like to announce immediate availability of a new stable release of
+darcs, 2.3.0. There is a number of improvements and bugfixes over the
+previous stable release, 2.2. Moreover, work has been done to improve
+performance of "darcs whatsnew" for large repositories.
+
+As in the past, there are two source tarballs available. As of this
+release, the cabal-based build is preferred, and the autoconf build is
+deprecated. You can obtain the source tarballs at these addresses:
+
+> -   [http://repos.mornfall.net/darcs/darcs-2.3.0.tar.gz](http://repos.mornfall.net/darcs/darcs-2.3.0.tar.gz)
+> -   [http://repos.mornfall.net/darcs/darcs-2.3.0\_autoconf.tar.gz](http://repos.mornfall.net/darcs/darcs-2.3.0_autoconf.tar.gz)
+
+The build instructions are available in the enclosed README file in
+those tarballs.
+
+Moreover, if you have cabal-install available, you can install latest
+stable release of darcs by issuing the following commands (no tarballs
+needed):
+
+    $ cabal update
+    $ cabal install darcs
+
+This should give you a darcs binary in \`\~/.cabal/bin\` -- you should
+probably add this to your PATH. More detailed instructions for
+installing on Windows are available near the end of this announcement.
+
+## What's New
+
+This is a summary of important changes since the last stable release
+(2.2):
+
+> -   Lots and lots of documentation changes (Trent).
+> -   Haskeline improvements (Judah).
+> -   Cabal as default buildsystem (many contributors).
+> -   Fixes in darcs check/repair memory usage (Bertram, David).
+> -   Performance improvement in subtree record (Reinier).
+> -   New option: --summary --xml (Florian Gilcher).
+> -   New option: changes --max-count (Eric and Petr).
+> -   Fix changes --only-to-files for renames (Dmitry).
+> -   Performance fix in "darcs changes" (Benedikt).
+> -   Hardlinks on NTFS (Salvatore).
+> -   Coalesce more changes when creating rollbacks (David).
+> -   New unit test runner (Reinier).
+> -   Inclusion of darcs-shell in contrib (László, Trent).
+> -   Author name/address canonisation: .authorspellings (Simon).
+> -   Working directory index and substantial "darcs wh" optimisation
+>     (Petr).
+> -   New command: "darcs show index" (Petr).
+> -   Gzip CRC check and repair feature (Ganesh).
+
+A number of issues has been resolved since 2.2 as well. See
+[http://bugs.darcs.net/issueN](http://bugs.darcs.net/issueN) for details
+on bug number N.
+
+> -   948 darcsman (Trent)
+> -   1206 countable nouns (Trent)
+> -   1285 cabal test v. cabal clean (Trent)
+> -   1302 use resolved, not resolved-in-unstable (Trent)
+> -   1235 obliterate --summary (Rob)
+> -   1270 no MOTD for --xml-output (Lele)
+> -   1311 cover more timezones (Dave)
+> -   1292 re-encoding haskeline input (Judah)
+> -   1313 clickable ToC and refs in PDF manual Trent)
+> -   1310 create merged darcsCommand{add} (Trent)
+> -   1333 better "cannot push to current repository" warning (Petr)
+> -   1347 (autoconf) check for unsafeMMapFile if mmap use enabled
+>     (Dave)
+> -   1361 specify required includes for curl in cabal file (Reinier)
+> -   1379 remove libwww support (Trent)
+> -   1366 remove unreachable code for direct ncurses use (Trent)
+> -   1271 do not install two copies of darcs.pdf (Trent)
+> -   1358 encode non-ASCII characters in mail headers (Reinier)
+> -   1393 swap "darcs mv" and "darcs move" (Trent)
+> -   1405 improve discoverability of global author file (Trent)
+> -   1402 don't "phone home" about bugs (Trent)
+> -   1301 remove obsolete zsh completion scripts (Trent)
+> -   1162 makeAbsolute is now a total function (Ben F)
+> -   1269 setpref predist - exitcode ignored bug (Ben M)
+> -   1415 --edit-long-comment, not --edit-description, in help (Trent)
+> -   1413 remove duplicate documentation (Trent)
+> -   1423 complain about empty add/remove (Trent)
+> -   1437 Implement darcs changes --max-count (Eric)
+> -   1430 lazy pattern matching in (-:-) from Changes command module
+>     (Dmitry)
+> -   1434 refactor example test (Trent)
+> -   1432 refer to %APPDATA%, not %USERPROFILE% (Trent)
+> -   1186 give a chance to abort if user did not edit description file
+>     (Dmitry)
+> -   1446 make amend-record -m foo replace only the patch name (Dmitry)
+> -   1435 default to get --hashed from a darcs-1.0 source (Trent)
+> -   1312 update and reduce build notes (Trent)
+> -   1351 fix repository path handling on Windows (Salvatore)
+> -   1173 support hard links on NTFS (Salvatore)
+> -   1248 support compressed inventories for darcs-1 repos (Ganesh)
+> -   1455 implement "darcs help environment" (Trent)
+
+## The question of GHC 6.8
+
+Using GHC 6.10.3 or newer is *strongly recommended*. You may compile
+darcs with GHC 6.8, but there are several caveats. If you are using
+6.8.2 or older, please disable mmap support (pass -f-mmap to cabal
+install or runghc Setup configure). Note that the GHC 6.8.2 that ships
+with Debian Lenny is not affected and it should be safe to keep mmap
+enabled. It is also recommended to disable use of Hackage zlib when
+compiling with GHC 6.8.2 (including the Debian Lenny version): pass
+-f-zlib to cabal. When using zlib, we have seen occasional crashes with
+error messages like "openBinaryFile: file locked" -- this is a known GHC
+6.8.2 bug (and is fixed in GHC 6.8.3). Last, if you are using a 64-bit
+system, darcs may hang when you exit a pager when compiled with GHC
+older than 6.10.3. Although this is harmless, it is quite inconvenient.
+
+Overall, the status of GHC 6.8 is "semi-supported": for many cases,
+things will work just fine, especially if you take a little extra
+caution with compilation flags.
+
+## Installing on Windows
+
+To install darcs on Windows systems from scratch, please download the
+Haskell Platform and MSYS:
+
+> -   [http://hackage.haskell.org/platform/2009.2.0.1/HaskellPlatform-2009.2.0.1-setup.exe](http://hackage.haskell.org/platform/2009.2.0.1/HaskellPlatform-2009.2.0.1-setup.exe)
+> -   [http://sourceforge.net/projects/mingw/files/MSYS+Base+System/MSYS-1.0.11-rc-1.exe/download](http://sourceforge.net/projects/mingw/files/MSYS+Base+System/MSYS-1.0.11-rc-1.exe/download)
+
+After installing both, you should have an "MSYS" icon: run MSYS and in
+the terminal window type (the \`$\` character denotes the prompt, do not
+repeat it):
+
+    $ cabal update
+    $ cabal install darcs -f-curl
+
+This should download, compile and install all required dependencies and
+also darcs itself. The resulting darcs executable will be placed into
+the Haskell Platform executables folder, and should be accessible from
+the MSYS shell (just type "darcs --version" to check).
+
+Yours,
+  ~ Petr.
+
+

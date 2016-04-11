@@ -1,0 +1,50 @@
+# News and discussions
+
+1. The first darcs fundraising has started! Help the darcs project to
+raise
+  ~ $1000 to pay for travel expenses of the approaching darcs sprint:
+
+\*
+[http://www.darcs.net/donations.html](http://www.darcs.net/donations.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-March/018064.html](http://lists.osuosl.org/pipermail/darcs-users/2009-March/018064.html)
+
+2. Haskeline, a Haskell module providing readline-like features, has
+been
+  ~ adopted as the module for command line input:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-March/018122.html](http://lists.osuosl.org/pipermail/darcs-users/2009-March/018122.html)
+
+3. Eric Kow proposed a first draft of the Google Summer of Code
+application:
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-March/018193.html](http://lists.osuosl.org/pipermail/darcs-users/2009-March/018193.html)
+
+# Issues resolved in the last week (0)
+
+# Patches applied in the last week (15)
+
+2009-02-06 Judah Jacobson
+  ~ -   Bump required Haskeline version to \>=0.6.1.
+    -   Resolve conflict between haskeline and utf8-string flag patches.
+    -   Don't set stdin's buffering; Haskeline will do that for us.
+    -   Make Haskeline a required dependency.
+
+2009-03-04 Petr Rockai
+  ~ -   Use ghc --make for hspwd intsead of runghc.
+
+2009-03-03 Eric Kow
+  ~ -   Add a simple donations page.
+
+2009-03-03 Trent W. Buck
+  ~ -   Accept issue1337: darcs changes shows unrelated patches.
+
+2009-03-02 Tommy Pettersson
+  ~ -   remove escape of latex special chars in ShowRepo help text
+    -   put back latex-unfriendly example in SetPref help text
+    -   change to conforming quoting in Record help text
+    -   put back latex-unfriendly markers in MarkConflicts help text
+    -   remove latex escapes from Dist help text
+    -   remove latex formatting from AmendRecord help text
+    -   escape latex special chars from command help text in manual
+    -   put each command usage in new paragraph in manual
+
+

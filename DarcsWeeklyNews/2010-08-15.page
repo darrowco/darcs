@@ -1,0 +1,152 @@
+# News and discussions
+
+1.  Darcs 2.5 beta 3 was released:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-August/024897.html](http://lists.osuosl.org/pipermail/darcs-users/2010-August/024897.html)
+
+2.  The next Darcs Hacking Sprint will take place at Orleans, France,
+    the 15-17 of October:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-August/024886.html](http://lists.osuosl.org/pipermail/darcs-users/2010-August/024886.html)
+    -   [http://wiki.darcs.net/Sprints/2010-10](http://wiki.darcs.net/Sprints/2010-10)
+
+3.  Version 0.1.9 of darcs-benchmark was released, including bugfixes
+    and experimental support for comparison with git and mercurial:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-August/024785.html](http://lists.osuosl.org/pipermail/darcs-users/2010-August/024785.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-August/024749.html](http://lists.osuosl.org/pipermail/darcs-users/2010-August/024749.html)
+    -   [http://wiki.darcs.net/Benchmarks/Mornfall?revision=20100807120334-328e3-64802e95bafde8a279faafa7baba24b0558ebb0a.gz](http://wiki.darcs.net/Benchmarks/Mornfall?revision=20100807120334-328e3-64802e95bafde8a279faafa7baba24b0558ebb0a.gz)
+
+4.  Adolfo Builes blogged about the end of his summer of code project. A
+    summary of his project is available on the wiki:
+
+    -   [http://abuiles.blogspot.com/2010/08/gsoc-week-11.html](http://abuiles.blogspot.com/2010/08/gsoc-week-11.html)
+    -   [http://abuiles.blogspot.com/2010/08/gsoc-week-12.html](http://abuiles.blogspot.com/2010/08/gsoc-week-12.html)
+    -   [http://wiki.darcs.net/GSoC/2010-Cache](http://wiki.darcs.net/GSoC/2010-Cache)
+
+# Issues resolved in the last week (7)
+
+issue1290 Eric Kow
+  ~ -   support diff --index.
+    -   [http://bugs.darcs.net/issue1290](http://bugs.darcs.net/issue1290)
+
+issue1530 Eric Kow
+  ~ -   allow user to pick from multiple email address.
+    -   [http://bugs.darcs.net/issue1530](http://bugs.darcs.net/issue1530)
+
+issue1599 Adolfo Builes
+  ~ -   1599: automatically expire unused caches
+    -   [http://bugs.darcs.net/issue1599](http://bugs.darcs.net/issue1599)
+
+issue1873 Petr Rockai
+  ~ -   give nicer error when apply fails due to missing patches.
+    -   [http://bugs.darcs.net/issue1873](http://bugs.darcs.net/issue1873)
+
+issue1896 Ganesh Sittampalam
+  ~ -   enable witnesses for library
+    -   [http://bugs.darcs.net/issue1896](http://bugs.darcs.net/issue1896)
+
+issue1908 Petr Rockai
+  ~ -   try to create a global cache before checking its availability.
+    -   [http://bugs.darcs.net/issue1908](http://bugs.darcs.net/issue1908)
+
+issue1909 Petr Rockai
+  ~ -   generate correct context in unpull -O.
+    -   [http://bugs.darcs.net/issue1909](http://bugs.darcs.net/issue1909)
+
+# Patches applied in the last week (49)
+
+2010-08-13 Eric Kow
+  ~ -   Reframe Darcs.Match.matchFirstPatchset documentation.
+    -   Improve module-level documentation for Darcs.Match.
+    -   Move Darcs.Match module-specific haddock to module level.
+    -   Resolve issue1290: support diff --index.
+    -   Fix issue1290 test.
+
+2010-08-07 Petr Rockai
+  ~ -   Resolve issue1909: generate correct context in unpull -O.
+    -   Accept issue1909: unrecord -O in a tagged repo makes a bad
+        bundle.
+
+2010-08-12 Eric Kow
+  ~ -   Tweak complaint about DARCS\_CONNECTION\_TIMEOUT.
+
+2010-08-11 Adolfo Builes
+  ~ -   Add environment variable DARCS\_CONNECTION\_TIMEOUT
+
+2010-08-12 Eric Kow
+  ~ -   Tighten up section on per-repository caches a bit.
+
+2010-08-11 Adolofo Builes
+  ~ -   Adding information about cache handling to manual
+
+2010-08-12 Eric Kow
+  ~ -   Tweak title case for repository formats chapter for consistency.
+
+2010-08-11 Adolfo Builes
+  ~ -   Add DARCS\_CONNECTION\_TIMEOUT info to user manual
+    -   Correct error code for curl operation timeout
+    -   Adding some haddock to Cache.hs
+
+2010-08-10 Eric Kow
+  ~ -   Accept issue1913: buggy mapPrimFL.
+
+2010-08-07 Jason Dagit
+  ~ -   remove redundant imports in Patchy and Real
+    -   fix conflict in Bundle
+    -   remove try combinator from ReadMonads
+    -   micro optimizations to parser code
+    -   remove all uses of try from parser code
+    -   ReadMonads no longer exports maybeWork fix other modules to
+        match
+    -   refactor Read to not rely on 'work'
+    -   ReadMonads no longer exports myLex, clean up imports in Real
+    -   refactor Read to use myLex'
+    -   ReadMonads no longer exports alterInput and clean up a few
+        warnings
+    -   cleanup import list of Patchy
+    -   remove peekInput from Real. peekInput no longer exported from
+        ReadMonads
+    -   refactor Patchy to not use peekInput
+    -   refactor Read and ReadMonads to remove peekInput from Read
+    -   add utility functions to ReadMonads
+    -   tune the patch parser
+
+2010-08-08 Petr Rockai
+  ~ -   Resolve issue1908: try to create a global cache before checking
+        its availability.
+    -   Add a "buildbot-try" script to contrib that submits local
+        changes to buildbot.
+    -   Skip testing of issue1599 on old-fashioned repos.
+
+2010-08-07 Adolfo Builes
+  ~ -   Test for issue1599: expire unused caches
+
+2010-08-08 Petr Rockai
+  ~ -   Fail more verbosely in issue1879-same-patchinfo-uncommon.sh.
+    -   Also set binary mode on stderr (we already had stdin/stdout).
+    -   Do not fail when there's debris in tests directory.
+
+2010-07-18 Eric Kow
+  ~ -   Resolve issue1530: allow user to pick from multiple email
+        address.
+    -   Helper Darcs.Utils.askUserListItem to select from an arbitrary
+        list.
+    -   Restyle issue1873 test and make it run in darcs 2.4.
+
+2010-08-07 Petr Rockai
+  ~ -   Add test for issue1873 (failed to read patch during apply).
+    -   Resolve issue1873: give nicer error when apply fails due to
+        missing patches.
+    -   Rename findCommonAndUncommon to findUncommon (it does not find
+        common).
+    -   Add a simple test for http get with packs.
+    -   Add a simple non-network test for darcs get over http.
+
+2010-08-07 Adolfo Builes
+  ~ -   Resolve issue 1599: automatically expire unused caches
+
+2010-07-21 Ganesh Sittampalam
+  ~ -   resolve issue1896: enable witnesses for library
+
+

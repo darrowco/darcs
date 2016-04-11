@@ -1,0 +1,310 @@
+---
+title: darcs-bridge usage
+...
+
+# **Warning**
+
+**Note: the bridge is incomplete and unmaintained.**
+
+At present for one-time conversions
+we recommend the 'darcs convert' command built into Darcs 2.10.
+
+Until further notice, the handling of git-branches is *extremely* fragile, and
+almost certain to break. Therefore, **I do not recommend darcs-bridge for
+creating a bridge between multi-head repos**, at this point in time.
+
+To be clear: *one-shot* conversions in either direction (darcs -> git or git ->
+darcs) should be fine, but attempting to create a synced bridge is *very*
+likely to fail/cause corruption.
+
+The problem is the difficulty in "unravelling" the encoding of git
+branches into darcs patch-sequences - we need to be able to recover the
+exact original patch sequence (in 1-to-1 correspondence with the git
+commits) when re-exporting an imported git-repo. This is required for
+the bridge to stay in sync.
+
+**With this in mind, I suggest that if you are going to try using the bridge as it is now, be very careful and ensure that you've made adequate backups!
+I am trying to find the time to work on the bridge, and do hope to release a fixed version in the near future (as of Aug. 2013).**
+
+# What is it?
+
+darcs-bridge translates between Git and Darcs v2 repos, either as a
+one-off conversion, or incrementally over time creating a "bridge"
+between the repositories.
+
+# How can I install it?
+
+While darcs-bridge is still in its infancy (read: not uploaded to
+hackage and still named darcs-fastconvert) you'll need to jump through a
+couple of (hopefully trivial) hoops to install it:
+
+1. Install darcs 2.8:
+
+    ~~~
+    cabal update; cabal install darcs-2.8.0
+    ~~~
+
+1. Grab a copy of the darcs bridge GSoC repo:
+
+    ~~~
+    darcs get http://hub.darcs.net/owst/darcs-bridge-export-branch darcs-bridge 
+    ~~~
+
+1. Install darcs-bridge (the executable will still be named darcs-fastconvert)
+
+    ~~~
+    cd darcs-bridge
+    cabal install
+    ~~~
+
+# How do I use it?
+
+There are several use-cases for darcs-bridge, we give instructions for
+each, below:
+
+## 1. I want to move from Git to Darcs, and not use Git anymore
+
+Assume we have a local Git repo */home/owen/repos/foo\_project* and we
+want to create a Darcs mirror under
+*/home/owen/repos/foo\_project\_darcs*.
+
+    cd /home/owen/repos
+    mkdir foo_project_darcs
+    (cd foo_project && git fast-export -M -C --progress=1 <BRANCH_LIST> --) | darcs-fastconvert import foo_project_darcs/master
+
+Here, <BRANCH\_LIST\> is a space-separated list of branch names you wish
+to export, e.g. "master feature1 production". The master branch will be
+imported into *foo\_project\_darcs/master* and other branches will be
+alongside the master Darcs repo, in this case:
+*foo\_project\_darcs/master-head-feature1* and
+*foo\_project\_darcs/master-head-production*.
+
+## 2. I want to move from Darcs to Git, and not use Darcs anymore
+
+Assume we have a local Darcs master repo */home/owen/repos/my\_project*
+and darcs-branch */home/owen/repos/my\_project-branch1* and we want to
+create a Git mirror under */home/owen/repos/my\_project\_git*.
+
+    cd /home/owen/repos
+    git init my_project_git
+    darcs-fastconvert export my_project my_project-branch1 | (cd my_project_git && git fast-import && git checkout master)
+
+The Git repo should now contain 2 branches: *master* and
+*my\_project-branch1*. A common prefix of the two branches will be
+shared by both branches, but no merges will be detected, as detailed
+below.
+
+## 3. I want to create a bridge that allows incremental updates, and use both Git and Darcs
+
+A bridge can be created from an existing Darcs or Git respository. Say
+we have a Darcs repo that we'd like to bridge at
+*/owen/repos/my\_project*, to create a bridge, we can proceed as
+follows:
+
+    cd /home/owen/repos
+    darcs-fastconvert create-bridge my_project
+
+    git clone my_project_bridge/my_project_git
+
+Now we have a equivalent Darcs and Git repository: the original Darcs
+repository is still located in *my\_project* and the newly created Git
+repo is located in *my\_project\_git*. Note that we have a
+*my\_project\_bridge* directory, which contains clones of both repos.
+These repos *must not* be modified directly - changes should instead be
+made in the original repo and pushed to the bridge-repos:
+
+    cd my_project_git
+
+    *wibble files and commit*
+
+    git push 
+
+Pushing to the bridged repos first ensures that the bridge is correctly
+synced (that the bridged Git-repo is either equal or a superset of the
+bridged Darcs-repo), before allowing the push to continue.
+
+**N.B. Whereas Git forces the user to pull any changes locally before
+allowing the push to go ahead, Darcs can only warn the user, a repeated
+push attempt will succeed, without error, but should be avoided, due to
+conflicts not being correctly handled.** Any changes should be pulled
+in, and the patch/commits be modified/re-recorded accordingly, before
+again pushing to the bridge.
+
+Since re-recording changes to avoid conflicts is awkward within Darcs, a
+manual bridge sync command can be periodically used, before creating any
+local patches.
+
+    # To pull in changes from Git, into Darcs (in the bridge)
+    darcs-fastconvert sync my_project_bridge darcs
+    # Pull changes into our local copy of the bridged repo...
+    darcs pull my_project_bridge/my_project
+
+    # And vice-versa, to pull in changes from Darcs, into Git (in the bridge)
+    darcs-fastconvert sync my_project_bridge git
+    # Pull changes into our local Git repo...
+    git pull my_project_bridge/my_project_git
+
+## 4. I want to apply a Git patch to my Darcs repository
+
+Suppose you make your project's Darcs repository publicly available and
+that a potential-contributor who uses Git (and doesn't want to create a
+long-term bridge) wants to send you some patches for your project. Using
+darcs-bridge, the contributor can create a Git mirror of your project,
+following \#2, above. They then modify the code and make git commits,
+and email them to you, using *git send-email*. Upon receiving a
+git-formatted patch, save the patch-file attachment and use the
+following darcs-bridge command:
+
+    darcs-fastconvert apply <DARCS_REPO_DIR> <PATCH_FILE>
+
+Git patches contain a hash of the affected files' contents, before, and
+after the original commit was made. We use these hashes to assert that
+we are applying in a "compatible" context (we cannot be sure that the
+context is the same, since we can only check the end-state of the file,
+rather than the patch history - we also only have hash information for
+affected files, not any other files in the repository). If the hash
+doesn't match the user will be prompted to try-to-apply anyway
+(by-default, but can be disabled via the --prompt=no flag). If the patch
+doesn't cleanly apply, no changes will be made to the repository.
+
+## 5. I want to modify the branches that the bridge is managing
+
+By default, the bridge will only manage the "master" branch of both
+repositories. Any merges will still correctly converted (*only* with
+explicit tagging, for exporting from Darcs) but the original branch will
+not be present in the "other" repository. We can instruct the bridge to
+handle extra branches by explicitly naming them:
+
+    # Which branches does the bridge know about?
+    darcs-fastconvert branch list
+
+    # I want to also track my other Darcs branch:
+    darcs-fastconvert track <BRIDGE_PATH> <BRANCH_REPO_PATH>
+
+    # I no-longer want the bridge to track that branch:
+    darcs-fastconvert untrack <BRIDGE_PATH> <BRANCH_NAME>    
+
+# How does it work?
+
+Internally, darcs-bridge uses the de-facto standard Git fast-import
+stream format to communicate repository states between Git and Darcs.
+See the [git fast-import
+man-page](http://www.kernel.org/pub/software/scm/git/docs/git-fast-import.html)
+for a description of the format.
+
+To track incremental conversions, "marks" and "inventories" files are
+used, which are used to create a correspondence between each
+patch/commit, a conversion-unique identifier and the context within
+which the patch was created (the inventory) - darcs-bridge automatically
+manages these mark/inventory files so the user does not have to.
+
+# What are the limitations?
+
+-   Darcs merges can only be handled explicitly, if a special form of
+    tagging is used (which is automatically employed when importing Git
+    merges):
+
+1.  There are no unrecorded changes.
+2.  A tag is created, before the merge on the *target* branch with the
+    exact message: **darcs tag -m 'darcs-fastconvert merge pre-target:
+    MERGE\_ID'**
+3.  A tag is created on *each* merge-source branch, before the merge,
+    with the exact message: **darcs tag -m 'darcs-fastconvert merge
+    pre-source: MERGE\_ID'**
+4.  The branches are pulled, in their entirety: **darcs pull -a
+    BRANCH\_NAME**
+5.  All resolutions are made, without any other changes, in as many
+    patches as necessary.
+6.  Finally, a end tag is created on the merge-target branch, with the
+    exact message: **darcs tag -m 'darcs-fastconvert merge post:
+    MERGE\_ID'**
+
+It is important that MERGE\_ID is unique in the repos, so the merge can
+be uniquely determined. The MERGE\_ID must be equal across all
+corresponding merge-tags.
+
+When exporting a tagged merge, the initial tag notifies the exporter of
+an impending merge, the end tag delimits the merge (and any resolutions)
+and each source-tag gives the context within which the merged-in patches
+were created. It is vital to obtain the patches' original context, since
+we need to commute-out any patches that are in the context of the
+patches after having been merged-in, so that we can obtain the patches'
+original form and context.
+
+-   Non-tagged merges aren't specifically handled - this means that any
+    conflicting changes will be exported such that some information is
+    lost (namely, the original changes the conflicting patches made),
+    since conflicting-changes are merged such that their changes are
+    undone (see the Darcs [conflicts FAQ](FAQ/Conflicts) for more information).
+    Any resolutions will be exported correctly, so the end-state of the
+    exported repo will be consistent with that of the Darcs repo.
+
+-   Patch-ids change on each distinct import of a Git repository to a
+    Darcs repository. This means that patches cannot be directly shared
+    between distinct bridged repositories; it is therefore recommended
+    that a authoritative bridge is created, and made publicly available,
+    along with the original repository.
+
+-   Darcs patch ordering/history cannot be changed, once the repository
+    has been bridged, otherwise new branches will be exported. For
+    example, unpull, obliterate and other such commands should not be
+    used (just as they shouldn't if the repository is available
+    publicly). This is the same restriction that Git places on
+    cherry-picked commits, i.e. A-\>B-\>C and A-\>C'-\>B' are equivalent
+    repositories to Darcs, but not Git and as such two separate
+    branches, based on A, would be exported.
+
+# What needs work?
+
+-   Performance - performance is currently sub-optimal for large/complex
+    repositories, with memory consumption being too high.
+
+-   Non tagged merges/conflicts are not exported as branches.
+    Unfortunately, unless merges (and thus conflicts) are tagged, there
+    is currently no functionality to export the conflicting patches as
+    an explicit fork/join of branches.
+
+-   Merge conflict-resolutions are squashed into a single patch, when
+    exporting to Git. This means that exporting, then re-importing will
+    "lose" some information relative to the original Darcs repository -
+    the original resolution patches will be replaced by a single patch
+    that combines their effects. This could probably be worked around by
+    encoding the original patches as we do for replace patches?
+
+# Aren't there already tool(s) to do that?
+
+There are several tools that provide some level of conversion between
+Darcs and git, with varying feature-sets:
+
+## darcs-fastconvert
+
+darcs-bridge was originally based on darcs-fastconvert written by Petr
+Ročkai, which provided simple import and export of Darcs/Git
+repositories using the fast-import stream format. It did not manage
+multiple branches or merges and is now replaced by darcs-bridge.
+
+## darcs-to-git
+
+Written in Ruby, originally by Steve Purcell. Gives one-way conversion
+from Darcs to Git - shelling out to Darcs and Git, to translate Darcs
+patches into Git commits. Supports incremental importing, but does not
+support branches. Has seen active development in 2011. Failed to export
+a darcs.net/screened repo as of 02/09/2011, but did manage to export
+hledger (\~2000 patches) in real 22m39.172s vs darcs-bridge's real
+0m10.774s.
+
+## darcs2git
+
+Written in Python, originally by Han-Wen Nienhuys. Gives one-way
+conversion from Darcs to Git - also shelling out to Darcs and Git. Does
+not support incremental importing or branches. Has not seen development
+since 2008. Failed to export the darcs.net/screened repo or the hledger
+repo as of 02/09/2011.
+
+## tailor
+
+Written in Python, originally written by lele, tailor supports
+incremental conversion but AFAICK doesn't support Darcs branches easily.
+Tailor has effectively been discontinued, citing darcs-fastconvert as a
+better alternative (since the fast-import format has become a de-facto
+standard).

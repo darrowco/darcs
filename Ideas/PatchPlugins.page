@@ -1,0 +1,143 @@
+# Patch regions
+
+This is an attempt to specify how the patch plugins proposal below might
+work.
+
+The problem is that when you want to introduce a new patch type you need
+to specify how they commute with all other known patch types. This
+proposal aims to demonstrate that specifying these rules need not drive
+one crazy.
+
+The idea is that patch types should be broken down into regions.
+
+The regions are associated with a tuple
+
+> type FP\_Region = (String, Int)
+
+Let's start with "file patches". When commuting two primitive file
+patches:
+
+-   if they touch different files, they commute
+-   if their region identifiers (FP\_Region) do not match, they do NOT
+    commute
+-   otherwise, see the definition of patch commutation associated with
+    that region identifier
+
+Examples of regions:
+
+-   fp-core-darcs 1: hunk, replace
+-   fp-core-darcs 2: hunk, replace, intra-file-hunk-move
+-   [fp-no-lines](http://bugs.darcs.net/issue1107) 1: char-hunk, replace
+-   fp-xml 1: new-tree, add-node, move-node
+-   [fp-change-log](http://bugs.darcs.net/issue674) 1: append
+
+It should be possible to generalise this idea beyond file patches as
+well:
+
+> type Region = (String, Int)
+
+-   if two patches have different region strings, they commute
+-   if they have different region numbers, they do NOT commute
+-   otherwise, see definition of patch commutation associated with that
+    region identifier
+
+More examples
+
+-   core-darcs 1: adddir, rmdir, addfile, rmfile, fp-core-darcs 1
+-   core-darcs 2: adddir, rmdir, addfile, rmfile, fp-core-darcs 2
+-   pref-system 1: changepref
+-   pref-system 2: awesome-changepref
+-   bts 1: open-ticket
+
+Things are a bit sketchier here, though because of doubts about how this
+should actually interact with the working directory
+
+# Original patch plugins commentary
+
+Mostly verbatim from the e-mail Geoffrey Alan Washburn originally wrote
+on the idea.
+
+* * * * *
+
+I was curious as to whether any thought had been given to being able to
+design "plugins" to extend the language of "atomic" patches.
+
+At least as I understand from looking at the manual there are a few
+"atomic" sorts of patches "hunks", "binary file modifications", "add a
+new file", etc. Then there are ways to combine them into larger patches.
+
+However, one annoyance I've had as of late is that most software uses a
+diff algorithm for text and maybe something special, like Xdelta for
+binary data. But quite a bit of data these days is structured, XML being
+the most popular example. But another good example are is just plain old
+ASCII text.
+
+For example, Subversion, in a really ad-hoc way, allows users from
+having to deal with DOS/Unix/Mac end-of-line conversions. The thought
+would be to make this into a new kind of "atomic" patch that people
+could choose as a "plugin".
+
+Similarly, XML documents are meaning invariant under quite a few
+operations (even more if you know the DTD or schema, but it would be
+better to start with invariants for all valid XML documents). One could
+imagine a "plugin" for an XML "atomic" patch that would take these basic
+invariants into account.
+
+Of course, users using these "plugins" would not necessarily be able to
+communicate their patches to others who don't have the same set of
+plugins, but I don't see this as especially onerous. One might even
+imagine requiring a kind of backwards compatibility mode with all these
+"plugins" such that they can be normalized to the core language of
+patches, but losing some of the advantages (i.e. you don't get end of
+line conversion for free).
+
+There is also the question of how to enforce that "plugin" patches obey
+the theory of patches. I see that there is already some investigations
+into using GADTs to ensure than invariants are maintained (I have to
+admit that was my favorite part of David's talk at the Haskell Workshop)
+, but even then that might not be enough. ghc is continuing to push
+forward with making more and more dependent type like features
+available, so perhaps eventually that will be enough. A more immediate
+proposal, but definitely more radical, would be to start coding up the
+theory of patch framework in Coq, which supports Haskell code
+extraction.
+
+Anyway, I would be curious to hear what people think about this idea,
+because this is something I'd really like to see in version control
+system.
+
+# Response to patch-plugins email
+
+I have had the same wish for some time. It would be brilliant to be able
+to use darcs for versioning of things with more (or different) structure
+than plain text. For example:
+
+-   Annotated text, e.g. a legal document with comments attached to
+    parts of its text. One can simulate this by including the comments
+    in the text (with some formatting), but this is not a perfect fit:
+    the order of comments on the same piece of text shouldn't matter,
+    for instance.
+
+-   A collection of notes/bookmarks/whatever, kept in a tree-like
+    structure.
+
+-   A large latex document, with sections, subsections and a preamble.
+    It would be nice if you could reorder sections without conflicting
+    with editing of those sections. Also the preamble could be kept
+    unordered, to allow different authors to define macros
+    independently, conflicting only when there is a name clash.
+
+This would all be possible given something like your plugin system. In a
+plugin, one would define the abstract "atomic patches", their
+commutation relations and their realisation (how they act on the
+"working directory").
+
+I'd imagine that darcs does not want to expand into this new area,
+though. It would probably be a lot of work to untangle darcs up to a
+point where code sharing becomes profitable.
+
+Another option would be to encode your structured text as a directory
+tree, keeping commuting parts in different files. You could then build a
+wrapper around darcs that interprets commands about high-level patches
+and issues the corresponding low-level darcs commands. Not sure if this
+is feasible.

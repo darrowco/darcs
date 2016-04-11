@@ -1,0 +1,27 @@
+As at June 2009, Trent W. Buck (twb) is an active member of the [Darcs
+Team](../DarcsTeam). His contributions are to infrastructure rather than
+the core code. They include:
+
+-   Extensive improvements to Darcs' documentation.
+-   Maintenance of the [Debian's Darcs
+    package](http://packages.qa.debian.org/d/darcs.html);
+-   Refactoring the (now deprecated) autoconf build infrastructure;
+-   A command-line interface to our BTS, called
+    [ru](http://code.haskell.org/~twb/ru/ru);
+-   View-as-mailbox support for BTS tickets (see
+    [issue1148](http://bugs.darcs.net/issue1148)); and
+-   Migration of wiki history from moinmoin to gitit.
+
+Planned contributions include:
+
+-   Unified documentation, using the Pandoc library to generate LaTeX,
+    manpage and online ("darcs help") documentation from a single
+    source;
+
+-   Catch common typos in patch descriptions
+    ([issue1094](http://bugs.darcs.net/issue1094));
+-   Improved functional test infrastructure
+    ([issue1283](http://bugs.darcs.net/issue1283)); and
+-   Improved coverage of license (and copyright) declarations.
+
+

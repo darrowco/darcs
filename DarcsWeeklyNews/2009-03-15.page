@@ -1,0 +1,98 @@
+# News and discussions
+
+1. Darcs fundraising is already halfway! We have gathered more than
+  ~ $500 on our objective of $1000 to help developers attend the
+    upcoming Haskell Hackaton. Spread the word!
+
+\*
+[http://www.darcs.net/donations.html](http://www.darcs.net/donations.html)
+  ~ -   [http://www.reddit.com/r/programming/comments/84nyi](http://www.reddit.com/r/programming/comments/84nyi)/
+
+2. Support for libwww and curl/wget dropped, darcs now relies only on
+  ~ libcurl or on the Haskell HTTP module:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-March/018147.html](http://lists.osuosl.org/pipermail/darcs-users/2009-March/018147.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-March/018341.html](http://lists.osuosl.org/pipermail/darcs-users/2009-March/018341.html)
+
+3. Bertram Felgenhauer submitted a patch that greatly reduces memory
+  ~ usage of \`darcs check\` and \`darcs repair\`:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-March/018244.html](http://lists.osuosl.org/pipermail/darcs-users/2009-March/018244.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-March/018252.html](http://lists.osuosl.org/pipermail/darcs-users/2009-March/018252.html)
+
+# Issues resolved in the last week (3)
+
+issue1271 Trent W. Buck
+  ~ -   do not install two copies of darcs.pdf.
+    -   [http://bugs.darcs.net/issue1271](http://bugs.darcs.net/issue1271)
+
+issue1366 Trent W. Buck
+  ~ -   remove unreachable code for direct ncurses use.
+    -   [http://bugs.darcs.net/issue1366](http://bugs.darcs.net/issue1366)
+
+issue1379 Trent W. Buck
+  ~ -   remove libwww support.
+    -   [http://bugs.darcs.net/issue1379](http://bugs.darcs.net/issue1379)
+
+# Patches applied in the last week (33)
+
+2009-03-13 Eric Kow
+  ~ -   Cabal: loosen HTTP package requirement.
+    -   Cabal: allow -fhttp to co-exist with -fcurl.
+    -   Remove support for calling wget/curl on the command line.
+
+2009-03-13 Simon Michael
+  ~ -   drop the list\_authors tool in favour of "darcs show authors"
+
+2009-03-09 Reinier Lamers
+  ~ -   Add --user flag to configure in test pref
+
+2009-03-14 Trent W. Buck
+  ~ -   Resolve issue1271: do not install two copies of darcs.pdf.
+    -   Explicitly license more tests (as GPL2+).
+    -   Mimic GNU cp's arg format for "darcs mv".
+    -   Refactor "darcs show files" help.
+    -   Mention "darcs query".
+    -   Refactor "darcs show bug" short description.
+    -   Refactor "darcs get" help.
+    -   Refactor "darcs init" help.
+    -   Refactor "darcs apply" short description.
+    -   Refactor "darcs show authors" help.
+    -   Refactor command\_alias help.
+    -   Leverage existing command\_alias macro.
+    -   Refactor "darcs remove" help.
+
+2009-03-14 Eric Kow
+  ~ -   Add status update to donations page.
+
+2009-03-12 Nicolas Pouillard
+  ~ -   New updated Zsh completion script (c.f. issue 1301)
+
+2009-03-12 Simon Michael
+  ~ -   another fix for the man page target, it's "darcs help manpage"
+
+2009-03-12 Trent W. Buck
+  ~ -   Resolve issue1366: remove unreachable code for direct ncurses
+        use.
+    -   Use standard library function \`union\` instead of custom
+        \`add\_to\_list\`.
+    -   Rearrange code to avoid unused imports and definitions.
+
+2009-03-10 Bertram Felgenhauer
+  ~ -   Improve memory usage of darcs check and repair.
+    -   Fix typo.
+
+2009-03-10 Eric Kow
+  ~ -   Break cabal file up into sections, visually speaking.
+    -   Fix ifdef error (inconsistent use of HAVE\_LIBCURL/HAVE\_CURL).
+    -   Fix Makefile oversight in darcsman move.
+    -   Fix Makefile oversight in libwww removal.
+
+2009-03-06 Trent W. Buck
+  ~ -   Remove documentation references to libwww.
+    -   Resolve issue1379: remove libwww support.
+    -   Partially resolve issue1376: merge darcsman.hs into darcs(1).
+
+

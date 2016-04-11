@@ -1,0 +1,19 @@
+---
+categories: Theory
+...
+
+# Graphictors
+
+# What are they?
+
+A new design for representing conflicts, within patch-theory.
+
+# Why are they needed?
+
+The current "Conflictors" are confusing, badly (not?) understood by
+current developers and perform badly.
+
+# How do they work?
+
+Conflicts are represented by graphs, where the edges are patches and the
+nodes are contexts.

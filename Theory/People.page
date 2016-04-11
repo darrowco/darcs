@@ -1,0 +1,135 @@
+We want to continue growing the list of people who have a solid
+understanding of [PatchTheory](../Theory). Note that some of these
+people hang out in \#darcs-theory on irc.freenode.net so do stop by for
+a chat!
+
+How to use this directory
+
+-   Note that patch theory questions are best asked on the mailing list
+    (darcs-users 2008-08).
+-   Perhaps browse this list to have a better idea who is answering your
+    question, or who you are debating with
+-   Put yourself on this list
+
+    -   ... even if you are just passively learning patch theory.
+    -   ... if you want to formalise patch theory in a certain way
+        (perhaps you can find a kindred spirit to work with)
+    -   ... if you have a wacky patch theory idea (perhaps somebody else
+        will have a similar wacky idea and you can collaborate!)
+
+-   It would help if you put down a short explanation of the extent of
+    your understanding.
+-   Note that "last seen" refers to the last time we heard from them
+    about patch theory
+
+# Patch theorists
+
+People who have actively been involved in the development of darcs patch
+theory.
+
+-   David Roundy
+
+    -   David devised patch theory in the first place and probably
+        understands the conflictors work in darcs 2 the best.
+    -   last seen: 2008-08
+
+-   [JasonDagit](../People/JasonDagit)
+
+    -   Jason worked with David on the darcs 2 stuff. His master's
+        thesis is on darcs. We are all looking forward to seeing it!
+    -   gaps: ...
+    -   last seen: 2009-10
+
+-   Ian Lynagh
+
+    -   Ian has participated in many of the core patch theory
+        discussions. He has also started the
+        [Camp](http://projects.haskell.org/camp/) project, to develop
+        and prove correct a darcs-like theory that will hopefully form
+        the basis for darcs 3.
+    -   last seen: 2008-09
+
+-   [GaneshSittampalam](../People/GaneshSittampalam)
+
+    -   Ganesh was working on conflictors up to 2005/2006. Along with
+        Arjan, he figures as a character in the wikibook.
+    -   also worked on: [GaneshPatchAlgebra](GaneshPatchAlgebra)
+    -   gaps: Ganesh said he doesn't really understand what's going on
+        recently (say in darcs 2)
+    -   last seen: 2006
+
+-   Arjan Boeijink
+
+    -   Arjan was working on conflictors up to 2005/2006, if I recall
+        correctly. He has recently resurfaced. Welcome back!
+    -   last seen: 2008-09
+
+-   [Jean-Phillipe Bernardy](People/JeanPhillipeBernardy)
+
+    -   Jean-Phillipe\_ and students were working on an alternative
+        patch theory in which conflicts do not exist. Instead, an
+        internal representation of repository state is chosen to
+        accomodate conflicting states.
+    -   "A patch theory should be divided in two parts... an internal
+        representation for data... [and] a relation between internal and
+        external representation" (see [FoCAL](../FoCAL) for details)
+    -   last seen: 2009-01
+
+-   Judah Jacobson
+
+    -   Judah wrote up a formalisation of patch theory using inverse
+        semigroups...
+    -   last seen: 2009-10
+
+# Alternative patch theorists
+
+I don't like making distinctions here, but I guess it is useful to have
+a list of people who have suggested reformulations of patch theory, or
+patch theory as it is not (currently) used by darcs
+
+-   [MarnixKlooster](../People/MarnixKlooster)
+
+    -   Marnix developed [a patch
+        calculus](http://home.solcon.nl/mklooster/darcs/patch-calculus.html)
+
+-   [PekkaPessi](../People/PekkaPessi)
+
+    -   Pekka started working on [Pekka patch
+        theory](PekkaPatchTheory)...
+    -   last seen: 2007
+
+-   Will Uther - has looked into the relationship between patch theory
+    and operational transforms
+
+    -   [operational transformation on revctrl
+        wiki](http://revctrl.org/OperationalTransformation)
+    -   last seen: 2009-09
+
+# Patch theory students
+
+-   [Eric Kow](../People/EricKow)
+
+    -   Eric (with Arjan's guidance) wrote the introductory chapter on
+        the understanding darcs wikibook, so he has a rudimentary
+        understanding of patch theory without conflicts (i.e. he knows
+        what commutation is and how darcs uses it).
+    -   gaps: He doesn't have a clue what goes on after there, nor does
+        he really get any of the new properties like permutivity
+    -   last seen: 2007
+
+-   [Petr Rockai](../People/PetrRockai)
+
+    -   last seen: 2008-08
+
+-   Apfelmus
+
+    -   Interested bystander who likes mathematical correctness and
+        proofs.
+    -   last seen: 2009-10
+
+-   [Reinier Lamers](../People/ReinierLamers)
+
+    -   Thinks he should understand patch theory as a darcs coder
+    -   last seen: 2009-04
+
+

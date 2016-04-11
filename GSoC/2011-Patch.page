@@ -1,0 +1,82 @@
+# Abstract
+
+> My project will make "darcs changes" and "darcs annotate" take
+> advantage of a new optimisation called patch index.
+
+# About the project
+
+> "darcs changes [FILE]" is used to list the patches that effected the
+> given files or directories. "darcs annotate [FILE]" is used to find
+> the patch that last modified each line in that file.
+>
+> However getting the relevant patches in darcs changes and darcs
+> annotate is slow, as it goes through every patch back until file
+> creation.
+>
+> I seek to solve these issues in my project.
+
+# Benefits to the community
+
+> Darcs is one of the most used VCS in haskell projects. However, "darcs
+> changes", and "darcs annotate" get unacceptably slow as the project
+> grows. For example, in darcs repository of darcs itself, it takes 45
+> minutes for a "darcs changes Apply.hs" to finish.
+>
+> My project will benefit the wider haskell community by speeding up
+> some of the slowest parts of darcs. Indeed patch index was designed to
+> speed up commands like changes and annotate.
+
+# Project Design
+
+> Patch Index is a way designed by Benedikt Schmidt, to directly access
+> all patches in a repo that affect a file.
+>
+> Patch index uses a map (Map FileId (Set PatchId)) to identify the
+> patches that go with a file. FileId is composed of creationName (name
+> of the file when created), and a counter for differentiating files
+> with same creationName.
+>
+> FileId = FileId {creationName :: ByteString, counter :: Int}
+> PatchesMap = Map FileId (Set PatchId)
+>
+> Although a patch usually effects only a few files, "darcs changes" and
+> "darcs annotate" parse every patch back till file creation.
+>
+> I will implement a --patch-index argument to "darcs changes [FILE]"
+> and "darcs annotate [FILE]", so that they parse only the patches that
+> touch the files.
+
+# Timeline
+
+> My summer break will begin before gsoc starting date, but my next
+> semester will begin July last week. Accordingly I plan to start before
+> actual start date (early May), and hopefully finish early as well.
+>
+> Benedikt has ported code for creating, updating, and querying the
+> patch index.
+>
+> week 1: I will study Benedikt's code, and look for approaches on
+> modifying darcs changes to use patch index.
+>
+> week 2 - 4: I will modify darcs changes to use patch index
+>
+> week 5: I will study darcs annotate (with Petr's improvements) and
+> look for approaches on modifying darcs annotate.
+>
+> week 6 - 8: I will modify darcs annotate to use patch index.
+>
+> week 9 - 12: This time will be spent on polishing the code, as well as
+> removing any leftover bugs, writing remaining tests and measuring
+> performance improvements. At end date we should be able to realise the
+> performance improvements.
+
+# About Me
+
+> I am sophomore undergraduate student in India. I have taught myself
+> functional programming one and a half years ago and haskell one year
+> ago. I mostly use haskell in programming contests and online judges. I
+> have also coded an AI bot in haskell for Google AI Contest 2010.
+> Although I have been using open source software since 7 years, I have
+> never actually contributed back to them. I think GSoC is going to be a
+> wonderful start for me in open source contribution. I will also be
+> able to improve my skills as a developer.

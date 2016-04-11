@@ -1,0 +1,128 @@
+# Update (March 2016)
+
+The following integration has been done of hashed-storage into Darcs:
+
+    ./src/Storage/Hashed/Hash.hs -> ./src/Darcs/Util/Hash.hs
+    ./src/Storage/Hashed/Tree.hs -> ./src/Darcs/Util/Tree.hs
+    ./src/Storage/Hashed/Darcs.hs -> ./src/Darcs/Util/Tree/Hashed.hs
+    ./src/Storage/Hashed/Plain.hs -> ./src/Darcs/Util/Tree/Plain.hs
+    ./src/Storage/Hashed/Monad.hs -> ./src/Darcs/Util/Tree/Monad.hs
+    ./src/Storage/Hashed/Index.hs -> ./src/Darcs/Util/Index.hs
+
+# Old documentation
+
+This page aims to provide high-level, informal documentation on
+[hashed-storage](http://hackage.haskell.org/packages/archive/hashed-storage)
+
+The hashed-storage library provides support code for reading and
+manipulating hashed file storage (where each file and directory is
+associated with a cryptographic hash, for corruption-resistant storage
+and fast comparisons).
+
+The supported storage formats include darcs hashed pristine, a plain
+filesystem tree and an indexed plain tree (where the index maintains
+hashes of the plain files and directories). darcs' pristine.hashed.
+
+Right now we're using it as a staging area for suggestions in improving
+the documentation.
+
+# Dream documentation
+
+This stuff could be hard to pull off, but if we had it, wow,
+hashed-storage documentation would be really good!
+
+1.  More examples
+2.  More explanation of details, especially efficiency concerns
+3.  Tutorials or example programs on how to use hashed-storage right
+4.  Complexities of various functions (cf
+    [ByteString](http://hackage.haskell.org/packages/archive/bytestring/latest/doc/html/Data-ByteString.html)
+    haddock)
+5.  A pony
+
+# Papercuts
+
+But maybe we can at least fix some easy stuff first...
+
+1.  The documentation says
+
+    > The on-disk format is best described by peekItem.
+
+    but peekItem is not in the index. Actually, this is due to peekItem
+    being not exported. (Fixed in hashed-storage HEAD, 0.5.3)
+
+2.  There is a dead link to
+    <http://hackage.haskell.org/packages/archive/hashed-storage/0.5.2/doc/html/indexFormatValid.html>
+    (maybe something in the haddock specifically). Minor haddock syntax
+    problem; (Fixed in hashed-storage HEAD, 0.5.3)
+
+3.  There is a dead link to
+    <http://hackage.haskell.org/packages/archive/hashed-storage/0.5.2/doc/html/Storage-Hashed-Diff.html>
+    (this is because the Storage.Hashed.Diff module is optionally
+    compiled in with -fdiff ... module to be nuked in hashed-storage
+    0.6)
+
+# Improvements to structure
+
+Also a little bit more signposting could be useful.
+
+1.  Where is the starting point? What is the first page of the
+    hashed-storage documentation I should read?
+
+2.  What is the bigger picture? If I'm an application developer, when
+    should I use hashed-storage, what-for? Also particularly, when might
+    I be tempted to use hashed-storage but actually find it's a bad idea
+
+# Questions
+
+And finally the following points may need clarification
+
+1.  Why store hashes? What are they used for?
+
+2.  What is the hash of empty files and empty directories? Hash of
+    directory of empty files?
+
+3.  What is the memory usage of the following behaviour?
+
+    > When a file in a directory changes hash, this triggers
+    > recomputation of all of its parent directory hashes; moreover this
+    > is done efficiently -- each directory is updated at most once
+    > during an update run
+
+    Why somebody would ask that is that they may think maybe files are
+    mmap'd to be read. How are the files read? Are they read strictly or
+    lazily, streamed? iteratee?
+
+# Design questions
+
+1.  Why does hashed storage use a binary format instead of a text-based
+    one?
+
+    To avoid the performance issues caused by having to parse the index
+    file
+
+2.  How large will the index file get if there are a lot of files in the
+    repository?
+
+    For 80893 pristine.hashed items, the index is about 7.2M.
+
+3.  How long does reading a large index file take?
+
+    To answer this question: reading the file is done with mmap, we
+    don't do any parsing and we have a length mechanism that lets us
+    skip parts of the index file that we're not interested in. More
+    concrete numbers to follow, but for now, we feel that reading the
+    index is fairly fast.
+
+4.  Where do the timestamps (that we put into the index file) ultimately
+    come from? Do we copy them from working?
+
+    See Storage.Hashed.Index inline documentation. -- Petr
+
+# More information
+
+1.  [Summer of Code 2009 timeline](GoogleSummerOfCode/2009-Hashed)
+2.  [Unstable
+    API](http://repos.mornfall.net/hashed-storage/dist/doc/html/hashed-storage/)
+3.  [Hashed-Storage Trac](http://repos.mornfall.net/hashed-storage/trac)
+4.  [Review Discussion](../Review/DarcsHS)
+

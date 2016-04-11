@@ -1,0 +1,79 @@
+# News and discussions
+
+1. Jason Dagit and Ganesh Sittampalam joined the review team:
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-August/021086.html](http://lists.osuosl.org/pipermail/darcs-users/2009-August/021086.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-September/021317.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021317.html)
+
+2. Ganesh Sittampalam tells us about darcs-relevant discussions at ICFP:
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-September/021221.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021221.html)
+
+3. Eric Kow clarified the policy of the contrib directory of darcs, in
+  ~ particular because of the darcs.cgi script:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-September/021148.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021148.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-September/021247.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021247.html)
+
+4. Eric also finished triaging all bugs of the bugtracker, sent us a
+summary
+  ~ of the situation and started looking for a way to track patches with
+    (or without) roundup (our bugtracker):
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-September/021212.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021212.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-September/021248.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021248.html)
+
+# Issues resolved in the last week (0)
+
+# Patches applied in the last week (27)
+
+2009-08-11 Petr Rockai
+  ~ -   Improve performance of clean\_hashed (by a factor of \~n/logn).
+
+2009-09-11 Eric Kow
+  ~ -   Split tags/TAGS target.
+
+2009-09-11 Thorkil Naur
+  ~ -   Test for issue1224
+
+2009-09-07 Eric Kow
+  ~ -   Accept issue1300: --delete-file should only delete if test
+        succeeds.
+    -   Accept issue1332: darcs add -r seems to ignore --boring.
+    -   Test for issue942.
+    -   Test for issue142.
+    -   Subsections for posthooks and prehooks.
+    -   Remove darcs.cgi contrib script.
+    -   More descriptive name for issue1488 test.
+
+2009-09-09 Marnix Klooster
+  ~ -   Accept issue1488: a 'fromJust error' in 'darcs whatsnew -l'
+
+2009-09-09 Petr Rockai
+  ~ -   Make the ./tests/issue1465\_ortryrunning.sh a little more
+        foolproof.
+    -   Skip the time-stamps test on windows.
+
+2009-09-08 Ganesh Sittampalam
+  ~ -   make an assumption in the pull code explicit
+
+2009-09-07 Petr Rockai
+  ~ -   Print expansions of simple commands in testsuite output.
+    -   Use the correct slash in push-formerly-pl.
+    -   Exit 200 in abort\_windows to indicate the skip to the harness.
+    -   Add a simple testcase for the --external-merge option.
+    -   Add a rudimentary release script.
+    -   Avoid relying on /dev/stdin in tests/emailformat.sh.
+
+2009-09-05 Eric Kow
+  ~ -   More extensive haddocks on Darcs.Patch.Depends.get\_extra.
+
+2009-08-29 Ganesh Sittampalam
+  ~ -   specify CPP globally for witnesses build
+    -   missing LANGUAGE in Darcs.ProgressPatches
+    -   missing LANGUAGE in Darcs.Commands.Unrevert
+    -   remove some derived classes from Tag
+    -   couple of GADT build fixes for recent GHCs
+    -   add a comment
+
+

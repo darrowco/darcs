@@ -1,0 +1,233 @@
+The hunk editor is a feature introduced in Darcs 2.4.
+
+# General principles
+
+The first thing to know about the hunk editor is that it has no effect
+on your working directory. So you can make any changes you like with
+complete impunity, and if you're not happy with the results, just abort
+record with 'q' and start anew.
+
+The second thing to know is that using the hunk editor is like editing
+the record state of the affected file, only that you don't see the whole
+file; just the part which was modified by the original patch.
+
+# Example uses (Quick start)
+
+Now that the general principles are out of the way, we will now show you
+how to use this hunk editor to split patches and make other
+modifications. Basically, you only need to think of this as modifying
+what you'd like the recorded state of the file to be.
+
+Note that you can try these examples out yourself with this test
+repository :
+
+    darcs get http://patch-tag.com/r/kowey/rambling-robot
+
+## Splitting a block of added text
+
+If your modification adds some lines that you would like to record as
+separate patches, you can easily split them in the hunk editor.
+
+    ./yourfile 42
+    - rambling robot
+    - red rover
+    + alliterative alligator
+    + amusing amoeba
+    + anecdotal antelope
+    Shall I add this change? [yn...] e
+
+All you have to do is to delete the bits you don't want from that second
+snippet of text. Remember, none of this affects your working directory,
+so deleting these lines is perfectly safe!
+
+    YOU SEE                     YOU WRITE
+    ==                          ==
+    rambling robot              rambling robot
+    red rover                   red rover
+    ==                          ==
+    alliterative alligator      alliterative alligator
+    amusing amoeba              amusing amoeba
+    anecdotal antelope          ==
+    ==
+
+Here we have created a split between the lines `amusing amoeba` and
+`anecdotal antelope.`
+
+    ./yourfile 42
+    - rambling robot
+    - red rover
+    + alliterative alligator
+    + amusing amoeba
+    Shall I add this change? [yn...] y
+
+Here's the filler patch that follows. You probably don't want to record
+this right now, but perhaps the next time you run darcs record
+
+    ./yourfile 43
+    + anecdotal antelope
+    Shall I add this change? [yn...] n
+
+## Splitting a block of removed text
+
+If you would like to split a block of removed text, just copy back the
+lines you would NOT like to remove:
+
+    ./yourfile 42
+    - rambling robot
+    - red rover
+    Shall I add this change? [yn...] e
+
+    YOU SEE                     YOU WRITE
+    ==                          ==
+    rambling robot              rambling robot
+    red rover                   red rover
+    ==                          ==
+                                red rover
+    ==
+
+Here we have created a split between the lines `rambling robot` and
+`red rover`
+
+    ./yourfile 42
+    - rambling robot
+    Shall I add this change? [yn...] y
+
+Once more, do not record the filler patch just yet
+
+    ./yourfile 42
+    - red rover
+    Shall I add this change? [yn...] n
+
+## Fixing typos or oversights
+
+Suppose you noticed a small error in your new text, say a typo or a
+whitespace issue. You can tweak the patch straight away by invoking the
+hunk editor
+
+    ./yourfile 42
+    - rambling robot
+    - red rover
+    + alliterative alligator
+    + amusing amoeba
+    + anecdotal antelope
+    Shall I add this change? [yn...] e
+
+All you need to do is to modify that second snippet to taste
+
+    YOU SEE                     YOU WRITE
+    ==                          ==
+    rambling robot              rambling robot
+    red rover                   red rover
+    ==                          ==
+    alliterative alligator      alliterative alligator
+    amusing amoeba              amusing amoeba
+    anecdotal antelope          anecdotal OOPS antelope
+    ==                          ==
+
+Here we have changed the added "ancedotal antelope" to "anecdotal OOPS
+antelope". The subsequent interaction with darcs record might look like
+this:
+
+    ./yourfile 42
+    - rambling robot
+    - red rover
+    + alliterative alligator
+    + amusing amoeba
+    + anecdotal OOPS antelope
+    Shall I add this change? [yn...]
+
+Here we see the patch as modified in the hunk editor.
+
+Here is the filler patch that follows it. You mostly like do NOT want to
+record this. And for that matter, you should probably revert it later on
+when you're done with darcs record
+
+    ./yourfile 43
+    - anecdotal OOPS antelope
+    + anecdotal antelope
+    Shall I add this change? [yn...] n
+
+## Inserting new lines after the hunk
+
+Appending to a hunk is much like fixing a typo...
+
+Suppose you thought of some new changes you wanted to make below the
+current patch...
+
+    ./yourfile 42
+    - rambling robot
+    - red rover
+    + alliterative alligator
+    + amusing amoeba
+    + anecdotal antelope
+    Shall I add this change? [yn...] e
+
+    YOU SEE                     YOU WRITE
+    ==                          ==
+    rambling robot              rambling robot
+    red rover                   red rover
+    ==                          ==
+    alliterative alligator      alliterative alligator
+    amusing amoeba              amusing amoeba
+    anecdotal antelope          anecdotal antelope
+                                NEW applauding ape
+    ==                          ==
+
+The interaction with darcs record might look like this:
+
+    ./yourfile 42
+    - rambling robot
+    - red rover
+    + alliterative alligator
+    + amusing amoeba
+    + anecdotal antelope
+    + NEW applauding ape
+    Shall I add this change? [yn...] y
+
+... and the unwanted filler patch
+
+    ./yourfile 44
+    - NEW applauding ape
+    Shall I add this change? [yn...] n
+
+# How does it work?
+
+You can think of this patch as being a delta between two states, which
+we'll call PRISTINE and WORKING. The hunk editor presents you with a
+snippet of both PRISTINE and WORKING. The first snippet corresponds to
+lines you have removed (below, `red rover` and `rambling robot`). The
+second snippet corresponds to lines you have added (below,
+`alliterative alligator`, `amusing amoeba` and `anecdotal antelope`).
+
+    ========================== BEFORE (reference) ==========================
+    rambling robot
+    red rover
+    ============================= AFTER (edit) =============================
+    alliterative alligator
+    amusing amoeba
+    anecdotal antelope
+    ============================= (edit above) =============================
+
+Your job is to modify the second snippet (let's call it the EDITED
+state). You can make any changes you want.
+
+When you save your changes, Darcs will present you with some new
+patches. Recall that before you invoked the hunk editor, you had a patch
+p0 which was a delta from PRISTINE to WORKING. When you use the hunk
+editor, you will be creating a new patch p1, which is a delta from
+PRISTINE to EDITED. For implementation reasons, Darcs will also create a
+second patch p2, which is a delta from EDITED to the original WORKING
+(so the sequence goes: PRISTINE p1 EDITED p2 WORKING).
+
+After some users trials and discussions, we've found that this second
+"filler" patch is a cause for much confusion. We've made some changes to
+the UI, which we hope will avoid some of this confusion.
+
+# Other notes
+
+Actually, you can also edit the first chunk of text (which we call the
+REFERENCE state), but only power-users should do this!
+
+Also on rare occasions, Darcs may present you with more than one
+"edited" patch. We'll come up with an example of this shortly, but rest
+assured it will not be a big surprise.

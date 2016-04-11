@@ -1,0 +1,230 @@
+# News and discussions
+
+1.  Darcs 2.8 was released:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2012-April/026493.html>
+
+2.  Report of the seventh hacking sprint was put online:
+
+    -   <http://blog.darcs.net/2012/04/darcs-hacking-sprint-7-report.html>
+
+3.  BSRK Aditya was accepted as a Summer of Code student to work on the
+    patch index optimization:
+
+    -   <http://www.google-melange.com/gsoc/project/google/gsoc2012/bsrkaditya/28002>
+    -   <http://wiki.darcs.net/GSoC/2012-PatchIndex>
+
+# Issues resolved in the last week (4)
+
+issue1166 Guillaume Hoffmann
+  ~ -   --unified flag for record, amend-record, revert and unrevert
+    -   http://bugs.darcs.net/issue1166
+
+issue2065 Owen Stephens
+  ~ -   filter and give warning for any malformed boring regexs.
+    -   http://bugs.darcs.net/issue2065
+
+issue2120 Adam Wolk
+  ~ -   Darcs fails to invoke an editor under MS Windows
+    -   http://bugs.darcs.net/issue2120
+
+issue2139 Florent Becker
+  ~ -   detect what to do when using darcs mv into/onto a directory
+    -   http://bugs.darcs.net/issue2139
+
+
+# Patches applied in the last week (111)
+
+2012-04-24 Ganesh Sittampalam
+  ~ -   update source link for 2.8 release
+
+2012-04-05 Owen Stephens
+  ~ -   Layout/Tidy of Patch.Bundle
+
+2012-04-05 Ganesh Sittampalam
+  ~ -   remove stale Tested-with entry from cabal file
+
+2012-04-01 Owen Stephens
+  ~ -   Haddock HashedRepo, and make a few fairly trivial refactorings
+    -   Extract duplicated code in readInventoryPrivate, in HashedRepo
+    -   Extract out the use of "pristine: " literal into an identifier
+    -   Refactor listInventories function in HashedRepo
+    -   Extract string literals for identifiers for inventories/pristine
+    -   hlint suggestions to HashedRepo
+    -   Change fmap -> <$> in HashedRepo
+    -   Layout/tidy of Repository/HashedRepo
+    -   Fix Patch.Set export list indentation
+
+2012-04-06 Michael Hendricks
+  ~ -   Implement exponential backoff test strategy
+    -   Factor out function to build bisect strategy initial state
+    -   Factor out initial test run
+    -   Improve darcs test descriptive help
+    -   Correct typos in trackdown-bisect test comments
+    -   Consistent test strategy function naming
+    -   Clearer test strategy selection
+    -   Factor out Strategy type
+    -   Unify darcs test strategy type signatures
+    -   Use safeApply throughout Darcs.Commands.Test
+    -   Style and Haddock for Darcs.Commands.Test
+
+2012-04-17 Owen Stephens
+  ~ -   Parse RepoFormat properties once, storing as an ADT, rather than a ByteString.
+    -   More tidying of Repository.Format
+    -   Tidy Repository.Format
+    -   Tidy Repository.Merge
+
+2012-04-01 Ganesh Sittampalam
+  ~ -   move URL.Curl to other-modules to avoid problems when curl isn't available
+    -   add a comment
+    -   drop unnecessary superclasses from MyEq (PatchInfoAnd p)
+    -   drop unnecessary call to joinPatches in Darcs.Resolution
+    -   drop unnecessary call to joinPatches in Darcs.Repository.Merge
+
+2012-03-31 Eric Kow
+  ~ -   Replace CPP witness macros with plain Haskell in Darcs.SelectChanges.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.PrintPatch.hs
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.AmendRecord
+
+2012-04-01 Ganesh Sittampalam
+  ~ -   fix name shadowing warning in Darcs.SelectChanges
+
+2012-03-16 Guillaume Hoffmann
+  ~ -   dirty fix for compile error in SelectChanges
+
+2012-03-09 Andreas Brandt
+  ~ -   Tidy up wspfr
+
+2012-03-08 Guillaume Hoffmann
+  ~ -   resolve issue1166 --unified flag for record, amend-record, revert and unrevert
+    -   change help of --unified to refer to changes in place of patches
+
+2012-04-22 Florent Becker
+  ~ -   Update current version in homepage
+
+2012-04-20 Michael Hendricks
+  ~ -   Patch 788 bundle
+
+2012-04-01 Ganesh Sittampalam
+  ~ -   import constructors of C types to deal with a GHC change
+    -   fix deprecation about using unsafePerformIO from Foreign
+    -   add missing type signatures
+    -   remove unused imports in Darcs.Commands.Revert
+    -   remove unused imports in Darcs.Ssh
+    -   remove unused import in Darcs.Global
+    -   remove unused import in Darcs.Patch.ApplyMonad
+    -   fix name shadowing warnings in src/Darcs/Patch/ApplyMonad
+    -   remove unused import in Darcs.Patch.Choices
+    -   fix deprecated syntax in Darcs.Patch.Choices
+    -   remove unusued imports in Darcs.Patch.Patchy.Instances
+    -   remove redundant exports from Darcs.Patch.Prim
+    -   remove unusued imports from Darcs.Patch.Prim.V1.Show
+    -   remove unused import from Darcs.Patch.Prim.V1.Show
+    -   add missing type signature in Darcs.Patch.Split
+    -   switch from block/unblock to mask
+    -   change from deprecated use of GHC.Handle.fdToHandle
+    -   remove an no-longer-needed pragma
+    -   remove unused import in Darcs.Patch.RepoPatch
+    -   remove unused imports in Darcs.Patch.V1.Viewing
+    -   remove unused imports in Darcs.Patch.V2.Non
+    -   remove unused imports in Darcs.Patch.Viewing
+    -   add missing type signatures in Darcs.Repository.HashedIO
+    -   remove unused definition in Darcs.Repository.HashedIO
+    -   remove unused import in Darcs.Repository.Prefs
+    -   remove unused import in Darcs.Repository.Repair
+    -   remove unused imports in Darcs.Repository.State
+    -   remove unused variable in Darcs.Repository.State
+    -   ignore name shadowing warnings in Darcs.Patch.V2.*
+    -   fix some warnings in Darcs.Patch.Prim.V3.*
+    -   silence various warnings for now
+    -   silence warnings about Prelude.catch for now
+
+2012-04-20 Michael Hendricks
+  ~ -   Find latin9 locale on OS X too
+
+2012-03-30 Simon Michael
+  ~ -   be a little smarter about finding a latin9 locale for shell tests
+    -   update utf8.sh test to suit the "last regrets" record prompt
+
+2012-04-07 Ganesh Sittampalam
+  ~ -   update for RC2
+
+2012-04-20 Michael Hendricks
+  ~ -   Patch 782 dependencies
+
+2012-04-01 Eric Kow
+  ~ -   Fix HTML typo in 2.8 RC announcement.
+
+2012-04-01 Florent Becker
+  ~ -   Announce 2.8 rc 1
+
+2012-04-01 Ganesh Sittampalam
+  ~ -   bump minimum GHC version
+    -   fix build-tools constraint for test project
+
+2012-04-20 Michael Hendricks
+  ~ -   Patch 598 dependencies
+
+2011-04-23 Owen Stephens
+  ~ -   resolve issue2065: filter and give warning for any malformed boring regexs.
+
+2012-03-31 Eric Kow
+  ~ -   Replace witness CPP macros with plain Haskell in Darcs.Match
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Diff
+
+2012-03-15 Guillaume Hoffmann
+  ~ -   remove two unused functions of Darcs.SelectChanges after darcs diff optimization
+    -   Optimize darcs diff
+
+2012-03-31 Eric Kow
+  ~ -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Move
+
+2012-02-23 Adam Wolk
+  ~ -   follow-up issue2120 : don't redirect stderr as it loses useful output
+    -   resolve issue2120
+
+2012-04-17 Owen Stephens
+  ~ -   Add some Haddock to Patch.Commute
+    -   Reorder some definitions in Patch.Commute
+    -   Tidy Patch.Commute
+
+2012-04-13 Michael Hendricks
+  ~ -   Patch 775 dependencies
+
+2012-03-31 Eric Kow
+  ~ -   Remove now unused gadts.h
+
+2012-04-13 Michael Hendricks
+  ~ -   Patch 733 dependencies
+
+2012-03-11 Owen Stephens
+  ~ -   Fix some compile warnings in Commands/Move
+
+2012-02-28 Florent Becker
+  ~ -   Clean up Commands/Move.hs
+
+2012-02-14 Ganesh Sittampalam
+  ~ -   fix issue2139 test so it passes on darcs 2.5
+
+2012-03-15 Michael Hendricks
+  ~ -   Style and error message clean up for patch733
+
+2012-02-28 Florent Becker
+  ~ -   resolve issue2139: detect what to do when using darcs mv into/onto a directory
+
+2012-02-14 Ganesh Sittampalam
+  ~ -   accept issue2139: problem with darcs mv path checking
+
+2012-03-31 Eric Kow
+  ~ -   Remove GADT_WITNESSES ifdef.
+    -   Build Darcs once rather than thrice.
+
+2012-04-01 Dave Love
+  ~ -   Minor grammar fixes
+
+2012-04-05 Owen Stephens
+  ~ -   Fix name shadowing warning in Patch.Set
+    -   Use haddock links in Patch.Set
+    -   Use more informative identifier names in Patch.Set
+    -   Tidy/style Patch.Set
+

@@ -1,0 +1,118 @@
+-- Canonical author spellings can be defined in this file, to clean up
+-- the output of show authors. Each line contains one or more
+-- comma-separated fields: the canonical name and email address in
+-- angle brackets, optionally followed by additional regular
+-- expression patterns. Blank lines and lines beginning with -- are
+-- ignored. An author string which contains the canonical email
+-- address or any of the patterns will be replaced by the full
+-- canonical form.  All matching is case-insensitive. To match the
+-- whole author string use ^ and $.
+
+David Roundy <droundy@darcs.net>, droundy@abridgegame.org, droundy@civet.berkeley.edu, ^David$
+Marnix Klooster <marnix.klooster@gmail.com>, marnix[._]klooster, mklooster@baan.nl
+Eric Kow <kowey@darcs.net>, kowey, kow@loria.fr, eric.kow@gmail.com, eric.kow@loria.fr, E.Y.Kow@brighton.ac.uk, q15kxe002@sneakemail.com
+Andres Loeh <mail@andres-loeh.de>, andres@cs.uu.nl, loeh@iai.uni-bonn.de
+Simon Marlow <simonmar@microsoft.com>, marlowsd@gmail.com
+Erik Schnetter <schnetter@cct.lsu.edu>, schnetter@aei.mpg.de, schnetter@aei.mpg.de
+Don Stewart <dons@galois.com>, dons@cse.unsw.edu.au
+Gwern Branwen <gwern0@gmail.com>, ^$
+Pekka Pessi <pekka.pessi@nokia.com>, Pekka Pessi <first.last@nokia.com>, ppessi@gmail.com, pekka@pessi.fi
+Mark Stosberg <mark@summersault.com>, testerALL --ignore-times
+Edwin Thomson <edwin.thomson@businesswebsoftware.com>, edwin.thomson@gmail.com
+Thomas Zander <zander@kde.org>, TZander@Factotummedia.nl
+Tomasz Zielonka <tomasz.zielonka@gmail.com>, t.zielonka@students.mimuw.edu.pl, tomekz@gemius.pl
+Lele Gaifax <lele@nautilus.homeip.net>, lele@seldati.it, lele@nautilus.homeip.net
+Christian Kellermann <Christian.Kellermann@nefkom.net>
+Benedikt Schmidt <benedikt.schmidt@inf.ethz.ch>, beschmi@cloaked.de
+Benjamin Franksen <ben.franksen@online.de>, benjamin.franksen@bessy.de
+Lennart Kolmodin <kolmodin@gentoo.org>, kolmodin@dtek.chalmers.se
+Kirill Smelkov <kirr@landau.phys.spbu.ru>, kirr@mns.spb.ru
+Adolfo Builes <builes.adolfo@googlemail.com>
+Jason Dagit <dagit@codersbase.com>
+Max Battcher <me@worldmaker.net>
+Thomas Danecker <tdanecker@gmail.com>
+Alexey Levan <exlevan@gmail.com>
+Radoslav Dorcik <dixiecko@gmail.com>
+Salvatore Insalaco <kirby81@gmail.com>
+Kamil Dworakowski <kamil@dworakowski.name>
+Marco Túlio Gontijo e Silva <marcot@debian.org>
+Karl Pinc <kop@meme.com>
+David Leuschner <darcs@loisch.de>
+Dave Love <fx@gnu.org>
+Antti-Juhani Kaijanaho <antti-juhani@kaijanaho.fi>
+Thomas Hartmann <thomashartman1@gmail.com>, tphyahoo, tphyahoo
+Scott Bell <sctb@me.com>, sctb
+Ganesh Sittampalam <ganesh@earth.li>
+Joeri van Ruth <jvr@blub.net>, jvr\+darcs@blub.net
+Trent W. Buck <trentbuck@gmail.com>, twb@cyber.com.au
+Spencer Janssen <spencerjanssen@gmail.com>, sjanssen@cse.unl.edu
+Mirian Crzig Lennox <mirian@cosmic.com>, mirian@
+Bryce Wilcox-O'Hearn <zooko@zooko.com>
+Ian Lynagh <igloo@earth.li>
+Zack Brown <zbrown@tumblerings.org>
+Daniel Buenzli <daniel.buenzli@epfl.ch>
+Adam Megacz <adam@megacz.com>
+Anthony Towns <aj@azure.humbug.org.au>
+Andrew Pimlott <andrew@pimlott.net>
+Andrew L Johnson <andrew@siaris.net>
+Aggelos Economopoulos <aoiko@cc.ece.ntua.gr>
+Benjamin Franksen <ben.franksen@online.de>
+Brian Alliet <brian@brianweb.net>
+Kirsten Chevalier <chevalier@alum.wellesley.edu>
+Anders Hockersten <chucky@dtek.chalmers.se>
+Daniel Gorin <dgorin@dc.uba.ar>
+Don Bindner <dbindner@truman.edu>
+Christian Egli <egli@apache.org>
+Esa Ilari Vuokko <ei@vuokko.info>
+Era Eriksson <era+darcs@iki.fi>
+Eric Gaudet <eric@rti-zone.org>
+Florent Becker <florent.becker@ens-lyon.org>
+Andrew J. Kroll <forge@dr.ea.ms>
+Florian Weimer <fw@deneb.enyo.de>
+Gaetan Lehmann <gaetan.lehmann@jouy.inra.fr>
+Henning Glawe <glaweh@physik.fu-berlin.de>
+Isaac Jones <ijones@debian.org>
+Jan Scheffczyk <jan@informatik.unibw-muenchen.de>
+Jan Braun <janbraun@gmx.net>
+Jani Monoses <jani@iv.ro>
+Juliusz Chroboczek <jch@pps.jussieu.fr>
+Jeremy Fincher <jemfinch@supybot.com>
+Joe Edmonds <joe@elem.com>
+Kannan Goundan <kannan@cakoose.com>
+Ketil Malde <ketil@ii.uib.no>
+Matthias Kilian <kili@outback.escape.de>
+Vadim Zaliva <lord@crocodile.org>
+Marco Túlio Gontijo e Silva <marcot@holoscopio.com>, malebria@riseup.net
+Jonathon Mah <me@JonathonMah.com>
+Petr Rockai <me@mornfall.net>
+Samuel Bronson <naesten@myrealbox.com>
+Thorkil Naur <naur@post11.tele.dk>
+Nicolas Pouillard <nicolas.pouillard@gmail.com>
+Nils Decker <nils@ndecker.de>
+Nathaniel Filardo <nwf@cs.jhu.edu>
+Peter Maxwell <peter.maxwell@anu.edu.au>
+Peter Hercek <peter@syncad.com>
+Peter Strand <peter@zarquon.se>
+Jens Petersson <petersen@haskell.org>
+Tommy Pettersson <ptp@lysator.liu.se>
+Ralph Corderoy <ralph@inputplus.co.uk>
+Nigel Rowe <rho@swiftdsl.com.au>
+Martin Schaffner <schaffner@gmx.li>
+Michael G Schwern <schwern@pobox.com>
+Sean Robinson <sean.robinson@sccmail.maricopa.edu>
+Sean Russell <ser@germane-software.com>
+Shae Erisson <shae@ScannedInAvian.com>
+Simon Michael <simon@joyful.com>
+Peter Simons <simons@cryp.to>
+Richard Smith <smithbone@gmail.com>
+Stephen Reindl <sreindl@triobit.de>
+Thies C. Arntzen <thies@thieso.net>
+Thomas L. Bevan <thomas_bevan@toll.com.au>
+Reinier Lamers <tux_rocker@reinier.de>
+Vladimir Vysotsky <trivee@noir.crocodile.org>
+Vaclav Haisman <v.haisman@sh.cvut.cz>
+Victor Hugo Borja Rodriguez <vborja@thehatcher.com>
+Aaron Denney <wnoise@ofb.net>
+Randy Roesler <xhl178@shaw.ca>
+Steven G. Johnson <stevenj@mit.edu>
+Weyfour WWWWolf <wwwwolf@iki.fi>

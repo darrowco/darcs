@@ -1,0 +1,67 @@
+# GUI ideas
+
+-   a patch dependency visualiser
+-   an iTunes-like interface to patches (click on the 'author' column,
+    and you see the patches sorted by author, for example)
+-   click on a patch and you get some subtle feedback on all the patches
+    it depends on (for example, they change colour)
+-   maybe some kind of help resolving conflicts? (no clear ideas)
+-   A file browser that highlights files not added to the repository,
+    files that have unrecorded changes, etc.
+-   Diff visualisation
+-   MacOS X - integration with [FileMerge](FileMerge)?
+-   a generic diff visualiser, which would allow to pick-and-choose
+    lines of code into a third file, a la Visual Source Safe and the
+    open-source [kdiff3](http://kdiff3.sourceforge.net/).
+-   There should be two ways to use the darcs gui. One is to have a
+    seperate gui for each command, so that you can run something like
+    `darcs whatsnew -gui`. The other is to have a standalone gui.
+-   The standalone gui could take a patch-oriented view towards
+    repositories, rather than a task oriented one. That is, rather than
+    decide you want to record some patches and then select the patches
+    (for instance), you select a bunch of patches and decide you want to
+    record them. (This is inspired from one of the patchworks'
+    screenshots)
+-   Ability to edit named patches by moving primitive patches back and
+    forth between them (from Shae's request for a patch browser)
+
+# Existing third-party projects that do not support darcs yet
+
+Instead of starting a GUI from scratch, add a darcs support to an
+existing GUI:
+
+* [RabbitVCS](http://rabbitvcs.org)
+* [QCT](http://qct.sourceforge.net)
+* [GeanyVC](http://plugins.geany.org/geanyvc.html)
+
+Or ensure Darcs is correcly supported in:
+
+* [meld](http://meld.sourceforge.net/), a graphical diff viewer,
+  handles darcs repositories: just type "meld ." inside of a darcs
+  repo to see the unrecorded changes
+* [Darcs support for the Emacs text editor](RelatedSoftware/Emacs)
+* [darcs.vim](http://www.vim.org/scripts/script.php?script_id=1683) - basic Darcs support for vim
+
+
+# Old projects
+
+Three students of the [BTU
+Cottbus](http://www.tu-cottbus.de/btu/en.html) worked on a darcs GUI
+application based on the
+[Grapefruit](http://haskell.org/haskellwiki/Grapefruit) FRP library.
+They were supervised by [Wolfgang
+Jeltsch](http://haskell.org/haskellwiki/User:Wolfgang_Jeltsch). See
+[http://haskell.org/haskellwiki/Patchwork](http://haskell.org/haskellwiki/Patchwork)
+for more details. The project is no longer maintained but the source
+code is still available (waiting to be cabalized, for a start).
+
+# See also
+
+-   [http://tortoisedarcs.sourceforge.net](http://tortoisedarcs.sourceforge.net)
+    (Windows) - Windows GUI for Darcs.
+-   [EclipseDarcs](http://eclipsedarcs.sourceforge.net/) (last version:
+    4.1, March 2008). See also
+    [http://cohatoe.blogspot.com/search/label/eclipsedarcs](http://cohatoe.blogspot.com/search/label/eclipsedarcs)
+    and
+    [http://web.archive.org/web/20071012050446/eclipsedarcs.org/doku.php?id=eclipsedarcs](http://web.archive.org/web/20071012050446/eclipsedarcs.org/doku.php?id=eclipsedarcs)
+

@@ -1,0 +1,40 @@
+So you have a Darcs repository, but your users would prefer to use
+Git/Hg as a client. How can we make this easy? Our hope is to
+provide easy copy-and-pasteable recipes for contributing to Darcs-hosted
+projects via another DVCS.
+
+# Exporting to Git
+
+The simplest way is to use Darcs 2.10 with its
+command `darcs convert export`.
+
+For a one-time export you can use the recipe:
+
+    $ cd repo
+    $ git init ../mirror
+    $ darcs convert export | (cd ../mirror && git fast-import)
+
+For incremental export using marksfiles (to maintain a git mirror of a darcs repository):
+
+    $ cd repo
+    $ git init ../mirror
+    $ touch ../mirror/git.marks
+    $ darcs convert export --read-marks darcs.marks --write-marks darcs.marks
+       | (cd ../mirror && git fast-import --import-marks=git.marks --export-marks=git.marks)
+
+# Importing from Git
+
+Only one-time import is currently available (as opposed to incremental).
+
+To convert a git repository to darcs (suppose that git-repo is the directory contains
+git source code, and darcs-repo is the directory for darcs)
+
+    $ (cd git-repo; git fast-export --all --progress 500) | darcs convert --import darcs-repo
+
+# One-time conversion from darcs-1 semantics to darcs-2 semantics
+
+See [DarcsTwo](/DarcsTwo) for more information about this.
+
+# See also
+
+* [Converting from other VCS](/Converting)

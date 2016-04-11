@@ -1,0 +1,58 @@
+# Purpose
+
+The purpose of this document is to explain in low level and concrete
+terms how the command 'darcs record' works. This is description is
+intended to give enough details that a programmer new to darcs could
+implement their own 'darcs record'. We focus on darcs-2 format
+repositories.
+
+# Steps
+
+1.  Take the repository lock (withRepoLock)
+2.  Read the recorded repository (slurp\_recorded)
+
+    > 1.  Read \_darcs/hashed\_inventory
+    > 2.  Construct in-memory representation of pristine (eg., Slurpy)
+
+3.  Sort file names in pristine
+4.  Construct patches from recorded state (pristine) to state of working
+    dir. These are the **unrecorded** changes (unrecordedChanges).
+
+    > 1.  read pending patches from \_darcs/patches/pending, as a
+    >     sequence of primitive patches
+    > 2.  read recorded state of pristine as a Tree (hashed-storage)
+    > 3.  check that pending applies cleanly to recorded state
+    > 4.  read pending patches again
+    > 5.  look through working directory (and Tree index) to find
+    >     unrecorded changes, ignoring boring files
+
+5.  Ask user which patches to record
+    (with\_selected\_changes\_to\_files')
+6.  Record selected patches (do\_actual\_record)
+
+    > 1.  create patch from name and sequence of prim patches
+    > 2.  add to inventory (tentativelyAddPatch)
+    >
+    >     > 1.  Generate a hash for the patch
+    >     > 2.  Add the patch info and hash to
+    >     >     \_darcs/tentative\_hashed\_inventory
+    >     > 3.  Write the patch to the cache (hash collisions are
+    >     >     treated as the patch already existing)
+    >
+    > 3.  invalidate hashed-storage index (invalidateIndex)
+    > 4.  finalize changes (withGutsOf/finalizeRepositoryChanges)
+    >
+    >     > 1.  Test tentative
+    >     > 2.  Block signals
+    >     > 3.  finalize\_tentative\_changes
+    >     >       ~ 1.  optimize inventory:
+    >     >               ~ 1.  read\_tentative\_repo
+    >     >                 2.  write\_tentative\_repo
+    >     >
+    >     >         2.  Read \_darcs/tentative\_hashed\_inventory
+    >     >         3.  Read \_darcs/tentative\_pristine
+    >     >         4.  TODO: document inv2pris/pris2inv and invisiblePS
+    >     >
+    > 5.  delete log file
+    >
+

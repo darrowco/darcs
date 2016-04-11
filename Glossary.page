@@ -1,0 +1,172 @@
+This page defines some specific terms as they are used in the context of
+darcs.
+
+# A-M
+
+commute
+  ~ Commutation is a fundamental operation in Darcs. Informally
+    speaking, given two patches in a sequence P1 P2, we say that these
+    patches commute if there is a sequence P2b P1b with the same effect
+    as P1 P2.
+
+    The idea is for P1b and P2b to the be the same in spirit as their
+    counterparts P1 and P2. If P1 and P2 are totally unrelated then P1b
+    and P2b are the same. On the other hand, if they are related, then
+    one or both patches may change. For example, suppose P1 is a hunk
+    patch that adds ten lines to the beginning of a file, and P2 being a
+    hunk patch that modifies line 25. If we re-order them as P2b P1b, it
+    would not make sense for P2b to modify line 25 (because the ten
+    lines added by P1 are no longer there), so it should modify line 15
+    instead.
+
+    Things to note:
+
+    > -   commutation can fail, which indicates that P2 depends on P1
+    > -   commutation is defined only on the basis of the patches
+    >     themselves with no regard to the surrounding context
+    > -   commutation has to be defined for each possible pair of patch
+    >     types
+
+    For more information about commutation, see the Darcs manual.
+
+composite patch
+  ~ *TODO*
+
+context
+  ~ This is a particular repository state. Uniquely described by (and
+    therefore identified with) a set of patch identities.
+
+effect of a patch
+  ~ The changes a patch will make to the tree of a context.
+
+grumpy old man
+  ~ This is an informal term for a process we introduced in the Darcs
+    development to help manage the introduction of new features into
+    Darcs. Some people found it offputting, so it's been renamed to
+    something more neutral like Skeptic
+
+hunk
+  ~ Hunks are the most common type of **primitive patch** in Darcs. In
+    darcs, a hunk patch refers to a modification removes and/or adds
+    lines to a *contiguous* region in a file, indicated by an offset.
+
+    Pitfalls:
+
+    > -   Git uses seems to use hunks to refer to any for any
+    >     modification to file, whether or not they are contiguous
+    > -   Addfile, mv, replace, etc patches are not hunks. They are
+    >     primitive patches, just as hunks are
+
+identity patch
+  ~ A patch with a null effect, i.e. one that will leave a tree
+    unaltered when applied to a context. One option would be to call
+    this the "null patch" to avoid confusion with "patch identity"
+
+inverse patch
+  ~ We can't yet precisely define this but the informal meaning should
+    be obvious. See the Camp work for a forma definition
+
+megapatch
+  ~ 2009-04-10: Camp's name for named patches, presumably to avoid the
+    confusion from the fact that primitive patches will have names too.
+
+merge
+  ~ *TODO*
+
+# N-P
+
+named patch
+  ~ A collection of primitive patches, recorded together and given a
+    name, date, author and possibly a longer description. The
+    [NamedPatch](NamedPatch) is identified by a hash name that is
+    (supposed to be) globally unique. The patch can now travel around
+    the world to make its changes included in other repositories, or it
+    can be excluded to return to an older version in a (copy of a)
+    repository.
+
+patch
+  ~ Something with a patch identity, an effect, and a starting context.
+    The ending context is obtained by the adding the ancestor to the
+    starting context.
+
+    Note that this can either refer to primitive patches or (more usual
+    in casual conversation), named patches.
+
+patch bundle
+  ~ *TODO*
+
+patch family (proposed)
+  ~ This is a new term (the name was suggested by Eric Kow) for a group
+    of patch kinds. For example, all the kinds of primitive patches
+    together form a patch family. Similarly, all kinds of primitive
+    patches together with conflictors form another patch family. We
+    expect a certain set of properties to be true of a patch family
+    (e.g. `AB <-> B'A' => B'^^A <-> A'B^^`). This means that primitive
+    patches + mergers are \*not\* a valid patch family (though we could
+    view them as an invalid patch family, or some name along those
+    lines).
+
+patch identity
+  ~ Something which uniquely identifies a patch. In Darcs: the patch
+    author, name, log and date.
+
+patch set
+  ~ *TODO* (refering to the [PatchSet](PatchSet) type in the code)
+
+        [[(PatchInfo, Maybe Patch)]]
+
+    why a list of lists? It seems that each inner list corresponds to a
+    checkpoint, that is, each inner list contains the patches up to that
+    checkpoint. I get this by by studying `DarcsRepo.read_repo_private`
+    and could well be wrong
+
+    why `Maybe`? [PatchSet](PatchSet).lhs mentions something about
+    marking patches clean... it probably has something to do with that
+
+patch theory
+  ~ This is the overarching formalism. There are some Darcs hackers who
+    do not like this name (eg. Juliusz). Others argue that there is no
+    real problem; we don't complain about "group theory", for example.
+    Of course, we have a lot of work to do to make it all as well
+    specified and explained as group theory! We believe Juliusz's
+    objection may have been to do with the current informality of it
+    all.
+
+primitive patch <a name="def:primpatch"/>
+  ~ A patch that is not constructed from other patches. For example,
+    "delete file" is a primitive patch, and a conflictor is not a
+    primitive patch.
+
+    Primitive patches encode different ways to modify a source tree.
+    Patches are exact (not fuzzy) and must be applied in precise order,
+    but through the theory of patches they can be commuted (altered to
+    apply in a different order) without changing the end result.
+    Sometimes a patch depends on another so they can not be commuted.
+    Sometimes two patchs conflict (they typically come from different
+    developers) and the end result is undecidable (ambigous) until the
+    conflict is resolved with a new patch.
+
+    NB. It's actually a bit unclear whether most hunk patches should be
+    treated as primitive, since they could in principle be broken down
+    into a sequence of single-line adds and subtracts, but this may not
+    have the same conflict behaviour. For now we should probably assume
+    that they are to be treated in this way.
+
+# Q-Z
+
+split patch (OBSOLETE since ???)
+  ~ A split patch is similar to a composite patch but rather than being
+    composed of several patches grouped together, it is created from one
+    patch that has been split apart, typically through a merge or
+    commutation.
+
+theory of patches
+  ~ See patch theory
+
+tree
+  ~ The set of files/directories etc associated with a context.
+
+unwind
+  ~ *TODO*
+
+

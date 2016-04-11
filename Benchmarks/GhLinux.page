@@ -1,0 +1,104 @@
+---
+title: Ubuntu 10.04
+...
+
+GHC version
+  ~ 6.12.1
+
+Machine description
+  ~ desktop
+
+Year
+  ~ 2007
+
+CPU
+  ~ Intel Pentium 4 (3 GHz)
+
+Memory
+  ~ 2GB ram, no swap
+
+Hard disk
+  ~ ?
+
+Notes
+  ~ Version 2.4.4 is the [static binary from the wiki](../Binaries) .
+    Version 2.5 dev is also a static binary, build on branch-2.5.
+
+# How to read these tables
+
+-   ?x = less than 5 runs used
+-   \~x = less than 20 runs used
+-   sdev = std deviation
+-   op = optimize --pristine variant
+
+# Timings
+
+## GHC
+
+                   ./darcs244   sdev      op ./darcs244   sdev       op ./darcs250   sdev
+  ---------------- ------------ --------- --------------- ---------- --------------- ---------
+  wh               76.9ms       (1.5ms)   14.4ms          (0.2ms)    65.8ms          (0.3ms)
+  wh mod           295.7ms      (5.6ms)   236.8ms         (7.8ms)    276.2ms         (5.0ms)
+  wh -l            170.2ms      (0.3ms)   103.8ms         (0.3ms)    157.9ms         (0.4ms)
+  record mod       ?5757.9ms    (4.2ms)   ?5675.1ms       (6.9ms)    337.1ms         (7.5ms)
+  revert mod       353.6ms      (2.7ms)   226.5ms         (4.2ms)    224.5ms         (3.3ms)
+  (un)revert mod   ?2624.2ms    (4.4ms)   \~2286.7ms      (32.6ms)   511.0ms         (1.5ms)
+  get (full)       ?18.0s       (0.2s)    ?17.9s          (0.1s)     ?17.9s          (0.1s)
+  get (lazy)       ?3.6s        (1.2s)    ?3.5s           (1.2s)     ?3.0s           (0.3s)
+  pull 100         ?9.3s        (0.1s)    ?9.2s           (0.0s)     ?3.3s           (0.1s)
+  pull 1000        ?54.3s       (0.2s)    ?54.7s          (0.2s)     ?46.9s          (0.3s)
+  check            ?3m59.9s     (0.2s)    ?4m0.0s         (0.4s)     ?4m9.6s         (0.4s)
+  repair           ?4m0.1s      (0.6s)    ?4m0.1s         (0.2s)     ?4m10.0s        (0.8s)
+  annotate         -            -         -               -          -               -
+
+## darcs
+
+                   ./darcs244   sdev        op ./darcs244   sdev        op ./darcs250   sdev
+  ---------------- ------------ ----------- --------------- ----------- --------------- -----------
+  wh               35.0ms       (0.2ms)     11.4ms          (0.2ms)     33.0ms          (0.2ms)
+  wh mod           155.8ms      (4.8ms)     131.3ms         (5.1ms)     150.7ms         (4.2ms)
+  wh -l            72.4ms       (0.4ms)     47.0ms          (0.2ms)     69.7ms          (0.2ms)
+  record mod       \~1579.3ms   (12.7ms)    \~1500.5ms      (3.8ms)     225.7ms         (2.2ms)
+  revert mod       180.4ms      (1.4ms)     135.4ms         (3.6ms)     124.3ms         (1.5ms)
+  (un)revert mod   \~884.1ms    (3.5ms)     \~752.7ms       (2.5ms)     302.3ms         (1.4ms)
+  get (full)       ?5.1s        (0.1s)      ?5.1s           (0.2s)      ?5.0s           (0.1s)
+  get (lazy)       \~1285.3ms   (443.6ms)   \~1292.7ms      (539.2ms)   \~1227.7ms      (493.4ms)
+  pull 100         ?2736.5ms    (22.2ms)    ?2728.3ms       (3.8ms)     \~1521.6ms      (77.1ms)
+  pull 1000        ?18.7s       (0.1s)      ?18.8s          (0.1s)      ?10.6s          (0.5s)
+  check            ?21.9s       (0.0s)      ?21.8s          (0.0s)      ?23.0s          (0.1s)
+  repair           ?21.9s       (0.0s)      ?21.8s          (0.0s)      ?23.0s          (0.0s)
+  annotate         ?13.4s       (0.0s)      ?13.4s          (0.1s)      ?14.1s          (0.0s)
+
+# Timing Graphs
+
+## GHC
+
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9L0&chtt=wh+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,76.87906&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9w4&chtt=wh+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,295.70663&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9l4&chtt=wh+-l+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,170.17914&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:98D&chtt=record+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,5757.881&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9nm&chtt=revert+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,353.57117&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:91L&chtt=(un)revert+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,2624.2288&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:988&chtt=get+(full)+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,18.03183&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:96x&chtt=get+(lazy)+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,3.6276083&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:97V&chtt=pull+100+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,9.325546&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:890&chtt=pull+1000+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,54.69409&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:669&chtt=check+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,249.59523&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:669&chtt=repair+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,249.97377&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:___&chtt=annotate+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,0.0&chbh=23,5,20.png)
+
+## darcs
+
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9T5&chtt=wh+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,34.98065&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9z7&chtt=wh+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,155.7549&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9n6&chtt=wh+-l+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,72.38474&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:95I&chtt=record+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,1579.3458&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9tq&chtt=revert+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,180.413&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9zU&chtt=(un)revert+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,884.11926&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:987&chtt=get+(full)+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,5.135105&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:895&chtt=get+(lazy)+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,1292.6549&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:98h&chtt=pull+100+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,2736.4917&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:89i&chtt=pull+1000+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,18.805264&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:659&chtt=check+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,23.014704&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:659&chtt=repair+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,22.977913&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:559&chtt=annotate+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C./darcs244%7Cop+./darcs244%7Cop+./darcs250&chxr=1,0.0,14.103149&chbh=23,5,20.png)

@@ -1,0 +1,61 @@
+# News and discussions
+
+1.  The next Darcs Hacking Sprint will take place on April 1st, 2nd and
+    3rd in Paris:
+
+    -   [http://wiki.darcs.net/Sprints/2011-04](http://wiki.darcs.net/Sprints/2011-04)
+    -   [http://www.haskell.org/pipermail/haskell-cafe/2011-March/089866.html](http://www.haskell.org/pipermail/haskell-cafe/2011-March/089866.html)
+    -   [http://www.irill.org/events/darcs-sprint](http://www.irill.org/events/darcs-sprint)
+
+2.  A comparison between Wave and Darcs was posted:
+
+    -   [http://lesswrong.com/lw/4nt/what\_are\_you\_working\_on/3mnv?context=3](http://lesswrong.com/lw/4nt/what_are_you_working_on/3mnv?context=3)
+
+# Issues resolved in the last week (0)
+
+# Patches applied in the last week (27)
+
+2011-02-23 Guillaume Hoffmann
+  ~ -   put repair implementation in Darcs.Commands.Check
+    -   test for get, pull and send support for OF repos
+
+2011-02-14 Ganesh Sittampalam
+  ~ -   tar on mingw seems to think c: introduces an ssh path
+
+2011-02-15 Guillaume Hoffmann
+  ~ -   remove bench dir since benchmarks have been externalised
+    -   remove unused stringify.hs
+    -   move manual .tex files from src to doc/src
+    -   remove irrelevant microbench.hs
+    -   get rid of literate haskell for commands
+    -   get rid of literate haskell for GZCRCs and TransferMode
+    -   move some literate haskell into theory\_of\_patches.tex
+    -   inline manual parts of configuring\_darcs.tex
+    -   no longer build patch-theory manual file
+    -   inline manual part of darcs.tex up to arguments
+    -   remove OF write support
+    -   test that OF disabled commands are disabled
+    -   update v1-braced.sh test to hashed format
+    -   don't bother with testing issue1232
+    -   add amInHashedRepository to disable OF-deprecated commands at
+        the UI level
+    -   remove some --hashed and --old flags from tests
+    -   modernize issue1984 test (patch by Petr Rockai)
+
+2010-08-29 Petr Rockai
+  ~ -   Remove parts of the hashed\_inventory that require conversion to
+        OF.
+    -   Adapt issue1248 test to current OF-less situation.
+    -   Modernize the conflict-doppleganger test.
+
+2011-01-21 Guillaume Hoffmann
+  ~ -   no longer test OF repositories
+    -   remove --old flag for init get and put, modify help accordingly
+    -   fix redundant import since not repairing when doing optimize
+        --upgrade
+
+2010-09-02 Petr Rockai
+  ~ -   Do not try to replayRepository in optimize --upgrade (redundant,
+        broken).
+
+

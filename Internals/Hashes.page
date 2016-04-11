@@ -1,0 +1,49 @@
+Things in Darcs that are or that resemble hashes:
+
+1.  Patch hash: hash of patch info (name, author name, timestamp, log, random seed)
+
+    -   Used as an identifier for patches independently of their
+        context (because patch internals change during commutation)
+    -   Shown in the `darcs log` output
+    -   This never changes, even if you commute the patch
+    -   It changes if you amend the patch (the random seed is changed)
+
+2.  File contents hash (sha256) - used for identifying/verifying hashed
+    patch/pristine/inventory files
+
+    -   For patches, it can change depending on what the context of the
+        patch is, since it is a hash on patch info (which never changes
+        unless patch is amended) + actual contents (which may change
+        depending on context).
+    -   All files of the recorded state (pristine) of a repository are
+        hashed. In particular, the pristine hash is a hash of the
+        entire recorded state of a repository. It can be found as the
+        first line of `_darcs/hashed_inventory` (`pristine:...`).
+    -   See [HashedPristine](HashedPristine) for details
+
+3.  Patch bundle hash
+
+    -   Found at the end of .dpatch files (`Patch bundle hash: ...`)
+    -   Used to verify that patch bundle was not corrupted (eg. by a
+        mail client)
+    -   Darcs doesn't mind if you remove this.
+    -   You probably should NOT remove it, but there are rare occasions
+        where you might do so for [Forensics](/Forensics) or some sort
+        of manual [rebase](http://bugs.darcs.net/issue938) operation.
+
+4. Repository Weak Hash (since darcs 2.10.3)
+
+    -   Shown in `darcs show repo` as `Weak Hash:`
+    -   looks like a Patch Hash (1) and indeed is the XOR of all
+        Patch Hashes of the repository
+    -   the same set of patches produces the same repository weak
+        hash, independently of their order
+    -   not cryptographically secure (since patch hashes do not depend
+        on patch contents)
+
+# See also
+
+-   more specific details about [NamedPatch](NamedPatch)
+-   [HashedPristine]()
+-   [CacheSystem]()
+

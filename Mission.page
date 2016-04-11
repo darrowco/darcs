@@ -1,0 +1,60 @@
+# Priorities
+
+Our current priorities in Darcs are to
+
+1.  make darcs faster and more comfortable for its current users,
+2.  build it on solid foundations, and
+3.  explore the future of revision control, particularly by expanding
+    our use of high-level patches to new domains.
+
+See below for elaboration on the three points.
+
+# Context
+
+Darcs has a unique approach to version control. Rather than tracking
+repository states, we place a special emphasis on what goes between the
+states, in other words, "patches".
+
+We do not currently recommend Darcs for large projects, or for projects
+that need explicit history tracking. Darcs' performance is improving,
+but still has a way to go. The lack of explicit history can make code
+archeology harder. We think these are short-term problems which we can
+fix with time and dedication.
+
+So what are Darcs' strengths? Our initial emphasis on patch-based
+revision control has given us ease and flexibility which we think are
+hard to reproduce elsewhere: (A) **easy user interface** and mental
+model - your repository is just a set of patches, (B) **cherry picking
+everywhere** - in Darcs it's easy to pick out exactly the patches you
+want to pull, undo, email, etc without worrying about their dependencies
+(C) **semantic patches** - darcs tracks high-level changes like "rename
+file foo.c to bar.c" or "replace token fizzle with fozzle in foo.c". In
+the future, we hope to have patches that, e.g., let us think of XML
+files as trees. We work on Darcs because these ideas are important to
+the future of DVCS; we hope that other systems will steal them from us!
+
+# Priority 1: Making it faster for current users
+
+We aim to improve Darcs scalability enough for users with small
+repositories (GHC would be a good typical user) will find it very fast
+and comfortable.
+
+It would be nice to also take on medium to large repositories, but for
+now, the main priority is to target our current users and move on to our
+other priorities. Once we have addressed the foundations on which Darcs
+is built, we will revise our mission to target very large repositories.
+
+# Priority 2: Solid foundations
+
+This means two things right now: improving the code quality and
+developing Patch Theory 3.
+
+# Priority 3: Revision control research
+
+Darcs is different from the other DVCSes out there because we work with
+a high-level representation of changes. This puts us in a very good
+position to break some new ground. How about a Darcs with
+tree-manipulation patches? This would mean being able to version control
+XML documents beyond their textual representation. Or how about bug
+tracking patches? We should embrace the fact that Darcs is weird and
+wonderful, and keep trying that new thing, keep trying that clean idea.

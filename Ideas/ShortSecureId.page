@@ -1,0 +1,61 @@
+# Context
+
+-   <http://bugs.darcs.net/issue992> - feature request for short secure version identifiers
+
+# Scenarios and use cases
+
+## Fetching a repository by identifier (Zooko)
+
+Alice has a repository. She generates an identifier. It less than 40
+characters long. She sends it to Bob. Bob has read-access to a different
+repo, owned by Charles. He then tells darcs "Using Charles's repo, get
+the version identified by this identifier. Darcs then (very very
+quickly) does one of two things: tells him it can't because Charles's
+repo doesn't have all the patches that it would need, or does so,
+resulting in a local repo (on Bob's computer) which has exactly the set
+of patches in it that Alice intended when she generated the identifier.
+
+The "secure" part simply means that *if* darcs does the second case
+(fetches the patches) instead of the first case (says that it can't),
+then Bob doesn't have to consider Charles as part of the equation of
+what set of patches that he got. Bob knows that he got the set of
+patches Alice intended, regardless of Charles's intention. (Charles
+could of course force darcs into the "I can't do that" branch, for
+example by deleting his repository or turning off his network
+connection.)
+
+# Desiderata
+
+-   short, secure, fast
+-   identify pristine state (ie guarantees we have same pristine)
+-   identify patch set (guarantee we have same patch set)
+-   accepts patch reordering (since for darcs it does not matter)
+-   rejects false patch contents (patch info for A but something else in
+    contents)
+-   rejects false ordering even of true patch contents (clever and
+    malicious)
+
+# Proposals
+
+  ---------------------------------------------------------------------------
+               id        id        commute-     spots fake     spots fake 
+               pristine  patchset  friendly     patches        ordering
+  ------------ --------- --------- ------------ -------------- --------------
+  context hash no        yes       no           NO!            no
+
+  naive        yes       yes       NO           yes            yes
+  inventory                                                    
+  hash                                                         
+
+  minimal      yes       yes       yes          yes            yes
+  context hash                                                 
+
+  pristine     yes       NO        yes          no             no
+  hash                                                         
+  ---------------------------------------------------------------------------
+
+
+## Notes and questions
+
+* Do we have a scenario for false ordering with true patch contents?
+

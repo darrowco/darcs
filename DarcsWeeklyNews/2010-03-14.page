@@ -1,0 +1,75 @@
+# News and discussions
+
+1.  Benedikt Schmidt talked about his progress in implementing a
+    filecache to enhance speed of annotate:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-March/023191.html](http://lists.osuosl.org/pipermail/darcs-users/2010-March/023191.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-March/023190.html](http://lists.osuosl.org/pipermail/darcs-users/2010-March/023190.html)
+
+2.  Radoslav Dorcik resubmitted work-in-progress patches implementing
+    trackdown --bisect, and asked for comments:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-March/023187.html](http://lists.osuosl.org/pipermail/darcs-users/2010-March/023187.html)
+
+# Issues resolved in the last week (1)
+
+issue1753 Eric Kow
+  ~ -   restrict mmap to version used by hashed-storage.
+    -   [http://bugs.darcs.net/issue1753](http://bugs.darcs.net/issue1753)
+
+# Patches applied in the last week (38)
+
+2010-03-14 Eric Kow
+  ~ -   Test for DARCS\_PATCHES\_XML.
+
+2010-03-13 Reinier Lamers
+  ~ -   Also add PatchInfo test module to darcs.cabal
+    -   Test release tarballs more thoroughly in release.sh
+    -   Add missing unit test modules to darcs.cabal
+
+2010-03-06 Ganesh Sittampalam
+  ~ -   resolve conflict between witnesses and Origin import
+    -   resolve conflict between witness addition and issue1749 fix
+    -   add witnesses to Darcs.Commands.Replace
+    -   fix witnesses in Darcs.Commands.Remove using gaps
+    -   add witnesses to Darcs.Commands.Check
+    -   add witnesses to Darcs.Repository.Repair
+    -   add witnesses to treeDiff
+    -   everything now compiles with witnesses
+    -   add witnesses to Darcs.Commands.Rollback
+    -   add witnesses to Darcs.Commands.Convert
+    -   add witnesses to Darcs.Commands.MarkConflicts
+    -   add witnesses to Darcs.Commands.Revert
+    -   add witnesses to Darcs.Commands.AmendRecord
+    -   use tentative repo in askAboutDepends
+    -   add witnesses to Darcs.Commands.Optimize
+    -   add witnesses to Darcs.Commands.Put
+    -   return new repo from applyToWorking
+    -   add witnesses to Darcs.Commands.Get
+    -   add witnesses to Darcs.Commands.Add
+    -   add witnesses to Darcs.Commands.Record
+    -   add witnessed toFL operation
+    -   add witnesses to Darcs.Commands.Move
+    -   add witnessed variant of PatchInfo
+    -   reduce conditionalisation on witnesses in Darcs.Patch.Commute
+    -   add TypeOperators to witnesses build
+    -   add docs to Gap and related types
+    -   add concept of gaps
+    -   return new repository state from tentativelyAdd etc
+    -   adding patches should affect the tentative state
+    -   make tentativelyRemove return the new repo state
+
+2010-03-01 Eric Kow
+  ~ -   Resolve issue1753: restrict mmap to version used by
+        hashed-storage.
+
+2010-02-19 Trent W. Buck
+  ~ -   Remove intermediary files from "cabal sdist" tarball.
+
+2010-03-02 Petr Rockai
+  ~ -   Update the install-deps script to work with Cabal 1.8.
+
+2010-03-05 Jens Petersen
+  ~ -   fix issue458.sh failing on systems with xattrs
+
+

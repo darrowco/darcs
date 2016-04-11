@@ -1,0 +1,123 @@
+# --look-for-moves
+
+The `--look-for-moves` flag is used to autodetect files and folders renames automatically. It do this comparing the inode information of the file/folder with the inode information saved in the index from the last record/pending change. The index is used to save a timestamp of each file in the repository and the tree structure state at the last record/pending change and the inode information.
+To do this it has to scan all the working copy at it could be relatively slow if you have a large number of files/folders, so "look-for-moves" flag is not set by default.
+
+The simplest case is when you rename a file/folder:
+
+    > mv foo foo2
+    > darcs whatsnew --look-for-moves
+    move ./foo ./foo2
+
+## Things to keep in mind
+
+Some editors(I would love some feedback on which editors do this.) could make use of temporal files or backups and substitute the old file with the backup. If this is the case, darcs will lose track of the file, but in any case will mark the file like a remove unless it is renamed too. i.e.:
+
+    > cp foo foo.backup
+    > mv foo.backup foo
+    > darcs wh --look-for-moves
+    No changes!
+    > mv foo foo2
+    > darcs wh --look-for-moves --look-for-adds
+    R ./foo
+    a ./foo2
+
+Like you can see, when you rename foo to foo2, darcs lost track of the file, because the backup has a different fileid than the original, and foo2 is registered as a new file. It could be possible to implement a brute force algorithm to autodetect this "renames" but is not currently planned.
+
+## Are inodes really unique?
+
+Yes, there are. In any given instance every file have an unique inode number. That's why it's pretty much impossible to mis-guess a move unless you really try it, because it means that there are different files with the same inode, and the only way would be to use the same file but change the content and use it like another file. I mean the probability to have the same inode number in a new file is low(once you have deleted the old file of course), and that a file with the same inode ends in the same repo is even lower, much lower. I think the inode number used by a new file is always an increment from the inodes used before, so unless you cover all the numbers in a 64 bit range, you will not face with the same number twice.
+
+## Internals
+
+The implementation of look for moves flag, uses the timestamp index to track the fileids(inodes in unix-like filesystems or fhandles in windows filesystems) of the files.
+The timestamp index is updated whenever the pending patch is updated or a record is made, and it saves the tree structure of the last pending state(ie recorded state plus pending patches).
+When a record or a pending patch(and darcs add, darcs mv, darcs replace, etc) is made, if a there is a file deleted(but the deletion is not recorded), the timestamp index don't track this deleted file and keep the old data safe, because the file is not deleted in the pending state. It is important to highlight this because it is critical to get look for moves working right in all cases.
+
+See also <http://bugs.darcs.net/issue494>.
+
+# --look-for-replace
+
+> In addition to line-based patches, Darcs supports a limited form of
+> lexical substitution.  Files are treated as sequences of words, and
+> each occurrence of the old word is replaced by the new word.
+> This is intended to provide a clean way to rename a function or
+> variable.  Such renamings typically affect lines all through the
+> source code, so a traditional line-based patch would be very likely to
+> conflict with other branches, requiring manual merging.
+
+The `--look-for-replaces` flag for the commands `record` and `whatsnew` autodetects
+replaces between the recorded (recorded plus pending) state and the working state.
+
+It could be implemented in different ways. I will explain the trade-offs of each one.
+
+I think this case shows most about the different ways of doing it.
+
+Recorded file content:
+
+    foo foo
+    fii fii
+
+Working file content:
+
+    fii foo
+    fii fii
+
+Depending on how it is implemented, this is what would happen if you use --look-for-replace.
+
+First the options are:
+
+1.  You check if all instances of a chunk are replaced.
+2.  You can check if some instances of a chunk are replaced and all other instances are the same.
+3.  You can force a replace(like when you use the `--force` flag with "darcs replace")[1]
+4.  You can not show replaces that need to be "forced" to be applied.
+
+[1] If you run `darcs replace --force foo fii filename`, darcs will replace the word/chunk foo for fii in the file "filename" and if the word "fii" is in file darcs first will add a patch changing all the "fii" instances for "foo" and then it will make the replace. Darcs do this in order for the patches to be reversibles.
+
+If you do 1 and 3:
+
+    The replace is not for all instances so it doesn't detect/show any replaces
+    ~ darcs wh --look-for-replaces
+    hunk ./file 1
+    -foo foo
+    +fii foo
+
+if you do 1 and 4:
+
+    It is skipped because "fii" is in the working file and the replace is not for all instances.
+    ~ darcs wh --look-for-replaces
+    hunk ./file 1
+    -foo foo
+    +fii foo
+
+If you do 2 and 3:
+
+    I'm implementing/testing this:
+    ~ darcs wh --look-for-replaces
+    hunk ./file 2
+    -fii fii
+    +foo foo
+    replace ./file [A-Za-z_0-9] foo fii
+    hunk ./file 1
+    -fii fii
+    +fii foo
+
+If you do 2 and 4:
+
+    It is skipped because "fii" is in the working file:
+    ~ darcs wh --look-for-replaces
+    hunk ./file 1
+    -foo foo
+    +fii foo
+
+## Other questions:
+
+Things like this should be detected or be skipped?:
+
+    darcs init
+    echo "foo foo foo\nfii fii" > file
+    darcs record -al -m "example file"
+    echo "fii faa foo\nfii fii" > file
+
+I think it should not be detected because it could lead to too many undesired options.
+BUt, if detecting is desirable, what is expected as result?

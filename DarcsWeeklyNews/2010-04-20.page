@@ -1,0 +1,97 @@
+# News and discussions
+
+1.  darcs 2.4.1 was released, fixing a couple of bugs of version 2.4.0.
+    However, a serious bug under Windows was discovered, so Windows
+    users should still stick to the 2.3.1 version, while 2.4.2 is not
+    out:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-April/023647.html](http://lists.osuosl.org/pipermail/darcs-users/2010-April/023647.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-April/023736.html](http://lists.osuosl.org/pipermail/darcs-users/2010-April/023736.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-April/023769.html](http://lists.osuosl.org/pipermail/darcs-users/2010-April/023769.html)
+
+2.  Three students wrote their applications for this year's Summer of
+    Code. Projects members discussed the priorities of darcs: network
+    speed, local speed or UI ?
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-April/023628.html](http://lists.osuosl.org/pipermail/darcs-users/2010-April/023628.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-April/023631.html](http://lists.osuosl.org/pipermail/darcs-users/2010-April/023631.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-April/023673.html](http://lists.osuosl.org/pipermail/darcs-users/2010-April/023673.html)
+
+# Issues resolved in the last week (3)
+
+issue1159 Dmitry Kurochkin
+  ~ -   smart caches union.
+    -   [http://bugs.darcs.net/issue1159](http://bugs.darcs.net/issue1159)
+
+issue1645 Eric Kow
+  ~ -   bump hashed-storage to 0.4.11; don't follow symlinks.
+    -   [http://bugs.darcs.net/issue1645](http://bugs.darcs.net/issue1645)
+
+issue1756 Reinier Lamers
+  ~ -   bump hashed-storage dependency to 0.4.10
+    -   [http://bugs.darcs.net/issue1756](http://bugs.darcs.net/issue1756)
+
+# Patches applied in the last week (29)
+
+2010-04-23 Eric Kow
+  ~ -   Resolve conflicts with dependency bump patches in 2.4.1.
+    -   Resolve issue1645: bump hashed-storage to 0.4.11; don't follow
+        symlinks.
+
+2010-03-25 Reinier Lamers
+  ~ -   resolve issue1756: bump hashed-storage dependency to 0.4.10
+    -   Fix issue1645 case fold test
+
+2010-04-11 Eric Kow
+  ~ -   Split case-folding tests for issue1645 out so we can skip them
+        as needed.
+
+2010-04-11 Reinier Lamers
+  ~ -   Mark issue1645 test as succeeding
+    -   Bump version number to 2.4.1
+    -   Update NEWS for 2.4 and 2.4.1
+
+2010-04-21 Eric Kow
+  ~ -   Camel case Preproc.
+    -   Camel case Darcs.Email.
+    -   Camel case Darcs.Global.
+    -   Camel case Darcs.RemoteApply.
+    -   Camel case Darcs.Lock.
+
+2010-04-22 Florent Becker
+  ~ -   make witnesses compile in Repository.hs
+
+2010-04-18 Dmitry Kurochkin
+  ~ -   Darcs.Repository: use pipelining when copying patches.
+    -   URL: add maxPipelineLength function, rename maxPipeLength to
+        maxPipelineLengthRef.
+    -   Resolve issue1159: smart caches union.
+
+2010-04-13 Matthias Kilian
+  ~ -   Create manual directory if it doesn't exist
+
+2010-04-13 Eric Kow
+  ~ -   Camel case IsoDate.
+    -   Camel case Printer and Darcs.ColorPrinter.
+    -   Camel case Exec, Darcs.Utils and Darcs.External.
+
+2010-04-12 Reinier Lamers
+  ~ -   Also update release date on homepage
+    -   Update website for 2.4.1 release
+
+2010-04-06 Dmitry Astapov
+  ~ -   Implemented all test cases from the discussion of bug 1645
+
+2010-04-08 Eric Kow
+  ~ -   Fix darcs bug tip (missing space).
+    -   Disable DARCS\_PATCHES\_XML posthook test on Windows.
+
+2010-04-05 Reinier Lamers
+  ~ -   Make issue1739 test skip instead of fail on non-UTF-8 locales
+
+2010-04-05 Eric Kow
+  ~ -   Accept issue1363: mark-conflicts inconsistency with duplicate
+        patches.
+    -   Accept issue1737: confusing darcs move error message.
+
+

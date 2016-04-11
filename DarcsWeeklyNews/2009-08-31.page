@@ -1,0 +1,92 @@
+# News and discussions
+
+1. Taylor Campbell brought up the topic of filecache as an optimisation
+for
+  ~ darcs, which helped Eric Kow pointing to the relevant action, tools
+    and bug tickets:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-August/021018.html](http://lists.osuosl.org/pipermail/darcs-users/2009-August/021018.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-August/021022.html](http://lists.osuosl.org/pipermail/darcs-users/2009-August/021022.html)
+
+2. Duncan Coutts brought figures about darcs 2.3's poor performance
+  ~ with darcs-1 repositories:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-August/021062.html](http://lists.osuosl.org/pipermail/darcs-users/2009-August/021062.html)
+
+3. Jason Dagit made some experiments by versionning the source code of
+Linux
+  ~ into darcs, and trying to enhance CPU and memory efficiency of darcs
+    record:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-August/021076.html](http://lists.osuosl.org/pipermail/darcs-users/2009-August/021076.html)
+
+# Issues resolved in the last week (3)
+
+issue1373 Trent W. Buck
+  ~ -   don't use a broken example.
+    -   [http://bugs.darcs.net/issue1373](http://bugs.darcs.net/issue1373)
+
+issue1548 Trent W. Buck
+  ~ -   show contents requires at least one argument.
+    -   [http://bugs.darcs.net/issue1548](http://bugs.darcs.net/issue1548)
+
+issue1578 Judah Jacobson
+  ~ -   Don't put newlines in the Haskeline prompts.
+    -   [http://bugs.darcs.net/issue1578](http://bugs.darcs.net/issue1578)
+
+# Patches applied in the last week (28)
+
+2009-08-30 Jason Dagit
+  ~ -   minor clean up in TouchesFiles
+    -   silence a warning that happens when compiling witnesses
+    -   remove unused argument to readPrim
+    -   use gzipFormat instead of GZip to work around deprecation
+        warning.
+
+2009-08-29 Judah Jacobson
+  ~ -   Resolve issue1578: Don't put newlines in the Haskeline prompts.
+
+2009-08-29 Trent W. Buck
+  ~ -   Whoops, one more obviated line from Darcs.Repository.Checkpoint.
+    -   Resolve issue1548: show contents requires at least one argument.
+    -   Add a hidden alias "darcs log" for "darcs changes".
+
+2009-08-28 Eric Kow
+  ~ -   Mark issue68 test as failing (and fix issue number).
+
+2009-08-28 Trent W. Buck
+  ~ -   Resolve issue1373: don't use a broken example.
+    -   Reorder paragraphs and minor rewrite of darcs replace --help.
+    -   Remove unused code from Darcs.Repository.Checkpoint.
+    -   The record-scaling test still fails.
+
+2009-08-27 Ganesh Sittampalam
+  ~ -   Print helpful message in gzcrcs command when visiting other
+        repos
+
+2009-08-24 Eric Kow
+  ~ -   Clean up leftover conflicts from merge with David's test suite
+        work.
+    -   Resolve conflicts between David and mainline test suite work.
+
+2009-03-29 David Roundy
+  ~ -   add failing test demonstrating nasty conflict markings.
+    -   mark check.sh test as passing.
+    -   mark issue27 test as passing.
+    -   mark issue 1043 test as passing.
+    -   mark nfs-failure.sh as passing (even though it might not be
+        fixed).
+    -   mark dist-v as passing.
+    -   mark check.sh as failing.
+    -   clean up and mark as passing the broken-pipe.sh test.
+    -   mark issue 525 is no longer failing.
+    -   move bugs into tests/ directory.
+
+2009-08-26 Taylor R Campbell
+  ~ -   Eliminate references to the autotools-based build system.
+
+2009-08-27 Ganesh Sittampalam
+  ~ -   update docs for darcs mv to reflect reality
+
+

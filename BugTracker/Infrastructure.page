@@ -1,0 +1,150 @@
+# Features we think we use
+
+Remember to take this infrastructure with a grain of salt. On the one
+hand it's been tuned to account for how people seem to behave (eg. wrt
+mailing lists); on the other hand, we could always have missed
+something.
+
+-   create bugs/patches via email
+-   create bugs/patches via web-interface
+-   follow-ups by email automagically update the right ticket
+-   spam-prevention
+-   noise mitigation (noise != spam)
+-   automated ticket closing
+-   mailing list integration
+-   patch tracking
+-   "screened" repository before mainline
+-   automagically applying signed patches to screened repo
+
+# Incoming email
+
+1.  User sends mail to bugs@ or patches@ addresses. For now, patches@ is
+    an alias for bugs@ [on the osuosl.org end]
+
+2.  bugs@ is actually a Mailman mailing list provided by osuosl.org This
+    allows us to moderate email entries from unknown addresses, which
+    avoids lots of spammy tickets being created on roundup. (To avoid
+    spam via the web interface, we impose a small registration
+    threshold. For some reason, this is currently sufficient to deter
+    people despite the lack of captcha)
+
+3.  When the email is approved (either automatically or by a moderator),
+    it is sent to a single recipient (the bugs@ mailing list has a
+    single subscriber).
+
+    There is a exim configuration that only accepts mail sent via bugs@
+    [and other darcs.net mailing lists]. I don't know if it's foolproof,
+    but it should work at least as well as our moderation techniques do.
+
+4.  Mail to our internal BTS address is fed through a procmail script,
+    which
+
+    -   tweaks the subject line so that 'darcs patch: ' is transformed
+        into [patch]
+    -   strips off mailing list tags like [darcs-users]
+    -   pipes the modified message to our roundup email gateway
+    -   applies a copy of any signed messages to the screened repo
+
+5.  The roundup gateway then either
+
+    -   updates an existing ticket, if [patchNNN] or [issueNNN] in the
+        subject line
+    -   creates a new patch ticket, if [patch] is in the subject line
+    -   creates a new issue ticket otherwise
+
+# Outgoing email
+
+6.  Most traffic to patch tickets is carbon-copied by roundup to
+    darcs-devel (the traffic excluded is any mail by darcswatch to avoid
+    noise).
+
+    Note that it is NOT made nosy (although you may still see it on a
+    handful of old tickets). As far as I can tell, using the CC list
+    allows us finer-grained policies like "only send this message to the
+    list if it's not from a robot", whereas nosy would blanket CC
+    everybody.
+
+    Noise avoidance:
+
+    -   there is a config file in detectors with a never\_nosy field
+        users in that file (particularly darcswatch) *never* get added
+        to the nosy list
+    -   users can opt into a "vacation mode" setting, which allows them
+        to be nosy on tickets without actually receiving email
+    -   we didn't always do this, but now we have use the roundup
+        default of only making people nosy on new tickets they create or
+        are CC'ed on. We used to always make them nosy if they comment
+
+7.  All traffic to issue tickets is blind-carbon-copied by roundup to
+    darcs-devel so that hard core darcs spotters can comment on bugs.
+
+    Note that making darcs-devel nosy would have undesirable
+    consequences (issue1676):
+
+    > -   people would reply just to darcs-devel and the BTS does not
+    >     see the message
+    > -   people would reply-all (which may interfere with any no-mail
+    >     policies the list may have)
+
+    I think we use BCC here so that when people either get bugs@ if they
+    hit reply, or bugs@ + nosy list if they hit reply-all. If they hit
+    reply-to-list, we're still in trouble for the reasons above.
+
+    See noise avoidance above.
+
+8.  Darcswatch is subscribed to darcs-devel and darcs-users and picks up
+    messages with patches attached. If the message also contains the
+    roundup-footer with the ticket number, it stores the ticket number.
+
+9.  Darcswatch then sends an email to patches@ updating the
+    darcswatchurl field in the ticket, pointing to the tracking URL for
+    the particular bundle.
+
+    Note that this does not generate any email noise for people because
+    the message sent has an empty body and Roundup is clever enough not
+    to send out an email when it has an empty body.
+
+# Automatic resolution of tickets
+
+1.  In its apply posthook, the reviewed and screened repositories on
+    [http://darcs.net](http://darcs.net) runs a Perl script that for
+    patterns in the subject line, particularly
+
+    > Resolve issueXXXX
+
+    This script sends an email to bugs@, setting the status to has-patch
+    if applied to the screened branch; or to resolved and the
+    resolved-in milestone to "X.Y (HEAD)" if applied to the reviewed
+    branch. Every time we release darcs, we have to update a
+    configuration file for this repository so that we get the right
+    milestone.
+
+2.  The release repository contains a similar posthook, which runs the
+    same darcs-roundup script. This sets the resolved-in milestone, so
+    that when the Release Manager looks at the bug trackers, the ticket
+    no longer appears in the list of outstanding
+    bugs for the milestone
+
+3.  When darcswatch notices that a bundle has been applied (observed by
+    regularly downloading the repository inventory), it updates the
+    corresponding ticket on roundup, marking the patch as accepted.
+
+# Pitfalls and flaws
+
+-   DARCS\_PATCHES\_XML must be < 1000K or it will be empty If you push
+    a very large number of patches at a time (more than 20), our
+    roundup-darcs integration will not pick up anything. See issue672
+    and issue1766
+
+-   The darcs-roundup integration pretends to be the patch author; it
+    should probably be [nobody@darcs.net](mailto:nobody@darcs.net)
+    instead
+
+-   patch376 is an example of something the infrastructure gets wrong
+    It's when the patch author does a darcs send --cc foo and when the
+    person foo does a reply to all (including bugs@). The problem is
+    that the patch does not have a ticket number associated with it, so
+    roundup just thinks it's a new patch entry. Instead of using send
+    --cc, you really just need to CC from the BTS
+
+

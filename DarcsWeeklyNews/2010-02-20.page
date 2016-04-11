@@ -1,0 +1,37 @@
+# News and discussions
+
+1.  Darcs 2.4 rc2 was released, try it now:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-February/023078.html](http://lists.osuosl.org/pipermail/darcs-users/2010-February/023078.html)
+
+2.  Benchmarks are starting to come to the wiki:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-February/023073.html](http://lists.osuosl.org/pipermail/darcs-users/2010-February/023073.html)
+    -   [http://wiki.darcs.net/Benchmarks](http://wiki.darcs.net/Benchmarks)
+
+3.  Finally, the fundraising drive was a success, a big thank-you to all
+    donators!
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-February/023067.html](http://lists.osuosl.org/pipermail/darcs-users/2010-February/023067.html)
+    -   [http://www.darcs.net/thanks.html](http://www.darcs.net/thanks.html)
+
+# Issues resolved in the last week (1)
+
+issue1741 Eric Kow
+  ~ -   fix --list-options when option has multiple names.
+    -   [http://bugs.darcs.net/issue1741](http://bugs.darcs.net/issue1741)
+
+# Patches applied in the last week (6)
+
+2010-02-20 Ganesh Sittampalam
+  ~ -   accept issue1749 - darcs remove <dir\> can make broken patches
+
+2010-02-17 Eric Kow
+  ~ -   Resolve issue1741: fix --list-options when option has multiple
+        names.
+    -   Add a special thank-you to some of our bigger donors.
+    -   Retire list of buildbot friends on thank-you page.
+    -   CSS support for testimonials.
+    -   News: darcs 2010 fundraising complete - we did it!
+
+

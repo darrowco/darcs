@@ -1,0 +1,32 @@
+# The vision
+
+-   [Library design bugs on the
+    tracker](http://bugs.darcs.net/issue?@search_text=&title=&@columns=title&topic=44&id=&@columns=id&creation=&creator=&activity=&@columns=activity&@sort=activity&actor=&nosy=&priority=&@group=priority&status=-1,1,2,3,4,5,6,16,17&@columns=status&assignedto=&@columns=assignedto&@pagesize=50&@startwith=0&@queryname=&@old-queryname=&@action=search)
+
+-   Using the repo-level library should be safe. No repo-level operation
+    should make a consistent repository inconsistent
+-   Implementing a Darcs GUI with cherry-picking should be possible
+-   Split into three components?
+
+    -   core
+    -   repo
+    -   commands
+
+-   Type witnesses work complete
+
+# Innards
+
+-   separation of business IO from UI IO -
+    [issue1483](http://bugs.darcs.net/issue1483)
+
+## darcs monad
+
+Things a Darcs monad might be good for: -
+[issue1895](http://bugs.darcs.net/issue1895)
+
+-   DarcsFlag
+-   Global variables
+-   Passing information into posthooks - (huh?)
+-   SSH parameterisation
+-   and more!
+

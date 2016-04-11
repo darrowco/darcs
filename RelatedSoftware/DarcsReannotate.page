@@ -1,0 +1,111 @@
+The "darcs-reannotate" program reformats "darcs annotate" output to look
+more like "cvs annotate".
+
+Repo:
+<http://cakoose.com/darcs/darcs-reannotate>
+Program:
+<http://cakoose.com/darcs/darcs-reannotate/darcs-reannotate>
+
+# Sample Output
+
+The original Darcs annotation format:
+
+    # File stringify.hs created by [add --exact-version option to darcs which gives its precise version.
+    # David Roundy <droundy@abridgegame.org>**20040730104030]  as ./stringify.hs
+    # Following line added by [add --exact-version option to darcs which gives its precise version.
+    # David Roundy <droundy@abridgegame.org>**20040730104030] 
+     module Main where
+    # Following line added by [add --exact-version option to darcs which gives its precise version.
+    # David Roundy <droundy@abridgegame.org>**20040730104030] 
+
+    # Following line added by [No need to use C for Context
+    # Ian Lynagh <igloo@earth.li>**20050409145935] 
+     import Data.List (intersperse)
+    # Following line added by [No need to use C for Context
+    # Ian Lynagh <igloo@earth.li>**20050409145935] 
+     import System.Environment (getArgs)
+    # Following line added by [No need to use C for Context
+    # Ian Lynagh <igloo@earth.li>**20050409145935] 
+     import System.IO (hGetContents, stdin)
+    # Following line added by [add --exact-version option to darcs which gives its precise version.
+    # David Roundy <droundy@abridgegame.org>**20040730104030] 
+
+    # Following line added by [add --exact-version option to darcs which gives its precise version.
+    # David Roundy <droundy@abridgegame.org>**20040730104030] 
+     main :: IO ()
+    # Following line added by [No need to use C for Context
+    # Ian Lynagh <igloo@earth.li>**20050409145935] 
+     main = do [modulename, varname] <- getArgs
+    # Following line added by [add --exact-version option to darcs which gives its precise version.
+    # David Roundy <droundy@abridgegame.org>**20040730104030] 
+               thedata <- hGetContents stdin
+    # Following line added by [fix newlines in stringify.
+    # David Roundy <droundy@abridgegame.org>**20050409154243] 
+               let pretty_data = concat $ intersperse "\\n\\\n \\"
+    # Following line added by [No need to use C for Context
+    # Ian Lynagh <igloo@earth.li>**20050409145935] 
+                               $ map (init . tail . show) $ lines thedata
+    # Following line added by [No need to use C for Context
+    # Ian Lynagh <igloo@earth.li>**20050409145935] 
+               putStrLn $ "module " ++ modulename ++ " (" ++ varname ++ ") where"
+    # Following line added by [No need to use C for Context
+    # Ian Lynagh <igloo@earth.li>**20050409145935] 
+               putStrLn $ varname ++ " :: String"
+    # Following line added by [No need to use C for Context
+    # Ian Lynagh <igloo@earth.li>**20050409145935] 
+               putStrLn $ varname ++ " = \"" ++ pretty_data ++ "\""
+    # Following line added by [No need to use C for Context
+    # Ian Lynagh <igloo@earth.li>**20050409145935] 
+
+"darcs-reannotate" program will reformat it to:
+
+    -- Patches --
+
+    DavidR: David Roundy <droundy@abridgegame.org>, 04/09/05 15:42:43
+     * fix newlines in stringify.
+
+    IanL: Ian Lynagh <igloo@earth.li>, 04/09/05 14:59:35
+     * No need to use C for Context
+
+    DavidR2: David Roundy <droundy@abridgegame.org>, 07/30/04 10:40:30
+     * add --exact-version option to darcs which gives its precise version.
+
+    -- File Contents --
+
+    DavidR2: module Main where
+          ^  
+       IanL: import Data.List (intersperse)
+          ^  import System.Environment (getArgs)
+          ^  import System.IO (hGetContents, stdin)
+    DavidR2: 
+          ^  main :: IO ()
+       IanL: main = do [modulename, varname] <- getArgs
+    DavidR2:           thedata <- hGetContents stdin
+     DavidR:           let pretty_data = concat $ intersperse "\\n\\\n \\"
+       IanL:                           $ map (init . tail . show) $ lines thedata
+          ^            putStrLn $ "module " ++ modulename ++ " (" ++ varname ++ ") where"
+          ^            putStrLn $ varname ++ " :: String"
+          ^            putStrLn $ varname ++ " = \"" ++ pretty_data ++ "\""
+          ^  
+
+# Usage
+
+You'll need Python to run the program. It accepts input through standard
+input or through files listed on the command line. All output goes to
+standard output.
+
+# Known Issues
+
+This program crashes on certain valid inputs. Darcs' annotation output
+uses a special format when describing changes from the latest patchset
+in the repo. This program doesn't understand that format yet. This
+should only happen when annotating files that are touched by the latest
+patchset. To work around this issue, you can record a new temporary
+patchset that doesn't affect any of the files you want to annotate. I
+think the proper way to fix this is to change Darcs to (optionally)
+eliminate special treatment of the latest patch.
+
+The date parsing library routine doesn't seem to recognize many time
+zones (at least, when run on my machine). There's a hack in there to
+recognize some of the time zones used in Darcs' own repo (look at the
+"INPUT\_TIME\_FORMATS" array).

@@ -1,0 +1,83 @@
+# News and discussions
+
+1.  Reiner releases the release candidate 1 and the packager's preview 1
+    of Darcs 2.5:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-October/025466.html](http://lists.osuosl.org/pipermail/darcs-users/2010-October/025466.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-October/025473.html](http://lists.osuosl.org/pipermail/darcs-users/2010-October/025473.html)
+
+2.  Florent and Ganesh volunteered to be the next co-release managers:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-October/025499.html](http://lists.osuosl.org/pipermail/darcs-users/2010-October/025499.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-October/025537.html](http://lists.osuosl.org/pipermail/darcs-users/2010-October/025537.html)
+
+3.  Finally, the Darcs Hacking Sprint took place last week in Orleans.
+    We will soon post a report.
+
+# Issues resolved in the last week (3)
+
+issue1942 Dmitry Astapov
+  ~ -   fix the fix which ended up too strict due to unsealing.
+    -   [http://bugs.darcs.net/issue1942](http://bugs.darcs.net/issue1942)
+
+issue1948 Eric Kow
+  ~ -   send BTS update emails as noreply@
+    -   [http://bugs.darcs.net/issue1948](http://bugs.darcs.net/issue1948)
+
+issue1951 Reinier Lamers
+  ~ -   refuse to add files outside repository
+    -   [http://bugs.darcs.net/issue1951](http://bugs.darcs.net/issue1951)
+
+# Patches applied in the last week (22)
+
+2010-10-18 Eric Kow
+  ~ -   Test for issue1923.
+
+2010-09-17 Adolfo Builes
+  ~ -   Solve issue1923: cache mechanism warns about sources outside
+        your control
+
+2010-10-16 Eric Kow
+  ~ -   Resolve issue1948: send BTS update emails as noreply@
+    -   Distinguish between --context with and without arguments.
+
+2010-10-01 Simon Michael
+  ~ -   hook env vars: haddock improvement
+    -   hook env vars: add some haddocks
+
+2010-10-01 Eric Kow
+  ~ -   Remove misleading debug output.
+
+2010-10-02 Reinier Lamers
+  ~ -   Haddock fixSubPaths
+    -   Make annotate handle fixSubPath's rejecting paths
+    -   Make issue1951 test clean up (needed for 2.5 branch)
+    -   Mark issue1951 test as passing
+    -   Don't act like user gave no file arguments to add when he gave
+        only invalid ones
+    -   Elaborate issue1951 test (for adding files outside the
+        repository)
+    -   resolve issue1951: refuse to add files outside repository
+
+2010-10-01 Ganesh Sittampalam
+  ~ -   clean up OPTIONS\_GHC usage
+    -   fix warning about tab character
+
+2010-09-14 Simon Michael
+  ~ -   require regex-posix \>= 0.94.4 on windows to avoid link errors
+        with with HP 2010.2.0.0
+
+2010-09-09 Eric Kow
+  ~ -   Improve error message when \_darcs/inventory fallback check
+        fails.
+    -   HLint: use notElem.
+    -   Haddock confusing naming for lastWord.
+
+2010-10-04 Ganesh Sittampalam
+  ~ -   write out tag before trying to optimize inventory
+
+2010-09-11 Dmitry Astapov
+  ~ -   Resolve issue1942: fix the fix which ended up too strict due to
+        unsealing.
+
+

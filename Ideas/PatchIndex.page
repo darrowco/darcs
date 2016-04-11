@@ -1,0 +1,141 @@
+---
+format: markdown+lhs
+title: Patch Index in Darcs (formerly known as file cache) 
+...
+
+# Why do we need a patch index?
+
+The following is simplified for presentation!
+
+> PrimitivePatch = Move FilePath FilePath | Hunk Line String String | AddFile FilePath | RmFile FilePath | ..
+> -- e.g. Move oldName newName,
+Hunk l old new, ... 
+>
+> Patch = Patch PatchInfo [PrimitivePatch]
+
+In Darcs, the repository is (roughly) of type `[Patch]`. This view is
+required for merging, conflict handling, cherry-picking, ... .
+
+Some operations are OK using this representation:
+
+    *Alice*: [p1,..,pn] <-- pull --> *Bob*: [p1,..,pn,pn+1,..,pn+k]
+    *Alice*: [p1,..,pn] unpull pk
+
+Others are very slow (mostly query operations):
+
+-   `annotate "Makefile"` =\> has to apply all patches (backwards from
+    the current state) back to the creation of the "Makefile"
+-   Same problem:
+
+    -   `changes "Makefile"`
+    -   `show contents Makefile -p "Some old patch"`
+
+# How to solve this?
+
+Keep [Patch] representation, extract some data that speeds up these
+operations
+
+`annotate "Makefile"`
+  ~ find out which patches touch "Makefile" =\> ignore all other patches
+
+Need function: `'touchingPatches :: DatedFilePath -> (Set PatchId)'`
+
+Have to handle renames, directory moves:
+
+    p01 Add   A/Foo                                  {A/Foo:"",..}
+    p02 Hunk  A/Foo ..                               {A/Foo:"some text",..}
+    p03 MV    A      B                               {B/Foo:"some text",..}
+        ...
+    p10 Add   A/Foo                                  {B/Foo:"some text",A/Foo:"",..}
+    p11 RM    A/Foo                                  {B/Foo:"some text",..}
+    p12 MV    B/Foo  A/Foo                           {A/Foo:"some text",..}
+
+Unique (local) identifier for each file. Identifier of file should be
+constant, name and content can change.
+
+We use: creation name and counter as unique identifier for a file:
+
+> FileId = FileId {creationName :: ByteString, counter :: Int}
+
+For example, there are 2 files in the repo above A/Foo\#1 and A/Foo\#2.
+
+Can refer to "old filenames" that are interpreted relative to an old
+revision of the repository.
+
+> FileRelativeRevision = FileRelativeRevision {filePath :: FilePath,
+revision::PatchId}
+
+A span starting with pstart to (maybe) pend where the file identified by
+fid had a certain name.
+
+> FileIdSpan = FileIdSpan {fid::FileID, pstart::PatchId, pend::Maybe
+PatchId}
+
+The map that returns all spans for a certain name, we can use it to look
+up which FileId the name refers to at a certain revision.
+
+> SpanMap = Map FilePath [FileIdSpan]
+
+The we just store all patches that touch a file.
+
+> PatchesMap = Map FileId (Set PatchId)
+> CreationNameMap = Map FileId (FilePath)
+
+can use *SpanMap* to lookup *FileId* for *FileRelativeRevision* then use
+*PatchesMap*
+
+# Patch Index Structure
+
+PatchId
+
+- It is a unique identifier for a patch.
+- Look at Patch Hash on this page [http://wiki.darcs.net/Internals/Hashes]().
+- The name consists of three segments:
+     - timestamp (ISO8601-compatible yyyymmmddHHMMSS, UTC)
+     - SHA1 hash of the author
+     - SHA1 hash of the patch name, author, date, log, and \"inverted\" flag.
+- Patch Index makes an ordering of the patches based on order of application on the repo.
+- if patch p1 depends on patch p2 then p1 > p2
+- if p1 < p2 then p1 cannot depend on p2
+
+FileId
+
+- The filename is insufficient to track a file as it can change
+- FileId uniquely identifies each file with it's creation name, and a counter
+- Patch-index carefully tracks the FileName of each FileId, and FileId of each FileName.
+
+Map FileId (Set PatchId)
+
+- Used to ascertain the patches that modified a file.
+ 
+Map FileName [(FileId, PatchId, PatchId)]
+
+- Let (fn, (fi, ps, px)) be an entry
+     - Applying all the patches < than ps in the repo, you will have fn /= fi
+     - Applying all the patches ≥ ps and ≤ to px in the repo, you will have fn == fi
+
+# Results
+
+You can try out changes using patch-index with this [http://bugs.darcs.net/file3197/sync.dpatch](patch).
+The command is darcs show patch-index-fileid ./Path_to_file_wrt_repo. Patch-index changes seems to be
+10x faster that the existing changes.
+
+Old Results
+-----------
+
+Seems to make annotate bearable for large repos (GHC-sized).
+
+Best case for patch-index: README in the ghc repo - touched by 29 files
+of 21345
+
+    $ time darcs changes --patch-index README  > /dev/null
+
+    real    0m0.669s
+    user    0m0.581s
+    sys     0m0.083s
+
+without "--patch-index": ran out of patience after 30 minutes
+
+annotate still takes about 15 seconds with "--patch-index" =\>
+bottleneck is now reading inventories
+

@@ -1,0 +1,70 @@
+"Any fool can make something complicated. It takes a genius to make it
+simple." -- Woody Guthrie
+
+What fans tend to love about Darcs is the simplicity of the user
+interface. In the Darcs team, we value the effort to put together a
+well-thought-out UI. We think a minimal amount of forethought is
+essential to preserving that unique combination of power and simplicity
+that Darcs offers.
+
+Here's the recommended route to adding a new feature. Keep in mind that
+we are not usability experts and we certainly do not expect you to be
+either. So we are not about trying to achieve perfection here, nor do we
+want to bog people down with Process. We just want to make sure we have
+a made a little bit of effort to get the UI right.
+
+# 1. Propose the feature
+
+# 2. Implement it?
+
+It could be useful to prepare a prototype implementation of the feature.
+Having a concrete example could help speed up the discussion below.
+
+On the other hand, it may prematurely constrain peoples' thinking about
+it. So don't get too attached to your first implementation. Maybe even
+keep the implementation to yourself until you feel the discussion could
+go faster if people saw it.
+
+# 3. Advocate the feature
+
+Think about the following questions and provide answers for them. Or
+find somebody who cares about the feature enough to advocate for it.
+
+1.  What problem does the proposed feature solve?
+
+2.  Who are the stakeholders? Who is going to benefit/be affected by
+    this feature: end-users, repo farms like patch-tag, darcs
+    developers?
+
+3.  Who are the users? New users? Repository maintainers? Patch authors?
+
+4.  What are the user scenarios?
+
+5.  Does this change any pre-existing workflows? Does this introduce any
+    incompatibilities?
+
+6.  How do we preserve the conceptual integrity of Darcs? Is the UI for
+    this feature really Darcs-ish?
+
+7.  What are the possible unintended interactions with other
+    pre-existing features?
+
+8.  What are the alternative approaches to solving the same problem? Why
+    do we prefer this one?
+
+# 4. Find a skeptic
+
+Find somebody to challenge the feature. Ideally, it would be somebody
+who does not like the feature. Expect them to challenge you on your
+answers to this discussion.
+
+Remember that we're all after the same thing here: a powerful and easy
+to use version control system, so getting challenged on the UI is a good
+thing. If we have trouble finding somebody to act as a skeptic, as a
+last resort, we can probably find somebody neutral/friendly to play the
+user advocate. It's about Thinking, not Process.
+
+# 5. Discuss
+
+Attempt to reach consensus on how to move forward. As a last resort, ask
+for somebody to moderate.

@@ -1,0 +1,110 @@
+# News and discussions
+
+1.  darcs 2.5 beta 2 was released. Give it a try!
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-July/024642.html](http://lists.osuosl.org/pipermail/darcs-users/2010-July/024642.html)
+
+2.  Reinier explained why beta 3 will have to wait a little:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-August/024681.html](http://lists.osuosl.org/pipermail/darcs-users/2010-August/024681.html)
+
+3.  Joachim "nomeata" Breitner released a ipatch, a tool based on darcs'
+    hunk editing feature:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-August/024699.html](http://lists.osuosl.org/pipermail/darcs-users/2010-August/024699.html)
+    -   [https://www.joachim-breitner.de/blog/archives/425-ipatch,-the-interactive-patch-editor.html](https://www.joachim-breitner.de/blog/archives/425-ipatch,-the-interactive-patch-editor.html)
+
+4.  Two more blog posts from our Summer of Code students Adolfo and
+    Alexey:
+
+    -   [http://abuiles.blogspot.com/2010/07/gsoc-week-9.html](http://abuiles.blogspot.com/2010/07/gsoc-week-9.html)
+    -   [http://darcs-gsoc2010.blogspot.com/2010/08/gsoc-2010-progress-report-2.html](http://darcs-gsoc2010.blogspot.com/2010/08/gsoc-2010-progress-report-2.html)
+
+# Issues resolved in the last week (2)
+
+issue1888 Petr Rockai
+  ~ -   fix changes --context.
+    -   [http://bugs.darcs.net/issue1888](http://bugs.darcs.net/issue1888)
+
+issue1892 Petr Rockai
+  ~ -   Improve safety of makeBundle\* and fix a couple of related bugs.
+    -   [http://bugs.darcs.net/issue1892](http://bugs.darcs.net/issue1892)
+
+# Patches applied in the last week (38)
+
+2010-08-06 Petr Rockai
+  ~ -   Undo an edit to the issue1829 test, since the original was
+        clearer.
+    -   Add a test for issue1829 by Ganesh & Ian.
+
+2010-07-18 Eric Kow
+  ~ -   Cut functions Darcs.Utils.putStrLnError and putDocLnError.
+    -   Tidy Darcs.Utils exports.
+
+2010-08-05 Guillaume Hoffmann
+  ~ -   switch homepage to two-column format ala xmonad.org
+
+2010-08-06 Petr Rockai
+  ~ -   Remove a couple of redundant type variables from foralls.
+
+2010-08-05 Eric Kow
+  ~ -   Accept issue1290: darcs diff --index support.
+    -   Fix missing type signature in Darcs.Arguments.
+    -   Fix warnings in Darcs.Repository.State.
+    -   Fix warnings in Darcs.Repository.InternalTypes.
+    -   Fix warnings in Darcs.Repository.HashedIO.
+    -   Fix warnings in Darcs.Repository.DarcsRepo.
+    -   Fix warnings in Darcs.Patch.Prim.
+    -   Fix redundant import warning in Darcs.Patch.Patchy.
+    -   Fix redundant imports in Darcs.Patch.Commute.
+    -   Fix shadow warning in Darcs.Patch.Choices.
+    -   Fix redundant imports in Darcs.Patch.Apply.
+    -   Fix RemoteDarcs related imports warning in Darcs.Flags and
+        Darcs.RemoteApply.
+    -   Fix deprecation warning on GHC.Handle in Exec module.
+
+2010-07-15 Petr Rockai
+  ~ -   Resolve issue1892: Improve safety of makeBundle\* and fix a
+        couple of related bugs.
+    -   Re-enable packs and optimize --http.
+
+2010-08-02 Alexey Levan
+  ~ -   Minimize the number of packed inventories
+    -   Use cache while getting a packed repository
+    -   Hardlink files while getting a packed repository
+
+2010-08-03 Joachim Breitner
+  ~ -   Export usageHelper
+
+2010-08-03 Adolfo Builes
+  ~ -   Add pronoun to english module
+
+2010-08-03 Joachim Breitner
+  ~ -   Make Darcs.RunCommand independent of Darcs.Commands.Help
+
+2010-07-24 Adolfo Builes
+  ~ -   Handle English nouns that end in y.
+
+2010-08-02 Reinier Lamers
+  ~ -   Remove unused imports in Darcs.Commands.Changes
+
+2010-07-29 Petr Rockai
+  ~ -   Resolve issue1888: fix changes --context.
+    -   Make the "error applying hunk" error a lot more readable (and
+        useful).
+
+2010-07-18 Eric Kow
+  ~ -   Haddock promptYorn.
+    -   Add header to issue1790 test and make it follow convention more.
+    -   Accept issue1790: darcs send --context foo
+    -   Modernise System.Cmd import in Distribution.ShellHarness.
+
+2010-07-26 Eric Kow
+  ~ -   Disable optimize --http for Darcs 2.5 release.
+    -   Disable packs for darcs 2.5.
+
+2010-07-26 Eric Kow
+  ~ -   Restore looking for version number in exact-version context
+        dump.
+
+

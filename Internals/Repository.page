@@ -1,0 +1,270 @@
+This page describes the structure of a darcs repository. Yes, this
+\_darcs thingy that appears after you do a `darcs initialize`! In this
+page, we describe repositories without referring to Darcs code. You may
+want to start by reading the [Model](../Using/Model) page, to have a
+more global vision of Darcs repositories.
+
+This is work in progress, so I will put a lot of *todo* everywhere.
+
+(*todo* mention patch_index)
+
+You can look into gzipped files with zless. Almost everything in \_darcs
+is gzipped.
+
+# \_darcs after an initialization
+
+This is what we have after `darcs init`:
+
+    _darcs/
+    |-- format
+    |-- hashed_inventory
+    |-- patches
+    |-- prefs
+    |   |-- binaries
+    |   |-- boring
+    |   `-- motd
+    `-- pristine.hashed
+        `-- e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+-   `format` describes the format of the repository. With the current
+    version, it contains the lines `hashed` and `darcs-2`.
+    `hashed` refers to the repository format (it is currently the only supported),
+    and `darcs-2` refers to the patch semantics format (darcs-1 is still available).
+    See [the Darcs 2 description page](../DarcsTwo) and
+    <http://article.gmane.org/gmane.comp.version-control.darcs.devel/5393>.
+-   `hashed_inventory` is a file that contains at the same time a hash and an *inventory*:
+    1. the first line starting with `pristine:` gives the hash of
+       the root of the pristine tree.
+    2. the following lines are the latest patches of the history
+       (from older to newer, if there are patches)
+    It is not gzipped.
+-   `patches` is a directory containing gzipped files, each one
+    containing a named patch. This directory is initially empty.
+-   `prefs` are plain text files that contain various options
+-   `pristine.hashed` contains gzipped files, each one containing either
+    a directory content, or a file content. All together, these files
+    contain the last saved state of the working copy.
+    In the current case, the file
+    `e3b0...` is present to describe the current empty root directory
+    of the pristine tree.
+
+# After preparing a patch (before recording)
+
+Let's start preparing a patch:
+
+    $ echo "file content" > somefile
+    $ darcs add somefile
+
+We have the extra files in \_darcs:
+
+    _darcs/
+    |-- format
+    |-- hashed_inventory
+    |-- index
+    |-- index_invalid
+    |-- patches
+    |   |-- pending
+    |   `-- pending.tentative
+    |-- prefs
+    |   |-- binaries
+    |   |-- boring
+    |   `-- motd
+    |-- pristine.hashed
+    |   `-- e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    |-- tentative_hashed_inventory
+    `-- tentative_pristine
+
+-   `index` is an optimization file added since darcs 2.3.1, see [TimeStampIndex]()
+-   `index_invalid` : same
+-   `patches/pending` : information about the patch being prepared.
+     Contains now `addfile ./somefile`  .  See [PendingPatch]().
+-   `patches/pending.tentative`  *todo*
+-   `tentative_hashed_inventory` *todo*
+-   `tentative_pristine` *todo*
+
+Now record:
+
+    $ darcs record -a -m "My first patch"
+
+# After recording a patch
+
+What we have now in \_darcs:
+
+    _darcs/
+    |-- format
+    |-- hashed_inventory
+    |-- index
+    |-- index_invalid
+    |-- inventories
+    |   `-- 0000000205-0332fe4dd444b6b9f94ba71ea1ce3b6fa7cb564e5d4b9f6c0fc7044073ee08db
+    |-- patches
+    |   |-- 0000000172-de1342a0b690a33830231c0929ce6b63fa23315c47f6a1d6552a34f744aeaa9b
+    |   |-- pending
+    |   `-- pending.tentative
+    |-- prefs
+    |   |-- binaries
+    |   |-- boring
+    |   `-- motd
+    |-- pristine.hashed
+    |   |-- 694b27f021c4861b3373cd5ddbc42695c056d0a4297d2d85e2dae040a84e61df
+    |   |-- 83bf551b64dc5f0e5684e1e42268c4ec56df209a4604cd7e936c169c3fa47603
+    |   `-- e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    `-- tentative_pristine
+
+New or changed files:
+
+-   `patches/0000000172-de13...`: the (gzipped) patch we just recorded.
+-   `inventories` directory: contains the inventory corresponding to the current
+    history.
+-   `hashed_inventory`: contains the updated hash of the pristine tree of the
+    repository, and the same contents as the inventory file mentioned above.
+
+The contents of the patch we recorded is:
+
+    [my first patch
+    Guillaume <me@mail.com>**20101016142609
+     Ignore-this: 9af21412b424aef171164f2b98bc9d10
+    ] addfile ./somefile
+    hunk ./somefile 1
+    +file content
+
+So it is really a darcs patch, containing:
+
+1.  metadata: patch name, author name, timestamp, and an random salt
+    to ensure it is unique
+2.  data: a list of *primitive patches* that constitute the current patch.
+    We have two primitive patches of different kinds: an `addfile` and a `hunk`.
+
+Let us look at the first line of the file `hashed_inventory`.
+It has a hash that starts by `83bf...`. 
+Let us look into `pristine.hashed`. It has two more files.
+Inside of the file `83bf...` we find
+
+    file:
+    somefile
+    694b27f021c4861b3373cd5ddbc42695c056d0a4297d2d85e2dae040a84e61df
+
+This means that the current recorded state of the working copy
+contains a file called `somefile` whose contents is given by the hashed file `694b...`.
+Let us look into that last file:
+
+    file content
+
+So, `hashed_inventory` describes the current recorded state of
+the repository and its first line indicates of to build the working copy.
+This is the information darcs needs when cloning a repository with `darcs clone`.
+
+Now one remark. Why do we keep this file `printine.hashed/e3b0...` if we
+no longer need it? Well, that's because darcs wants to be fast and does
+not delete pristine files over time. Also it's because if the repository
+is public and someone is cloning it, you don't want to have some files
+disappearing in the process.
+However one can manually optimize this directory, running `darcs optimize clean`.
+After such a command, \_darcs contains:
+
+    _darcs/
+    |-- format
+    |-- hashed_inventory
+    |-- index
+    |-- index_invalid
+    |-- inventories
+    |   `-- 0000000205-0332fe4dd444b6b9f94ba71ea1ce3b6fa7cb564e5d4b9f6c0fc7044073ee08db
+    |-- patches
+    |   |-- 0000000172-de1342a0b690a33830231c0929ce6b63fa23315c47f6a1d6552a34f744aeaa9b
+    |   |-- pending
+    |   `-- pending.tentative
+    |-- prefs
+    |   |-- binaries
+    |   |-- boring
+    |   `-- motd
+    |-- pristine.hashed
+    |   |-- 694b27f021c4861b3373cd5ddbc42695c056d0a4297d2d85e2dae040a84e61df
+    |   `-- 83bf551b64dc5f0e5684e1e42268c4ec56df209a4604cd7e936c169c3fa47603
+    `-- tentative_pristine
+
+So we got rid of that `e3b0...` file that is no longer useful. Over time
+your darcs repositories may grow in size because of this
+`pristine.hashed` directory that accumulates files. Run `darcs optimize clean`
+if you are in desperate need of disk space (the effect is dramatic if
+you have big files, like binary files, in your repository).
+
+# hashed\_inventory, inventory
+
+An inventory is a file that describes the history of a repository by
+listing patches from older to newer. An inventory may start with the lines
+
+    Starting with inventory:
+    0000043508-7a6b...
+
+Which means that it does not contain the complete history of the repository,
+and that to look into older patches, you have to open the inventory file
+named by the hash `0000043508-7a6b...`.
+
+`hashed_inventory` is the inventory of the current state of the
+repository. The subdirectory `inventories` stores other inventories
+useful for the history of the repository (and also "older" inventories
+that no longer are relevant, like inventories that contain deleted or
+modificated patches).
+
+Let us take a repository with already many patches. Let us take one inventory
+file from \_darcs/inventories/ :
+
+    Starting with inventory:
+    0000009036-9cbf750ff34fa7b3940af47b7c95ec812d2e536f5feada8d0e89ed530cecddcc
+    [TAG 1.5.3
+    Guillaume <me@mail.com>**20100513150110
+     Ignore-this: 4d602c25b18ca30228400f8800e27253
+    ] 
+    hash: 0000005948-e154869978642799facaca2180634f353d45df6e7478244f4fb16ea831ec612c
+    [switch to GHC 6.12 Prelude, fix warnings and take sme advice from hlint
+    Guillaume <me@mail.com>**20100604121359
+     Ignore-this: 7286831df91ffb8974deeb6a67527fa0
+    ] 
+
+    ...
+
+If we look at the file `_darcs/inventories/0000009036-9cbf...`:
+
+    Starting with inventory:
+    0000005042-37894faa0a3f90fcba049147fdb28490d53b1a27b5763feff3a940906a8e0823
+    [TAG 1.5.2
+    Guillaume <me@mail.com>**20091110191538
+     Ignore-this: 7af98721b507b5b53d95688aeee45eff
+    ] 
+    hash: 0000003430-515b0a6e2c0fd55f0fb7fdf85b59387ee78a7c97306b56cd5767e0afedc62303
+    [comment no longer relevant
+    Guillaume <me@mail.com>**20100217132511
+     Ignore-this: e854183117a8d980ccab7efdf5a66a3d
+    ] 
+    hash: 0000000232-c7d79d1acf8a1847869c73e7852937b91d65a179f91e3d5b0581a354f6596cfe
+    [defer more to getMods
+    Guillaume <me@mail.com>**20100217173918
+     Ignore-this: f6e2633492d31565723729e787a62dd2
+    ] 
+
+The idea of splitting inventory files is to avoid making darcs open and
+modificate too big files at once when running commands like record or pull.
+But splitting too much (say, splitting at every patch)
+would make darcs open too many files for a lot of operations.
+So the heuristic used is to split inventory files on tags.
+This follows the assumption that one cannot modificate the history
+before the last tag of the repository (to do so, you have to unrecord
+the tag).
+
+See that inventory files contain the metadata of patches but not their
+contents. There is a hash for that, and the hash is used as a file name
+in \_darcs/patches/.
+
+Why do inventory files store patch metadata, and not only their hash?
+This is for lazy repositories. In lazy repositories you don't download
+patches files but you have the inventory files.
+So at least you can run `darcs log` without having to download
+extra files. However running `darcs log -v` (which shows the contents of
+every patch), will automatically download all the patches.
+
+# See also
+
+-   [HashedPristine]()
+-   [HashedStorage]()
+-   [http://web.mornfall.net/blog/designing\_storage\_for\_darcs.html](http://web.mornfall.net/blog/designing_storage_for_darcs.html)
+

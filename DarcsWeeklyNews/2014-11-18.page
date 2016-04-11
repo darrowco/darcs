@@ -1,0 +1,232 @@
+# News and discussions
+
+1. We are in the feature freeze period of darcs 2.10:
+
+   - <http://lists.osuosl.org/pipermail/darcs-users/2014-November/027056.html>
+
+2. Our two Summer of Code projects ended up two months ago. Marcio and Ale's
+   code will be part of the upcoming new stable version of darcs. In case you
+   missed them, here are the latest posts of Marcio for his project:
+
+   - <http://marcioodiaz.blogspot.com.ar/2014/07/gsoc-progress-report-3-bucketed-global_23.html>
+   - <http://marcioodiaz.blogspot.com.ar/2014/07/gsoc-progress-report-4-garbage.html>
+   - <http://marcioodiaz.blogspot.com.ar/2014/07/gsoc-progress-report-5-starting.html>
+
+3. Ale's posts:
+
+   - <http://alegdarcs.blogspot.com.ar/2014/07/month-of-june.html>
+   - <http://alegdarcs.blogspot.com.ar/2014/07/some-week-14-19-july.html>
+   - <http://alegdarcs.blogspot.com.ar/2014/07/other-week-21-26-july.html>
+   - <http://alegdarcs.blogspot.com.ar/2014/08/last-few-weeks.html>
+
+# Issues resolved (7)
+
+issue1514 Guillaume Hoffmann
+  ~ -   send --minimize-context flag for send
+    -   <http://bugs.darcs.net/issue1514>
+
+issue1624 Marcio Diaz
+  ~ -   bucketed cache.
+    -   <http://bugs.darcs.net/issue1624>
+
+issue2153 Andreas Brandt
+  ~ -   allow skipping backwards through depended-upon patches
+    -   <http://bugs.darcs.net/issue2153>
+
+issue2249 Mateusz Lenik
+  ~ -   Rename isFile to isValidLocalPath and WorkRepoURL to WorkRepoPossibleURL
+    -   <http://bugs.darcs.net/issue2249>
+
+issue2380 Owen Stephens
+  ~ -   allow darcs mv into known, but deleted in working, file
+    -   <http://bugs.darcs.net/issue2380>
+
+issue2403 Ganesh Sittampalam
+  ~ -   need to avoid moving the rebase patch to the end
+    -   <http://bugs.darcs.net/issue2403>
+
+issue2409 Ganesh Sittampalam
+  ~ -   implement darcs rebase apply
+    -   <http://bugs.darcs.net/issue2409>
+
+
+# Patches applied (118)
+
+2014-11-07 Guillaume Hoffmann
+  ~ -   directly pass around SHA1 of patches instead of string representation
+
+2014-11-05 Ganesh Sittampalam
+  ~ -   fix warnings
+    -   update messages mentioning darcs optimize --patch-index
+    -   make the help message for --ask-deps generic
+    -   basic test of tag --ask-deps
+    -   Disallow "skip all" option in interactive selection for tag --ask-deps
+    -   Initial implementation of --ask-deps flag to darcs tag
+    -   rename the confusing concept of 'Tag' in Darcs.Patch.Choices to 'Label'
+    -   push the WhichChanges choice into the PatchSelectionContext
+
+2014-11-05 Guillaume Hoffmann
+  ~ -   correctly take into account --[no-]edit-description
+    -   revert send default to --edit-description
+    -   put again as verbose-only the patches pack fail message on cloning
+
+2014-11-04 Ben Franksen
+  ~ -   integrate new options subsystem
+
+2014-10-27 Ganesh Sittampalam
+  ~ -   Make the rebase changes output more user-friendly
+    -   resolve conflicts
+    -   add a unit test for RebaseChange
+    -   resolve conflicts
+    -   change/add various Show instances to ones that produce Haskell code
+    -   stop using custom Show instance on PatchInfo
+    -   rebase changes: delegate listConflictedFiles etc instead of using default
+    -   abstract code for treating RebaseChange as a merge
+    -   resolve conflicts
+    -   initial version of 'rebase changes' command
+    -   introduce a new type class for patch matching
+    -   resolve conflict (getChangesInfo flag changes and renaming)
+    -   make getChangesInfo take specific flags only
+    -   resolve conflicts (getChangesInfo renaming and refactoring)
+    -   resolve conflicts (addition of diff algorithm and getChangesInfo refactoring)
+    -   make getChangesInfo take a PatchFilter instead of a Repository
+    -   fix warning
+    -   reduce dependencies for Named/PatchInfoAnd Patchy instances
+    -   drop unnecessary UndecidableInstances
+    -   Work around haskell-src-exts (and hence hlint) parse errors
+    -   resolve issue2409: implement darcs rebase apply
+    -   switch applyCmd to use the PatchApplier abstraction
+    -   reuse the standard pullCmd for rebase
+    -   generalise applyPatchesForRebase along the same lines as applyPatches
+    -   bundle up checking for patch index and using it
+
+2014-10-23 Guillaume Hoffmann
+  ~ -   add --no-minimize flag to fix broken tests
+    -   minimize bundle contexts by default, allow ctrl-c or --no-minimize
+
+2014-10-16 Ganesh Sittampalam
+  ~ -   pattern-match against Sealed rather than using unsafeUnseal
+
+2014-10-15 Guillaume Hoffmann
+  ~ -   --minimize for obliterate -O
+    -   resolve issue1514: send --minimize-context flag for send
+
+2014-10-21 Ganesh Sittampalam
+  ~ -   resolve issue2403: need to avoid moving the rebase patch to the end
+    -   Share applyPatches code between pull and apply
+    -   clarify naming of applyPatches functions
+    -   resolve conflict in improved 'darcs replace' message
+    -   improve message from force-replace
+
+2014-06-29 Ben Franksen
+  ~ -   replaced duplicate DiffAlgorithm in Darcs.Repository.Flags with re-export
+    -   Darcs.Repository.Flags: added Show instances for all types
+    -   Darcs.Repository.Flags: added Eq instance for UseIndex
+
+2014-05-11 Owen Stephens
+  ~ -   Move previously failing issue2382 test
+    -   Tweak renameHelper - add trailing EOL in files and remove unnecessary $
+    -   Always use MyersDiff when removing a file - the diff will be identical
+    -   Use addPendingDiffToPending to add move patch and deps to pending
+    -   Add addPendingDiffToPending function and comment addToPending
+    -   Implement moveToDir and simpleMove with common function
+    -   Fix a rename testcase marked as ok when it shouldn't be
+    -   Make renameHelper much more efficient
+    -   Give user more feedback when doing a move
+    -   Allow diff to handle a file changing to a dir or vice-versa
+    -   Prevent updateIndex failing if a file is moved to a dir or vice-versa
+    -   Accept issue2382: darcs is confused if a dir is moved inplace of a file
+    -   renameHelper now tests all combos of path status and path type
+    -   Tidy up of Move - refactor out some common code
+    -   Allow post-hoc moves to known paths
+    -   renameHelper should not record all changes
+    -   Resolve issue2380: allow darcs mv into known, but deleted in working, file
+    -   Tidy up checkNewAndOldFilenames in the Move command
+
+2013-02-20 Ganesh Sittampalam
+  ~ -   tweaks to rebase help strings
+    -   Control pkgconfig use with a flag, defaulted to off
+    -   switch curl config to use pkgconfig
+    -   rename join in the PrimCanonize class to coalesce
+    -   rename coalesce to coalesceRev to free up the 'coalesce' name for the type class
+
+2014-09-26 Aristid Breitkreuz
+  ~ -   AMP for FileModMonad and second copy of "Perhaps"
+    -   AMP for Perhaps and DefaultIO/TolerantIO/SilentIO/TolerantWrapper
+    -   Remove faulty (>>) in second Perhaps
+    -   Perhaps was not a valid Monad
+
+2014-09-27 Andreas Brandt
+  ~ -   accept issue2153: allow skipping backwards through depended-upon patches
+    -   resolve issue2153: allow skipping backwards through depended-upon patches
+
+2014-09-27 Ganesh Sittampalam
+  ~ -   fix some warnings that show up with -DHAVE_HTTP
+    -   hack to appease GHC 7.8 warning about patterns that don't bind anything
+    -   GHC 7.8 is a bit more picky about unused imports
+    -   Fix some Windows-specific warnings
+    -   switch from deprecated System.Cmd to System.Process
+    -   switch from deprecated Data.AttoParsec.Char8 import
+    -   respect -fwarn-as-error in hashed-storage-test and fix warnings
+
+2014-10-21 Guillaume Hoffmann
+  ~ -   optimize cache help string
+    -   followup work on garbage collecting of global cache
+
+2014-07-29 Marcio Diaz
+  ~ -   Fixed file does not exist error when using darcs optimize global-cache.
+    -   Garbage collection of global cache.
+
+2014-07-31 Guillaume Hoffmann
+  ~ -   restore import
+
+2014-07-25 Ganesh Sittampalam
+  ~ -   print an informative message after rollback
+    -   change test to use a hostname that doesn't resolve
+
+2014-09-28 Mateusz Lenik
+  ~ -   Resolve issue2249: Rename isFile to isValidLocalPath and WorkRepoURL to WorkRepoPossibleURL
+
+2014-09-26 Ganesh Sittampalam
+  ~ -   push CPP down into individual modules
+    -   enable a few tests on Windows
+    -   add a format pragma for the convert.sh and fix the test data
+    -   skip the issue1739 test on Windows for now as it fails
+    -   fix the utf8.sh test to reflect the issue2320 changes
+
+2014-10-08 Guillaume Hoffmann
+  ~ -   use now -h and --hash as shortcut flags to match on patch hash
+
+2014-09-27 Ganesh Sittampalam
+  ~ -   fix send-output tests to reflect changes in patch display
+
+2014-07-24 Guillaume Hoffmann
+  ~ -   enable to match on patch hash prefix and ignore case
+    -   show patch hash in UI and put author and date on separate lines
+    -   use makePatchID
+    -   comment about fast-export forbidden tag characters
+
+2014-09-27 Ganesh Sittampalam
+  ~ -   remove the broken sigPIPE test
+    -   support random 1.1
+    -   support text 1.2
+    -   support mtl 2.2
+
+2014-08-25 Guillaume Hoffmann
+  ~ -   remove creator-hash flag unused since annotate rewrite
+    -   document pull --reorder
+
+2014-07-09 Ale Gadea
+  ~ -   Add failing test for issue2403: darcs rebase pull --reorder crashes in src/Darcs/Patch/Depends.hs:275
+    -   New option "--reorder" for the command rebase pull.
+    -   New option "--reorder" for the command pull and apply.
+
+2014-07-17 Marcio Diaz
+  ~ -   Some files are not being written to the bucketed cache because there is 
+
+2014-06-24 Guillaume Hoffmann
+  ~ -   fix darcs convert import, enhance help string
+
+2014-07-16 Marcio Diaz
+  ~ -   resolve issue1624: bucketed cache.
+

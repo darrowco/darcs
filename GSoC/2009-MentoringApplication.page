@@ -1,0 +1,153 @@
+This is meant as a temporary page for the darcs application to be a
+Google Summer of Code mentoring organisation, due 2009-03-09
+
+* * * * *
+
+1.  Describe your organization.
+
+    -   Darcs is a free, open source distributed revision control
+        system. It is based on an advanced 'theory of patches' and is
+        written in Haskell.
+    -   The darcs team supports the continued development of darcs by
+        hosting the official darcs repository, website and bugtracker;
+        and by organising regular darcs coding sprints, performing
+        fundraising and otherwise seeking ways to increase the
+        participation of darcs users in development.
+
+2.  Why is your organization applying to participate in GSoC 2009? What
+    do you hope to gain by participating?
+
+    -   More time to hack on darcs!
+    -   We love darcs. We think it is unique in the revision control
+        world because it uses the full patch history to get operations
+        like merging and partial undos exactly right. But we also know
+        that it has a lot of warts: the "patch theory" is still a work
+        in progress, it has not yet been optimised to deal with large
+        repositories, and it's still a little behind in GUIs and web
+        interfaces.
+    -   These are things that that take a lot of time and concerted
+        effort to work on, which is why we're so excited by the
+        opportunity that a GSoC project would provide. Our goal is to
+        create as much space as possible for us to work on darcs, for
+        example, by getting "20% time" arrangements with our employers,
+        holding biannual darcs hacking sprints, cooperating with
+        lecturers to develop student projects, and actively
+        participating in programs like Google Summer of Code. In the
+        bigger picture, we hope that the darcs project can be a regular
+        participant in the Google Summer of Code program.
+
+3.  Did your organization participate in past GSoCs? If so, please
+    summarize your involvement and the successes and challenges of your
+    participation.
+4.  No. But we have had a successful project under the umbrella of the
+    Haskell.org, Jason Dagit, 2007 mentored by David Roundy.
+
+5.  Being part of the Haskell community has been very good for darcs. We
+    can think of Haskell.org as a sort of incubator for projects: the
+    community has given us ideas, advice and programmers. But by now, we
+    have grown to the point, where it would make sense for us to stand
+    our own, and for the Haskell community to concentrate on its smaller
+    projects.
+
+6.  Jason has stayed with the darcs community for a year since his
+    Summer of Code project and has gone on to do a Masters thesis with
+    David Roundy based on his work. Unfortunately, he has recently had
+    to cut back on his darcs activity, but we will still be in touch
+    with him for advice on future projects.
+
+His work provided us with a much needed false start. As most of his time
+was spent getting to grips with the darcs patch theory and learning
+about the deeper parts of the code, we did not get as much
+implementation work done as we would have liked. But we did a good
+foundational piece of code started (the use of type witnesses), and some
+preliminary work on darcs-2. While we did not end up using the latter
+code, it did help us to get a better idea on how darcs-2 should work,
+which allowed us to eventually release darcs 2 in January 2008.
+
+Furthermore, we now have a somewhat better idea what kind of work is
+suitable and realistic for the summer. With his advice, we will be more
+careful to make sure that projects are better defined and easier to get
+started on right away.
+
+4.  If your organization has not previously participated in GSoC, have
+    you applied in the past? If so, for what year(s)?
+5.  No
+
+6.  What license(s) does your project use?
+
+    The GPL. We are also interested in spinning out or rewriting some of
+    our our code as standalone libraries, for which we may decide that
+    the BSD license is most appropriate.
+
+7.  What is the URL for your ideas page?
+    [http://wiki.darcs.net/index.html/GoogleSummerOfCode](http://wiki.darcs.net/index.html/GoogleSummerOfCode)
+
+8.  What is the main development mailing list or forum for your
+    organization?
+
+    -   [darcs-users@darcs.net](mailto:darcs-users@darcs.net)
+    -   [http://lists.osuosl.org/mailman/listinfo/darcs-users](http://lists.osuosl.org/mailman/listinfo/darcs-users)
+
+9.  What is the main IRC channel for your organization? \#darcs on
+    irc.freenode.net
+
+10. Does your organization have an application template you would like
+    to see students use? If so, please provide it now. We will use the
+    same template as the Haskell community
+    [http://hackage.haskell.org/trac/summer-of-code/wiki/StudApply2008](http://hackage.haskell.org/trac/summer-of-code/wiki/StudApply2008)
+
+11. Who will be your backup organization administrator? Please include
+    Google Account information. Ganesh Sittampalam
+
+12. Who will your mentors be? Please include Google Account information.
+13. Eric KOW - eric.kow
+14. Ganesh SITTAMPALAM - ganesh.sittampalam
+15. Ian LYNAGH igloo earth.li
+16. KIDO Takahiro - shelarcy
+
+17. What criteria did you use to select these individuals as mentors?
+    Please be as specific as possible.
+18. Eric is the darcs project maintainer and has time specifically set
+    aside in his week for working on darcs. Ganesh and Ian are very
+    experienced Haskell programmers, and have made substantial
+    contributions to darcs and darcs theory. Takahiro is an active
+    member of the wxHaskell team and would be extremely helpful for any
+    projects that involve build a darcs graphical user interface.
+
+19. What is your plan for dealing with disappearing students?
+20. We will work the same way as the Haskell community. We will choose
+    students who are reliable in the first place. Also, we will expect
+    our students to produce a weekly progress report, chasing after a
+    week and dropping them after two weeks.
+21. What is your plan for dealing with disappearing mentors?
+22. Each project will have a backup mentor. If this is not enough, we
+    will call on the wider darcs and Haskell community
+23. What steps will you take to encourage students to interact with your
+    project's community before, during and after the program?
+24. Before - if they aren't already regulars, we will invite our
+    students to hang out in \#darcs where they can interact with the
+    community and get a guided tour of the source code.
+25. During - we will encourage them to blog their progress (which will
+    appear on [http://planet.darcs.net)](http://planet.darcs.net)).
+    Also, our Darcs Weekly News editor will keep in touch with them and
+    produce regular summaries of their work.
+26. After - patches which are related to the student's work would
+    definitely go their way. We'll also work on making them part of the
+    darcs team, as below.
+27. What will you do to ensure that your accepted students stick with
+    the project after GSoC concludes?
+28. The satisfaction of your getting your code in darcs, something that
+    real people rely on is quite addictive. It's how some of us got
+    started anyway. We will also engage the students more actively by
+    inviting them to our darcs hacking sprints (and helping to pay for
+    their travel if we have the funds). We will also try to involve them
+    in darcs team jobs. For example, we have a Review Team which we rely
+    on to check all our incoming code. Students would be encouraged to
+    participate in this team.
+
+# See also
+
+-   [http://code.google.com/opensource/gsoc/2009/faqs.html](http://code.google.com/opensource/gsoc/2009/faqs.html)
+-   [http://groups.google.com/group/google-summer-of-code-announce/web/notes-on-organization-selection-criteria](http://groups.google.com/group/google-summer-of-code-announce/web/notes-on-organization-selection-criteria)
+-   [[http://socghop.appspot.com/org\\\_app/apply/google/gsoc2009](http://socghop.appspot.com/org%5C_app/apply/google/gsoc2009)](http://socghop.appspot.com/org_app/apply/google/gsoc2009)
+

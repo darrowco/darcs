@@ -1,0 +1,131 @@
+# Darcs 2.2.0 announcement (2009-01-16)
+
+Hi all!
+
+I am happy to announce general availability of darcs 2.2.0.
+
+## Getting the release
+
+For this release, we have decided to provide two flavours, depending on
+the build system used:
+
+1)  The source tarball,
+    <[http://www.darcs.net/darcs-2.2.0.tar.gz](http://www.darcs.net/darcs-2.2.0.tar.gz)\>,
+    which can be built using the traditional autoconf-based system. This
+    is the fully supported version. After downloading and unpacking, you
+    can issue:
+
+        $ ./configure
+        $ make
+
+    and possibly
+
+        # make install
+
+    More detailed instructions inside the tarball (file README).
+
+    Please note that we had at least one report of build failure, with
+    quickcheck-related message. The currently best workaround, if this
+    happens to you, is to use the cabal version of the package instead,
+    see below.
+
+2)  Cabalised source. You can either download a tarball from
+    <[http://hackage.haskell.org/packages/archive/darcs/2.2.0/darcs-2.2.0.tar.gz](http://hackage.haskell.org/packages/archive/darcs/2.2.0/darcs-2.2.0.tar.gz)\>
+    and build manually (see the build instructions in README inside the
+    tarball), or, alternatively, you can use cabal-install to obtain a
+    copy:
+
+        $ cabal update
+        $ cabal install darcs
+
+    This will give you a darcs binary in \~/.cabal/bin -- you should
+    probably add that to your PATH.
+
+In addition to source tarballs, we expect binary packages for various
+UNIX platforms will be available in due time.
+
+For Windows users, Salvatore Insalaco has prepared a binary build,
+available from
+[http://homepage.mac.com/kirby81\_it/darcs/darcs-2.2.0-win1.zip](http://homepage.mac.com/kirby81_it/darcs/darcs-2.2.0-win1.zip).
+You just need to unpack the directory somewhere and add it to your path
+(if you like).
+
+Moreover, an experimental TortoiseDarcs release for darcs 2 has been
+made available by Kari Hoijarvi <hoijarvi-at-seas-dot-wustl-dot-edu\>
+and is looking for home. It can be found at
+<[http://datafed.net/darcs](http://datafed.net/darcs)\> (unfortunately,
+at the time of this writing, the site seemed unreachable... If you can
+help with hosting, please mail Kari.)
+
+## What's New
+
+The summary of changes since version 2.1.2 (released last November)
+follows:
+
+> -   In interactive record, it is now possible to get a list of
+>     currently selected hunks (command 'l'). (Christian Kellermann)
+> -   It is now possible to specify --in-reply-to when using darcs send,
+>     to generate correct references in the mail header. (Pavel Shramov)
+> -   New repositories with --no-pristine-tree can no longer be created.
+>     This only has effect on legacy darcs-1 repositories.
+> -   Improvements in Windows support. (Salvatore Insalaco)
+> -   Performance improvements in \`darcs repair\` and robustness
+>     improvements in \`darcs check\`. (Petr Ročkai)
+> -   Extensive manual and online help improvements. (Trent W. Buck)
+> -   Support for GHC 6.10.
+> -   Overhaul of the make-based build system. (Trent W. Buck)
+> -   Cabal is now supported as a build method for darcs. (Duncan
+>     Coutts, Petr Ročkai, Gwern Branwen)
+> -   First stab at libdarcs -- when building through Cabal, all of
+>     darcs implementation is now exposed in modules. No API guarantees
+>     whatsoever. (Eric Kow)
+> -   Additions to Haddock documentation of the existing darcs modules
+>     for improved development experience.
+> -   Improvements in the testing infrastructure. (Christian Kellermann,
+>     Gwern Branwen)
+> -   Low-level optimisations in filesystem code. (Ganesh Sittampalam)
+> -   Numerous major and minor bug fixes, refactorings and cleanups by
+>     David Roundy, Eric Kow, Jason Dagit, Dmitry Kurochkin, Thorkil
+>     Naur, Salvatore Insalaco, Christian Kellerman, Florent Becker,
+>     Duncan Coutts, Reinier Lamers, Ganesh Sittampalam, Petr Ročkai.
+
+And a summary of issues that have been fixed in darcs since version
+2.1.2 (compiled by Thorkil Naur):
+
+    525     amend-record => darcs patches show duplicate additions
+    971     darcs check fails (case sensitivity on filenames)
+    1006    darcs check and repair do not look for adds
+    1043    pull => mergeAfterConflicting failed in geteff (2.0.2+)
+    1101    darcs send --cc recipient not included in success message
+    1117    Whatsnew should warn on non-recorded files
+    1144    Add darcs send --in-reply-to or --header "In-Reply-To: <x...@y.z>"
+    1165    get should print last gotten tag
+    1196    Asking for changes in /. of directory that doesn't exist gives changes 
+    in entire repo
+    1198    Reproducible "mergeConflictingNons failed in geteff with ix"
+    1199    Backup files darcs added after external merge
+    1223    sporadic init.sh test failure (2.1.1rc2+472)
+    1238    wish: darcs help setpref should list all prefs
+    1247    make TAGS is broken
+    1249    2.1.2 (+ 342 patches) local drive detection on Windows error
+    1272    amend-record not the same as unrecord + record
+    1273    renameFile: does not exist (No such file or directory)
+    1223    sporadic init.sh test failure (2.1.1rc2+472)
+
+I would like to thank all contributors for making this release possible.
+
+## Future
+
+The next release will be 2.2.1, fixing low-risk issues found in 2.2.0,
+or those that have been excluded for 2.2.0 due to freeze. This release
+will appear in two or three weeks time, depending on circumstances.
+
+The next major release will be 2.3, due in June or July this year. The
+focus of this release will be new features and further work on
+performance. Moreover, we expect that it will use Cabal as its default
+build system and will make first steps towards sustainable libdarcs API.
+
+Yours,
+  ~ Petr.
+
+

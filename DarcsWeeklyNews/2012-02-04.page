@@ -1,0 +1,38 @@
+# News and discussions
+
+1.  Ganesh uploaded a third beta of Darcs 2.8:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2012-January/026364.html](http://lists.osuosl.org/pipermail/darcs-users/2012-January/026364.html)
+
+2.  The next Darcs Sprint has a tentative date and place of 31 march,
+    Southampton. Please annotate yourself on the wiki to participate:
+
+    -   [http://wiki.darcs.net/Sprints/2012-03](http://wiki.darcs.net/Sprints/2012-03)
+
+# Issues resolved in the last week (1)
+
+issue1470 Johannes Weiss
+  ~ -   Allow to amend-record patch by removing some hunks
+    -   [http://bugs.darcs.net/issue1470](http://bugs.darcs.net/issue1470)
+
+# Patches applied in the last week (11)
+
+2012-01-15 Ganesh Sittampalam
+  ~ -   add amend-unrecord alias
+    -   TAG 2.7.98.3
+    -   change version to 2.7.98.3 (2.8 beta 3)
+    -   clean out dist folder from sdist tarball
+    -   use cabal unpack instead of tar -x when testing
+    -   TAG 2.7.98.2
+    -   Change version to 2.7.98.2 (2.8 beta 2)
+    -   fill out options for amend-record --unrecord and add test
+    -   rename amend-record's --rollback option to --unrecord
+
+2011-08-14 Johannes Weiss
+  ~ -   resolve issue1470: Allow to amend-record patch by removing some
+        hunks
+
+2012-01-13 Ganesh Sittampalam
+  ~ -   make repair fix add of already existing things
+
+

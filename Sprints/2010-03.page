@@ -1,0 +1,275 @@
+# Report
+
+[http://blog.darcs.net/2010/03/darcs-hacking-sprint-4-report.html](http://blog.darcs.net/2010/03/darcs-hacking-sprint-4-report.html)
+
+# Date and Venue
+
+As part of the Haskell Hackathon (ZuriHac)
+
+When: 19-21 March 2010
+
+Where:
+
+-   Google, Zurich -
+    [http://www.haskell.org/haskellwiki/ZuriHac](http://www.haskell.org/haskellwiki/ZuriHac)
+
+# Your checklist
+
+-   Please register with ZuriHac (registrations are closed now)
+-   Let Eric know if you'd like to make a travel claim [SAVE/SCAN YOUR
+    RECEIPTS!]
+-   Prepare your laptop for Darcs hacking (see below)
+
+# Key information
+
+-   Dates and times
+
+    -   **Pre-sprint meeting Friday 12:00** - Pizzeria Santa Lucia
+        Niederdorf by CB hostel (see map) [Eric will probably be there a
+        good bit earlier]
+    -   Sprint starts at 14:30 at Google (stop: Bahnhof Enge)
+
+-   Maps
+
+    -   [Darcs-specific
+        stuff](http://maps.google.com/maps/ms?ie=UTF8&hl=en&msa=0&msid=106040076820866939778.000481d836be781204ad1&z=19)
+    -   [ZuriHac venue and
+        suggestions](http://maps.google.com/maps/ms?ie=UTF8&hl=en&t=h&msa=0&msid=101091454640940002658.00047a38e7149663627ae&ll=47.369408,8.53466&spn=0.027438,0.037079&z=15)
+
+# Darcs hacking quick start
+
+You'll have more fun if you can hit the ground running, so please make
+sure you can do all of these things:
+
+1.  darcs get --lazy [http://darcs.net](http://darcs.net)
+2.  cabal configure; cabal build
+3.  darcs send (your patch should wind up on the tracker)
+
+    a.  create a test patch (see
+        [http://darcs.net/report.html](http://darcs.net/report.html) )
+    b.  see [Msmtp](/Msmtp) for easiest setup or configure your MTA if
+        you know how
+    c.  darcs send
+    d.  wait 10 minutes
+    e.  check the patch tracker
+        [http://bugs.darcs.net](http://bugs.darcs.net) (Patches \> Show
+        Open)
+
+# Priorities
+
+## ProbablyEasy
+
+We'll meet a little before the sprint to pick out a top-N list of
+candidates to work through. If we don't have many new hackers during the
+sprint
+
+-   PATCH SENT gzipped patch bundles in darcs apply:
+    [http://bugs.darcs.net/issue1427](http://bugs.darcs.net/issue1427) -
+    Guillaume
+-   DONE darcs send -o output
+    [http://bugs.darcs.net/issue643](http://bugs.darcs.net/issue643) -
+    Guillaume
+-   versioned darcs transfer-mode
+    [http://bugs.darcs.net/issue1167](http://bugs.darcs.net/issue1167)
+-   support -P for plink SSH\_PORT -
+    [http://bugs.darcs.net/issue1371](http://bugs.darcs.net/issue1371)
+-   convert should read \_darcs/prefs/prefs -
+    [http://bugs.darcs.net/issue1232](http://bugs.darcs.net/issue1232)
+-   you cannot unrevert warning on non-interactive UI
+-   author prompt on non-interactive UI
+-   \_darcs/trash (unobliterate) -
+    [http://bugs.darcs.net/issue75](http://bugs.darcs.net/issue75)
+-   DONE (WONT-FIX) add a --diff-command flag to whatsnew -
+    [http://bugs.darcs.net/issue1744](http://bugs.darcs.net/issue1744) -
+    Stefan & David looking into it
+-   TAKEN fix minor darcs annotate bug -
+    [http://bugs.darcs.net/issue1473](http://bugs.darcs.net/issue1473) -
+    Stefan & David, patch sent
+-   pass ssh output through on Windows -
+    [http://bugs.darcs.net/issue845](http://bugs.darcs.net/issue845)
+-   TAKEN darcs show patch filename -
+    [http://bugs.darcs.net/issue1768](http://bugs.darcs.net/issue1768) -
+    Steve
+-   --ask-repos flag
+    [http://bugs.darcs.net/issue1772](http://bugs.darcs.net/issue1772)
+-   prevent amend-recording tags -
+    [http://bugs.darcs.net/issue1611](http://bugs.darcs.net/issue1611) -
+    Guillaume
+
+## Target-2.5 Priorities
+
+See [Roadmap]() for what's planned in Darcs 2.5.
+
+We have to remember to focus on small achievable tasks here and not take
+on things that are too large.
+
+-   fix the O(n) record/etc problem:
+    [issue1106](http://bugs.darcs.net/issue1106) - Petr?
+-   global cache: [issue1624](http://bugs.darcs.net/issue1624) - Luca
+    (hopefully)
+-   filecache - Benedikt
+-   new and improved darcs annotate -
+    [issue25](http://bugs.darcs.net/issue25) (note this will be an
+    especially nice one for Zurich because Johan Tibell will be there,
+    plus Benedikt working on filecache) - Eric? (at least the easy bits)
+-   cache cleanup - Reinier?
+-   Windows installer
+-   faster darcs get
+
+# Talks and meetings
+
+Our previous experience has been that the sprint has been useful for
+designing stuff.
+
+## FRIDAY
+
+-   DONE: Ganesh and Benedikt
+-   DONE: GSoC filechace
+-   DONE: GSoC florent
+-   DONE: release process
+
+## SATURDAY
+
+-   DONE: meeting? darcs rebase UI
+-   DONE: global cache strategy
+
+## SUNDAY
+
+-   DONE - [../DefaultSwitches]() - lets get some decisions for Darcs
+    2.5
+-   DONE - consensus on hardcoded darcs paths? (kill them!)
+-   NOT NEEDED? [hashed storage](/Development/DarcsHS)
+-   DONE - [issue1645](http://bugs.darcs.net/issue1645) (Petr has been
+    duly nagged)
+-   talk: Benedikt and Petr on their performance work
+-   Roadmap bis
+-   DONE Windows installer status
+
+# Notes for the blog
+
+## Friday lunch
+
+-   We should have darcs optimize --http (eg. snapshots) - Petr
+-   We should have a nice CGI script that makes darcs get over http fast
+    - Petr
+-   Let's call filecache something else. Current best candidate: patch
+    index
+-   Optimism about file-patch-map: maybe no GSoC project needed for
+    that; do CGI instead?
+
+## Friday evening
+
+-   Ganesh and Petr - future handling of darcs conflicts - conflictor as
+    graph
+-   Ganesh and Petr - storing files in darcs repos
+-   Petr, Ganesh and Eric - making darcs get faster
+
+    -   smart cgi script
+    -   (adapt darcs transfer-mode?)
+
+-   Darcs optimize --http again
+
+## Release process
+
+-   We need people to test Darcs more
+-   Reinier will do manual alphas on hackage every 4 weeks
+-   Future work: automatic uploading? Tahoe-style supported/unsupported?
+
+## Darcs rebase
+
+Ganesh explained how darcs rebase worked and we all discussed a sensible
+user interface for it
+
+## global cache
+
+Luca, Reinier and Petr discussed the global cache design. Their
+conclusion was that we should store the bucketed cache and the old-style
+cache in different directories. Every time you look up a file in the
+cache:
+
+> If the new-style cache exists:
+>   ~ use that.
+>
+> Else:
+>   ~ If the old-style cache exists:
+>       ~ Create a new bucketed cache, hardlinked to the old-style one
+>
+>     Else:
+>       ~ Create a new, empty bucketed cache
+>
+## DPM and Darcs Library
+
+David, Stephen, Ganesh and Florent discussed an exciting new patch
+management program for project maintainers. The DPM project offers a new
+way of keeping track of incoming patch bundles; their status,
+dependencies, reviews, etc. It's a pioneering user of the Darcs API.
+
+We got a darcs apply --match feature out of this TODO: question about
+conflicts?
+
+## darcs diff --interactive
+
+Florent, Ganesh and Eric discussed darcs diff -i, particularly the
+question of what to do with patches that have been cherry-picked out of
+the diff. Should they appear in the diff context (ie. go before) or not?
+The current thinking is to include them so that users always see the
+diff in the latest possible context.
+
+## Windows installer
+
+Salvatore put together a nice Windows installer using the [bamse
+package](http://hackage.haskell.org/package/bamse). The only thing it
+can't do is set the PATH for the user automatically. This will open the
+door to nicer integration with Windows tools, for example, using
+Tortoise SSH to avoid issue845
+
+# Participants
+
+Initial guesses on what we'll be working on
+
+-   Florent Becker
+-   Guillaume Hoffmann - probably-easy issues (1744, 1427)
+-   Eric Kow - show history UI, running around like a headless chicken
+-   Reinier Lamers - UTF-8?
+-   Ganesh Sittampalam - rebase
+-   Petr Rockai - issue1106
+-   Salvatore Insalaco (Sat, Sun) - Windows
+-   Luca Molteni (Sat, Sun) - global cache
+-   Benedikt Schmidt - filecache
+-   Radoslav Dorcik - trackdown bisect (over the IRC only)
+-   Benedikt Huber - Darcs record Mac GUI
+-   David Markvica - Darcs record Mac GUI
+-   Steven Keuchel - issue1768
+
+# Travel plans
+
+-   Eric Kow arrives at the airport 09:35 on the 19th; leaves at 21:55
+    on the 21st
+-   Ganesh Sittampalam arrives at the airport 12:40 on the 19th; leaves
+    at 20:25 on the 21st (Swiss from LCY and back to LHR) (might try to
+    get on the earlier flight arriving 11:20 if I get to airport in time
+    and Swiss let me)
+-   Petr Rockai arrives at Zurich HBF at 9:17 on the 19th and leaves at
+    19:44 on the 21st
+-   Guillaume Hoffmann arrives at Zurich HBF at 10:26 on the 19th and
+    leaves at 17:02 on the 21st
+-   Florent Becker arrives at HBF at 11:00 on the 19th and leaves at
+    17:34 on the 21st.
+
+## Shared hostel room
+
+Who's interested in sharing a hostel room? Eric has booked 5 beds at the
+[City Backpacker](http://www.city-backpacker.ch) (6 person room). The
+hostel have been advised that we may be a larger group than that, likely
+to use up the whole room. The beds go for 35 CHF per night + 3 CHF for
+sheets. For two nights, that would work out to 80 CHF, or roughly 50
+EUR.
+
+One more bed available in the room!
+
+-   Guillaume Hoffmann
+-   Eric Kow
+-   Ganesh Sittampalam
+-   Reinier Lamers
+-   Florent Becker
+

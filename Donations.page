@@ -1,0 +1,80 @@
+---
+title: Darcs Donations
+toc:no
+...
+
+<div align="center">
+<img src="img/logos/logo.png" border="0" width="242" height="79" alt=""><br />
+<strong>Distributed. Interactive. Simple.</strong>
+</div>
+
+<div id="rightcol">
+
+[<img src="http://2.bp.blogspot.com/-Ne9qA85RC30/T3youWr8QHI/AAAAAAAAAhk/wPoRi-22ppU/s320/sprint-agp.jpg" width="300" alt="hacking sprint 2012" />](http://blog.darcs.net/2012/04/darcs-hacking-sprint-7-report.html)
+
+[<img src="http://lh3.ggpht.com/_wlGLHRg69T4/S6Yqkr2KROI/AAAAAAAAAZM/z2_f-WSZW2U/s640/IMG_1385.JPG" width="300" alt="hacking sprint 2010" />](http://blog.darcs.net/2010/03/darcs-hacking-sprint-4-report.html)
+
+[<img src="http://4.bp.blogspot.com/-DZ_h3WMS-I4/VeZAE4ShT9I/AAAAAAAAChw/aMfPJNEA5ic/s320/slide_img_7020.jpg"  width="300" alt="hacking sprint 2009" />](http://blog.darcs.net/2009/11/darcs-hacking-sprint-3-report.html)
+
+[<img src="http://2.bp.blogspot.com/_c6WmXt2id8U/SfDtPr8ppnI/AAAAAAAAAVo/wcXFirZnwu8/s200/DSC_1199.jpg"  width="300" alt="hacking sprint 2009" />](http://blog.darcs.net/2009/04/darcs-hacking-sprint-2-report.html)
+
+</div>
+
+Darcs is a volunteer-run free-software project that is a
+member of the Software Freedom Conservancy, a US tax-exempt
+501(c)(3) organization.
+
+We may use the donations to cover the following costs:
+
+* organization of [hacking sprints](Sprints)
+* infrastructure (hardware, hosting)
+* hiring developers
+* marketing, communication
+
+# Paypal
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="hosted_button_id" value="5032668">
+            <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The
+            +safer, easier way to pay online!">
+            <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+# Flattr
+
+<a href="http://flattr.com/thing/943161/Darcs-free-and-open-source-cross-platform-version-control-system" target="_blank">
+<img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a>
+
+# Checks from a bank in the USA
+
+Checks should be made payable to "Software Freedom
+Conservancy, Inc.", with "Directed donation: Darcs" in the
+memo.  They can be mailed to
+<address>
+            Software Freedom Conservancy, Inc.<br>
+            137 MONTAGUE ST  STE 380<br>
+            Brooklyn, NY 11201-3548   USA<br>
+</address>
+
+# Wire transfer
+
+If you wish to send a donation by wire transfer, please
+contact <donate@sfconservancy.org>.
+
+# Stock donations
+
+Conservancy also accepts stock donations on behalf of the Darcs project. If you
+would like to donate stock, please contact <accounting@sfconservancy.org> for
+instructions on how to initiate the transfer.
+
+# Past fundraising runs
+
+* 2010 (deadline 15 Feb): $2000 raised
+
+<div id="footer">
+<div id="conservancy">
+        Darcs is a member of the
+        <a href="http://sfconservancy.org/">Software Freedom Conservancy</a>
+</div>
+</div>

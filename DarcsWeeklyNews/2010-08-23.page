@@ -1,0 +1,77 @@
+# News and discussions
+
+1.  Darcs 2.5 beta 4 was released:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-August/024998.html](http://lists.osuosl.org/pipermail/darcs-users/2010-August/024998.html)
+
+2.  Ganesh put online his branch of darcs containing the \`\`rebase''
+    command for all to try. Simon Marlow gave feedback on this feature:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-August/024924.html](http://lists.osuosl.org/pipermail/darcs-users/2010-August/024924.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-August/024955.html](http://lists.osuosl.org/pipermail/darcs-users/2010-August/024955.html)
+
+3.  Joachim Breiner uploaded ipatch on hackage:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-August/024983.html](http://lists.osuosl.org/pipermail/darcs-users/2010-August/024983.html)
+
+# Issues resolved in the last week (3)
+
+issue1875 Eric Kow
+  ~ -   avoid accidentally setting default.
+    -   [http://bugs.darcs.net/issue1875](http://bugs.darcs.net/issue1875)
+
+issue1898 Eric Kow
+  ~ -   notify user when they can use set-default.
+    -   [http://bugs.darcs.net/issue1898](http://bugs.darcs.net/issue1898)
+
+issue1913 Ganesh Sittampalam
+  ~ -   sort changes in treeDiff
+    -   [http://bugs.darcs.net/issue1913](http://bugs.darcs.net/issue1913)
+
+# Patches applied in the last week (31)
+
+2010-08-22 Jason Dagit
+  ~ -   ReadMonads.hs: rename State to ParserState
+
+2010-08-15 Eric Kow
+  ~ -   Fix tests that were broken by issue1898 fix.
+    -   Fix tests that were broken by issue1875 fix.
+    -   Resolve issue1898: notify user when they can use set-default.
+    -   Fix the remote-repo flag if it's not a URL.
+    -   Resolve issue1875: avoid accidentally setting default.
+    -   Generalise issue1875 test on not setting default.
+    -   Accept issue1875: darcs does not honor no-set-default on fetch.
+    -   Accept issue1898: set-default notification system.
+
+2010-08-19 Ganesh Sittampalam
+  ~ -   resolve issue1913: sort changes in treeDiff
+    -   generalise the type of treeDiff
+    -   make issue1913 test actually fail
+
+2010-08-13 Jason Dagit
+  ~ -   dramatically improve the parser performance
+    -   ReadMonad.hs: fix haddocks
+    -   handle whitespace lexing more intelligently in Read.hs
+    -   tidy up Info.hs
+    -   tidy up Real.hs and refactor space lexing
+    -   tidy up peekforc
+    -   remove unused import
+    -   tidy up readPatches
+    -   remove unneeded export
+    -   optimize char parser
+    -   tidy up linesStartingWith
+    -   tidy up skipNewline
+    -   tidy up anyChar parser
+    -   remove unused word8 parser
+    -   tidy up readPatchInfo
+    -   improve interface of peekforw and bracketedFL
+
+2010-08-20 Ganesh Sittampalam
+  ~ -   accept issue1928: removing a file then adding a directory with
+        the same name breaks
+
+2010-08-15 Eric Kow
+  ~ -   Restore obliterate output options.
+    -   Resolve conflict between 'Also set binary mode' duplicates.
+
+

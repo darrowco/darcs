@@ -1,0 +1,138 @@
+History of darcs whatsnew and record performance.
+
+# How to read these tables
+
+-   ?x = less than 5 runs used
+-   \~x = less than 20 runs used
+-   sdev = std deviation
+-   op = optimize --pristine variant
+
+# Timings
+
+## GHC Testsuite
+
+               2.2          sdev         2.3          sdev       2.4          sdev      op 2.4       sdev       op HEAD     sdev
+  ------------ ------------ ------------ ------------ ---------- ------------ --------- ------------ ---------- ----------- -----------
+  wh           ?4399.8ms    (85.3ms)     39.4ms       (0.5ms)    211.9ms      (2.5ms)   32.3ms       (84.0ms)   23.7ms      (0.6ms)
+  wh mod       ?4311.4ms    (6.6ms)      41.8ms       (0.8ms)    216.0ms      (2.8ms)   29.2ms       (1.7ms)    29.0ms      (1.3ms)
+  wh -l        ?12441.0ms   (1081.9ms)   \~1232.4ms   (1.9ms)    485.4ms      (3.6ms)   289.1ms      (3.6ms)    335.5ms     (241.4ms)
+  record mod   \~2173.7ms   (25.6ms)     \~2245.4ms   (71.3ms)   \~1483.0ms   (4.3ms)   \~1114.5ms   (11.8ms)   \~614.5ms   (13.2ms)
+
+# Memory
+
+## GHC Testsuite
+
+               2.2     2.3     2.4     op 2.4   op HEAD
+  ------------ ------- ------- ------- -------- ---------
+  wh           0.0M    0.0M    0.0M    0.0M     0.0M
+  wh mod       22.7M   4.0M    5.0M    3.0M     3.0M
+  wh -l        89.3M   31.0M   5.0M    5.0M     5.0M
+  record mod   41.2M   33.4M   24.0M   26.0M    21.0M
+
+# Timing Graphs
+
+## GHC Testsuite
+
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=300x200&chd=s:9ACAA&chtt=wh+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C2.2%7C2.3%7C2.4%7Cop+2.4%7Cop+HEAD&chxr=1,0.0,4399.806&chbh=23,5,20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=300x200&chd=s:9ADAA&chtt=wh+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C2.2%7C2.3%7C2.4%7Cop+2.4%7Cop+HEAD&chxr=1,0.0,4311.4434&chbh=23,5,20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=300x200&chd=s:9GCBB&chtt=wh+-l+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C2.2%7C2.3%7C2.4%7Cop+2.4%7Cop+HEAD&chxr=1,0.0,12441.014&chbh=23,5,20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=300x200&chd=s:79oeQ&chtt=record+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C2.2%7C2.3%7C2.4%7Cop+2.4%7Cop+HEAD&chxr=1,0.0,2245.3784&chbh=23,5,20%20%20%20%20%20.png)
+
+and without 2.2:
+
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:M9GG&chtt=wh+(ms)&chco=c4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C2.3%7C2.4%7Cop+2.4%7Cop+HEAD&chxr=1,0.0,211.55664&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:L9IH&chtt=wh+mod+(ms)&chco=c4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C2.3%7C2.4%7Cop+2.4%7Cop+HEAD&chxr=1,0.0,216.29762&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9DBB&chtt=wh+-l+(ms)&chco=c4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C2.3%7C2.4%7Cop+2.4%7Cop+HEAD&chxr=1,0.0,9207.711&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9lcP&chtt=record+mod+(ms)&chco=c4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C2.3%7C2.4%7Cop+2.4%7Cop+HEAD&chxr=1,0.0,2424.4355&chbh=23,5,20.png)
+
+# Memory Graphs
+
+## GHC Testsuite
+
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=300x200&chd=s:_____&chtt=wh+(MiB)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C2.2%7C2.3%7C2.4%7Cop+2.4%7Cop+HEAD&chxr=1,0.0,0.0&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=300x200&chd=s:9KNII&chtt=wh+mod+(MiB)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C2.2%7C2.3%7C2.4%7Cop+2.4%7Cop+HEAD&chxr=1,0.0,22.666666&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=300x200&chd=s:9VDDD&chtt=wh+-l+(MiB)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C2.2%7C2.3%7C2.4%7Cop+2.4%7Cop+HEAD&chxr=1,0.0,89.333336&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=300x200&chd=s:9xjmf&chtt=record+mod+(MiB)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7C2.2%7C2.3%7C2.4%7Cop+2.4%7Cop+HEAD&chxr=1,0.0,41.2&chbh=23,5,20.png)
+
+# Compared to Git and Mercurial (small repo)
+
+(because I don't have a bigger one... conversions are not very
+straightforward)
+
+NB: times are reported as mean + 1 std deviation
+
+-   ?x = less than 5 runs used
+-   \~x = less than 20 runs used
+-   sdev = std deviation
+-   op = optimize --pristine variant
+
+    > darcs: 2.4.98.1 (+ 109 patches),
+    >   ~ 2010-08-07 01:51:04, GHC 6.12.1
+    >
+    > git: 1.6.5,
+    >   ~ 1970-01-01 00:00:00, GHC none at all
+    >
+    > hg: Copyright,
+    >   ~ 1970-01-01 00:00:00, GHC none at all
+    >
+# Timing Graphs
+
+## hashed-storage
+
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:C9J&chtt=wh+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cgit+git%7Chg+hg%7Cop+darcs&chxr=1,0.0,53.112404&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:E9W&chtt=wh+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cgit+git%7Chg+hg%7Cop+darcs&chxr=1,0.0,47.838234&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:B9Q&chtt=wh+-l+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cgit+git%7Chg+hg%7Cop+darcs&chxr=1,0.0,42.045517&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:AA9&chtt=record+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cgit+git%7Chg+hg%7Cop+darcs&chxr=1,0.0,83.28871&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:9QT&chtt=get+(full)+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cgit+git%7Chg+hg%7Cop+darcs&chxr=1,0.0,388.2512&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:AA9&chtt=get+(lazy)+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cgit+git%7Chg+hg%7Cop+darcs&chxr=1,0.0,37.769127&chbh=23,5,20.png)
+
+# Timings
+
+## hashed-storage
+
+               git git   sdev        hg hg     sdev      op darcs   sdev
+  ------------ --------- ----------- --------- --------- ---------- ----------
+  wh           1.9ms     (0.1ms)     53.1ms    (4.4ms)   8.0ms      (0.5ms)
+  wh mod       3.3ms     (0.2ms)     47.8ms    (0.5ms)   17.8ms     (3.4ms)
+  wh -l        1.1ms     (0.1ms)     42.0ms    (0.5ms)   11.3ms     (1.1ms)
+  record       -         -           -         -         83.3ms     (20.6ms)
+  get (full)   388.3ms   (220.6ms)   104.5ms   (0.8ms)   127.3ms    (1.4ms)
+  get (lazy)   -         -           -         -         37.8ms     (3.1ms)
+
+# And for a big repository (GHC Testsuite)
+
+-   ?x = less than 5 runs used
+-   \~x = less than 20 runs used
+-   sdev = std deviation
+-   op = optimize --pristine variant
+
+    > darcs: 2.4.98.1 (+ 109 patches),
+    >   ~ 2010-08-07 12:27:31, GHC 6.12.1
+    >
+    > git: 1.6.5,
+    >   ~ 1970-01-01 00:00:00, GHC none at all
+    >
+    > hg: 1.6),
+    >   ~ 1970-01-01 00:00:00, GHC none at all
+    >
+# Timing Graphs
+
+## GHC Testsuite
+
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:IM9&chtt=wh+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cgit+git%7Cop+darcs%7Chg+hg&chxr=1,0.0,112.32797&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:JS9&chtt=wh+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cgit+git%7Cop+darcs%7Chg+hg&chxr=1,0.0,111.8748&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:A9A&chtt=wh+-l+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cgit+git%7Cop+darcs%7Chg+hg&chxr=1,0.0,285.1157&chbh=23,5,20.png)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=200x200&chd=s:Qz9&chtt=record+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cgit+git%7Cop+darcs%7Chg+hg&chxr=1,0.0,722.1154&chbh=23,5,20.png)
+
+# Timings
+
+## GHC Testsuite
+
+           git git   sdev       op darcs    sdev      hg hg       sdev
+  -------- --------- ---------- ----------- --------- ----------- ---------
+  wh       16.0ms    (0.2ms)    23.9ms      (0.8ms)   112.3ms     (1.6ms)
+  wh mod   17.2ms    (0.7ms)    34.6ms      (6.3ms)   111.9ms     (1.3ms)
+  wh -l    -         -          285.1ms     (2.3ms)   -           -
+  record   191.2ms   (92.1ms)   \~607.3ms   (3.2ms)   \~722.1ms   (6.0ms)
+
+

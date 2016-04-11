@@ -1,0 +1,187 @@
+Notes:
+
+-   Below each modification is a table showing the tree before and after
+    the change. These tables are not the point of this example. They are
+    mostly irrelevant, and exist only to help you follow the example
+    better.
+-   Due to limitations in wiki syntax, newlines are represented as <br\>
+    in these tables
+-   Patch names strategically chosen to reflect when they were made and
+    where they were originally made, but are otherwise meaningless.
+-   Sequential composition of patches is here written in the old style
+    --- the rightmost patch is applied first.
+
+# initial record (patch lA)
+
+repoLeft: initial record
+
+    [lA
+    author**20050424225158] {
+    addfile ./file
+    hunk ./file 1
+    +red
+    +blue
+    +green
+    }
+
++--------+-------------+---------+
+| before | after       | history |
++========+=============+=========+
+|        | red<br/>    | lA      |
+|        | blue<br/>   |         |
+|        | green<br/>  |         |
++--------+-------------+---------+
+
+# repoRight modifications
+
+repoRight: pull patch A from repoLeft, then change first line
+
+    [rD
+    author**20050424225453] {
+    hunk ./file 1
+    -red
+    +exRed
+    }
+
++------------+----------------+---------+
+| before     | after          | history |
++============+================+=========+
+| red<br/>   | **exRed**<br/> | rD lA   |
+| blue<br/>  | blue<br/>      |         |
+| green<br/> | green<br/>     |         |
++------------+----------------+---------+
+
+repoRight: add pink at beginning
+
+    [rE
+    author**20050424225640] {
+    hunk ./file 1
+    +pink
+    }
+
++----------------+---------------+----------+
+| before         | after         | history  |
++================+===============+==========+
+| <br/>          | **pink**<br/> | rE rD lA |
+| exRed<br/>     | exRed<br/>    |          |
+| blue<br/>      | blue<br/>     |          |
+| green<br/>     | green<br/>    |          |
++----------------+---------------+----------+
+
+-   observe that patches rE and rD are independent of each other
+
+# repoLeft modifications (patches lB, lC)
+
+repoLeft: change second line
+
+    [lB
+    author**20050424225332] {
+    hunk ./file 2
+    -blue
+    +exBlue
+    }
+
++----------------+-----------------+----------+
+| before         | after           | history  |
++================+=================+==========+
+| red<br/>       | red<br/>        | lB lA    |
+| blue<br/>      | **exBlue**<br/> |          |
+| green<br/>     | green<br/>      |          |
++----------------+-----------------+----------+
+
+
+repoLeft: add line to end of file
+
+    [lC
+    author**20050424225356] {
+    hunk ./file 4
+    +cyan
+    }
+
++----------------+-----------------+----------+
+| before         | after           | history  |
++================+=================+==========+
+| red<br/>       | red<br/>        | lC lB lA |
+| exBlue<br/>    | exBlue<br/>     |          |
+| green<br/>     | green<br/>      |          |
+|                | **cyan**<br/>   |          |
++----------------+-----------------+----------+
+
+-   observe that patch lC is actually independent of patch lB
+
+# repoRight pull from repoLeft (commuting!)
+
+repoRight: pull patch lB and lC from repoLeft, darcs commutes the
+patches lB and lC (??? with rE and rD? -- FIXME, clarify) and changes
+the lines numbers
+
+    [lB
+    author**20050424225332] {
+    hunk ./file 3
+    -blue
+    +exBlue
+    }
+    [lC
+    author**20050424225356] {
+    hunk ./file 5
+    +cyan
+    }
+
++----------------+-----------------+----------+
+| before         | after           | history  |
++================+=================+==========+
+| pink<br/>      | pink<br/>       | lC' lB'  |
+| exRed<br/>     | exRed<br/>      | rE rD lA |
+| blue<br/>      | **exBlue**<br/> |          |
+| green<br/>     | green<br/>      |          |
+|                | **cyan**<br/>   |          |
++----------------+-----------------+----------+
+
+# repoLeft pull from repoRight
+
+repoLeft: pull patch rD and rE from repoRight, darcs just adds the
+patches rD and rE since no changes are needed (??? but this is deduced
+somehow (by commutation?); if not, why is it obvious that no changes are
+needed? -- FIXME, clarify)
+
+repoLeft contains lA lB lC rD rE now, repoRight contains lA rD rE lB'
+lC' where lB' and lC' produce the same result in a different context as
+their counterparts lB and lC produce in the original context.
+[RepoLeft](RepoLeft) and repoRight can now exchange patches without
+conflicts.
+
++----------------+-----------------+----------+
+| before         | after           | history  |
++================+=================+==========+
+|                | **pink**<br/>   | rE'rD'   |
+| red<br/>       | **exRed**<br/>  | lC lB lA |
+| exBlue<br/>    | exBlue<br/>     |          |
+| green<br/>     | green<br/>      |          |
+| cyan<br/       | cyan<br/>       |          |
++----------------+-----------------+----------+
+
+# repoLeft make a new change
+
+repoLeft: record patch changing line 2
+
+    [lF
+    author**20050424232202] {
+    hunk ./file 2
+    -exRed
+    +newRed
+    }
+
++----------------+-----------------+----------+
+| before         | after           | history  |
++================+=================+==========+
+| pink<br/>      | pink<br/>       | lF       |
+| exRed<br/>     | **newRed**<br/> | rE'rD'   |
+| exBlue<br/>    | exBlue<br/>     | lC lB lA |
+| green<br/>     | green<br/>      |          |
+| cyan<br/>      | cyan<br/>       |          |
++----------------+-----------------+----------+
+
+
+repoRight: can pull this patch without conflicts
+
+See also [Motivation]() and [Questions]()

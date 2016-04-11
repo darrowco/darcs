@@ -1,0 +1,54 @@
+---
+categories : Theory
+...
+
+# Motivation and examples
+
+-   [Motivation](Theory/Motivation)
+-   [Example](Theory/Example)
+-   [Questions](Theory/Questions)
+
+# Patch theory in the past/present/future
+
+## Past: Darcs 1 - Mergers
+
+- An explanation of [mergers](http://lists.osuosl.org/pipermail/darcs-devel/2005-May/002400.html)
+  (and what conflictors were meant to be)
+- [Merges Documentation](Theory/MergersDocumentation) An old theory document that was included in the darcs source, from around when mergers were in use. Explains unwinding and mergers to some extent.
+
+## Present: Darcs 2 - Conflictors
+
+- [Conflictors](Theory/Conflictors): the current state of the art
+
+## Future? Darcs 3 - ?
+
+Ian and Ganesh want a minimal 'toy' implementation of the core patch theory
+stuff (which could eventually be plugged into darcs 3). The point is to prove
+things about patch theory. One it would make everybody feel a lot better, two
+we could then do things like simplify it whilst proving that things *still*
+work. With that in mind:
+
+- [Camp](http://projects.haskell.org/camp/) is a project to develop and prove
+    correct a darcs-like patch theory, which will hopefully form the basis for
+    darcs 3. The theory is similar to that of darcs 2, so reading the paper on
+    the camp site will also give an insight into how the current darcs patch
+    theory works.
+- Judah Jacobson wrote up his work on formalizing darcs 2-and-beyond patch theory
+  on <ftp://ftp.math.ucla.edu/pub/camreport/cam09-83.pdf>
+- [Graphictors](Ideas/Graphictors) are an evolution of Conflictors.
+- also check out [Pijul](http://pijul.org)
+
+# See also
+
+- [Why nested conflicts are bad](http://lists.osuosl.org/pipermail/darcs-users/2005-January/005227.html)
+- The [darcs-conflicts](http://marc.info/?l=darcs-conflicts&r=1&w=2) mailing
+  list (archived on MARC)
+- [GaneshFormalismTwo](Theory/GaneshFormalismTwo) (Two to distinguish from GaneshPatchAlgebra below)
+- [GaneshPatchAlgebra](Theory/GaneshPatchAlgebra) (very old/obsolete)
+- The [Talks](Talks) wiki page.
+- [Understanding darcs](http://en.wikibooks.org/wiki/Understanding_darcs)
+  Wikibook attempt to explain darcs and patch theory very slowly and with lots
+  of diagrams. Note: very incomplete.
+- [People](Theory/People) - who (want to) understand patch theory
+- [Bibliography](Theory/Bibliography)
+

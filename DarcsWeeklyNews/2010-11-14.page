@@ -1,0 +1,65 @@
+# News and discussions
+
+1.  Reinier talked about the release process of darcs 2.4 and 2.5:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-November/025652.html](http://lists.osuosl.org/pipermail/darcs-users/2010-November/025652.html)
+
+2.  Petr released darcs-fastconvert 0.2:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-November/025670.html](http://lists.osuosl.org/pipermail/darcs-users/2010-November/025670.html)
+
+# Issues resolved in the last week (2)
+
+issue1551 Eric Kow
+  ~ -   only use unchanged file content prompt in darcs send.
+    -   [http://bugs.darcs.net/issue1551](http://bugs.darcs.net/issue1551)
+
+issue1977 Guillaume Hoffmann
+  ~ -   by considering more repositories as being NoPristine
+    -   [http://bugs.darcs.net/issue1977](http://bugs.darcs.net/issue1977)
+
+# Patches applied in the last week (25)
+
+2010-11-08 Guillaume Hoffmann
+  ~ -   replace contents of HACKING with a link to the relevant wiki
+        page
+
+2010-10-21 Florent Becker
+  ~ -   make test for issue1465 not spawn real editors
+
+2010-10-20 Eric Kow
+  ~ -   Make issue1465 test a bit more straightforward.
+    -   Resolve issue1551: only use unchanged file content prompt in
+        darcs send.
+
+2010-11-10 Dmitry Tsygankov
+  ~ -   Hlintification of Prefs.lhs
+    -   Hlintification of Utils.hs
+    -   Hlintification of Format.hs
+    -   Changed comment on Progress.hs - was a copypaste from elsewhere
+    -   Removed putTiming duplication
+    -   Removed an extra return
+    -   Hlintification of SetPref.lhs
+    -   Hlintification of Lcs.hs
+
+2010-10-17 Ganesh Sittampalam
+  ~ -   add some explicit export lists in Darcs.Commands
+    -   explicit import list from Printer
+    -   drop some dead exports/code from ByteStringUtils
+    -   remove some dead code in Darcs.Repository
+    -   explicit exports/imports for Darcs.Repository.Merge
+    -   drop unused flag
+    -   remove dead code from Darcs.Utils
+    -   clean up some dead code in Darcs.Patch
+    -   drop unused verboseMode global
+    -   remove unused exports
+
+2010-11-05 Alexey Levan
+  ~ -   Add visual emphasys to note about --set-default flag
+
+2010-10-17 Guillaume Hoffmann
+  ~ -   resolve issue1977 by considering more repositories as being
+        NoPristine
+    -   accept issue1977
+
+

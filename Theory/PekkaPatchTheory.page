@@ -1,0 +1,552 @@
+# Patch Theory, Take N
+
+This page contains discussion on properties of a Darcs-like patch system
+where the order of the patches within the repository does not affect its
+state.
+
+The discussion and the patch system presented here is based on [David's
+patch theory](http://www.darcs.net/manual/node8.html),
+[GaneshPatchAlgebra](GaneshPatchAlgebra) and [Marnix Klooster's patch
+calculus](http://home.solcon.nl/mklooster/darcs/patch-calculus.html).
+
+## Concepts and Some Notation
+
+First we define central concepts, *repository* and *patch*, and some
+notation for them.
+
+A *patch* represents modification to the *repository* state. The patch
+*P* below modifies repository from state *s* to state *e*:
+
+||<tableclass=userpref\>||<:\>'' <s\> P <e\> ''||
+
+*Basic patches* describe the change between the states. With Darcs, such
+patches include `addfile`, `rmfile`, `hunk` (remove and/or add text
+lines to a file), `adddir`, `rmdir`, `move` (change name of file or
+directory), `replace` and `binary` (remove and/or add binary content to
+a file).
+
+When multiple patches are applied to a repository the end state of
+previous patch is always the beginning state of next patch:
+
+||<tableclass=userpref\>||<:\>'' <s\> A <sa\> B <sab\> ''||
+
+The intermediate state can be shown with single dot, the beginning state
+with <\> and end state with <$\>:
+
+||<tableclass=userpref\>||<:\>'' <\> A . B <$\> ''||
+
+Sequence of patches can be shown also as {'' A B ''}:
+
+||<tableclass=userpref\>||<:\>{'' A B ''}.||
+
+A *repository* is a sequence of patches with a well-known start state.
+The *state of repository* refers to the end-state of last patch in the
+sequence, and defined by the effect of all the patches in the sequence.
+
+## Patches and Identity
+
+**Definition 1.** Each patch has *identity*. *Basic patches* with same
+identity have identical effect when applied to same state.
+
+The identity of the patch *P* is shown as *[P]*.
+
+It is pretty clear from the definition that two repositories have same
+state if they both have one basic patch in them and both patches have
+same identity.
+
+## Inverse
+
+Each patch *P* has an inverse patch. A patch followed by its inverse
+results in the original state.
+
+**Definition 2.** *Inverse* of patch *P* is *\~P*, where
+
+||<tableclass=userpref\>||<:\>'' <\> P <p\> \~P <\> ''||
+
+The right inverse of a patch is its left inverse:
+
+||<tableclass=userpref\>||'' <p\> \~P <\> P <p\> ''||
+
+Inverse of inverse is patch itself.
+
+||<tableclass=userpref\>||<:\>'' <\> \~\~P <p\> ''||
+
+**Theorem 1.** Inverse of sequence of two patches
+
+||<tableclass=userpref\>(1)||'' \~{ A . B } = { \~B . \~A } ''||
+
+Proof:
+
+||<tableclass=userpref\> ||'' <\> { A . B } <ab\> \~ { A . B } <\> *||
+||<)\> <=\> ||* <\> A <a\> B <ab\> \~B <a\> \~A <\> ''||
+
+The simplest inverse of a basic patch is a basic patch. However, a
+sequence of patches can be a inverse of a basic patch, e.g., *{BCD}* is
+inverse of *A* below:
+
+||<tableclass=userpref\> ||'' <\> A <a\> { B . C . D } <\> ''||
+
+## Merge
+
+Identical repositories with one patch in each are not very interesting.
+Let us now consider two repositories, one patch in each, where the
+patches are different.
+
+Note that because our definition of repository is recursive,
+repositories with patches in identical order and identity have identical
+state. So we could have two almost identical repositories where only the
+last patch differ from each other.
+
+We can combine the repositories (or *branches* they represent) in two
+different ways. We can take patch from repository S first and then patch
+from repository Q, or first patch from Q and then from S. Regardless of
+the order, we want to end up in the same state — the combined effect of
+*S* followed by *P* should equal to the combined effect of *Q* followed
+by the effect of *R*. If we want to take first patch from repository S,
+we have to modify the start state and effect of the patch from
+repository Q, and vice versa. Despite the modification the identity of
+the patches should not change, however.
+
+**Definition 3.** *Merge* is an operation where two basic patches are
+combined together in unambiguous way. *Merge* of the pair of basic
+patches *(S, Q)* is the unique pair of patches *(R, P)* where the
+sequences ''{S
+
+-   P}'' and *{ Q . R }* start from a common state, end up in a common
+    state, and the identities of the patches *S* and *R* and the patches
+    *P* and *Q* are same.
+
+||<tableclass=userpref\> ||'' (R, P) = *merge* (S, Q) *|| ||<)\> where
+||* <\> S . P <$\>*|| ||<)\> ||* <\> Q . R <$\>*|| || ||* [S] = [R] *||
+|| ||* [P] = [Q] ''||
+
+Note that the definition is symmetric:
+
+||<tableclass=userpref )\> If||'' (S', Q') = *merge* (S, Q) *|| ||<)\>
+then ||* (Q', S') = *merge* (Q, S) ''||
+
+A note worth of taking: patches may do incompatible changes, or their
+merge may be ambiguous. There might be multiple reasonable end states
+that the repository might end up. For instance, consider two patches,
+one adding "Chapter 1", another "Section 1" as first line in the file.
+Should the "Chapter 1" or "Section 1" go first in the merged repository?
+According to our definition above, the patch system should be able to
+decide an unambiguous end state, regardless of the ordering of the
+patches.
+
+### Conflict
+
+**Definition 4.** If there is no unambiguous merge for the patch pair
+*(S, Q)* with a common start state, the patches are in *conflict*.
+
+## Commute
+
+Merge was defines as an unambiguous way to combine two repositories.
+What if we wanted to split a repository into two parts — in unambiguous
+way?
+
+We start with a repository with two patches
+
+||<tableclass=userpref\>||'' <\> S <s\> P <sp\> ''||
+
+and we aim at two repositories with one patch in each
+
+||<tableclass=userpref\>||'' <\> S <s\> *|| || ||* <\> P' <p'\> ''||
+
+where the patch ''P' '' has same identity as patch *P*. As our goal is
+not permanent divorce but rather separation, we should be able to merge
+the repositories back together unambiguously:
+
+||<tableclass=userpref\>||'' <\> P' . S' <sp\> *|| || ||* <\> S . P"
+<sp\> ''.||
+
+We can fail finding the patch ''P' '' in two ways. Obviously, there
+might be no basic patch satisfying the requirement — for example, *S*
+adds some text to a file and *P* removes said text. Alternatively, there
+might be multiple candidates for ''P' '' (or '' S' '' or *P"*). For
+example, *S* adds text "Section 1" as first line and *P* adds *Chapter
+1* as second line.
+
+With all those unambiguities under our belt, let us proceed to next
+definition.
+
+**Definition 5.** *Commutation* creates an unique reordering of two
+patches while keeping the identity of the patches, the start and end
+state of the sequence same. Pair of basic patches *(S, P)* commutes with
+pair of basic patches *(Q, R)* iff [S] = [R] and [P] = [Q] and the {'' Q
+. R *} is the only possible pair of basic patches sharing same end state
+with patch sequence {* S . P ''}.
+
+||<tableclass=userpref )\> If||'' <\> S . P <$\> *|| || ||* <\> Q . R
+<$\> *|| || ||* [S] = [R] *|| || ||* [P] = [Q] *|| || ||* (Q, R) =
+*commute* (S, P) *|| || or ||* (Q, R) <--\> (S, P) ''||
+
+It is clear from the definition that ||<tableclass=userpref )\> if||''
+(Q, R) <--\> (S, P) *|| ||<)\> then||* (S, P) <--\> (Q, R)''.||
+
+### Dependence
+
+**Definition 6.** If the sequential patch pair *(S , P)* cannot be
+commuted, they *depend* on each other.
+
+## Representing Conflicts
+
+When there is is conflicting or ambiguous merge, the basic patches
+described above are not enough.
+
+In order to handle and mark conflicts we introduce `merger` (or
+`conflictor` or `duplicate`) patches to our patch system. Below
+m-notation is used to represent the mergers. The end state of conflict
+is shown as *<\*\>*.
+
+||<tableclass=userpref\>||merge'' (S, Q) = ( m(Q , S), m(S , Q) ) *||
+||<)\> or ||*<\> S <p\> m(S, Q) <\*\> *|| ||<)\> = ||*<\> Q <r\> m(Q, S)
+<\*\> ''||
+
+The identity of a merger patch is same as the identity of the rightmost
+patch in the pair, *[m(X, Q)]* is *[Q]*. The effect of the merger patch
+differs from the effect the basic patches with same identity, however.
+
+What if the patches depend on each other and commute ends up in some
+kind of conflict:
+
+||<tableclass=userpref\>||'' ( P, Q ) <\~\~\~\> ( Q', P') ''||
+
+Luckily there is no need to introduce more patches, but we can do with
+merger:
+
+**Theorem 2.** The sequence *{ P . Q }* equals with sequence *{ m(\~P,
+Q) . \~m(Q, \~P }*.
+
+||<tableclass=userpref\>||'' ( P, Q ) <\~\~\~\> ( m(\~P, Q), \~m(Q, \~P)
+) ''||
+
+(A patch sequence equals with another if their start state, end state
+and the identity of their patches, regardless of their ordering, is are
+same.)
+
+Proof. Consider two patch sequences
+
+||<tableclass=userpref\>||'' <\> P <p\> Q <pq\> *|| || ||* <\> P <p\>
+\~P <\> ''||
+
+Clearly *Q* and *\~P* have same start state and they can be merged.
+After merging we have two sequences with same end state:
+
+||<tableclass=userpref\>||'' <\> P <p\> Q <pq\> m(Q, \~P) <\*\> *|| ||
+||* <\> P <p\> \~P <\> m(\~P, Q) <\*\> ''||
+
+From the definition of inverse we get
+
+||<tableclass=userpref\>||'' <\> m(\~P, Q) <\*\> \~m(Q, \~P) <pq\> ''||
+
+QED.
+
+The almost-commuted patch *m(\~P, Q)* is in conflict. You might as well
+ask *conflict with what?* It is entirely undefined what happens if the
+repository is split into two branches (*<\> P <p\>* and *<\> m(\~P, Q)
+<\*\>*) after the swap. So the "curly commute" or the swap operation is
+clearly not the same operation as the *commute* defined above.
+Nevertheless it is useful when reordering already conflicting patches,
+or reordering patches if the intention is not to split the repository.
+
+## Ordering Does Not Matter
+
+The rule \#1 follows from Theorem 2: it is possible to freely reorder
+patches within repository without modifying its state:
+
+||<tableclass=userpref\>||*<\> A ||.|| B ||.|| C <abc\>*|| ||<)\>
+=||''<\> B' ||.|| A' ||.|| C <abc\> *|| ||<)\> =||*<\> B' ||.|| C' ||.||
+A" <abc\> *|| ||<)\> =||*<\> C" ||.|| B" ||.|| A" <abc\> *|| ||<)\>
+=||*<\> C" ||.|| A"' ||.|| B"' <abc\> *|| ||<)\> =||*<\> A"" ||.|| C"'
+||.|| B"' <abc\> *|| ||<)\> =||*<\> A"" ||.|| B"" ||.|| C"" <abc\> ''||
+
+We can also add patch and its inverse to the repository without changing
+its state:
+
+||<tableclass=userpref\>||*<\> A ||.|| B ||.|| C || . || \~C <ab\>*||
+||<tableclass=userpref\>||''<\> C ||.|| A' ||.|| B' || . || \~C <ab\>
+*|| ||<tableclass=userpref\>||*<\> C ||.|| B" ||.|| A" || . || \~C <ab\>
+''||
+
+## Conflict and Dependence
+
+What else we can say about conflicts? Clearly, conflict and dependence
+(as defined above) seem to have something in common.
+
+**Theorem 3.** Conflicting patches depend on each other's inverse.
+
+Proof. Consider patch sequences where A and B are in conflict:
+
+||<tableclass=userpref\>||'' <\> A <a\> m(A, B)'' <\*\> *\~m(\~B, A)*
+*<b\> \~B <\>*|| || ||'' <\> B <b\> m(B, A)'' <\*\> *\~m(\~A, B)* *<a\>
+\~A <\>*||
+
+Commute the pairs *(m(A, B), \~m(\~B, A))* and *m(B, A) . \~m(\~A, B)*:
+
+||<tableclass=userpref\>||'' <\> A <a\> \~A <\> B <b\> \~B <\>'' || ||
+||'' <\> B <b\> \~B <\> A <a\> \~A <\>''.||
+
+According to our definition of dependence, *B* depends on *\~A* and *A*
+depends on *\~B*.
+
+QED.
+
+## State After Conflict
+
+The merge of conflicting patches should end in an unambiguous end state.
+How to determine the end state? It is just a matter of definition, but
+the definition should be convenient. Darcs 1 uses following definition:
+
+**Definition 7(a).** The conflict merge of two patches result in start
+state.
+
+||<tableclass=userpref\>||'' <\> A <a\> m(A, B)'' <\> || || ||'' <\> B
+<b\> m(B, A)'' <\> ||
+
+According to the definition above, the effect of the merger patch m*(A,
+B)* is same as effect of *\~A* and its identity is same as the identity
+of *B*.
+
+Darcs 2 modified the definition so that two identical patches are
+handled in different way:
+
+**Definition 7(b).** The conflict merge of two identical patches result
+in end state of first patch.
+
+||<tableclass=userpref\>||'' <\> A <a\> m(A, A) <a\> ''||
+
+## How the Conflicts are Stored in Repository
+
+Darcs 1 stores the conflicting patches pretty much like the m-notation
+we use above. The patches involved are stored as separate text lines.
+For historical reasons the merger patches made by Darcs 1 has a version
+number associated with them.
+
+For instance, merge of two branches where the `file` got renamed to `a`
+in the first branch and `b` in the second branch is represented as
+follows:
+
+    merger 0.0 (
+    move ./file ./a
+    move ./file ./b
+    )
+
+### Complex Conflicts
+
+A `merger` has always two patches within it. But conflicts don't
+necessarily involve just two patches. If we apply three conflicting
+patches, *A*, *B* and *C* in the repository, we end up with something
+like
+
+||<tableclass=userpref\>||'' <\> A <a\> m(A, B)'' <\*\> *m(m(A, B), m(A,
+C)) <\*\>*||
+
+The first patch changes the repository state, the second reverses the
+change (and records the conflict) but there is no change associated with
+the third one. It just indicates that this is the patch *C* and it
+conflicts with both *A* and *B*. The C is formatted as follows:
+
+    merger 0.0 (
+    merger 0.0 (
+    move ./file ./a
+    move ./file ./b
+    )
+    merger 0.0 (
+    move ./file ./a
+    move ./file ./c
+    )
+    )
+
+The limitations of our `merger` notation become clear when we add the
+fourth conflicting patch, *D*:
+
+||<tableclass=userpref\>||'' <\*\> m(m(m(A, B), m(A, C)), m(m(A, B),
+m(A, D)) <\*\>''||
+
+The deep and complex conflicts are commonplace, and they deserve more
+efficient way of expressing them. The `merger` pairs records the
+complete history of the patches which got merged — but ordering is not
+needed beyond first marked conflict. The state does not depend on the
+order of the merged branches, only the identity of conflicting patches
+is important.
+
+Darcs 2 uses `conflictor` patches where the set of conflicting branches
+is simply listed:
+
+||<tableclass=userpref\>||'' <\> A <a\> c(,A,B)*<\*\>*c(A, B, ,C) <\*\>
+c(A, B, C, ,D) <\*\>''||
+
+The last patch is actually represented like this:
+
+    conflictor {{
+    :
+    move ./file ./a
+    :
+    move ./file ./b
+    :
+    move ./file ./c
+    }} [[
+    ]]
+    :
+    move ./file ./d
+
+(In a rather Haskellish way the colon does not separate branches from
+each other but it rather indicates that the next patch is the last one
+in the current branch.)
+
+## Resolving Conflicts
+
+A *conflict* between two branches can be represented with the following
+diagram:
+
+||<tableclass=userpref\>||'' || || <a\>|| || *|| || ||* ||A|| ||m(A,
+B)*|| || || ||*<\>|| || || || <\*\>*|| || ||* ||B|| ||m(B, A)|| *|| ||
+||* || || <b\>|| || ''||
+
+The obvious way to *resolve* the conflict is to select one of the three
+states before the conflict as the starting point for the new
+development: *<\>, <a\>* or *<b\>*. In more general case, we can either
+choose one of the conflicting branches as the basic of new development,
+or start a completely new branch from the root of the conflict.
+
+How Darcs then resolves conflicts? Darcs 1 has chosen the non-obvious
+way: the new development is started *after* the conflict, from the *end
+state* of the conflicting patches, shown as *<\*\>* above. As you might
+remember, in order to avoid any ambiguities the start state of the
+conflict was conveniently selected as its end state, too.
+
+If the new patch resolving the conflict is *N* and the conflicting
+patches are *A* and *B*, the patch sequence looks pretty simple (again,
+using our notation):
+
+||<tableclass=userpref\>||'' <\> A <a\> m(A, B)'' <\> *N <n\>*||
+
+The patch file created by Darcs 1 looks likewise simple.
+
+However, there is something very important going on, something that does
+not manifest itself in the patch *N* or our notation above. Namely, the
+new patch
+
+-   depends on both *A* and *B*, or rather the conflicting combination
+    of *A* and *B*
+-   conflicts with either *\~A* or *\~B* (or any further patch that
+    depends on *A* and/or *B*, for that matter)
+
+The notation above does not reflect the actual behavior of *N*, so we
+improve it:
+
+||<tableclass=userpref\>||'' <\> A <a\> m(A, B)'' <\*\> *N\* <n\>*||
+
+Now, it is clear that
+
+1.  after the conflict the state of the repository differs in important
+    way from the state before it, and
+2.  the resolution patch *N\** differs from plain patch *N* (which is
+    just an another branch parallel with *A* and *B*).
+
+The improved notation also makes it clear that there is no way we can do
+the trick we did with theorems 2 and 3 above (merge *N* with *A* or
+*B*).
+
+Darcs 1 enforces the proper behavior of patch *N*, too. However, from
+the point of view of Darcs, the end state (*<\*\>*) of the conflict is
+exactly like its start state (*<\>*). Also, there is no new patch type
+like `resolver` — the patch *N\** looks exactly like *N*. Instead Darcs
+uses *contexts* — sets of patches that must be present in repository
+before a certain patch can be applied to it. In other words, Darcs 1
+absolutely, definitely requires that both *A* and *B* are present before
+*N* can be applied to the repository. Darcs 1 also prevents you from
+moving *A* or *B* past the *N* within the repository. (If *N* was an
+ordinary patch, you could do that by *unpulling* or *obliterating* *A*
+or *B*).
+
+### Weakness of Darcs 1 Way of Resolving Conflicts
+
+The foremost drawback of Darcs-1-style implicit resolver patches is that
+they break the rule \#1 Darcs started with — *ordering of the patches
+does not matter*.
+
+Perhaps more severe problem for usability of Darcs is the
+destructiveness of the conflicts. There is no way you can continue on
+any of the conflicting branches (unless you manage to remove all the
+traces from the other conflicting branches).
+
+Yet another problem is the fact that resolving the conflict in the same
+way in two different repositories ends up in conflict. (However, while
+the duplicate is conflict according to the definition above, it is quite
+harmless and invisible to the Darcs 2 user.)
+
+The resolver patch also make new conflicts more complex. Instead of
+starting the new branch from the root of conflict, the new branch starts
+from the neck of conflict. Any new conflicting branch — including the
+continuation from the one of the original branches — is in recursive
+conflict, conflict with a conflict. The patches used to mark conflict,
+mergers or conflictors, need to recognize that. They can not just be a
+list of a bunch of conflicting branches. They must keep the history of
+conflict, show the order of conflicting patches and store the new
+conflict inside the old conflict.
+
+## Resolving Conflicts, Take 2
+
+Above we represented the conflict with a diamond. Let us now extend the
+diamond with its inverse:
+
+||<tableclass=userpref\>||'' || || <a\>|| || || || <a\>|| || *|| || ||*
+||A|| ||m(A, B)*||*||\~m(\~A, \~B)*||*||\~A|| *|| || ||*<\>|| || || ||
+<\*\>|| || || || <\>*|| || ||* ||B|| ||m(B, A)|| ||\~m(\~B, \~A)||
+||\~B|| *|| || ||* || || <b\>|| || || || <b\>|| || ''||
+
+Also, let us rephrase the paragraph after the diamond diagram:
+
+The obvious way to resolve the conflict is to select one of the three
+states *after* the conflict as the starting point for the new
+development: *<a\>*, *<b\>* or *<\>*. In more general case, we can
+either choose one of the conflicting branches as the basic of new
+development, or start a completely new branch from the root of the
+conflict.
+
+If the development is continued from the branch *A*, we record inverse
+of *B* after the conflict. If it is not clear from the above double
+diamond, inverse of *B*, as it would be applied after the conflict, is
+*\~m(\~A, \~B)*.
+
+Likewise, if we want to continue from the branch *B*, we record inverse
+of *A* after the conflict, *\~m(\~B, \~A)*.
+
+If we want to start a new branch, we record inverse of both, *\~m(\~B,
+\~A)* followed by *\~B*, or *\~m(\~A, \~B)* followed by *\~A*.
+
+If the conflict is resolved in the same way in another repository, there
+is no problem — it is just a duplicate. If the conflict is resolved in
+different way then we have another conflict. However, that is exactly
+what we expect to happen.
+
+## Resolving Conflicts: Some Practicalities
+
+In retrospective, the definition 7(a) is not so hot. The repository
+**is** hosed after a conflict, it has no clear unambiguous state, and if
+we pretend otherwise, we end up in trouble with the rule \#1.
+
+However, Darcs just cannot turn the respective bits in the repository
+sideways and tell the user that hey, there is a conflict, do something
+about it.
+
+One way to solve the problem of ambiguous state of the conflict is to
+prevent live conflicts. Each time Darcs merges two branches and there is
+a conflict, it will automatically record a inverse patch for all the
+conflicting branches. Conflicts would be resolved by obliterating one
+(or none) of those conflict-saving patches.
+
+A bit more advanced approach is to keep the state of pristine just like
+it is now, but to create special *pending* patches when conflict occurs.
+Again, conflicts would be resolved by obliterating one (or none) of the
+conflict-saving patches in the pending queue, and recording the rest of
+the patches.
+
+If the user insists in obliterating too many patches and records a
+Darcs-1-style resolver patch, it is always possible to apply the rule
+\#1:
+
+||<tableclass=userpref\>||'' <\> A <a\> m(A, B)'' <\> *N <n\>*|| becomes
+|| ||<)\> ||'' <\> A <a\> m(A, B)'' <\*\> *m(m(A, B), m(A, N)) <\*\>*||

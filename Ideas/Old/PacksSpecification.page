@@ -1,0 +1,82 @@
+# Status
+
+This idea was implemented during the 1st Darcs Hacking Sprint. A report
+of the sprint can be read at:
+[http://blog.darcs.net/2008/10/darcs-hacking-sprint-1-report.html](http://blog.darcs.net/2008/10/darcs-hacking-sprint-1-report.html)
+More information at:
+[http://www.mail-archive.com/darcs-users@darcs.net/msg08919.html](http://www.mail-archive.com/darcs-users@darcs.net/msg08919.html)
+
+Basically, this idea was superseeded by hashed repositories and lazy
+darcs get. When this idea was implemented for old-fashioned
+repositories, benchmarking showed that it gave real improvements to
+`darcs get`. for hashed-storage to settle and port to that. However,
+discussion of the repo format(s) and the specification is still current.
+
+# The idea of Packs
+
+When doing get or pull, darcs tends to transfer over the network a large
+number of small files, generally in a non-pipelined way. This is
+generally aweful for performance, since most of the time in get is spent
+waiting for very small requests to do round-trips.
+
+Since get and pull will get any patches that are under a tag, the idea
+is to put these patches into "packs" that are big enough to be worth
+downloading.
+
+# The layout of a packed repo
+
+## Format file and compatibility
+
+We introduce a new format for repositories, which we call "packed". For
+the rest of the discussion, darcs version 2.p will refer to any version
+of darcs posterior to the implementation of packs, and darcs 2.1 to any
+version of darcs anterior to this historic landmark.
+
+Post darcs-2.p, a repository can have a "packed" line in its format
+file. Darcs-2.1 will freak out on such a repository. In a repository in
+packed format, there can be "packs" in addition to patches. Unless it is
+given an explicit switch, Darcs-2.p will manipulate repositories without
+the "packed" line in a darcs-2.1 compatible way. I.e, it won't create
+packs in such a repository.
+
+## Pack format
+
+A pack is the concatenation of a sequence of patches. Like a patch, it
+is contained in a file whose name is its hash (using the code in
+HashedIO). It is also automagically compressed whenever patches are.
+
+In a packed repository, each line describing a patch can have the
+following form:
+
+    [<patch description>]
+    hash: <hash>[<offset>]
+
+This reads "patch <patch description\> can be found at offset <offset\>
+of pack <hash\>" (since the hash of the pack is also its filename).
+
+# Interaction of commands with packed repos
+
+## Read-only operation
+
+When pulling or getting, and we need a patch which happens to be
+reffered as <hash\>[offset], we download file <hash\>. Then we read the
+content at <offset\> in that file. Since darcs always starts looking for
+files locally, we only download each pack once. Packs are also shared
+through the global cache.
+
+## Pack creation
+
+Packs get more and more redundant as the patches they contain get
+commuted about. Hence, only patches which are under a tag are packed,
+but this is a /contingent heuristic/. This Packing is done through a
+call to
+
+    darcs optimize --pack
+
+which packs unpacked patches under a tag.
+
+## Pack disposal
+
+When a packed patch is commuted and changes of representation, the rest
+of the packs keeps being valid. Garbage collection in the presence of
+lazy repositories seems problematic. I am looking for ideas.

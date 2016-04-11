@@ -1,0 +1,156 @@
+# News and discussions
+
+1.  Second pre-release of darcs 2.1.0 (formerly known as 2.0.3) This
+    version of darcs will produce darcs-2 format repositories by default
+    -   [http://www.darcs.net/darcs-2.1.0pre2.tar.gz](http://www.darcs.net/darcs-2.1.0pre2.tar.gz)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-September/013977.html](http://lists.osuosl.org/pipermail/darcs-users/2008-September/013977.html)
+
+2.  New issue manager - Thorkil Naur. The darcs team now has an official
+    Issue Manager role. Thorkil will be ensuring that incoming reports
+    are responded to in a timely manner, and that all bugs are
+    eventually moved to a resolved state.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-September/013887.html](http://lists.osuosl.org/pipermail/darcs-users/2008-September/013887.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-September/013920.html](http://lists.osuosl.org/pipermail/darcs-users/2008-September/013920.html)
+
+3.  Hoogling the darcs source?
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-September/013976.html](http://lists.osuosl.org/pipermail/darcs-users/2008-September/013976.html)
+
+# Issues resolved in the last week (5)
+
+issue27 David Roundy
+  ~ -   add junk to patch identifiers.
+    -   [http://bugs.darcs.net/issue27](http://bugs.darcs.net/issue27)
+
+issue53 Eric Kow
+  ~ -   check for windows filename validity in darcs add/mv.
+    -   [http://bugs.darcs.net/issue53](http://bugs.darcs.net/issue53)
+
+issue805 David Roundy
+  ~ -   make darcs-2 format the default for new repositories.
+    -   [http://bugs.darcs.net/issue805](http://bugs.darcs.net/issue805)
+
+issue1039 Dmitry Kurochkin
+  ~ -   detect seemingly unrelated repositories when doing push, pull
+        and send.
+    -   [http://bugs.darcs.net/issue1039](http://bugs.darcs.net/issue1039)
+
+issue1041 Vlad Dogaru
+  ~ -   Get: if URL is invalid, direcotry is not created (\#1041)
+    -   [http://bugs.darcs.net/issue1041](http://bugs.darcs.net/issue1041)
+
+# Patches applied in the last week (54)
+
+2008-09-25 Eric Kow
+  ~ -   TAG 2.1.0pre2
+    -   Bump version number to 2.1.0pre2.
+    -   ChangeLog entries for 2.1.0pre2
+    -   ChangeLog entries: more stuff to ignore
+
+2008-09-24 David Roundy
+  ~ -   resolve issue805: make darcs-2 format the default for new
+        repositories.
+    -   make flagsToPristine obey repository format.
+    -   simplify patches in rollback.
+
+2008-09-24 Eric Kow
+  ~ -   More readable length comparison.
+    -   Haddock some primitive patch functions.
+
+2008-09-23 David Roundy
+  ~ -   move issue27 test to bugs directory, since it fails.
+
+2008-09-18 Dmitry Kurochkin
+  ~ -   Add test for issue27.
+
+2008-09-23 Eric Kow
+  ~ -   Add a test case for issue1078
+
+2008-09-23 David Roundy
+  ~ -   give more useful failure message in HTTP for proxy errors.
+
+2008-09-23 Eric Kow
+  ~ -   HTTP: detect proxy server (failing if we want one)
+
+2008-09-23 [droundy@darcs.net](mailto:droundy@darcs.net)
+  ~ -   fix filepath code to work with FilePath package that preceded
+        filepath.
+
+2008-09-22 David Roundy
+  ~ -   fix type witness bug in createRepository.
+
+2008-09-22 Eric Kow
+  ~ -   Resolve conflict between replace patches in Darcs.Arguments
+    -   Resolve issue53: check for windows filename validity in darcs
+        add/mv.
+    -   Use --reserved-ok to allow a file with ':' in it in tests.
+    -   Add test for issue53.
+    -   Add --reserved-ok flag for darcs add and mv.
+    -   Check for filepath package in configure.
+
+2008-09-22 David Roundy
+  ~ -   simplify fix for issue1041.
+    -   translate conflict-doppleganger test to bash.
+
+2008-09-22 Eric Kow
+  ~ -   Translate mark-conflicts test into shell.
+    -   Stop calling the darcs-2 format experimental.
+    -   Move repository creation to Darcs.Repository.
+
+2008-09-22 David Roundy
+  ~ -   remove test\_unit from disttest to speed things up.
+    -   resolve issue1041: add test for issue1041.
+
+2008-09-22 Vlad Dogaru
+  ~ -   Get: if URL is invalid, direcotry is not created (\#1041)
+
+2008-09-22 Trent W. Buck
+  ~ -   Replace --without-docs with less ambiguous --without-manual
+        (issue1082).
+
+2008-09-22 Dmitry Kurochkin
+  ~ -   Documentation for --allow-unrelated-repos.
+    -   Rename --ignore-unrelated-repos to --allow-unrelated-repos.
+
+2008-09-21 David Roundy
+  ~ -   fix bug I introduced into issue1039 test.
+
+2008-09-18 Judah Jacobson
+  ~ -   Fix hang after a user input error (for example, EOF).
+
+2008-09-21 David Roundy
+  ~ -   replace consRLSealed with a more general mapFlipped.
+    -   make issue1039 fix allow small dissimilar repositories.
+    -   revert refactor that breaks type witnesses.
+
+2008-09-19 Dmitry Kurochkin
+  ~ -   Add '--ignore-unrelated-repos' option to disable unrelated
+        repositories check.
+    -   Resolve issue1039: detect seemingly unrelated repositories when
+        doing push, pull and send.
+    -   Refactor in pull\_cmd.
+    -   Test for issue1039.
+
+2008-09-18 Simon Michael
+  ~ -   manual: add an example of record --pipe prompts similar to tag
+        --pipe docs
+    -   user manual corrections regarding what record and tag --pipe
+        prompt for
+    -   clarify the short help for --pipe
+
+2008-09-19 Trent W. Buck
+  ~ -   Use gmakeisms for prettier output.
+
+2008-09-19 Dmitry Kurochkin
+  ~ -   Spaces in Darcs.Arguments.
+    -   Spaces in Darcs.Commands.Send.
+    -   Spaces in Darcs.Commands.Pull.
+    -   Spaces in Darcs.Commands.Push.
+    -   Print "We have the following patches to send:" only when we
+        really have somthing to send.
+
+2008-09-17 David Roundy
+  ~ -   fix changes.pl test (translating to bash)
+    -   hokey fix to allow unit tests to generate random input.
+    -   resolve issue27: add junk to patch identifiers.
+
+

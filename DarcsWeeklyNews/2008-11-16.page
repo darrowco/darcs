@@ -1,0 +1,588 @@
+# News and discussions
+
+1.  Reasons to delay upgrading. Nathan Gray gives feedback as to why his
+    team cannot yet switch to darcs2. Let's fix Nathan's bugs!
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/015511.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/015511.html)
+
+2.  darcs roadmap proposal. Eric has given us a roadmap for next six
+    months of development. Get hacking!
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/015545.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/015545.html)
+
+3.  FYI: user-manual status. Trent W. Buck is making steady progress
+    with revamping the user manual.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/015571.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/015571.html)
+
+4.  New extension syntax -WError? How do you want to solve this?
+    Managing compiler warnings is now a social requirement instead of a
+    technical one.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/015575.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/015575.html)
+
+5.  Buildbot uploads. Don't let the typos scare you away! Jules Colding,
+    Zooko and others have the buildbots setup to upload the binaries as
+    they build them!
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/015607.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/015607.html)
+    -   [https://zooko.com/darcsbuildbot/uploads](https://zooko.com/darcsbuildbot/uploads)
+
+6.  transitioning to cabal. Darcs now builds with cabal.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/015649.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/015649.html)
+
+7.  announcing darcs 2.1.1rc2. Try out our newest release candidate
+    today.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/015679.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/015679.html)
+
+8.  growing the darcs team again! Welcome Alexander Suresh Kerr
+    Sittampalam to the world and congratulate Ganesh Sittampalam.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/015681.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/015681.html)
+
+9.  new Windows Czar and Review Team. Salavtore has taken the title of
+    Windows Czar and we have an official review team now. Join today!
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/015698.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/015698.html)
+    -   [http://wiki.darcs.net/index.html/DarcsTeam](http://wiki.darcs.net/index.html/DarcsTeam)
+
+10. Software Freedom Conservancy agreement. The Darcs project may be
+    joining the Software Freedom Conservancy.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/015684.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/015684.html)
+
+11. [ANNOUNCE] darcs-fast-export. Miklos Vajna has put together a fast
+    export from darcs to git.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/015704.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/015704.html)
+
+# Reviewers
+
+Thanks to our patch reviewers this week!
+
+We had a lot of reviewers this week, I hope I didn't miss anyone.
+
+-   Don Stewart
+-   Duncan Coutts
+-   Jason Dagit
+-   Trent Buck
+-   Petr Rockai
+-   Ganesh Sittampalam
+-   Lele Gaifax
+-   Christian Kellermann
+
+# Issues resolved in the last week (5)
+
+issue525 David Roundy
+  ~ -   canonize output of sort\_coalesceFL in AmendRecord.
+    -   [http://bugs.darcs.net/issue525](http://bugs.darcs.net/issue525)
+
+issue844 David Roundy
+  ~ -   don't call gzwrite with zero length.
+    -   [http://bugs.darcs.net/issue844](http://bugs.darcs.net/issue844)
+
+issue864 Tommy Pettersson
+  ~ -   check non-force replace against pending
+    -   [http://bugs.darcs.net/issue864](http://bugs.darcs.net/issue864)
+
+issue1189 David Roundy
+  ~ -   define HAVE\_SIGNALS in franchise build.
+    -   [http://bugs.darcs.net/issue1189](http://bugs.darcs.net/issue1189)
+
+issue1223 Eric Kow
+  ~ -   Fix broken init.sh test
+    -   [http://bugs.darcs.net/issue1223](http://bugs.darcs.net/issue1223)
+
+# Patches applied in the last week (282)
+
+2008-11-16 Eric Kow
+  ~ -   Work around difference between Windows and Cygwin sort program
+        in test
+
+2008-11-16 Eric Kow
+  ~ -   Add DARCS\_TESTING\_HOME to shell harness
+
+2008-11-16 Eric Kow
+  ~ -   Move timestamps test to bugs directory
+    -   Conditionally compile out reset\_umask on Windows
+
+2008-11-15 Jason Dagit
+  ~ -   import Arguments just once in WhatsNew
+    -   remove --restrct-paths from the manual
+    -   remove unused export restrict\_paths in Arguments
+    -   clean up unused exports in Arguments.lhs
+    -   tighten up imports in preproc.hs
+    -   tighten imports in Commands.lhs
+    -   tighten up imports in Tag.lhs
+    -   tighten up imports in Replace.lhs
+    -   tighten up imports in Commands.Dist
+    -   remove unused export for isa from Arguments
+
+2008-11-16 Trent W. Buck
+  ~ -   Appease Windows by replacing find(1) with globbing.
+
+2008-11-15 Eric Kow
+  ~ -   issue525 fixed by David's patch
+    -   Fix Darcs.Patch.Prim haddock
+
+2008-11-15 David Roundy
+  ~ -   resolve issue525: canonize output of sort\_coalesceFL in
+        AmendRecord.
+
+2008-11-14 Eric Kow
+  ~ -   Make test-network a .PHONY target
+    -   Create the .darcs directory in the test-network dir
+    -   Remove obsolete test-franchise .PHONY entry from makefile
+    -   Use Control.OldException if compiling shell harness with GHC
+        6.10
+
+2008-11-12 Christian Kellermann
+  ~ -   use ShellHarness in Setup.lhs
+    -   Use the shell harness in Makefile
+    -   make ShellHarness a module
+    -   move shell\_harness to Distribution/ShellHarness.hs
+    -   remove bash shell\_harness
+
+2008-11-13 [zooko@zooko.com](mailto:zooko@zooko.com)
+  ~ -   on "make darcs-snapshot" make a copy of the executable in a
+        directory named "snapshots" and named with its version number
+        including patch count
+
+2008-11-13 Karel Gardas
+  ~ -   replace \`test -e' in makefile with either \`test -d' or \`test
+        -f'
+
+2008-11-12 Eric Kow
+  ~ -   Update darcs.cabal to reflect removal of homegrown filepath
+        modules
+    -   Generalise use of --optghc to all GHCFLAGS for haddock
+
+2008-11-12 Eric Kow
+  ~ -   Remove deprecated (and now unused) homegrown filepath modules
+    -   Replace homegrown code with filepath functions in
+        Darcs.Commands.Dist
+    -   Remove homegrown code with filepath equivalents in
+        Darcs.Commands.Mv
+    -   Replace homegrown code with filepath equivalents in
+        Darcs.Commands.Add
+    -   Specifically import System.FilePath.Posix in darcs commands
+    -   Replace FilePathUtils.(///) with filepath equivalent in
+        Darcs.Diff
+    -   Copy UglyFileName.patch\_filename into Darcs.Commands.Send
+    -   Replace UglyFileName with filepath equivalents in
+        Darcs.CommandsAux
+    -   Replace our breakup with filepath's splitDirectories in
+        Darcs.Lock
+
+2008-11-13 Christian Kellermann
+  ~ -   make finds more portable
+
+2008-11-12 Eric Kow
+  ~ -   Replace liftM with fmap in Darcs.Repository.Prefs
+    -   Tidy up type signatures in Darcs.Repository.Prefs
+    -   Tidy up global\_cache\_dir
+    -   Resolve conflict between my UserProfile override and
+        DARCS\_TESTING\_HOME
+
+2008-11-11 Petr Rockai
+  ~ -   Enable .darcs location override through DARCS\_TESTING\_HOME
+        that also works on Windows.
+
+2008-11-12 Eric Kow
+  ~ -   Override UserProfile environment variable in (Perl)
+        shell\_harness
+
+2008-10-28 Eric Kow
+  ~ -   Replace UglyFileName with filepath equivalents in Darcs.RepoPath
+    -   Replace FilePathUtils.(///) with filepath equivalent in preproc
+    -   Specify that we want System.FilePath.Posix in Darcs.External
+    -   Replace UglyFileName normalisation in Darcs.External
+    -   Replace basename with filepath's takeDirectory in
+        Darcs.External.
+    -   Replace (++ "/" ++) with filepath's (</\>) in
+        Darcs.External.cloneTree
+    -   Replace absolute\_dir with ioAbsoluteOrRemote in
+        Darcs.Repository
+    -   Switch from absolute\_dir to ioAbsoluteOrRemote in commands
+    -   Add an AbsoluteOrRemotePath type
+
+2008-11-12 Duncan Coutts
+  ~ -   Trivial style improvement
+    -   Fix compile failure in gzReadFilePS without
+        HAVE\_OLD\_BYTESTRING
+
+2008-11-11 Petr Rockai
+  ~ -   Isolate overriding-defaults.sh failures to that test.
+
+2008-11-12 Christian Kellermann
+  ~ -   Fix shell\_harness so it uses --ignore-times
+
+2008-11-11 Petr Rockai
+  ~ -   Silence haskell\_policy complaining about Setup.lhs.
+    -   Allow "cabal test tests network bugs" as suggested by Trent.
+    -   Include the testsuite in Cabal sdist.
+    -   Fixes to the release/distributed-\* file generation in Cabal
+        sDistHook.
+    -   Bundle the version/context data (produced by Setup.lhs sdist) in
+        the tarball.
+    -   Update Cabal file lists to match reality.
+    -   Bundle version and context data in Cabal source distribution.
+    -   Implement runTests hook for Cabal.
+
+2008-11-11 Trent W. Buck
+  ~ -   Darcs works with regex-compat 0.91.
+    -   Refactor DARCS\_FILES to work around Solaris' buggy find(1).
+    -   Remove silly sort.
+
+2008-11-11 Eric Kow
+  ~ -   Fix filepath test
+    -   Fix get test (it was assuming a clean directory)
+    -   Resolve issue1223: Fix broken init.sh test
+    -   Fix regression in configure test for zlib.
+    -   TAG stable 2008-11-10
+    -   Use conditional compilation for Salvatore's strict readFile fix
+
+2008-11-08 Salvatore Insalaco
+  ~ -   Fix gzReadFilePS to close file descriptor even on old
+        bytestrings.
+
+2008-11-11 Eric Kow
+  ~ -   Add configure check for bytestring 0.9.1
+
+2008-11-11 Eric Kow
+  ~ -   Simplify bytestring check.
+
+2008-11-11 David Roundy
+  ~ -   resolve issue844: don't call gzwrite with zero length.
+
+2008-11-11 Petr Rockai
+  ~ -   Avoid exporting cleanupRepositoryReplay.
+
+2008-11-09 Trent W. Buck
+  ~ -   Remove literacy stub from Darcs.Patch.Choices.
+    -   Remove literacy stub from Darcs.Patch.Info.
+    -   Remove literacy stub from Darcs.Patch.Read.
+    -   Remove literacy stub from Darcs.Patch.Test.
+    -   Remove literacy stub from Darcs.Patch.Real.
+    -   Remove literacy stub from Darcs.Patch.Non.
+    -   Remove literacy stub from Darcs.Patch.Depends.
+    -   Remove literacy stub from Darcs.Patch.Check.
+    -   Remove literacy stub from Darcs.Patch.Viewing.
+    -   Remove literacy stub from Darcs.Patch.Unit.
+    -   Remove literacy stub from Darcs.Patch.QuickCheck.
+    -   Remove literacy stub from Darcs.Patch.Permutations.
+    -   Remove literacy stub from Darcs.Patch.Patchy.
+    -   Remove literacy stub from Darcs.Patch.Bundle.
+    -   Remove literacy stub from Darcs.Patch.FileName.
+    -   Remove literacy stub from Darcs.Patch.Set.
+    -   Remove literacy stub from Darcs.Patch.MatchData.
+    -   Remove literacy stub from Darcs.Repository.HashedRepo.
+    -   Remove literacy stub from Darcs.Repository.Pristine.
+    -   Remove literacy stub from Darcs.Repository.HashedIO.
+    -   Remove literacy stub from Darcs.Repository.Cache.
+    -   Remove literacy stub from Darcs.Repository.
+    -   Remove literacy stub from Darcs.Repository.Format.
+    -   Remove literacy stub from Darcs.Repository.ApplyPatches.
+    -   Remove literacy stub from Darcs.Repository.InternalTypes.
+    -   Remove literacy stub from Darcs.Repository.Checkpoint.
+
+2008-11-09 Petr Rockai
+  ~ -   Make --match 'date "after year"' work into the future.
+    -   Add a test for matching 'date "after year"' working for future
+        patches.
+
+2008-11-10 Eric Kow
+  ~ -   Remove franchise build file and test scripts.
+
+2008-11-10 Eric Kow
+  ~ -   Restore configure check for QuickCheck 2.1
+
+2008-11-06 Petr Rockai
+  ~ -   Fix Repair.applyAndFix.
+
+2008-11-10 Eric Kow
+  ~ -   Resolve conflicts between darcs repair and literacy removal
+        patches
+
+2008-11-06 Petr Rockai
+  ~ -   Introduce syncSlurpy, that syncs slurpy to disk as needed.
+
+2008-11-09 Eric Kow
+  ~ -   Move Cabal based build to repository root
+    -   Remove makefile instructions to test franchise build
+    -   Remove now superfluous darcs.cabal.in
+
+2008-11-05 Petr Rockai
+  ~ -   Refactor Repository.Repair.replayRepository to get rid of
+        CanRepair.
+
+2008-11-10 Eric Kow
+  ~ -   TAG 2.1.1rc2
+    -   Bump version number to 2.1.1rc2
+    -   ChangeLog entry for darcs 2.1.1rc2 (oops)
+
+2008-11-10 Eric Kow
+  ~ -   Rollback configure check for QuickCheck 2.1
+
+2008-11-10 Eric Kow
+  ~ -   TAG 2.1.1rc1
+    -   Bump version number to 2.1.1rc1
+    -   Remove colon in external.sh http get test
+    -   ChangeLog entries for darcs 2.1.1rc1
+
+2008-11-09 Trent W. Buck
+  ~ -   Remove literacy stub from Darcs.SlurpDirectory.Internal.
+    -   Remove literacy stub from Darcs.SelectChanges.
+    -   Remove literacy stub from Darcs.Ordered.
+    -   Remove literacy stub from Darcs.SignalHandler.
+    -   Remove literacy stub from Darcs.Sealed.
+    -   Remove literacy stub from Darcs.TheCommands.
+    -   Remove literacy stub from Darcs.TouchesFiles.
+    -   Remove literacy stub from Darcs.RemoteApply.
+    -   Remove literacy stub from Darcs.PrintPatch.
+    -   Remove literacy stub from Darcs.Show.
+    -   Remove literacy stub from Darcs.SlurpDirectory.
+
+2008-11-10 Thorkil Naur
+  ~ -   Work around grep -Fw platform differences in haskell\_policy.sh
+
+2008-11-09 Petr Rockai
+  ~ -   Handle EOF exceptions from hReady, in accordance with H98.
+
+2008-11-07 Christian Kellermann
+  ~ -   shell\_harness script in haskell
+
+2008-11-09 Thorkil Naur
+  ~ -   Avoid test issue1017\_whatsnew\_stack.sh looping under buildbot
+        control
+
+2008-11-09 Trent W. Buck
+  ~ -   Remove literacy stub from CommandLine.
+    -   Remove literacy stub from Darcs.Hopefully.
+    -   Remove literacy stub from Darcs.Global.
+    -   Remove literacy stub from Darcs.CheckFileSystem.
+    -   Remove literacy stub from Darcs.Bug.
+    -   Remove literacy stub from Darcs.IO.
+    -   Remove literacy stub from Darcs.Flags.
+    -   Haddockize Darcs.Lock.
+
+2008-11-09 Eric Kow
+  ~ -   Fix haddock bugs in ByteStringUtils
+
+2008-10-23 Eric Kow
+  ~ -   Reformat Darcs.URL comments as haddock.
+
+2008-11-09 Eric Kow
+  ~ -   Resolve conflicts (lstat vs de-literate)
+
+2008-10-31 Reinier Lamers
+  ~ -   hopefully less buggy version of get\_unrecorded\_in\_files
+
+2008-10-26 [tux\_rocker@reinier.de](mailto:tux_rocker@reinier.de)
+  ~ -   make whatsnew use the lstat-saving functions to scan the working
+        copy
+    -   make get\_unrecorded\_private work with type witnesses again
+    -   add a get\_unrecorded\_in\_files to check for unrecorded changes
+        in a subset of working directory
+
+2008-11-09 Trent W. Buck
+  ~ -   Keep OS X happy by passing a path to find(1).
+
+2008-11-09 Eric Kow
+  ~ -   Remove tabs in franchise build.
+    -   Move issue1017 test back into tests
+
+2008-11-07 David Roundy
+  ~ -   make unrecord work with type witnesses.
+    -   add franchise target for type witness testing.
+    -   cut dead code from Unrecord.
+    -   be more verbose when type witnesses are enabled in franchise.
+    -   enable type witnesses for show commands.
+
+2008-11-08 Eric Kow
+  ~ -   Check for base package version in configure.
+    -   Upgrade configure test to require QuickCheck 2.1
+    -   Do not compile with -Werror in configure tests either
+
+2008-11-08 Salvatore Insalaco
+  ~ -   Fix cabal file for lhs -\> hs transition.
+
+2008-11-08 Eric Kow
+  ~ -   Add issue1189 fix suggested by Duncan to Cabal build
+    -   Do not build with -Werror
+
+2008-11-08 Trent W. Buck
+  ~ -   Haddockize Lcs.
+
+2008-11-02 Eric Kow
+  ~ -   Extend zlib franchise test to look for zlib 0.5.0.0
+
+2008-10-26 Ganesh Sittampalam
+  ~ -   switch to zlib 0.5.0.0 with new interface for specifying
+        decompressed size
+
+2008-11-07 Eric Kow
+  ~ -   Move issue1017 test back to bugs.
+
+2008-11-07 Trent W. Buck
+  ~ -   Remove dangling .lhs references.
+
+2008-11-06 Eric Kow
+  ~ -   Add comment to test pref
+    -   Fix typo in documentation
+
+2008-11-06 David Roundy
+  ~ -   resolve issue1189: define HAVE\_SIGNALS in franchise build.
+
+2008-11-06 Eric Kow
+  ~ -   Canonize Eric Kow
+    -   Use make -j4 to run disttest.
+
+2008-11-05 Petr Rockai
+  ~ -   Change "Repairing patch" to "Replaying patch" as progress report
+        in replayRepository.
+
+2008-11-06 Eric Kow
+  ~ -   Tweak issue1012 test to use temp1 as tempdir name
+    -   Clean up after previous tests in issue1017 test
+
+2008-11-06 Trent W. Buck
+  ~ -   Refactor test\_network target.
+    -   Let DARCS\_FILES and UNIT\_FILES cope with .lhs/.hs renames.
+
+2008-11-05 Ganesh Sittampalam
+  ~ -   clean up .lhs versions of ThisVersion and Autoconf to make
+        transition easier
+
+2008-10-04 Tommy Pettersson
+  ~ -   resolve issue864: check non-force replace against pending
+
+2008-11-03 Eric Kow
+  ~ -   Avoid using pkgconfig-depends for libcurl (cabal)
+
+2008-10-28 Jason Dagit
+  ~ -   change tabs to spaces in cabal's Setup.hs
+
+2008-10-27 Duncan Coutts
+  ~ -   Use exceptions again in cabal Setup.hs
+    -   Make building with HTTP package work via cabal
+    -   Add the location of the darcs repo to the cabal file
+    -   Update cabal file for renamed ByteStringUtils module
+    -   When not using external zlib binding require z C lib (in cabal
+        file)
+    -   Add the other modules and extra src files to the cabal file
+    -   Support building with libwww via Cabal
+    -   Update darcs.cabal for HAVE\_SIGINFO\_H
+    -   Make Setup.hs work with ghc-6.8 and 6.10 by not using exceptions
+    -   Add cabal support files under release/ directory
+
+2008-10-25 Don Stewart
+  ~ -   Add all required language extensions to .cabal.in file
+
+2008-10-25 Ganesh Sittampalam
+  ~ -   issue 1017 now fixed
+
+2008-11-05 Eric Kow
+  ~ -   Restore 'pass/fail' output in shell\_harness.
+
+2008-11-05 Trent W. Buck
+  ~ -   Refactor away boilerplate in naughty ./configure-circumventing
+        profile targets.
+    -   Resolve conflicts.
+    -   Typo: make distclean and maintainer-clean rules cumulative.
+    -   Refactor TAGS targets.
+    -   autoconf.mk doesn't depend on darcs.cgi.in.
+    -   Delete unused "register" target.
+    -   Move cleanup rules to appropriate target (clean/distclean).
+    -   Resolve conflicts.
+    -   Merge autoconf.mk and .depend inclusion.
+    -   Make .hs.in of trivial .lhs.in files.
+    -   Make .hs of trivial .lhs files.
+    -   Split darcs.lhs into darcs.tex and darcs.hs.
+    -   Only .lhs (not .hs) files could possibly be TeX sources.
+    -   Typo: remove silly circular dependency.
+    -   Don't warn unless ALL alternatives are missing.
+    -   If installed, use rubber(1) to quieten TeX.
+    -   Typo.
+    -   Turn procedural assignments (:=) into declarations (=).
+    -   Refactor .hi rule.
+    -   Refactor install rules.
+    -   Refactor targets that prevent "include autoconf.mk" (and
+        .depend).
+    -   Generate TEXSOURCES programmatically.
+    -   Generate DARCS\_FILES by blacklist, not whitelist.
+    -   Use $@ and $\* to shrink test\_harness.
+    -   Refactor test rules.
+    -   Don't call GHC on autoconf.mk in .depend rule.
+    -   Miscellaneous refactoring.
+    -   Replace procedural := with declarative =.
+    -   Obviate SRC\_DIRS altogether.
+    -   Ameliorative ChangeLog mode hint for Emacs.
+
+2008-10-06 Florent Becker
+  ~ -   quickCheck tests for QuickCheck 2.1
+
+2008-11-03 Reinier Lamers
+  ~ -   add yet another braindead file path to file path
+        canonicalization test
+    -   Add bug script for issue1196
+    -   Fix "make bugs" target in makefile
+    -   Try a bit harder to hack darcs pathname canonicalization in
+        tests
+
+2008-10-25 Trent W. Buck
+  ~ -   Typo: install-pdf was trying to install \*.ps.
+    -   Typo.
+    -   Add conventional install-ps/pdf/html targets.
+    -   Use new "ps", "pdf" and "html" targets.
+    -   Clean hspwd.
+    -   Colour test output in Emacs' M-x compile.
+    -   Reduce loquacity of haddock targets.
+    -   Fix some predicates I accidentally reversed.
+    -   release/debian is long gone.
+    -   Make it obvious why deps are being filtered.
+    -   Leverage gmake's order-only dependencies.
+
+2008-10-28 Jason Dagit
+  ~ -   -fregs-graph seems to be a problem on both ghc 6.6 and 6.10
+
+2008-11-02 Eric Kow
+  ~ -   Resolve conflict between make darcs\_p and make continuous
+
+2008-10-26 Ganesh Sittampalam
+  ~ -   restore -auto-all to profiling options
+    -   avoid .depend doubling in size on every make
+
+2008-10-26 Eric Kow
+  ~ -   Also clean intermediate profiling files.
+    -   Do not use -threaded when building darcs\_p
+    -   Clean up how darcs\_p is built
+    -   Rename DARCS\_OBJS\_P and GHCFLAGS\_P
+    -   Allow the profiling and non-profiling versions of darcs to
+        co-exist
+    -   Add -fregs-graph to build instructions for SHA1.o
+
+2008-11-03 Simon Michael
+  ~ -   replace a hoogle workaround with a comment, we now index names
+        beginning with \_
+
+2008-11-02 Trent W. Buck
+  ~ -   Make haddock aware of CommandLine module comment.
+    -   Refactor QuickCheck 2 test.
+    -   Use cute short form of $(dir) and $(notdir).
+    -   Refactor dependency declaration for helper utils.
+    -   Turn descriptive commands into comments.
+    -   Quieten removal of "Main" intermediaries.
+    -   Add conventional "pdf", "ps" and "html" targets.
+    -   Don't override MAKEFLAGS's -j.
+    -   Use ANNOUNCE\_GHC convention for darcs.
+    -   Conventionalize make rule for hspwd.
+    -   Reduce disttest noise for teetotalers.
+
+2008-11-03 David Roundy
+  ~ -   resolve conflict in makefile.
+
+2008-10-29 Ganesh Sittampalam
+  ~ -   fixup SRC\_DIRS
+    -   a slight simplification
+    -   clarify SlurpDirectory interface
+    -   cleanup some patterns
+    -   simplify slurp\_has\_anycase
+    -   another obvious use of the SlurpyMap
+    -   bug fix
+    -   make use of the SlurpyDir Map in the obvious places
+    -   dumb changeover of SlurpDir contents from [] to Map
+    -   refactor Slurpy to common up name component between File/Dir
+
+

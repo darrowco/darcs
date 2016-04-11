@@ -1,0 +1,54 @@
+Say you have the repository Stable with three patches (let's call them
+A, B and C) in it:
+
+Stable: A B C
+
+You create a development branch based on that:
+
+Devel: A B C
+
+You add stuff to your development branch:
+
+Devel: A B C D E F
+
+Now you notice that F is an important bugfix that should go into the
+next stable release. But if you pull it from Devel to Stable, darcs has
+to find out which patches it should pull together with F. Maybe F
+depends on some stuff you added with D, or with E?
+
+Darcs can use the Patch Theory to find out if a patch depends on
+another. In the case above, it will try to use the rules of the patch
+theory to commute (i.e. "swap") the patch F backwards. First it tries to
+see if E and F can be commuted. If they can, it knows the F does not
+depend on E:
+
+Devel: A B C D F E
+
+It then tries to commute D and F to see whether F depends on D. If that
+works, all is well, and darcs can just pull F and be happy. If that does
+not work, darcs knows that F depends on D, and has to pull both patches.
+
+Since this reordering is based on a sound theory of patches, it is
+guaranteed that darcs will find the minimal set of patches it has to
+pull to satisfy the dependencies of any patch you requested, without
+asking you what other patches it needs.
+
+There's a bad side, of course. The patch theory works on a purely
+textual level. It can only find out that two patches depend on each
+other if they affect the same portions of text. So, while darcs will
+detect the relationship between two patches that modify the same line of
+code, it will *not*, for example, detect the relation between changes
+such as one which adds a call to a function, and the other which checks
+the returned value of this function, *unless* the two patches happen to
+fall in the same region of text.
+
+But semantic dependencies are beyond the automatism of darcs. If you add
+a new function in one patch and call it in another, darcs won't be able
+to find this dependency. Darcs provides some extensions to add such
+explicit dependencies by hand, but to find such things automatically, it
+would need a parser for the programming language (at least).
+
+[Example](Example) shows a simple example of a merge without conflicts.
+
+Ask questions on the
+[darcs-users@darcs.net](mailto:darcs-users@darcs.net).

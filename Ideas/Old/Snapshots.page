@@ -1,0 +1,67 @@
+(This idea is superseeded by [Alexey's summer of code
+2010](../GoogleSummerOfCode/2010-Network) )
+
+I believe that the nub of this idea is from [Petr
+Rockai](People/PetrRockai) and that he had this idea during the Vienna
+2009 sprint (during dinner). I wanted to flesh this out, so any stupid
+bits are mine and not his fault.
+
+Snapshots are a potential short-term solution to the pain that people
+experience fetching and pulling from darcs repos. They are meant as an
+alternative to packed repos. The main advantage of tag snapshots is that
+they are backwards compatible: if the snapshots exist, they are used, if
+not, then tough luck but no big deal.
+
+# Creating snapshots
+
+A snapshot is essentially a glorified tarball; it contains the
+\_darcs/pristine.hashed, \_darcs/patches and \_darcs/inventories.
+
+There is only ever one snapshot per repository, say
+\_darcs/snapshot.tar.gz
+
+Commands that can create tag snapshots are optimize, tag, and apply
+(which would create a snapshot if any of the tags it has applied were
+tags).
+
+# Retrieving snapshots
+
+Darcs get should first determine if the remote snapshot exists. If not,
+it should just behave as normally. If it does exist, it should retrieve
+and expand the snapshot. Doing so should add new files to
+\_darcs/patches and \_darcs/pristine.hashed and \_darcs/inventories.
+
+This mechanism relies on the darcs implementation of caching for hashed
+files. The result of prior shapshot fetching is that Darcs should
+automagically recognise when it has fewer hash files to fetch. Doing a
+darcs get, for example, should fetch only the snapshot, and any pristine
+files that have changed since the last tag, along with the patches that
+make them.
+
+## Making the idea fancier
+
+We could have actually two snapshots, one that only covers the contents
+of \_darcs/pristine.hashed and one that covers everything else. Maybe
+this would make darcs get --lazy faster.
+
+Or perhaps we could have a single pristine snapshot (for darcs get), and
+then one patches snapshot per tag. Doing a darcs get --lazy would then
+only fetch the one snapshot. Doing a darcs pull or a darcs get would
+fetch as many snapshots as there are tags.
+
+## Questions
+
+Can we make this useful for darcs pull? The problem is that in pull, you
+often only need to fetch a few patches. Retrieving the entire snapshot
+may wasteful. Perhaps we could have a way of dating the snapshot, say by
+storing a timestamp in \_darcs/snapshot.date. This way, darcs pull only
+ever fetches a snapshot if the one it has is out of date.
+
+## Related work
+
+Darcs 1 had a concept of [Checkpoints](/Checkpoints). The difference
+between snapshots and checkpoints is that snapshots are low-level (they
+just contain \_darcs files) and checkpoints are high-level (they are
+patches that represent the big delta from one tag to another).
+
+See also [Packs]()

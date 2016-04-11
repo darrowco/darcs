@@ -1,0 +1,19 @@
+- [People behind Darcs]
+- [Background theory of Darcs]
+- [Talks and Papers about Darcs]
+- [Blog Buzz]
+- [Darcs' repo history]
+- [Donations]
+- [License]
+
+[Donations]: /Donations
+[People behind Darcs]: /DarcsTeam
+[Talks and Papers about Darcs]: /Talks
+   "talks on darcs and darcs-related issues"
+[Background theory of Darcs]: /Theory
+   "the maths behind darcs"
+[Blog Buzz]: /BlogBuzz
+   "and third party comparisons which mention darcs"
+[Darcs' repo history]: http://hub.darcs.net/darcs/darcs-screened/changes
+   "darcs.net mirror on hub.darcs.net"
+[License]: /License

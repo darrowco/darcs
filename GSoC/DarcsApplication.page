@@ -1,0 +1,164 @@
+---
+title: Darcs 2013 Summer of Code Mentoring Organization Proposal
+...
+
+## 1. Describe your organization.
+
+Darcs is a cross-platform distributed version control system
+with a unique approach.
+It is the only system that treats changes as first-class
+citizens.
+
+Darcs is a volunteer-led project that has been developed and self-hosted
+for more than 10 years. It is a member of
+the Software Freedom Conservancy.
+
+For the user, a repository is a set of patches that can be
+independently transmitted between various branches. Darcs does all the math
+automatically, providing a simple and very interactive user interface.
+
+Many branching, merging and cherry-picking operations that would require additional
+commands with traditional systems like Git or Mercurial, can be simply done
+with Darcs with the usual `pull` and `push` commands.
+
+Although the space of distributed version control systems is currently dominated by Git
+and Mercurial, we believe that there is space for the alternative approach
+provided by Darcs. One of our current development streams is focused on improving
+interoperability with other version control systems.
+
+## 2. Why is your organization applying to participate in Google Summer of Code 2013? What do you hope to gain by participating?
+
+We hope to attact new developers to Darcs and to implement ideas that
+will make Darcs friendlier and more powerful.
+
+We are currently preparing
+the release of the next major stable version, 2.10, and have plans
+for the following major stable version. Many of the tasks we are thinking about can
+be implemented in the duration
+of a summer of code project.
+Input from new developers would help us implement these plans quickly.
+
+## 3. Has your organization participated in past Google Summer of Codes? (yes/no)
+
+Yes
+
+## 4. If you answered “yes” to the question above, please summarize your involvement and the successes and challenges of your participation. Please also list your pass/fail rate for each year.
+
+Up to now we always participated as member of the Haskell.org organization.
+Our previous involvement to Google Summer of Code is listed at <http://darcs.net/GSoC>.
+
+We participated in 2007 (1 student), 2009 (1), 2010 (2), 2011 (2) and 2012 (1).
+We had in total 7 projects so far, done by 6 different students, with a 100%
+passing rate for every year.
+
+Over time our connection with the Haskell.org community has been weakening. In past years
+they have explicitly asked for an extra slot specifically for Darcs, but they have no
+plans to do that this year.
+
+## 5. If your organization has not previously participated in Google Summer of Code, have you applied in the past? If so, for what year(s)?
+
+We also applied as a separate organisation in 2009.
+
+## 6. What Open Source Initiative approved license(s) does your project use?
+
+Darcs is licenced under the GNU GPL, version 2.
+
+## 7. What is the URL for your Ideas list?
+<!--  **This is the most important part of your proposal. Please make sure we can access it and it is complete when you submit this proposal. “Placeholder” or inaccessible ideas pages will be grounds for an automatic rejection for participation in Google Summer of Code 2013.** -->
+
+<http://darcs.net/GSoC>
+
+## 8. What is the main development mailing list for your organization?
+
+<http://lists.osuosl.org/mailman/listinfo/darcs-devel>
+
+## 9. What is the main IRC channel for your organization?
+
+\#darcs on irc.freenode.net
+
+## 10. Who will be your backup organization administrator?
+
+Ganesh Sittampalam, ganesh.sittampalam AT gmail.com
+
+## 11. What criteria did you use to select the mentors? Please be as specific as possible.
+
+They are active contributors to Darcs and participate on IRC,
+the mailing list and coding sprints.
+
+Owen is a past GSoC student, and Ganesh is a past GSoC mentor.
+
+## 12. What is your plan for dealing with disappearing students? Please be as specific as possible.
+
+We will choose students who are reliable in the first place. In particular, one
+potential mentor and darcs contributor works at the National University of Córdoba,
+Argentina, and has already met a group of interested students from his faculty.
+By choosing students from this group, we believe it will be unlikely that they
+will drop out in the middle of the project.
+
+We will have at least one meeting per week with every student. We will also
+make them work with public repositories so that their work in progress will
+remain accessible. We aim at having their changes incorporated to the main branch
+of Darcs regularly, whenever possible. We also make the students write a blog
+post per week, which help the rest of us understand the current state of their work.
+
+## 13. What is your plan for dealing with disappearing mentors? Please be as specific as possible.
+
+Darcs has a small but stable and very connected developer base. Most of the active
+developers meet at our bi-annual coding sprints. Communication between students and
+mentors will mostly happen on IRC. Hence it happens publicly and other developers
+are encouraged to intervene in the discussions.
+A disappearing mentor would thus get noticed quickly, and there should be no problem
+for another developer to step up as a mentor in such a case.
+
+## 14. What steps will you take to encourage students to interact with your project's community before, during and after the program?
+
+### Before
+We encourage the students to become known by the Darcs team. This means,
+sending patches to fix simple problems on the codebase and thus get to know
+the reviewing process. We also want them to show up on IRC and on the mailing lists.
+
+### During
+Mailing lists and IRC will still be the main communication channels between
+students and the rest of the Darcs team. We also want them to maintain a blog
+and write one post every week to log their project and maintaing interest of our
+most attentive users.
+
+### After
+We encourage every Darcs developer, and in particular newcomers, to attend
+our coding sprints. The Darcs project accepts donations so that it can refund the
+travel and hosting expenses of the participants who ask for it.
+This makes participation more accessible to students.
+
+We will also keep in touch
+with the students as we do with any project member. For instance, we may assign
+bugs or feature requests to them if they are related to code they wrote during
+the sprint. We also aim to grow new developers by getting them involved in
+reviewing other developers code.
+
+## 15. Are you a new organization who has a Googler or other organization to vouch for you? If so, please list their name(s) here.
+
+[haskell.org](http://www.google-melange.com/gsoc/org/google/gsoc2012/haskell)
+
+## 16. Are you an established or larger organization who would like to vouch for a new organization applying this year? If so, please list their name(s) here.
+
+No.
+
+## 17. What will you do to encourage that your accepted students stick with the project after Google Summer of Code concludes?
+
+We will see to it that the students will enjoy the experience of working on Darcs.
+In the project, we stick to principles of open source software development
+that aim at making newcomers feel comfortable. For instance, contributions by
+everyone goes through code review on the bug tracker and on the mailing list.
+We also consider as an important objective of the Summer of Code projects, to merge
+the code written by students by the end of the project timeframe.
+By doing this we hope to make the experience satisfying to them, and prove that
+they can really make a difference working on an open source project.
+
+# More information
+
+## Mentors
+
+* Ganesh Sittampalam, ganesh.sittampalam AT gmail.com
+* Guillaume Hoffmann, guillaumh AT gmail.com
+* Owen Stephens, o.a.stephens AT gmail.com
+

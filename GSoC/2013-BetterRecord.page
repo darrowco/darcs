@@ -1,0 +1,96 @@
+[Jose's Blog](http://blog.jlneder.com.ar/search/label/darcs)
+
+# Todo list 10-22-2013
+
+* Complete [LookForMoves](/Using/Record)
+* <s>Fix ghc warnings on hashed-storage repository.</s>
+* <s>Use hub.darcs.net/jlneder/hashed-storage-look-for-moves for sending patches to hashed-storage repository.</s>
+* <s>Update hashed storage internals.</s>
+* <s>Test "--look-for-moves" flag with "--ignore-times" and see all works allright.</s>
+* <s>Update TimeStampIndex.</s>
+* <s>Read Jason Dagit's tesis [http://blog.codersbase.com/2009/03/type-correct-changes-safe-approach-to.html]</s>
+
+# Todo pencils down:
+* Check darcs dependencies with regards to Haskell Platform.([issue 2338](bugs.darcs.net/issue2338))
+
+# Updated Timeline
+
+
+* June 17th: GSoC start
+* week 1, 2, 3: Implement patience diff, tests for correctness, evaluate performance. Integrate it in the main branch of Darcs.
+* week 4, 5, 6: Implement record -look-for-moves.. Integrate it in the main branch of Darcs.
+* week 7: Midterm evaluation.
+* around weeks 6, 7, 8: possible exams dates
+* week 7, 8, 9: Implement record -look-for-replaces Integrate it in the main branch of Darcs.
+* week 10, 11, 12: Implement record --provide-primitive-patches. Integrate it in the main branch of Darcs.
+
+
+
+# Initial Proposal
+
+## Abstract
+
+The objective of this project is to improve the darcs record command implementing several options.
+
+## About the project
+
+The most complicated part of Darcs is, arguably, the patch handling core. However, the task of creating patches has received less attention. The command record creates patches, based on the changes that are present in the working copy. It proposes the user to record changes based on diffing the pristine and the working copy.
+
+Diffing two given files can produce various correct outputs, depending on the algorithm used. The standard diff algorithm (used in darcs and many other places) has been criticized to sometimes produce counterintuitive diffs. We would like to try out the "[patience diff](http://www.owenstephens.co.uk/programming/2010/12/24/scala-patience-diff.html)" algorithm([Issue 346](http://bugs.darcs.net/issue346)), which seems to produce more interesting chunks when used on source code. One downside of patience diff is that it may be slower than classic diff, so performance will have to be evaluated.
+
+Moreover, just as the existing flag --look-for-adds proposes adding unversioned files to the new patch, we could use a --look-for-moves flag, which would be handful when one wants to record a file move after having done the move, ie, without using darcs move([Issue 642](http://bugs.darcs.net/issue642)). Another cool flag would be --look-for-replaces, which would detect token renaming when one forgets about using darcs replace([Issue 2209](http://bugs.darcs.net/issue2209)).
+
+If time allows, a --provide-primitive-patches would be useful for darcs to be called by another program that provides the changes to record. For instance, a web interface providing a simple on-line code edit feature a la GitHub.
+
+## Benefits to the community
+
+Darcs is a free and open source, cross-platform version control system written entirely in Haskell.
+I think that by implementing these changes we will improve the user experience.
+If diff patience produces generally simpler patches than GNU diff, then the patches produced are going to be simpler for cherry picking / the commutation.
+Add more options to the `record` command will do it more interactive, and this is good, because one of the distinctions of darcs is interactivity.
+
+##Project Design
+
+Patience diff: Implement Patience Diff in Darcs.Repository.Diff. See how much we can extract the diff code (regular + patience) from Darcs.Repository.Diff to make it generic, and maybe spin off our own diff library.
+
+record --look-for-moves: I may need to modify [hashed-storage](http://hackage.haskell.org/package/hashed-storage) to get the modified files between the recorded state and the working copy, and then detect moves (with possible changes). Also, study corner cases ( when there are multiple possible moves). Make --look-for-moves correspond as much as possible to the expectation of users.  Also handle directory moves.
+
+record --look-for-replaces:  the algorithm is quite simple and there seem to be no corner cases.
+
+--provide-primitive-patches: darcs has to check that the provided primitive patches make sense with regards to the current state of the repository. This should be doable using code from the Repair command. There is currently no program (apart from darcs) that provides primitive patches, so one way to test this feature will be: darcs whatsnew | darcs record --provide-primitive-patches.
+
+##Timeline
+
+week 1, 2, 3: Implement patience diff, tests for correctness, evaluate performance. Integrate it in the main branch of Darcs.
+
+week 4, 5, 6: Implement record -look-for-moves.. Integrate it in the main branch of Darcs. Midterm evaluation.
+
+week 7, 8, 9: Implement record -look-for-replaces Integrate it in the main branch of Darcs.
+
+week 10, 11, 12: Implement record --provide-primitive-patches. Integrate it in the main branch of Darcs.
+
+##Deliverables
+
+- Implement patience diff in the commands : record , amend-record, whatsnew (provide flags --patience, --old-diff)
+- Comment Darcs.Repository.Diff
+- tests for diff correctness
+- patience diff performance versus original diff performance benchmark
+- record --look-for-moves
+- record --look-for-replaces
+- record --provide-primitive-patches
+
+##Challenges
+
+- Getting the UI right for --look-for-moves.
+- Avoid performance regressions.
+- Get a correct performance for --look-for-moves so that it is usable in medium-to-big sized repositories.
+
+##About Me
+
+My name is José Neder, I'm a student of computer science.
+
+I've used haskell in several projects at university including my thesis.
+
+I am very happy for this opportunity to contribute as always I liked the open source ideals.
+
+But above all, I hope to have lots of fun.

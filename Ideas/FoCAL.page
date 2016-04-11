@@ -1,0 +1,40 @@
+---
+categories : Theory
+...
+
+- Paper:
+<http://www.cse.chalmers.se/~bernardy/AConcflictFreeVersionControlSystem.pdf>
+- Toy implementation:
+<http://www.cse.chalmers.se/~bernardy/focal_Code_Anders_Petter.tar.gz>
+
+* * * * *
+
+Jean-Phillipe Bernardy has suggested that the following could go
+an a wiki:
+
+A "patch theory" should be divided into two parts:
+
+1.  An internal representation for data. This should be general enough
+    to allow for universal merge operation. (I argue that this should
+    have a free abelian group structure). Advantages are that the system
+    never prevents you to "try" a merge, or a rollback, or
+    cherrypicking, etc.
+2.  A relation between internal representation and external
+    representation (ie. the unix filesystem). "Ideally" this should be a
+    bijection, but in practice this can not really be achieved. In
+    particular the translation from internal to external may produce
+    "conflict tags" in the output.
+
+On top of that all the goodies that come with usual VC systems can be
+implemented, usually by annotation of the internal representation an
+queries on this.
+
+Why proceed as such?
+
+-   Allows for total user-level liberty, as in state-based approach,
+    while preserving the cleanness of operation-based.
+-   This is a neat separation of concerns. In fact, the internal
+    representation can be seen as an extension of the space of versions.
+    This is an extremely common technique in mathematics to improve
+    orthogonality: eg. from naturals to integers to rationals, etc.
+

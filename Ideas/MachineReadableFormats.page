@@ -1,0 +1,83 @@
+# Questions
+
+1.  Goal: conceptual integrity across formats (eg. all formats use XML)
+2.  Goal: avoid ad-hoc formats (eg. use XML or YAML if possible)
+3.  Goal: use community standards for revision control if possible
+4.  Do we want to use a single format for context files and changes
+    --xml?
+5.  The changes --match problem
+
+# Insights
+
+-   annotate is a sort of special case, so we should give up on trying
+    to achieve \#1 for it
+-   diff already uses community-based format (unified diff), so it would
+    be silly to try to achieve \#1 (conceptual integrity) at the expense
+    of (\#3)
+
+## We need a line-based format
+
+There are two things that make markup-based formats problematic:
+
+> -   escaping markup characters
+> -   encoding arbitrary bytes - doable but ugly
+
+Using a line-based format avoids these two problems because
+
+-   the only markup character is newline, but for revision control
+    systems, newlines by definition DO NOT EXIST (if you see a newline
+    then you have a new line)
+
+-   line-based format does not pretend to be text; it's just bytes
+
+TODO: trivial to parse
+
+# Tasks that 3rd party tools would want
+
+-   File history (F)
+-   Show patch (D)
+-   Annotate (A)
+-   Last touching patch (quickly!) (L)
+-   Searching by metadata (S)
+
+# PRESENT formats
+
+-   annotate XML (A)
+-   changes XML (F,M,L)
+-   changes -s XML (F,M,L)
+-   diff (D)
+-   annotate -p (D)
+-   whatsnew (D)
+-   whatsnew -s
+-   changes -s
+-   context files and patch bundles
+
+# FUTURE formats
+
+We will converge on 4 formats
+
+1.  unified diff format [SAME]
+2.  line-separated annotate format [NEW! (adventure)] TODO: make sure we
+    have a story for annotate directory
+3.  patch disk format (taking eg. replace into account) [SAME]
+4.  hashed context file format [NEW!]
+
+    -   basically a hashed version of current context file format
+        [issue1550]
+    -   single field which tells if it's valid context file (contains
+        dependencies or not), so that we can safely use it for darcs
+        changes --match (without risking the depless output being for
+        get --context)
+
+Note!
+
+-   changes --xml will be deprecated in favour of \#4
+-   we will provide documentation for all the formats we create
+
+# Potentially open questions
+
+-   annotate directory
+-   pull --dry-run
+-   git-gi
+-   patch -\> cached file version
+

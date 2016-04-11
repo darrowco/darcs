@@ -1,0 +1,45 @@
+# Repository formats discussion
+
+What should we do for Darcs 2.8 with regards to the old-fashioned (OF)
+repositories ?
+
+Different options:
+
+-   Keeping full OF support
+-   Keeping all read-only support
+-   Keeping only `darcs optimize --upgrade` support
+
+The devil is in the details, there are in fact much more than 3 options,
+we will probably discuss the behaviour of each command.
+
+# Previous discussions
+
+On the mailing list:
+
+-   late August 2010
+-   adventure branch proposal
+
+\_darcs/pristine.hashed should be bucketed:
+
+-   [http://lists.osuosl.org/pipermail/darcs-users/2010-August/024945.html](http://lists.osuosl.org/pipermail/darcs-users/2010-August/024945.html)
+-   [http://lists.osuosl.org/pipermail/darcs-users/2010-August/024961.html](http://lists.osuosl.org/pipermail/darcs-users/2010-August/024961.html)
+
+Argument for not supporting getting from OF repositories:
+
+-   [http://lists.osuosl.org/pipermail/darcs-users/2010-August/025019.html](http://lists.osuosl.org/pipermail/darcs-users/2010-August/025019.html)
+-   [http://lists.osuosl.org/pipermail/darcs-users/2010-August/025046.html](http://lists.osuosl.org/pipermail/darcs-users/2010-August/025046.html)
+
+Recent discussion on IRC:
+
+-   [http://irclog.perlgeek.de/darcs/2010-11-15\#i\_2996809](http://irclog.perlgeek.de/darcs/2010-11-15#i_2996809)
+
+Latest discussion on mailing list:
+
+-   [http://lists.osuosl.org/pipermail/darcs-users/2010-November/025779.html](http://lists.osuosl.org/pipermail/darcs-users/2010-November/025779.html)
+
+There are probably other discussions on IRC and the ML.
+
+# See also
+
+-   [Roadmap](../Roadmap)
+

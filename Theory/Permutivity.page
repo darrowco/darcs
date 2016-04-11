@@ -1,0 +1,114 @@
+This is a page for discussing and recording various permutivity
+scenarios. If you aren't familiar with the new conflictor work (and most
+people aren't), you probably won't benefit much from reading this page.
+You may also wish to get the source code and latex versions of some of
+this work at
+
+    darcs get http://darcs.net/darcs-patch-theory
+
+In particular, this will let you see how conflictors really ought to
+look.
+
+My latest idea for conflictor notation consists of three conflictor
+forms, a "left-conflict" a "right-conflict" and a "middle-conflict". An
+ordinary conflicting commute of two primitive patches leads to a left
+and right conflict:
+
+    AB <-> <A;@B| |@A;B>
+
+The "@B" portion of the conflictor indicates the identity of the
+patch---A is now on the right, and B on the left. The conflictor <A;@B|
+is a left-conflictor, which is why it points to the left. The "A" part
+of this is the effect of this conflictor. The right-conflictor is
+symmetric with the left-conflictor. Together, left and right conflictors
+are referred to as \\emph{ordinary conflictors}. There are a couple more
+fields in an ordinary conflictor, but I won't discuss them quite yet. To
+the conflictor experts they'll be easy to guess.
+
+The third sort of conflictor is the "middle-conflict", which is written
+as |(A);@B;(C)|. Its identity is B, and conflicts with patches on both
+the right and the left. Its effect is B\^.
+
+# Two non-commuting patches plus inverse
+
+    A        A^       B           %   a  ia   b
+
+> <--\>AA\^ <A;@A\^| |@A;A\^\> B % ia1 a1 b <--\>AB <A;@A\^| <(A);A\^@B|
+> |@A;A\^B\> % ia1 b1 a2 <--\>A\^B B <B\^A;@A\^| |@A;A\^B\> % b2 ia2 a2
+> <--\>A\^A B <B\^;@A| |@A\^;B\> % b2 a3 ia3 <--\>BA A <A\^;@B|
+> |@A\^;B\> % a b3 ia3
+
+# Permutation of three noncommuting patches
+
+    A         B            C
+
+> <--\>AB <A;@B| |@A;B\> C <--\>AC <A;@B| <(A);B@C| |@A;BC\> <--\>BC
+> <AB;@C| |(A);@B;(C)| |@A;BC\> <--\>BA <AB;@C| |@AB;(C)\> |@B;C\>
+> <--\>CA A <B;@C| |@B;C\>
+
+# Permutation of two commuting patches with one non-commuter
+
+    A          B            C      % a  b  c
+
+> <--\>AB B' A' C % b' a' c <--\>AC B' <A';@C| |@A';C\> % b' c1 a2
+> <--\>BC <AB;@C| |@B'A';(C)\> |@A';C\> % c2 b2 a2 <--\>BA <AB;@C|
+> |@AB;(C)\> |@B;C\> % c2 a3 b3 <--\>CA A <B;@C| |@B;C\> % a c3 b3
+
+# Three parallel conflicting patches
+
+Here we have `A \/ B \/ C`. Note that the symmetry between `B` and `C`
+leads to a sort of "top-bottom" symmetry in the permutations. And even
+the symmetry between `A^` and `C` is apparent in the middle scenario.
+
+    A^        B            <B^;@C|
+
+> <--\>AB <A\^;@B| |@A\^;B\> <B\^;@C| <--\>AC <A\^;@B| <(A\^,B\^);@C|
+> |@A\^;(B,C)\> <--\>BC <A\^;@C| <(A\^,C\^);@B| |@A\^;(B,C)\> <--\>BA
+> <A\^;@C| |@A\^;C\> <C\^;@B| <--\>CA A\^ C <C\^;@B|
+
+# Permutation of four noncommuting patches
+
+This is just a sketch, feel free to add in more. I'm using the notation
+{a[BC]} to mean "the patch A, which has effect BC". Feel free to adjust
+the notation.
+
+    a  b  c  d = a[A]    b[B]   c[C]   d[D]
+    b1 a1 c  d = b[A]    a[B]   c[C]   d[D]
+    b1 c1 a2 d = b[A]    c[]    a[BC]  d[D]
+    c2 b2 a2 d = c[AB]   b[B^]  a[BC]  d[D]
+    c2 a3 b3 d = c[AB]   a[]    b[C]   d[D]
+    a  c3 b3 d = a[A]    c[B]   b[C]   d[D]
+    (so far it's just the three-way commute, and we can copy stuff over from above)
+
+    a  b  d4 c4 = a[A]   b[B]   d[C]   c[D]
+    a  d5 b4 c4
+    a  d5 c5 b5
+    a  c3 d3 b5
+    a  c3 b3 d
+    (again, it's trivial stuff)
+
+    d6 a4 b4 c4 = d[ABC] a[]    b[]    c[D]
+    d6 b6 a5 c4 = d[ABC] b[?]   a[?]   c[D]
+    d6 b6 c6 a6 = d[ABC] b[C^]  c[B^]  a[BCD] ?
+    d6 c7 b7 a6 = d[ABC] c[C^]  b[B^]  a[BCD] ??
+
+    b1 a1 d4 c4 = b[A]   a[B]   d[C]   c[D]
+    b1 a1 c  d  = b[A]   a[B]   c[C]   c[D]
+    b1 d7 a7 c4 = b[A]   d[B]?  a[C]?  c[D]  ???
+
+    (I haven't covered all the permutations, but that's enough for now)
+
+Arjan's table:
+
+    |~(G) ~(G)H ~(G)hI ~(G)HiJ ~(G)hIjK ~(G)HiJkL ~(G)hIjKlM
+
+> -----------+-------------------------------------------------------
+> (G)\~ | G H - I - J - F(G)\~ | F G\^ H\^ - I\^ - J\^
+>   ~ Ef(G)\~ | - F\^ G H - I -
+>
+> DeF(G)\~ | E - F G\^ H\^ - I\^
+>   ~ CdEf(G)\~ | - E\^ - F\^ G H -
+>
+> > BcDeF(G)\~ | D - E - F G\^ H\^
+>
+> AbCdEf(G)\~ | - D\^ - E\^ - F\^ G

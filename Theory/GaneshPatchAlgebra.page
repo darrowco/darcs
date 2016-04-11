@@ -1,0 +1,203 @@
+This page is to describe [Ganesh
+Sittampalam](http://www.earth.li/~ganesh/)'s formalisation of patch
+algebra, as discussed on the [darcs-conflicts mailing
+list](http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-conflicts)
+beginning with [this
+post](http://www.abridgegame.org/pipermail/darcs-conflicts/2005-May/000050.html).
+That list and the archives are currently dead.
+
+**Nothing here is "official" darcs theory or endorsed by David or anyone
+else (unless you can deduce otherwise from mailing list posts).**
+
+There should be a strong connection with existing patch theory, and with
+[Marnix Klooster's patch
+calculus](http://www.solcon.nl/mklooster/darcs/patch-calculus.html). In
+particular my hope is that this view of the world will provide a more
+low-level foundation which leads to clear justifications of higher-level
+rules.
+
+Feel free to edit it to add comments etc, but please don't change the
+core notation without discussing it on the mailing list first.
+
+A darcs patch has three components: an *identity*, a *context* and an
+*effect*.
+
+The identity of a patch is invariant under patch commutation. However,
+commutation always changes the context of a patch, and this may lead to
+changes in the effect of the patch.
+
+If `identity(A) = identity(B)` and `context(A) = context(B)` then
+`effect(A) = effect(B)` and we can write `A=B`.
+
+A *primitive* patch is one whose effect is a single hunk/addfile/replace
+etc. Compound patches can be made by putting other patches together in
+sequence, subject to certain rules on the contexts fitting that will be
+specified later.
+
+A primitive patch (conceptually) has a globally unique identifier
+associated with it at record time, known as a *ppid*.
+
+[can anyone think of a better name than ppid?]
+
+The identity of a patch is defined as two sets of ppids. One of these
+sets is the *positive* set and one is the *negative* set. The identity
+of a primitive patch has a singleton set containing its ppid as the
+positive set, and the empty set as its negative set. The positive and
+negative sets of a patch identity must be disjoint.
+
+The context of a patch is defined as a single set of ppids.
+
+    context(A) /\ positive(identity(A)) = {}
+    context(A) >= negative(identity(A))
+
+[/\\ is set intersection and \>= is non-strict subset inclusion (and \>
+would be strict subset inclusion)]
+
+Note that this implies
+`positive(identity(A)) /\ negative(identity(A)) = {`}
+
+A context is *reachable* if there is some sequence of patches that
+results in that context (sequences of patches will be defined precisely
+later). A reachable context has a tree associated with it, that is the
+same no matter what sequence of patches is used to reach it.
+
+The effect of a patch is given as a pair of trees, the *starting* tree
+and the *ending* tree. An effect will actually have an internal
+representation consisting of a sequence of darcs actions
+(hunk/replace/addfile etc), but two effects are considered equal if they
+have the same starting and ending trees.
+
+It is always true that:
+
+    starting(effect(A)) = tree(context(A))
+
+Note that `tree(context(A)) = tree(context(B))` does **not** imply that
+`A=B` or even that `context(A) = context(B)`.
+
+Two effects can be composed in sequence iff the ending and starting
+trees match up, i.e. we require that
+
+    ending(effect(A)) = starting(effect(B))
+
+and then
+
+    starting(effect(A);effect(B)) = starting(effect(A))
+    ending(effect(A);effect(B)) = ending(effect(B))
+
+    inv(A)
+
+exists for any `A` and is defined by:
+
+    positive(identity(inv(A)) = negative(identity(A))
+    negative(identity(inv(A)) = positive(identity(A))
+    context(inv(A)) = context(A) u positive(identity(A)) \ negative(identity(A))
+    starting(effect(inv(A)) = ending(effect(A))
+    ending(effect(inv(A)) = starting(effect(A))
+
+Two patches A and B can be composed in sequence iff:
+
+    context(B) = context(A) u positive(identity(A)) \ negative(identity(A))
+    positive(identity(A)) /\ positive(identity(B)) = {}
+    negative(identity(A)) /\ negative(identity(B)) = {}
+
+Then (note that the conditions on contexts and the rules about the same
+context always having the same tree guarantees that the conditions for
+`effect(A);effect(B)` to exist are satisfied):
+
+    context(AB) = context(A)
+    positive(identity(AB)) = (positive(identity(A)) \ negative(identity(B))) u positive(identity(B))
+    negative(identity(AB)) = (negative(identity(A)) \ positive(identity(B)) u negative(identity(B))
+    effect(AB) = effect(A);effect(B)
+
+This may all seem a bit complicated but the basic idea is just that to
+change a context for AB it is first changed for A and then for B.
+
+    A || B
+
+iff `context(A) = context(B)`.
+
+    A ~~ B
+
+iff `identity(A) = identity(B)`.
+
+The rule that contexts should have identical trees no matter how they
+are reached leads to the definition of commutation.
+
+    AB <-> B'A'
+
+iff:
+
+    AB and B'A' are valid sequential compositions
+    identity(A) = identity(A')
+    identity(B) = identity(B')
+    context(A) = context(B')
+    effect(AB) = effect(B'A')
+
+    <B,A>
+
+is defined iff: [need to check this]
+
+    context(B) = context(A) (i.e. A || B)
+    positive(identity(B)) /\ positive(identity(A)) = {}
+    negative(identity(B)) /\ negative(identity(A)) = {}
+
+And the properties:
+
+    identity(<B,A>) = identity(A)
+    context(<B,A>) = context(B) u positive(identity(B)) / negative(identity(B))
+
+Also, `<A,B>` is defined iff `<B,A>` is defined (this is a consequence
+of the rules above), and
+
+    A<A,B> <-> B<B,A>
+
+Conflicts are always between primitive patches. If a conflict arises
+during composition of patches, the approach taken is to remove the
+effects of both conflicting patches from the tree (the tree presented to
+the user uses conflict markers, but that's a different matter).
+
+A conflict only makes sense between `A` and `B` when `A||B`.
+
+Since we want the same tree for the same context reached from different
+patch orderings, this suggests that it must be the case that if two
+patches conflict, then any two patches with the same ppids will
+conflict. If this property doesn't hold, I think all kinds of bad things
+might happen - it's probably something we should try to prove, or at
+least quickcheck, about commutation and conflict detection.
+
+Assuming that this property holds, it makes sense to talk about ppids
+conflicting.
+
+Then, given a context, the corresponding tree should contain the
+semantic effects of all the ppids in the context, apart from those that
+clash with another ppid in the context.
+
+Using the old notation for conflictors, `[B,A]` has the same
+pre-conditions and properties as `<B,A>`, and also:
+
+    effect([B,A]) = effect(inv(B))
+
+    A+B
+
+is defined under the same conditions as `<B,A>` (which are the same as
+for `<A,B>`). Properties:
+
+    positive(identity(A+B)) = positive(identity(A)) u positive(identity(B))
+    negative(identity(A+B)) = negative(identity(A)) u negative(identity(B))
+    context(A+B) = context(A) = context(B)
+
+if A and B conflict then
+
+    starting(effect(A+B)) = ending(effect(A+B))
+
+The next bit is a work in progress and mostly wrong:
+
+Moving onto `A+B+C`, with all of A,B and C conflicting, we want:
+
+    starting(effect(A+B+C)) = ending(effect(A+B+C))
+
+    A+B+C = A[A,BC] = B[B,AC] = C[C,AB]
+    context([A,BC]) = {a}
+    So [A,BC] || [A,B] || [A,C]
+    Suppose [A,BC] = [A,B][,C] = [A,C][,B]
+    context([,C]) = {a,b}

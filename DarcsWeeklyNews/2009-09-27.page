@@ -1,0 +1,95 @@
+# News and discussions
+
+1. darcs 2.3.1 was released, including bug fixes for windows and
+documentation
+  ~ improvements:
+
+> -   [http://blog.darcs.net/2009/09/darcs-231-better-docs-less-bugs.html](http://blog.darcs.net/2009/09/darcs-231-better-docs-less-bugs.html)
+
+2. The date and location for the next Darcs Hacking Sprint have been set
+at
+  ~ 14-15 november, Vienna:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-September/021559.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021559.html)
+
+3. Ganesh's hunk editing patch has been applied in the main branch of
+darcs.
+  ~ Please help up test and improve this feature!
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-September/021487.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021487.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-September/021590.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021590.html)
+
+# Issues resolved in the last week (3)
+
+issue291 Ganesh Sittampalam
+  ~ -   add (basic) interactive patch splitting
+    -   [http://bugs.darcs.net/issue291](http://bugs.darcs.net/issue291)
+
+issue1478 Trent W. Buck
+  ~ -   document summary mnemonics.
+    -   [http://bugs.darcs.net/issue1478](http://bugs.darcs.net/issue1478)
+
+issue1584 Eric Kow
+  ~ -   Provide optimize --upgrade command.
+    -   [http://bugs.darcs.net/issue1584](http://bugs.darcs.net/issue1584)
+
+# Patches applied in the last week (33)
+
+2009-09-19 Ganesh Sittampalam
+  ~ -   Resolve issue291: add (basic) interactive patch splitting
+    -   Rolling back broken patch
+
+2009-09-23 Eric Kow
+  ~ -   Fix breakage in manual introduced by darcs optimize --upgrade.
+
+2009-09-23 Ganesh Sittampalam
+  ~ -   This patch is broken.
+
+2009-09-22 Eric Kow
+  ~ -   Resolve issue1584: Provide optimize --upgrade command.
+    -   Test for issue1584, the optimize --upgrade feature.
+
+2009-08-30 Ganesh Sittampalam
+  ~ -   add some QC properties that demonstrate the problem with
+        canonizeFL
+
+2009-09-21 Eric Kow
+  ~ -   Simplify and camel-case setSimplys.
+    -   Move make\_everything\_later type signature next to
+        implementation.
+    -   Simplify EXAMPLE.sh.
+    -   Haddock some of Darcs.Patch.Choices.
+    -   Move some core-specific modules into Darcs.Patch in cabal file.
+    -   Move OldDate module to Darcs.Patch.OldDate.
+    -   Move RegChars module to Darcs.Patch.RegChars.
+    -   Camel-case fileExists exported by Darcs.Commands.Record.
+    -   Camel-case getLog and getDate exported by Darcs.Commands.Record.
+    -   Remove old LWN quote from homepage.
+
+2009-09-20 Trent W. Buck
+  ~ -   Rewrite "darcs show repo" help.
+    -   Remove an obsolete remark from TeX.
+    -   Remove duplicated documentation.
+    -   Fix "make website".
+
+2009-09-20 Petr Rockai
+  ~ -   Include missing .tex files in the cabal source tarball.
+    -   Distribute GNUmakefile in the cabal tarball (for manual
+        building).
+    -   There's no longer a bugs/ directory, so remove from .cabal.
+    -   Remove the no-longer-existing darcs.cgi bits from cabal file.
+
+2009-09-20 Reinier Lamers
+  ~ -   Update website to link to 2.3.1 tarball
+    -   TAG 2.3.1
+    -   Bump version number to 2.3.1
+    -   Update NEWS
+
+2009-09-20 Trent W. Buck
+  ~ -   Typo: stray ++'s.
+    -   Typo: unescaped quotes within a string.
+    -   Rewrite "darcs changes" help.
+    -   Resolve issue1478: document summary mnemonics.
+
+

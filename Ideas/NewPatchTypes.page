@@ -1,0 +1,89 @@
+This page is meant as a one-stop catalogue of all the new patch types
+that people would like to see
+
+-   character-based hunks (as opposed to line based)
+    [issue1107](http://bugs.darcs.net/issue1107)
+-   word-based hunks
+-   hunk indent [issue311](http://bugs.darcs.net/issue311)
+-   line ending conversion
+-   intra-line whitespace modifications (covers hunk indent and line
+    ending conversion)
+-   restricted replace (like replace patches but affects only specific
+    line ranges)
+-   hunk move (Ganesh was working a bit on this)
+-   XML/tree tracking patches (add node, delete node, etc)
+-   patches for "key: value" files
+-   bug tracking patches (ask Petr Rockai)
+-   add patches with a field for file-type (binary vs line-based vs
+    paragraph-based vs xml …) and associated file type conversion
+    patches
+-   ... any other ideas?
+
+# Word-based hunks
+
+Consider the following file:
+
+    if ( x == true ) {
+      print "hello\n"
+    }
+
+modified with the following hunk patch:
+
+    if ( x == false ) {
+      print "hello\n"
+    }
+
+A standard hunk patch would be
+
+    hunk ./foo 1
+    -if ( x == true ) {
+    +if ( x == false ) {
+
+With a word-based hunk, we'd have something like
+
+    wordhunk ./foo 1 9
+    -true
+    +false
+
+Namely, in the file named 'foo', on the first line, change the 9th token
+from 'true' to 'false'. These patches are the same as hunk patches
+except a tokenization algorithm first converts a single line into
+multiple lines with one token per line. This is similar to how wdiff
+operates.
+
+It's possible that word-based hunks are a subset of character-based
+hunks, but I found no documentation about the latter.
+
+# Intra-line whitespace modifications
+
+Consider the following file
+
+    var x = 'foo';
+    var delay = 20; # seconds
+    var name = 'John Doe'; # the full name
+
+organized to add some vertical alignment
+
+    var x     = 'foo';
+    var delay = 20;         # seconds
+    var name  = 'John Doe'; # the full name
+
+One could imagine a patch roughly like this
+
+    spaces ./foo 1 x = 1 5
+    spaces ./foo 2 ; # 1 9
+    spaces ./foo 3 name = 1 2
+
+Namely, in the file named 'foo', on the first line, between the tokens
+'x' and '=', replace one space with five spaces, etc.
+
+Allowing start-of-line and end-of-line as tokens and allowing tabs and
+carriage returns as whitespace characters allows one to specify hunk
+indentation and newline conversion.
+
+# See also
+
+-   [issue1786](http://bugs.darcs.net/issue1786) - patch plugin
+    mechanism
+-   [Semantic patching with Coccinelle](http://lwn.net/Articles/315686/)
+

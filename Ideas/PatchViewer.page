@@ -1,0 +1,41 @@
+A patch viewer is a program that builds a visual representation of the
+darcs dependency graph.
+
+See the video in
+[http://projects.haskell.org/camp/unique](http://projects.haskell.org/camp/unique)
+for an example of a patch viewer in action.
+
+# Use cases
+
+What kinds of questions would a patch viewer help users to answer?
+
+# Features
+
+-   Support for darcs matchers (--match, --tag, --last)
+-   Venn diagram visualisation of commonality between patches?
+    [issue1200](http://bugs.darcs.net/issue1200)
+
+# Comments
+
+-   I have 7000 patches in my repository: what would be a reasonable
+    graphical representation of this?
+-   Perhaps showing all 7000 patches at a time would be a bit much
+    -could we show patches up to the last tag?
+-   Interactivity:
+-   Perhaps we could have collapsed nodes: if I click on a node, the
+    patch viewer could expand it to a set of patches and their
+    dependencies.
+-   Darcs does not store a dependency graph. Instead, it stores patches
+    in a sequence and computes some dependencies on the fly by commuting
+    patches. What might be interesting work is to have some tool (or
+    library) which gives you a graph for some set of patches
+
+# See also
+
+-   [Camp](http://projects.haskell.org/camp) provides a simple viewer
+    for camp...
+-   [gitk screenshot](http://lwn.net/Articles/140350/)
+-   [github network
+    graphs](http://github.com/blog/39-say-hello-to-the-network-graph-visualizer)
+-   [GraphicalInterface](GraphicalInterface)
+

@@ -1,0 +1,104 @@
+---
+title: How Darcs interacts with SSH
+...
+
+TODO: this page is very out of date (darcs transfer-mode could be
+described here in more detail, for example), but there are things in
+here which may be useful for long term history-of-darcs knowledge (for
+example, understanding our choices behind some SSH-related stuff).
+
+# Notes from the Darcs 1 era
+
+## Windows
+
+1.0.9rc2 works fine with PuTTY on Windows XP *provided* that you use
+public key authentication via pageant.
+
+  command   uses       1.0.9rc2 putty pageant   1.0.9rc putty w/out pageant
+  --------- ---------- ------------------------ -----------------------------
+  get       scp,sftp   works                    
+  push      scp,ssh    works                    
+  pull      scp        works                    
+  put       sftp,ssh   works                    
+  send      scp        works                    works
+
+## Unix
+
+Note: the following results are for 1.0.9rc2, openssh 4.5 on MacOS X
+(Intel)
+
+  command   uses       --ssh-cm   --no-ssh-cm   sshagent   --no-ssh-cm, sshagent
+  --------- ---------- ---------- ------------- ---------- -----------------------
+  get       scp,sftp   works      works         works      works
+  push      scp,ssh    works      works         works      works
+  pull      scp        works      works         works      works
+  put       sftp,ssh   works      works         works      works
+  send      scp        works      NO! [1]       works      must fix
+
+[1] --no-ssh-cm not supported (must fix)
+
+## General notes
+
+Running just the SSH tests
+
+    cd tests
+    USE_CONTROL_MASTER=1 REMOTE=you@foo.bar.info  ./ssh.sh
+
+See also the SSH tester script in
+[http://lists.osuosl.org/pipermail/darcs-devel/2007-October/006392.html](http://lists.osuosl.org/pipermail/darcs-devel/2007-October/006392.html)
+
+-   Seems to be scp (or sftp) related in that if I replace it with just
+    a generic program like ping, then everything goes fine
+
+### PuTTY
+
+Putty has this bad habit of using stdin/stdout for asking for passwords.
+It's not a problem if you're using pageant. Note that Pagaent does not
+appear to be available outside of windows, so no using darcs/PuTTY under
+Unix! (then again, you have OpenSSH anyway, so why worry?)
+
+What happens without pageant (Windows):
+
+-   under 1.0.9rc2 - psftp (get) will continously ask you for your
+    password and just die. This is because we are using stdin for
+    batch-controlling psftp (this was added in 1.0.9rc2). This works
+    fine when you are using PuTTY+pageant (no passwords to read), or if
+    you are using OpenSSH (reads directly from the tty, not from
+    stdin... cool!), but it breaks psftp sans pageant because it will
+    try to read bits of batch file for the password
+-   under 1.0.9rc2 - if you patch darcs to use the -b argument instead
+    of feeding the batchfile in, darcs+PuTTY (sans pageant) just hangs
+-   under 1.0.5 - you get the same hanging behaviour (whew! this means
+    the hanging is not a regression that I introduced). No ideas yet
+    what causes the hanging
+
+PuTTY under Unix:
+
+-   Interestingly, pscp continuously asks for passwords (pscp is called
+    before psftp in darcs get) and then dies. Pscp is much better
+    behaved in Windows, possibly because of how we have redirection set
+    up, but then again psftp seems to get us on both platforms.
+
+### Weird hanging
+
+A user has reported subprocess hanging with 1.0.9rc2. He says it affects
+large repositories only. The user is on MacIntel, and says that it's
+highly reproducible. I wonder if it's just macs, or if there is a more
+general problem.
+
+2010-06: After much investigation, we eventually discovered (around
+2007-10) that this was due to an OpenSSH bug. See
+[issue437](http://bugs.darcs.net/issue437) for more details.
+
+### darcs-ssh
+
+We still have some unpleasant issues with darcs:
+
+1.  creating the darcs-ssh in weird places (temp dir creation seems a
+    little too loose to me; surely we can improve on it)
+2.  not exiting the control master cleanly in all cases (if you Ctrl-C
+    out of darcs, for example, you might have a loose cm process lying
+    around)
+3.  not cleaning up the darcs-ssh directory on exit (even a clean exit)
+
+Is creating the directory in TEMPDIR neccesarily the best idea?

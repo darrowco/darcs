@@ -1,0 +1,31 @@
+"Stash" is the current working name for a command that can be used to temporarily suspend patches from the active set in a repository and then restore them with the same identity. This in contrast to `rebase`, which always restores patches with a different identity.
+
+Protoype implementation at [http://hub.darcs.net/ganesh/darcs-stash-draft-20150914](http://hub.darcs.net/ganesh/darcs-stash-draft-20150914)
+
+To use it, `darcs stash suspend` and `darcs stash unsuspend`.
+
+Any comments to `darcs-devel@darcs.net`.
+
+Notes
+-----
+
+The implementation is only very lightly tested and is likely to go wrong when the suspended patches get into complicated conflicts.
+
+The name isn't great as it this isn't really the same as `git stash` which captures unrecorded local changes. Maybe `suspend` and `unsuspend` should be top-level commands of their own.
+
+In the long-term, we should unify this with rebase, for example making it easy to switch from a normally suspended patch to one that's had its identity changed.
+
+Should we enable direct stashing of unrecorded changes?
+
+The implementation is some way from being mergeable as it refactors a whole load of darcs code first (including a lot of the rebase implementation).
+
+# Related
+
+Suspending patches locally provides a sort of halfway-house to the full idea of [multiple branches](Branches)
+
+There is also the pre-existing workflow of using `darcs obliterate -O` to shelve patches. Darcs stash can be understood as being more robust wrt dependencies. Suppose you have a patch "Later" which depends on "Earlier".  If you obliterate -O "Later" and then amend/delete "Earlier", the "Later" patch cannot be applied (not even with `darcs rebase apply`).  With the `darcs suspend/unsuspend` workflow, darcs will remember to also suspend "Earlier" if at any point you modify or remove it.
+
+Some relevant IRC discussions:
+
+* [http://irclog.perlgeek.de/darcs/2015-08-13#i_11050753]()
+* [http://irclog.perlgeek.de/darcs/2015-09-15#i_11223993]()

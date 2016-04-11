@@ -1,0 +1,63 @@
+# Shell Completion for darcs
+
+Darcs completion is available for some command line shells. With this in
+place, you can hit tab after 'darcs' on the command line, and the shell
+will offer possible completions of the sub-command or option names.
+
+## Bash Completion
+
+A basic completion script is distributed with darcs. You can also
+[download it](http://www.darcs.net/contrib/darcs_completion). It's
+possible it may just work seamlessly for you. For example, once
+`bash-completion` installed on Mandrake Linux, darcs completion works
+after the 'darcs' Mandrake package has been installed.
+
+Otherwise you may need to add a line to your bash profile to manually
+source the file.
+
+For fink users who have updated to darcs 1.01 or later, bash completion
+should "just work," if you have also installed fink's `bash-completion`
+package.
+
+For OS X the following steps work:
+
+-   Edit the above script following
+    [http://lists.osuosl.org/pipermail/darcs-users/2005-December/009073.html](http://lists.osuosl.org/pipermail/darcs-users/2005-December/009073.html)
+-   Add to \~/.bashrc: source \~/somepath/darcs\_completion
+    Alternatively if you use Darwin Ports you can do (better):
+-   port install bash-completion - this also enables lots of other fancy
+    completions. Remember to follow the instructions r.e. adding a few
+    lines to your \~/.bashrc.
+-   copy the above script (unmodified this time) to
+    /opt/local/etc/bash\_completion.d/
+
+## Zsh Completion
+
+Zsh completion scripts are distributed with darcs. You can download [the
+completion file](http://www.darcs.net/contrib/_darcs.zsh) . The latest
+version of zsh (currently available from CVS) comes with [darcs
+completion](http://zsh.git.sourceforge.net/git/gitweb.cgi?p=zsh/zsh;f=Completion/Unix/Command/_darcs;hb=HEAD)
+by default (for those that use compinit completion).
+
+## tcsh Completion
+
+A simple tcsh completion:
+
+    complete darcs 'p/1/(initialize get add remove mv whatsnew record unrecord \
+                        amend-record revert unrevert pull unpull rollback send \
+                        apply push replace tag setpref diff changes annotate \
+                        optimize check resolve dist trackdown repair)/' \
+                  'p/2/f/'
+
+(taken from
+[here](http://www.abbruchco.de/mainzelM/blog/index.php?p=18).)
+
+## fish Completion
+
+[fish](http://roo.no-ip.org/fish/) version 1.14.0 and later ship with
+command specific completions for darcs.
+
+## Emacs Completion
+
+Completion in the Emacs shell is also possible. See the [darcs emacs
+page](Emacs) for more information.

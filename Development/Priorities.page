@@ -1,0 +1,20 @@
+Last discussed 2012-04
+
+1.  [Clean up](Cleanup) darcs coding style and library
+    (for example, cleaner separation between Darcs.Patches and
+    Darcs.Repository).  New abstractions
+    like the [Darcs monad](issue1895).
+
+2.  Support Darcs hosting and GUIs.  Our goal is to have library code that
+    makes it easier to write things like a Darcs based GitHub.  This means working
+    with people behind services like Darcsden, and potentially
+    writing code that uses that library to prove it works.
+
+3.  Develop the Darcs 3 theory of patches.  We will focus on fixing conflict
+    handling. The more exciting features (eg. more semantic patches) will
+    likely have to wait for after.
+
+# See also
+
+-   [HowToHelp](/HowToHelp) us reach our goals faster :-)
+

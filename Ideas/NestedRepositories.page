@@ -1,0 +1,352 @@
+(If someone would please donate a usage case (an example of how nested
+repositories are used). Doing so would help the one person every month
+that wants to know how to do this with darcs.)
+
+*Note: this page is for describing how darcs behaves now wrt to nested
+repositories. See [ProposalForSubrepositories](Subrepositories) for
+possible future directions that darcs could take*
+
+# Quick documentation of the behavior of darcs for nested repositories
+
+Although its usefulness is currently very limited, it is possible to
+nest repositories in darcs. (Note that the current support for nesting
+is certainly not flexible enough for you to manage things similar to the
+way you would with hierarchical systems like CVS and SVN, nor is it
+intended to)
+
+The basic idea is that a darcs repository will basically ignore any
+darcs repositories it contains, and any repositories that it is
+contained in. They don't interact directly. Changes in the
+sub-repository will not be seen in the root repository, you have to go
+into the sub repository to notice them.
+
+Example: If you have repositories A and B nested inside a repository C,
+moving a file from A to B would result in recording a delete file patch
+in one repository and an add file patch in the other, with the
+super-repository C not even noticing the difference.
+
+If you have an existing repository, it is safe to create a repository at
+a higher level that contains it. However, if you have an existing
+repository, it is NOT safe to create a sub-repository containing files
+in the first repository.
+
+## Scenario A (creating a parent repository)
+
+An example of this scenario is you have a number of small tools (with
+preexisting darcs repositories) that you want to group under a single
+parent repository.
+
+The desired behavior is that you would be able to tell people to darcs
+get parentProject, which results in both subProj1 and subProj2 being
+retrieved.
+
+I think that the easiest way to do this is to create config file in
+parentProject with subrepos and subdirs:
+
+    <repo URL for subProject1> <dirname for subProject1>
+    <repo URL for subProject2> <dirname for subProject2>
+    ...
+
+and use following script to get the sub-repositories:
+
+    #!/bin/bash
+    set -eu;
+    if [ ! "$#" -gt 1 ]; then
+        echo "Usage: $0 <config file> [<options>]";
+        echo "Args: $@";
+        exit 1;
+    fi;
+    exec 5<"$1";
+    shift;
+    while read -u 5 A B; do
+        echo "$B";
+        case "$1" in
+            get )
+                if [ -e "$B" ]; then
+                    q_mv.sh "$B" './';
+                fi;
+                darcs "$@" "$A" "$B";
+            ;;
+            * )
+                #for check, whatsnew, ... commands
+                darcs "$@" --repodir="$B" || echo ko "$?";
+        esac;
+    done;
+    exit 0;
+
+Where q\_mv.sh will find new unique name for the sub-repository
+directory, so we will not lose current changes. We must also update
+boringfile or else darcs will browse sub-repositories when looking for
+changes with --look-for-adds option. See [the
+manual](http://lists.osuosl.org/darcs/manual/node5.html#SECTION00510040000000000000)
+for more info about customizing boringfile.
+
+(credit Korusef for the script)
+
+## Scenario A' (creating "sub-repo" nodes within a parent repository)
+
+Again, assume you have a number preexisting darcs repositories that you
+want to group under a single parent repository.
+
+The desired behavior in this situation is that you want darcs to manage
+"subrepo nodes", which are simply empty darcs repositories which you can
+run "darcs pull -a" to retrieve. Performing pull or push in the parent
+repository only pushes/pulls the nodes, and does not affect any file or
+patch in the subrepo.
+
+The trick in this situation is that you want the nodes to be valid darcs
+repositories **as soon as they arrive** wherever they are pulled or
+pushed. This functionality would be best if built-in to darcs, but can
+be hacked-in using scripts.
+
+First, a usage scenario:
+
+    $ darcs get host.com:/whatever/projectgroup
+    $ cd projectgroup
+    $ ls
+    component1 component2 component3
+
+    $ cd component1
+    $ darcs pull -a
+    // all patches are retrieved for component1
+    // edit, record, and then
+    $ darcs push -a
+    // now you decide to add a new component
+    $ cd ..
+    $ mkdir component4
+    $ cd component4
+    $ darcs init
+    // edit, and record
+    $ cd ..
+    $ darcs addrepo component4
+    $ darcs record -a -m "added subrepo for component 4"
+    $ darcs push -a
+    $ cd component4
+    $ darcs push -a
+
+*Note that "darcs addrepo" is not a real command.*
+
+And now a script which adds the missing functionality.... I apologize in
+advance for the ugliness and brittleness of this hack, but with darcs
+1.0.5 it works quite nicely. (There are other more reliable ways to pull
+this off, but aren't quite as efficient. If you write one, feel free to
+replace this code)
+
+1.  Install the utility "strace"
+2.  Rename $prefix/bin/darcs to $prefix/bin/darcs\_binary
+3.  Save the following script as $prefix/bin/darcs
+
+<!-- -->
+
+    #!/bin/bash
+
+    REPOMARKER=.this_is_a_sub_repo_from
+    REAL_DARCS=${0}_binary
+
+    # Subroutine to run "darcs init" if needed, on a possible repo stub
+    InitIfNeeded() {
+       if [[ ! -d "$1/_darcs" ]]; then
+          if pushd "$1" >/dev/null; then
+             darcs init \
+               && cp $REPOMARKER _darcs/prefs/repos \
+               && head -n 1 $REPOMARKER > _darcs/prefs/defaultrepo \
+               && cp _darcs/prefs/defaultrepo _darcs/prefs/lastrepo \
+               || echo "Failed to init darcs and make pref files in $PWD" >&2
+             popd >/dev/null
+          else
+             echo "cant change to $1 to run darcs init" >&2
+          fi
+       fi
+    }
+
+    # Decide what to do based on what darcs command is given
+    case "$1" in
+    pull|push|apply)
+       # each of push/pull/apply needs to search for repo stubs.  I "creatively" do this
+       # by collecting a list of all the directories where darcs writes a file named
+       # $REPOMARKER and then running the subroutine on them.  In a fit of pure insanity,
+       # I also detect the "repo root" by looking for where darcs creates the lock file.
+       # It would be tricky to detect this ourselves, though, since there's chances of a
+       # misplaced "_darcs".  A proper search would need to use the same hieuristic that
+       # darcs itself uses to determine whether a directory named "_darcs" is actually
+       # the repo we're in.
+       #
+       # "darcs query reporoot" would be a nice command to have built-in.
+       #
+       NEWFILE_TRACE=`mktemp /tmp/darcstrace.XXXXXX`
+       strace -e trace=open -o $NEWFILE_TRACE $REAL_DARCS "$@" \
+         && sed -ne '/open("\(...*\)\/'$REPOMARKER'.*O_CREAT.*/ s//\1/p' \
+                -e '/open("\(...*\)\/_darcs\/darcs_lock.*O_CREAT.*/ s//\1/p' <$NEWFILE_TRACE \
+       | while read fname; do
+          if [[ -z "$basepath" ]]; then
+             basepath="$fname";
+          else
+             InitIfNeeded "$basepath/$fname"
+          fi
+       done
+       rm $NEWFILE_TRACE
+       ;;
+    addrepo)
+       # This adds the director(y|ies) specified, and sets up the $REPOMARKER file,
+       # which contains the default URLs for push/pull.  If a repo URL list has
+       # not been created for the subrepo yet, prompt the user for the default repo.
+       while [[ -n "$2" ]]; do
+          dir="$2"
+          if [[ -d "$dir" && -d "$dir/_darcs" ]]; then
+             if [[ -f "$dir/$REPOMARKER" ]]; then
+                echo "Subrepo has already been marked" >?
+             else
+                if [[ -f "$dir/_darcs/prefs/repos" ]]; then
+                   cp "$dir/_darcs/prefs/repos" "$dir/$REPOMARKER";
+                else
+                   read -p "Enter the default repo path: " apath
+                   echo "$apath" > "$dir/$REPOMARKER"
+                fi
+                $REAL_DARCS add "$dir/$REPOMARKER";
+             fi
+          else
+             echo "$dir is not a darcs repo";
+          fi
+          shift
+       done
+       ;;
+    *)
+       # all other ocmmands pass through to the real darcs
+       $REAL_DARCS "$@";
+       ;;
+    esac
+
+Note that you must use this hack on each instance of darcs you intend to
+use: all your client machines and the server as well. If this script is
+not in place, the "darcs init" will not happen on the repo stubs, and
+you will not be able to push into them remotely.
+
+## Scenario B (creating a sub-repository)
+
+Once again, it is NOT safe to create a sub-repository containing files
+in the first repository.
+
+If you still want to try this, one way to do this might be to remove the
+files from the first repository before initializing the sub-repository.
+Unfortunately, this means that you loose the history of files in the
+inferior repository, which means that you won't be able to apply any
+patches from clones of the complete repository.
+
+Another solution is to duplicate the repository, remove spurious files
+in both clones, move files in the inferior repository, and move it in
+place. This will allow applying some patches from clones of the compound
+repository to either repository (those that don't span the two
+repositories).
+
+Both solutions cause major bloat, unless you tag, checkpoint and get
+--partial after the split.
+
+(credit Juliusz for the above explanation)
+
+Its completely safe to do something like this:
+
+    cd parentProject
+    mkdir subProject
+    cd subProject
+    darcs init
+
+Any changed/adds/removes you do in the newProject dir, or its subdirs
+will be isolated from the myProject repository.
+
+Known issues:
+
+    darcs record --look-for-adds
+
+will result in files being added to the wrong repository. The subrepo
+could end up being added as a normal dir in the root-repo
+
+    darcs whatsnew --look-for-adds
+
+will give you (perhaps dangerously) misleading feedback if you have new
+files in a nested repository.
+
+(credit David Roundy for above warnings)
+
+* * * * *
+
+What exactly are nested repositories?
+
+* * * * *
+
+I thought of this:
+
+    mkdir a
+    mkdir b
+    cd a/
+    darcs init
+    mkdir a
+    touch a/1 a/2 a/3
+    darcs add -r a/
+    darcs record -a -m "a1"
+    cd ../b/
+    darcs init
+    mkdir b
+    touch b/1 b/2 b/3
+    darcs add -r b/
+    darcs record -a -m "b1"
+
+then
+
+    cd ../
+    mkdir c
+    cd c/
+    darcs init
+    darcs pull ../a/
+    darcs pull ../b/
+
+then
+
+    cd ../
+    mkdir d
+    cd d/
+    darcs init
+    darcs pull ../c
+
+`a` and `b` never conflict. `a` and `b` nest inside `c`.
+
+Cross repository patches spanning `a` and `b` or patches against `c`
+should not be recorded. If you need to be able to record patches against
+`c` -- there is ad hoc approach which is not recommended -- a script
+could read a patch and divide it's pieces into two piles based on which
+repository they modify. (This breaks moves which would have to be
+replaced with a delete and an add. I don't see a way of getting around
+this without forgetting about this entire idea and just merging the
+repositories together which in many ways is a lot simpler. I know the
+benefits of this are the ability to work on parts individually without
+having a copy of everything locally, but I believe this benefit is
+weak.) With this script the example behavior described above at the
+beginning (the one in the third paragraph ignoring parenthetical
+thoughts) could be implemented without as much trouble as the prior two
+"scenarios".
+
+In this implementation, you don't nest repositories (as in nesting
+directories containing a `_darcs` subdirectory). You create a repository
+which contains all the patches from one or more other repositories; in
+other words this repository is the union of several repositories. by
+giving each repositories files a unique prefix and putting them within a
+directory with that name results in patches which cannot conflict
+between repositories.
+
+I don't remember if I mentioned this elsewhere but to allow repositories
+without unique prefixes an option like `darcs pull --patch-prefix=a`
+would make all of the patches pulled act as if they had been recorded
+from within `a/` in other words probably more clearly and by example `1`
+would act like `a/1`
+
+-- [DanDutkiewicz](People/DanDutkiewicz)
+
+* * * * *
+
+If someone is interested: I wrote a python script which splits the
+latest patch of a repo into independent patches for any number of given
+sub directories. If you have any use for it you my contact me on \#darcs
+at irc.freenode.net (nickname: asmanian) or via email: hhasemann at web
+dot de. My script tries to handle can handle moves even between
+subdirectories and binary files, too. But note that its not tested much
+so make backups of any valuable data before using it. --
+[HenningHasemann](HenningHasemann)

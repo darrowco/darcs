@@ -1,0 +1,253 @@
+# News and discussions
+
+1.  Darcs 2.5.1 is the first stable release that can be built with GHC
+    7:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2011-February/026018.html](http://lists.osuosl.org/pipermail/darcs-users/2011-February/026018.html)
+    -   [http://wiki.darcs.net/Releases/2.5](http://wiki.darcs.net/Releases/2.5)
+
+2.  A Darcs plugin for the Hudson/Jenkins continuous integration system
+    was released:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2011-February/026012.html](http://lists.osuosl.org/pipermail/darcs-users/2011-February/026012.html)
+
+# Issues resolved in the last week (5)
+
+issue1350 Gabriel Kerneis
+  ~ -   reliable patch transport
+    -   [http://bugs.darcs.net/issue1350](http://bugs.darcs.net/issue1350)
+
+issue1558 Gabriel Kerneis
+  ~ -   remove ".gz" extension in xml output
+    -   [http://bugs.darcs.net/issue1558](http://bugs.darcs.net/issue1558)
+
+issue2003 Ganesh Sittampalam
+  ~ -   no set-default hint if user explicitly chose no-set-default
+    -   [http://bugs.darcs.net/issue2003](http://bugs.darcs.net/issue2003)
+
+issue2019 Alex Suraci
+  ~ -   mtl 2.x support
+    -   [http://bugs.darcs.net/issue2019](http://bugs.darcs.net/issue2019)
+
+issue2035 Eric Kow
+  ~ -   Catch malicious subpaths.
+    -   [http://bugs.darcs.net/issue2035](http://bugs.darcs.net/issue2035)
+
+# Patches applied in the last week (147)
+
+2011-02-10 Petr Rockai
+  ~ -   Allow building with cmdlib 0.3.
+
+2011-02-13 Ganesh Sittampalam
+  ~ -   2.5.1 release
+    -   dependency bumps for GHC 7.0
+
+2011-01-21 Eric Kow
+  ~ -   Support both mtl-1 and mtl-2.
+
+2010-12-17 Alex Suraci
+  ~ -   resolve issue2019: mtl 2.x support
+    -   bumped network and HTTP dependency upper version bounds
+
+2011-02-10 Ganesh Sittampalam
+  ~ -   update issue2035 test for new test dir layout
+    -   resolve conflict between
+
+2011-02-02 Guillaume Hoffmann
+  ~ -   make OF get warning message point to wiki
+
+2010-12-29 Ganesh Sittampalam
+  ~ -   ignore GHC output when running \`pwd\` in test harness
+    -   resolve conflicts between
+    -   get rid of some impredicative uses of flip
+    -   don't insist on explicit flagging as malicious in issue2035 test
+
+2011-01-19 Eric Kow
+  ~ -   Resolve issue2035: Catch malicious subpaths.
+    -   Accept issue2035: malicious subpaths not caught.
+
+2011-01-07 Ganesh Sittampalam
+  ~ -   add test of set-default hint messages
+    -   resolve conflicts between
+    -   resolve issue2003: no set-default hint if user explicitly chose
+        no-set-default
+    -   resolve conflicts between
+    -   get rid of n+k patterns
+
+2010-12-04 Dmitry Tsygankov
+  ~ -   case -\> fromMaybe in cleanCachesWithHint'
+    -   Removed an extra parameter from iw
+    -   Removed an extra liftIO in applyAndFix
+    -   Removed an extra putAnn in annotateFile
+    -   case -\> mplus in copyFileUsingCache
+    -   Take+length+(==) -\> isPrefixOf
+    -   \>\>= return to fmap
+    -   Remove unneeded return ()
+    -   Eliminate an extra occurence of selectChanges
+    -   Cases -\> maybes
+    -   Remove a couple of dos and returns from deselectUnwanted
+    -   case -\> maybe in canonizeAfterSplitter
+    -   Remove unneeded parentheses
+    -   Fixed 'Use print' hlint suggestion everywhere
+
+2010-11-30 Florent Becker
+  ~ -   correct Darcs.URL.isSshUrl
+    -   Windows paths are not ssh urls
+
+2011-01-19 Gabriel Kerneis
+  ~ -   Fix race-condition in withSignalsBlocked
+
+2010-11-21 Ganesh Sittampalam
+  ~ -   resolve conflict between withUMaskFromOpts and withGutsOf
+
+2010-11-04 Gabriel Kerneis
+  ~ -   Generalize withSignalsBlocked and withGutsOf
+
+2011-02-07 Ganesh Sittampalam
+  ~ -   bump haskeline dependency to 0.6.3 to get runInputTBehavior
+    -   redo issue1465 test to use haskell instead of shell for fake
+        editors
+    -   fix problem on Windows when stdin is /dev/null
+    -   add test that non-interactive commands work when stdin is
+        /dev/null
+    -   don't clean up twice in issue612 test
+    -   TAG 2.7.2
+    -   bump version to 2.7.2
+    -   break examples out of Darcs.Test.Patch.QuickCheck
+    -   decouple Unit and Unit2
+    -   break test cases out of Darcs.Test.Patch
+    -   put property test list along with tests
+    -   reorganise top-level test list
+    -   move properties out of Darcs.Test.Patch.Test
+    -   delete unused and not very useful looking testcase
+    -   delete unused utility function
+    -   remove unneeded warning flag
+    -   delete some commented out stuff
+    -   patch test harness: break out some utility code
+
+2010-12-16 Gabriel Kerneis
+  ~ -   Remove the .gz suffix in Darcs.Patch.patchname
+
+2010-12-07 Iago Abal
+  ~ -   Simplification of commuteFiledir Move:<DP case.
+    -   Simplification of speedyCommute.
+
+2010-12-15 Ganesh Sittampalam
+  ~ -   re-enable witnesses for the test harness which got lost somehow
+    -   issue1988 cleanups: accept a couple of commutes that just check
+        success
+    -   issue1988 cleanups: accept throwing away PatchCheck results
+    -   issue1988 cleanups: accept throwing away parse results
+
+2011-01-18 Gabriel Kerneis
+  ~ -   Ignoring applyToWorking return value is safe
+
+2011-01-14 Florent Becker
+  ~ -   test for rollback --no-record
+    -   add a --no-record option to rollback
+
+2010-11-23 Ganesh Sittampalam
+  ~ -   put commuteNoConflicts into its own class and remove default
+        impl
+    -   move consistency checking into Darcs.Patch.Repair
+    -   drop an unused instance of Conflict
+    -   remove default for resolveConflicts
+    -   break patch repair out into its own class
+    -   get rid of unused default implementation for apply
+    -   remove unused parameter
+
+2010-12-08 Guillaume Hoffmann
+  ~ -   remove Darcs.Repository.Checkpoint
+
+2010-11-21 Ganesh Sittampalam
+  ~ -   resolve more conflicts with issue332 patch
+
+2010-12-08 Guillaume Hoffmann
+  ~ -   remove support for get --partial and check --partial
+    -   remove get --ephemeral support
+    -   remove all tests related to checkpoints and --partial
+
+2011-01-26 Alexey Levan
+  ~ -   Remove unused areFileArgs
+    -   Don't treat empty lists as special; use Maybe instead
+    -   Split Darcs.Commands.WhatsNew.announceFiles
+    -   Maybefy arguments to whatsnew
+    -   Maybefy arguments to record
+    -   Maybefy arguments to rollback
+
+2011-01-10 Ganesh Sittampalam
+  ~ -   add new types of repository job to clean up Convert a bit
+    -   issue1988 cleanup: accept warning
+    -   generic job transformation function
+    -   get rid of the ($-) operator
+    -   use API function for identity patch
+    -   abstract RealPatch over Prim
+    -   abstract Patch over prim type
+    -   introduce Dummy patch type
+    -   get rid of unnecessary instances for Prim
+    -   get rid of Effect instance for Prim
+    -   abstract Prim behind a class
+    -   don't go via Patch to summarise changes in record
+    -   stop going via V2 patches in WhatsNew
+    -   make summaries of lists work properly
+    -   get rid of Conflict instance for Prim
+    -   test that summaries are merged properly in record
+    -   simplify Effect instances
+    -   given token replacement its own module
+    -   clean up some unused exports
+    -   simplify ShowPatch constraints
+    -   move Prim instances for Show into Prim.Show
+    -   move FileNameFormat out of Prim
+    -   hide the internals of Prim
+    -   move IsHunk into its own module
+    -   extract Darcs.Patch.Prim.Commute
+    -   move showPrim etc out of Darcs.Patch.Prim.Core
+    -   move coalescing code out of Darcs.Patch.Prim.Core
+    -   move read of Prim into its own module
+    -   move Apply Prim code into separate module
+    -   move Population handling out of Darcs.Patch.Apply
+    -   abstract Population over PatchInfo
+    -   give applyFL a better name
+    -   move Darcs.Population[Data] into Darcs.Patch namespace
+    -   move markupFile etc out of Darcs.Patch.Apply
+    -   break up Summary so Prim is handled internally
+    -   abstract MarkedUpFile etc over PatchInfo
+    -   remove dead code
+    -   split out Darcs.Patch.{Effect,Conflict}
+    -   split out IsHunk from Effect
+    -   get rid of Identity constructor from Prim
+    -   move MyEq superclass from Invert to Patchy
+    -   drop identity member of Invert
+    -   read legacy Split patch format
+    -   get rid of Split
+    -   add tests for reading of split patches
+    -   make Show instance for V2 patches mirror that for V1 patches
+    -   move guts of Darcs.Patch.Prim into new Core module
+    -   get rid of a few more unnecessary superclasses
+    -   break out Summary code into separate module
+    -   disentangle Darcs.Patch.Named from Darcs.Patch.Viewing
+    -   switch test to use a URL we can make sure will fail
+
+2011-01-18 Gabriel Kerneis
+  ~ -   Remove redundant Packs and NoPacks
+    -   Remove dummy .gz suffix in patch name
+    -   resolve issue1350: reliable patch transport
+
+2011-01-25 Ganesh Sittampalam
+  ~ -   TAG 2.7.1
+    -   TAG 2.7.0
+
+2010-10-19 Florent Becker
+  ~ -   Support hunk editing in rollback
+
+2011-01-21 Eric Kow
+  ~ -   Bump text dependency to 0.11.\*.
+    -   Use Data.Text.find instead of findBy.
+
+2010-12-16 Gabriel Kerneis
+  ~ -   Test issue1558: xml output for patch hash shall not include "gz"
+        extension
+    -   resolve issue1558: remove ".gz" extension in xml output
+    -   Split makeFilename to get rid off the .gz suffix
+
+

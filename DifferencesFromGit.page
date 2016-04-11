@@ -1,0 +1,74 @@
+# Merging
+
+Darcs' merging is always done the same way,
+by transforming patches, such that they form a linear history.
+This does not allow for different merge "strategies" as in Git,
+but instead results in behaviour similar to what Git users would call rebasing
+(N.B. darcs merging is not related to the darcs rebase command).
+However, simple merging in Darcs does not change patch identities (unlike git rebase),
+so Darcs can safely reorder/merge published patches.
+
+# The index
+
+Darcs does not use a git-style index
+(we have a control file called "index" which is completely unrelated)
+to stage commits.
+
+If staging is important to you,
+one workflow you could try is to to use `amend` to stage changes as you go.
+You could, for example, record a patch named "DRAFT"
+and incrementally add to this using `amend`.
+When you're done, just `amend --edit` to give the patch its final name.
+
+Some advantages of Git staging, pointed out by Alberto Bertolgi,
+with a proposal of equivalent workflow with darcs:
+
+-   when merging, the git index stores non-conflicted changes.
+    A status/diff will only show you only the conflicted paths.
+      ~ -But then, doing `whatsnew` just after `pull`
+        also gives exactly the conflicts, assuming you did record DRAFT.
+
+-   if you want to change a non-conflicted path,
+    you can easily ask for a diff between the version from your working directory
+    and the version that the merge has prepared.
+      ~ -`darcs whatsnew` after `pull` should also show you that.
+
+-   it is also very useful when splitting big patches
+    or rebasing a long list of commits.
+      ~ -When ready, interactive rebase for darcs should let you do that
+        using normal darcs commands.
+
+# Hunks
+
+Git and Darcs use the word 'hunk' in subtly different ways.
+The difference seems to be that a darcs hunk is a contiguous block of changes to a file;
+whereas a git hunk seems to be any set of changes to a given file.
+Darcs would model the latter as a set of hunks.
+
+# Local branches
+
+Darcs does not yet support local branches.
+See [issue555](http://bugs.darcs.net/issue555).
+
+# Shallow repositories (Git) vs Lazy repositories (Darcs)
+
+Darcs' lazy repositories are like normal repositories
+but they do not have the whole history of patches downloaded.
+Thay can be created with: `darcs clone --lazy URL`.
+
+Git's shallow repositories are repositories with the history truncated to a given depth.
+They can be created with `git clone -depth DEPTH URL`.
+
+Both concepts are similar, but darcs' lazy repositories can retrieve history on demand
+(they can even reach a point where they become complete repositories).
+Moreover, it is possible to push from a lazy repository,
+while according to the help of git-clone,
+shallow repositories do not always allow it.
+
+# See also
+
+-   [Converting repositories from Git to Darcs](Using/Convert)
+-   <http://lists.osuosl.org/pipermail/darcs-users/2010-January/022724.html>
+-   <http://hackage.haskell.org/trac/ghc/wiki/GitForDarcsUsers?version=25#Commands>
+    gives a git equivalent to the most used darcs commands
+

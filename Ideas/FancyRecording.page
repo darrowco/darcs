@@ -1,0 +1,12 @@
+-   ability to split hunks (covered by hunk editor)
+-   ability to modify hunks (covered by hunk editor)
+
+-   [http://bugs.darcs.net/issue1742](http://bugs.darcs.net/issue1742)
+    (merging hunks)
+-   [http://bugs.darcs.net/issue1734](http://bugs.darcs.net/issue1734)
+    (revert on record)
+-   ability to record patches into multiple bins (Ganesh FOSDEM'05)
+-   [http://bugs.darcs.net/issue1470](http://bugs.darcs.net/issue1470)
+    (ability to remove hunks during amend)
+
+

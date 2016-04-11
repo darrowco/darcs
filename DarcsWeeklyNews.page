@@ -1,0 +1,25 @@
+---
+categories : Recruitment
+...
+
+[Darcs Weekly News](http://blog.darcs.net/search/label/dwn) provides a summary
+of darcs activity for people who are unable to follow the darcs-users
+mailing list fully.
+
+# How to contribute
+
+DWN is mostly automated -- we have a Haskell script that parses darcs
+changes output and formats it nicely -- but we also need human editors
+to summarise activity on mailing lists and the blogosphere. To help out,
+
+    darcs get --lazy http://wiki.darcs.net
+
+and write a patch to the DarcsWeeklyNews directory (or just use the web
+interface).
+
+DWN is currently edited by Guillaume.
+
+# See also
+
+-   [archives](DarcsWeeklyNews/)
+

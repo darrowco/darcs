@@ -1,0 +1,152 @@
+First: even though there is no V2 prims, I call those V3, because the V1
+prims have slightly (and somewhat confusingly) different semantics in
+Darcs1 and Darcs2 repositories; if nothing else filename encoding has
+changed incompatibly. There have been some commute rule changes as well,
+although I am not sure this wasn't retroactively changed even for Darcs1
+repos.
+
+# Objects
+
+All patches operate on abstract objects, identified by UUIDs. Objects
+come into existence the first time they are referenced and they are
+never destroyed. We assign a type to each object (and object patches get
+arrow types).
+
+I imagine there would be a few object types: binary, text, directory. We
+can add bugs and stuff later. The patch types should be monomorphic to
+simplify things. We can share implementations between different patch
+types if they are identical apart from their type.
+
+## Directories
+
+A directory object is a map from names (strings) to object ids. (I say
+map and not bimap since there seems no good reason to prevent multiple
+manifestations of a single object.) We should however take care to avoid
+loops in the structure and such. We could even tie hardlinking to this,
+although that's probably pretty useless in practice. We definitely
+should take care to avoid loops and similar abominations in the
+directory structure.
+
+Among other repository properties, we keep a "root" object -- this is
+the UUID of a (directory) object that represents the root of the working
+copy of the repository. The directory can map names to things, like text
+or binary files, or other directories.
+
+Akin to the "root" object, we can keep track of a "preferences" object
+as well. Again, this would be just an UUID of a directory object. The
+directory object could then list individual preference files.
+
+# Patches
+
+Some examples:
+
+-   bhunk (binary hunk) :: binary -\> binary
+-   hunk (text hunk) :: text -\> text
+-   bin2text :: binary -\> text
+-   text2bin :: text -\> binary
+-   manifest :: directory -\> directory
+-   demanifest :: directory -\> directory
+
+Patches of different types on the same object clearly don't need to
+commute. If there is a binary -\> binary patch and a text -\> text patch
+affecting the same object, they can never change their order. In fact, a
+-\> b patches for a != b can't realistically commute with any a -\> a
+patch. This should drastically reduce the exponential number of commute
+rules we'd otherwise need to deal with, and should make the primitive
+commute function much more modular. In fact, only a -\> a patches for
+same a become involved in the exponential commute definition blowup.
+This should be manageable.
+
+Moreover, if we impose a map from patches to the object they affect, we
+can also trivially commute patches that affect different objects. We
+will need to generalise this later, however, since some patch types may
+involve multiple objects (even though our type system can't handle that
+yet, either).
+
+Patch application needs to obey the type restrictions of course.
+
+We will probbaly want to attach a UUID to each primitive patch as well,
+so it can be readily identified. Of course, this increases the space
+overhead, but presumably not exceedingly so.
+
+## Hunks
+
+The basic patch type is the hunk: the representation may be identical
+for both binary and text objects. What is not the same is how binary and
+text hunks are obtained. For text objects, we should use a
+whitespace-sensitive diffing algorithm (line diff, most likely; either
+the one we already have in darcs, or alternatively patience diff). For
+binary objects, we can use one of the binary delta algorithms. It may be
+prudent to disallow commute for binary hunks, too.
+
+(XXX Format to be elaborated; see also
+<http://web.mornfall.net/blog/patch_formats.html>;
+however, we probably want a somewhat different format, or an additional
+hunk type, because we apparently want both removal and addition to
+happen in a single Prim, for commute to make more sense)
+
+## Multi-object patches
+
+Until now, we restricted ourselves to patches that affect a single
+object. This may be genuinely impractical for patches that move around
+things, be it complete files (move) or pieces of content (hunk move). We
+want such patches to commute as a single unit, either commuting
+completely or not at all. This could be achieved differently, by adding
+a concept of atomic patch group. I am not entirely sure if that is right
+or not, but it currently seems like the more complicated option.
+
+Therefore, we can go on adding multi-object patches. Presumably, the
+correct type would be (a, b) -\> (c, d). Most commonly of course (i.e.
+in the two abovementioned cases), this would end up being (a, a) -\> (a,
+a).
+
+## Generic commute rules
+
+Let's assume a function:
+
+    touches :: Prim -> [UUID]
+
+we can say that:
+
+    commute (a :> b) | null (touches a `intersect` touches b) = (b :> a)
+
+Now we can also add the type restrictions. We demand that for each
+touched object, all the types in both patches match for the commute to
+be allowed.:
+
+    commute (a :> b) | not (a `typematch` b) = fail
+
+Where:
+
+    typematch a b = all match (touches a `union` touches b)
+        where match x | type a x /= type b x = False
+                      | fst (type a x) /= snd (type a x) = False
+                      | fst (type b x) /= snd (type b x) = False
+                      | otherwise = True
+
+With \`type :: Patch -\> UUID -\> (ObjectType, ObjectType)\`.
+
+## Adding new patch/object types
+
+With the generic commute rules, it becomes possible (and easy) to add
+new object types and corresponding patch types to the system, without
+ending up in an exponential tangle. One such object type could be
+"haskell" (holding a representation of a Haskell AST), or "bug" (for
+in-repo bug tracker, ala bugs everywhere). Another useful object type
+could be "set", keeping a sorted set of lines, or a "changelog", keeping
+a timestamped list.
+
+## Optimisations
+
+The suggested patch representation allows for some optimisations in the
+way patches are stored. This could include per-object buckets, detached
+hunk storage or the alike. Per-object buckets are slightly complicated
+by multi-object patches, but probably not ruled out. With per-object
+buckets, UUIDs based on hashing and minimal context for prims may be
+feasible.
+
+(XXX To be elaborated)
+
+# Obtaining patches
+
+(XXX To be written)

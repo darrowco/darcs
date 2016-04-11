@@ -1,0 +1,31 @@
+# News and discussions
+
+1. We discussed the cases where other systems require more user input
+  ~ than darcs for the same task:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-April/019161.html](http://lists.osuosl.org/pipermail/darcs-users/2009-April/019161.html)
+
+2. Ashley Moran asked about the feasibility of a whitespace adjustment
+  ~ patch type:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-April/019165.html](http://lists.osuosl.org/pipermail/darcs-users/2009-April/019165.html)
+
+3. The darcs team is working hard on migrating the current wiki (powered
+  ~ by MoinMoin) to darcsit, a darcs-based wiki engine:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-April/019240.html](http://lists.osuosl.org/pipermail/darcs-users/2009-April/019240.html)
+
+4. The camp team paved the route for its work at the current darcs
+sprint:
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-April/019241.html](http://lists.osuosl.org/pipermail/darcs-users/2009-April/019241.html)
+    -   [http://projects.haskell.org/camp](http://projects.haskell.org/camp)/
+
+5. The second darcs sprint has started ! Stay tuned on darcs weekly news
+  ~ next week to know about the work done during this week-end!
+    Meanwhile, learn more about the topics and the people involved:
+
+> -   [http://wiki.darcs.net/index.html/Sprints/2009-04](http://wiki.darcs.net/index.html/Sprints/2009-04)
+
+# Issues resolved in the last week (0)
+
+# Patches applied in the last week (0)

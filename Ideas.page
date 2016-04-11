@@ -1,0 +1,64 @@
+---
+categories : Development 
+... 
+
+This page is meant to give darcs users
+and developers a way to flesh out their ideas.
+
+Since the ideas are just that and not necessarily finished or accepted proposals, just because an idea is described here doesn't mean it's something that should or will be implemented.
+
+Any specific feature requests should be logged on the
+[bugtracker](http://bugs.darcs.net)
+
+# Known ideas
+
+-   [Full list of proposals on this wiki](Ideas/)
+-   [Wishlist items for future versions of
+    darcs](http://bugs.darcs.net/issue?@search_text=&title=&@columns=title&topic=&id=&@columns=id&creation=&creator=&activity=&@columns=activity&@sort=activity&actor=&priority=5&@group=priority&status=&@columns=status&assignedto=&@columns=assignedto&@pagesize=50&@startwith=0&@sortdir=on&@queryname=&@action=search).
+
+## Ideas that affect core patch semantics
+
+The following ideas require additions to core patch theory
+
+-   [AddAddConflicts](Ideas/AddAddConflicts)
+-   [BugTracker](Ideas/BugTracker) (with bug tracking patches)
+-   [CopyPatch](Ideas/CopyPatch)
+-   [NewPatchTypes](Ideas/NewPatchTypes) and
+    [PatchPlugins](Ideas/PatchPlugins)
+-   [NewRepositorySemantics](Ideas/NewRepositorySemantics)
+-   [DerivingCommuteRules](Ideas/DerivingCommuteRules)
+
+## Ideas that affect repository layout / mega-patches
+
+These ideas affect how patches and repositories are represented, but
+build on the same old patch-theory, or any other we might implement
+
+-   [Branches](Ideas/Branches)
+-   [CVSKeywords](Ideas/CVSKeywords)
+-   [NestedRepositories](Ideas/NestedRepositories) and Subrepositories
+-   [PatchIndex](Ideas/PatchIndex)
+-   [RebaseDesign](Ideas/RebaseDesign)
+
+## Other ideas
+
+These ideas should be implementable (at least in part) before darcs 3,
+or without major disruption. They still can be a big piece to chew on.
+
+-   [BugTracker](Ideas/BugTracker) (without bug tracking patches)
+-   [ConflictMarking](Ideas/ConflictMarking)
+-   [DarcsLibrary](Ideas/DarcsLibrary)
+-   [Education](Ideas/Education)
+-   [EssentialDependencies](Ideas/EssentialDependencies)
+-   [FancyRecording](Ideas/FancyRecording)
+-   [GraphicalInterface](Ideas/GraphicalInterface)
+-   [MachineReadableFormats](Ideas/MachineReadableFormats)
+-   [PatchViewer](Ideas/PatchViewer)
+-   [ShortSecureId](Ideas/ShortSecureId)
+-   [Subversion](Ideas/Subversion)
+-   [Camp](Ideas/Camp)
+-   [FoCAL](Ideas/FoCAL)
+-   [Darcs 3 Wishlist](Ideas/Darcs3Wishlist)
+
+# How to suggest/add a new feature?
+
+See [Development/NewFeature]()

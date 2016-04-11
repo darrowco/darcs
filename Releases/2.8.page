@@ -1,0 +1,204 @@
+# Availability
+
+-   2.8.5 is available by `cabal install darcs-2.8.5`; you can also download the [source
+    tarball](http://hackage.haskell.org/packages/archive/darcs/2.8.5/darcs-2.8.5.tar.gz)
+    .
+
+
+# Supported GHC versions and Unicode filenames
+
+Due to changes in ghc's handling of non-ASCII filenames, darcs 2.8.5 supports GHC versions 6.10.x, 6.12.x, 7.0.x, 7.4.x, 7.6.x and 7.8.x. Version 7.2.x is also supported on Windows. On Unix systems, version 7.2.x is disabled by the cabal file, as using a darcs executable built using ghc 7.2.x could make the on-disk format of repositories inconsistent.
+
+# What's new in 2.8.5
+
+- GHC 7.8 support
+- Resolved [issue2364](http://bugs.darcs.net/issue2364): Download problems with GHC 7.8
+- Support matching on short patch hash
+- Resolved [issue2345](http://bug.darcs.net/issue2345): Fix bug where configure script reported missing libiconv rather than libcurl
+
+# What's new in 2.8.4
+
+- GHC 7.6 support
+- Resolved [issue2199](http://bugs.darcs.net/issue2199) : get --tag can include extra patches
+- Removed the --xml-output option to annotate which has been non-functional for a while
+
+# What's new in 2.8.3
+
+- Tweak the library to avoid a C symbol clash with cryptohash
+
+# What's new in 2.8.2
+
+- Addition to the Darcs API to support darcsden
+
+# What's new in 2.8.1
+
+- Bump in the mtl dependency to support the upcoming Haskell Platform
+
+
+# What's in 2.8
+
+
+Since darcs 2.5 has been tagged, there have been 1181 patches accepted. Here is a list of the most user-visible changes:
+
+## Performance
+
+-   "darcs annotate" is now significantly faster and uses less
+    memory, although it still slows down linearly with repository
+    size.
+-   An experimental option is available to speed up HTTP
+    downloads.
+    -   You can now use "darcs optimize --http" to create a
+        repo optimized for HTTP downloads, and use "darcs get
+        --packs" to download such a repo.
+    -   There are still some known issues with it, so the
+        feature is not enabled by default.
+
+## New features
+
+- Darcs now supports multiple email addresses for the author in
+    the global prefs file. So, if you use different identities for
+    home and work, you can now easily select between them.
+    (issue1530)
+-   The -o/-O options for obliterate which were removed in 2.5 are
+    back.
+-   Hunk-splitting now works in "darcs revert" (issue114)
+-   Sending patches by email is now more robust and human
+    friendly. We display a cleaner version in plain text for
+    humans, and have added a complete version of the patch for
+    "darcs apply". (issue1350)
+-   A new environment variable has been added to help control
+    network connections: DARCS\_CONNECTION\_TIMEOUT. See the
+    manual for details.
+-   "darcs status" has been added as a hidden alias for "darcs
+    whatnew -ls" to ease the transition from some other source
+    control systems. (issue182)
+-   "darcs amend-record" now has the option --unrecord to allow
+    individual changes to be unrecorded. (issue1470). This can
+o be used as "darcs amend-unrecord".
+-   "darcs amend-record"'s interactive selection now supports 'k'
+    for going back to a previous patch.
+-   "darcs dist" now has the option --set-scripts-executable.
+    (issue734)
+-   pushing to ssh:// URLS is now supported. eg: darcs push
+    ssh://code.haskell.org/foo
+-   If a test fails during darcs record, you now have the option
+    to record it anyway. (issue332)
+-   "darcs send" now tries to report the right character set in
+    the email headers, and has the option --charset to override
+    this.
+-   "darcs init" and "darcs get" now have a --no-working-dir
+    option.
+-   Conflicts are now marked with red in the terminal. (issue1681)
+-   ssh stderr output is now passed through, making it easier to
+    diagnose problems. (issue845)
+-   Interactive selection now has a 'g' command to go to the first
+    patch.
+-   The --unified flag is now available for record, end-record,
+    revert and unrevert (issue1166)
+-   darcs now has a "darcs test" command for running whatever
+    test-suite is associated with the repository.
+
+## Simplifications
+
+-   Local support for the legacy "old-fashioned" repository format
+    has been removed.
+    -   You can still work with remote repositories in this
+        format
+    -   Local repositories can still be upgraded via "darcs
+        optimize --upgrade".
+-   The --ephemeral and --partials options to "darcs get" has en
+    removed. "darcs check --partial" has also been removed.
+-   "darcs rollback" now has a --no-record option, to be used en
+    you only want to update the working directory.
+
+-   The --nolinks option for "darcs get" was removed.
+-   The "--old" flag has been removed for "darcs init", "darcs
+    get" and "darcs put".
+-   "darcs resolve" has been removed an alias for "darcs
+    mark-conflicts".
+-   ssh ControlMaster support has been removed.
+
+## Issues resolved in Darcs 2.8
+-   issue1266: "darcs init" now warns when run inside another
+    darcs repo.
+-   issue1344: When using darcs send, let users know sooner if
+    they won't eventually be able to send
+-   issue1397: darcs changes /bad /paths no longer lists all
+    changes
+-   issue1473: problem with annotate --repodir
+-   issue1551: Now we only use 'file content did not change'
+    prompt for darcs send
+-   issue1558: xml output for patch hash no longer includes "gz"
+    extension
+-   issue1599: automatically expire unused caches
+-   issue1637: When darcs get fails due to a HTTP failure, port
+    the actual HTTP failure.
+-   issue1640: darcs apply --verbose docs have been improved
+-   issue1661: darcs add --quiet is quieter
+-   issue1705: fix error with unhandled --index in "darcs show
+    contents"
+-   issue1714: provide more sensible behavior when combining an
+    "ALL" default with a default for a specific sub-command
+-   issue1727: a better diagnostic message is provided when the
+    user tries to move the root of the repository
+-   issue1740: "darcs mv" now gracefully the handles the case re
+    the user first does an "mv" on a directory and then follows
+    up with a "darcs mv"
+-   issue1804: The diagnostic message "getSymbolicLinkStatus: es
+    not exist" has been improved
+-   issue1883: rename --patch-name option to --name. This is
+    usually used in darcs record in shorthand (-m) form. This
+    rename is aimed at eliminating the confusion with the patch
+    matcher, which bites amend-record and rollback users.
+-   issue1884: darcs get was wrongly reporting "getting lazy
+    repository" when you hit C-c
+-   issue1908: try to create a global cache before checking its
+    availability
+-   issue1922: Fixed bug where obliterate -o was producing
+    incorrect bundles in some cases
+-   issue1923: bad source warning mechanism no longer warns out
+    sources outside your control
+-   issue1932: Handling of files with colons is improved
+-   issue1965: attempting "darcs move" on non-repo files now ves
+    a sensible error
+-   issue1977: "darcs repair" now no longer complains if the
+    pristine.hashed directory is missing
+-   issue1978: Improve handling of the \_darcs/format file with
+    "darcs get"
+-   issue1984: "darcs convert" now gives a better error message
+    for invalid repo names
+-   issue2013: "darcs send" no longer ignores --to (or default
+    recipient) with --context
+-   issue2021: character encoding handling has been improved
+-   issue2041: "darcs add" no longer follows directory symlinks
+-   issue2054: The behavior when combining --boring with a ring
+    file has been improved
+-   issue2066: "darcs record" better handles adding deleted and
+    added files passed on the command line
+-   issue2067: darcs diff no longer outputs blank lines when
+    non-existent files are given
+-   issue2076: "darcs move myfile" into directory confuses darcs
+-   issue2077: "darcs mv myfile" into directory no longer confuses
+    darcs
+-   issue2079: "darcs put" now does --set-default by default
+
+# Todo-list for the release
+
+1.  Benchmarks, please use darcs-benchmark on HEAD, and report;
+    currently, darcs-benchmark is broken for two reasons:
+    a.  it does not compile with modern ghcs. For this, please get it
+        from darcs get
+        [http://tausenblum.lautre.net/darcsystuff/darcs-benchmark](http://tausenblum.lautre.net/darcsystuff/darcs-benchmark)
+        for a modernized versions
+    b.  The benchmarks repositories are not available anymore. If you
+        have them somewhere, then you can use them (skip darcs-benchmark
+        get); otherwise, we'll make them available as soon as possible
+
+2.  Exotic platform support: we need someone to check that installing on
+    windows and mac works. We'll also need a windows installer and
+    something (what?) on mac.
+
+3.  Check for release blocking bugs and regressions, please use the
+    betas and report issues.
+
+4.  Marketing: where do we announce and how?

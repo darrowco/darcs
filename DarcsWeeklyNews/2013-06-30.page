@@ -1,0 +1,89 @@
+# News and discussions
+
+1.  Google Summer of Code 2013 has begun!
+    BSRK and José will post updates on their blogs:
+
+    -   <http://bsrkaditya.blogspot.com/search/label/darcs>
+    -   <http://blog.jlneder.com.ar/search/label/darcs>
+
+# Issues resolved (8)
+
+issue2163 Radoslav Dorcik
+  ~ -   new option for amend, select author for patch stealing.
+    -   <http://bugs.darcs.net/issue2163>
+
+issue2227 Ganesh Sittampalam
+  ~ -   move the rebase patch to the end before an amend-record
+    -   <http://bugs.darcs.net/issue2227>
+
+issue2248 Ganesh Sittampalam
+  ~ -   always clean up rebase-in-progress state
+    -   <http://bugs.darcs.net/issue2248>
+
+issue2250 BSRK Aditya
+  ~ -   tabbing in usageHelper - pad by max length of command name
+    -   <http://bugs.darcs.net/issue2250>
+
+issue2311 Sebastian Fischer
+  ~ -   posthook for 'get' should run in created repo
+    -   <http://bugs.darcs.net/issue2311>
+
+issue2312 Sebastian Fischer
+  ~ -   posthooks for 'record' and 'amend-record' should receive DARCS_PATCHES
+    -   <http://bugs.darcs.net/issue2312>
+
+issue2320 Jose Luis Neder
+  ~ -   save prompted author name in ~/.darcs/author instead of ./_darcs/prefs/author
+    -   <http://bugs.darcs.net/issue2320>
+
+issue2321 Jose Luis Neder
+  ~ -   when no patch name given, directly invoke text editor
+    -   <http://bugs.darcs.net/issue2321>
+
+
+# Patches applied (20)
+
+2013-06-09 Guillaume Hoffmann
+  ~ -   make nano the default text editor instead of vi
+
+2013-06-20 BSRK Aditya
+  ~ -   Resolve issue2250: tabbing in usageHelper - pad by max length of command name
+
+2013-06-16 Guillaume Hoffmann
+  ~ -   remove word repetition in fileHelpAuthor string
+
+2013-06-16 Jose Luis Neder
+  ~ -   resolve issue2320: save prompted author name in ~/.darcs/author instead of ./_darcs/prefs/author
+    -   resolve issue2321: when no patch name given, directly invoke text editor
+
+2013-04-30 Guillaume Hoffmann
+  ~ -   remove repository flag DryRun parameter when not used or always NoDryRun
+
+2013-04-05 Ganesh Sittampalam
+  ~ -   fix test for Windows
+
+2013-03-10 Sebastian Fischer
+  ~ -   Follow-up on patch1066 resolving issue2312.
+    -   resolve issue2312: posthooks for 'record' and 'amend-record' should receive DARCS_PATCHES
+    -   Added tests for issue2312: posthooks for 'record' and 'amend-record' should receive DARCS_PATCHES
+
+2013-02-16 Ganesh Sittampalam
+  ~ -   resolve issue2227: move the rebase patch to the end before an amend-record
+    -   tidy command definitions in Darcs.UI.Commands.Rebase
+    -   resolve issue2248: always clean up rebase-in-progress state
+    -   add --ignore-times option to rebase commands that read the working dir
+
+2013-03-08 Sebastian Fischer
+  ~ -   resolve issue2311: posthook for 'get' should run in created repo
+    -   Added tests for Issue 2311.
+
+2013-06-03 Guillaume Hoffmann
+  ~ -   haddocks for functions that look for user e-mail
+
+2013-03-02 Radoslav Dorcik
+  ~ -   Resolve issue2163: new option for amend, select author for patch stealing.
+
+2013-05-29 BSRK Aditya
+  ~ -   Export doOptimizeHTTP from Optimize module
+    -   Increase efficiency of patch index update by more efficient extraction
+

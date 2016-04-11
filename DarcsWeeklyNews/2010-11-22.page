@@ -1,0 +1,205 @@
+# News and discussions
+
+1.  Eric called for a Windows darcs packager:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-November/025817.html](http://lists.osuosl.org/pipermail/darcs-users/2010-November/025817.html)
+
+2.  The lists darcs-users and darcs-devel now follow a more usual
+    separation, that is, patches discussions are now being done on
+    darcs-devel. This will make darcs-users less noisy for
+    non-developers:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-November/025794.html](http://lists.osuosl.org/pipermail/darcs-users/2010-November/025794.html)
+
+3.  Gour explained why he switched from darcs to Fossil:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-November/025757.html](http://lists.osuosl.org/pipermail/darcs-users/2010-November/025757.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-November/025813.html](http://lists.osuosl.org/pipermail/darcs-users/2010-November/025813.html)
+
+# Issues resolved in the last week (6)
+
+issue332 Gabriel Kerneis
+  ~ -   ask if test fails
+    -   [http://bugs.darcs.net/issue332](http://bugs.darcs.net/issue332)
+
+issue1397 Alexey Levan
+  ~ -   separate arguments/repository code in Changes.lhs
+    -   [http://bugs.darcs.net/issue1397](http://bugs.darcs.net/issue1397)
+
+issue1637 Dmitry Tsygankov
+  ~ -   report HTTP response code for HTTP errors
+    -   [http://bugs.darcs.net/issue1637](http://bugs.darcs.net/issue1637)
+
+issue1965 Reinier Lamers
+  ~ -   Resolve conflicts with argument handling work in move
+    -   [http://bugs.darcs.net/issue1965](http://bugs.darcs.net/issue1965)
+
+issue1970 Florent Becker
+  ~ -   allow ssh:// urls
+    -   [http://bugs.darcs.net/issue1970](http://bugs.darcs.net/issue1970)
+
+issue1988 Gabriel Kerneis
+  ~ -   enable warn-unused-do-bind
+    -   [http://bugs.darcs.net/issue1988](http://bugs.darcs.net/issue1988)
+
+# Patches applied in the last week (89)
+
+2010-11-21 Gabriel Kerneis
+  ~ -   resolve issue1988: enable warn-unused-do-bind
+    -   Explain do-notation comments in README
+
+2010-11-17 Guillaume Hoffmann
+  ~ -   update comparisons to other VCS in manual, remove section
+        subsumed by the wiki
+    -   update building section of manual, avoid information rot
+    -   remove the mysterious add --date-trick
+
+2010-11-15 Dmitry Tsygankov
+  ~ -   resolve issue1637: report HTTP response code for HTTP errors
+
+2010-11-21 Ganesh Sittampalam
+  ~ -   resolve conflict between Darcs.Population cleanup and catMaybes
+        -\> mapMaybe
+
+2010-11-10 Guillaume Hoffmann
+  ~ -   remove command optimize --relink-pristine
+    -   haddock for createPartialsPristineDirectoryTree
+    -   in Pristine use bug more and remove unused functions
+    -   remove dangling doc paragraph from 2002 in DarcsRepo
+    -   unused return value of createPristine
+    -   remove the nopristine function
+    -   remove unused getRepoPop function
+
+2010-11-16 Sergei Trofimovich
+  ~ -   tests/emailformat.sh: use ghc --make instead of ghci
+
+2010-11-13 Dmitry Tsygankov
+  ~ -   Repository/Internal.hs: invert if to remove negation
+    -   Removed two unneeded returns from Repository/Internal.hs
+    -   Minor readProblem-writeProblem refactoring
+    -   Factor out common parts of readProblem and writeProblem
+    -   Fixed some copypasted comments on xxProblem in Format.hs
+    -   Fixed 'Use when' hlint suggestion where reasonable
+    -   Fix 'Use mapMaybe' hlint suggestion everywhere
+    -   A couple of maybes instead of cases
+    -   Removed an unneeded $
+    -   Factor out a repeated pattern with getUMask
+    -   flip catch -\> handle
+    -   Hlintification of Preproc.hs
+
+2010-11-21 Ganesh Sittampalam
+  ~ -   resolve conflicts in issue332 patch
+
+2010-11-07 Gabriel Kerneis
+  ~ -   resolve issue332: ask if test fails
+
+2010-11-05 Florent Becker
+  ~ -   Darcs.Patch.Bundle.parseBundle: return patches from the bundle
+        and context separately
+
+2010-11-21 Ganesh Sittampalam
+  ~ -   fix warning in Ssh
+    -   fix warning in Darcs.Commands.Move
+    -   fix warning in Darcs.Commands.Dist
+    -   fix warning in Darcs.Commands.Changes
+
+2010-10-27 Petr Rockai
+  ~ -   Bump the shellish dependency to \>= 0.1.3.
+
+2010-11-17 Florent Becker
+  ~ -   correct showContextPatch documentation
+    -   correct haddock for PartitionFL
+    -   document showContextPatch
+    -   Remove redundant (:\>\>) type constructor
+
+2010-11-05 Eric Kow
+  ~ -   Resolve darcs.cabal conflict with branch-2.5.
+    -   Fix conflict with darcs 2.5 backport of issue1942 patch.
+
+2010-11-02 Florent Becker
+  ~ -   Cope with initial spaces in URLs
+    -   resolve issue1970: allow ssh:// urls
+    -   remove useless unsafePerformIO
+    -   Warn when running cabal test with -fno-test
+
+2010-10-22 Ganesh Sittampalam
+  ~ -   move optimization setting into a flag
+    -   make test harness optional
+
+2010-10-19 Eric Kow
+  ~ -   Resolve conflicts between test harness extensions and cleanups.
+    -   Split unit tests into Darcs.Patch and miscellaneous ones.
+    -   Sweep Darcs.Patch.Info tests into a single suite.
+    -   Sweep Darcs.Email tests into a single suite.
+    -   Consolidate unit test running logic into test harness.
+    -   Remove literate Haskell from Darcs.Test.Unit.
+
+2010-03-26 Alexey Levan
+  ~ -   darcs dist doesn't take any arguments
+
+2010-10-17 Reinier Lamers
+  ~ -   Resolve conflicts with Alexey's refactoring of argument handling
+        in diff
+
+2010-03-25 Alexey Levan
+  ~ -   Separate arguments/repository code in Diff.lhs
+
+2010-10-17 Reinier Lamers
+  ~ -   resolve issue1965: Resolve conflicts with argument handling work
+        in move
+    -   Resolve conflicts with Alexey's refactoring of argument handling
+        in annotate
+
+2010-03-25 Alexey Levan
+  ~ -   Separate arguments/repository code in Annotate.lhs
+
+2010-10-17 Reinier Lamers
+  ~ -   Resolve conflicts with Alexey's refactoring of argument handling
+        in changes
+    -   Resolve conflicts with Alexey's refactoring of argument handling
+        in add
+    -   Resolve conflicts with Alexey's refactoring of argument handling
+        in amend-record
+    -   Resolve conflicts with Alexey's introduction of maybeFixSubPaths
+
+2010-03-20 Alexey Levan
+  ~ -   Resolve issue1397: separate arguments/repository code in
+        Changes.lhs
+    -   Separate arguments/repository code in Add.lhs
+    -   Separate arguments/repository code in AmendRecord.lhs
+    -   Add test for absolute paths
+    -   Separate argument handling from repository work in Move.lhs
+    -   Add Maybe variant of fixSubPaths
+
+2010-11-18 Petr Rockai
+  ~ -   Put back showHexLen into Darcs.Utils, it's needed on windows.
+
+2010-11-16 Eric Kow
+  ~ -   Disable unsupported haddock.
+    -   Fix Darcs.Repository haddock.
+
+2010-10-17 Ganesh Sittampalam
+  ~ -   make sure all of Darcs.Patch is imported with explicit import
+        lists
+    -   explicit import of Darcs.Test.Patch.Test
+
+2010-11-14 Florent Becker
+  ~ -   Make send-output-v\*.sh tests more robust against timezones
+
+2010-10-21 Ganesh Sittampalam
+  ~ -   fix regressions in V1 patch reading/hash recalc
+    -   push FL from Repository instances into Named
+    -   remove locale sensitivity from send output tests
+    -   make send output tests for v2 repos
+    -   add test of send adding context around hunks
+    -   get rid of unneeded pragma
+    -   showContextPatch FL needs to manage braces too
+    -   add test of V1 send output
+    -   add test for handling of v1 patches with nested braces
+    -   get rid of ComP
+    -   stop using Patch instances for reading/writing pending
+    -   Clean up pending API a bit
+    -   relax type of bracketedFL
+    -   simplify showContextHunk
+
+

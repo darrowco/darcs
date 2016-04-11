@@ -1,0 +1,7 @@
+*TODO*
+
+Document how locks work in darcs.
+
+Document how *sloppy* locks work.
+
+See <http://bugs.darcs.net/issue904>.

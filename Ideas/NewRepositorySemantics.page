@@ -1,0 +1,248 @@
+# Repository Semantics
+
+repository is a:
+
+-   set of disabled patches D
+-   set of enabled patches E
+-   (extra information used to track which patches belong where)
+
+D \`intersection\` E = empty
+
+-   the pristine state (and the working copy) correspond to applying E
+    to an empty tree
+-   there are no conflicts within E
+-   the only operation allowed on D is selecting and enabling patches
+    (under the above constraint, i.e. enabling a patch may not introduce
+    a conflict)
+
+## Conflicts
+
+-   when a conflict arises:
+    -   move both sides of the conflict into D
+    -   mark up working copy / notify the user
+
+The user could then either proceed to use their text editor to wibble
+the conflict mark up and record a brand new patch, or they could use
+some commands to bring one side of the conflict back into E. (A smart
+implementation could notice that the user used a text editor to
+effectively do the latter and suggest doing that instead of recording a
+new patch.)
+
+## Local branching
+
+There is no inherent branching (apart from the E/D split). Local
+branching can be handled on the UI level, though.
+
+## Simple E/D tracking
+
+The simplest option is to just have the two sets and no extra
+information --i.e. there is no versioning nor history of migration
+between E and D. This of course works, but maybe isn't very comfortable.
+
+The operation of interest is merging two repositories (i.e. doing a
+darcs pull). As far, as there was only a single set of patches that was
+only growing, things were fairly obvious: just take a union of the
+repositories.
+
+We could generalise this approach of course, and say:
+
+    E = E1 `union` E2
+    D = D1 `union` D2
+
+which works until a patch ends up in both E and D. The sensible (and
+safe, at least with regards to repo invariants) thing to do would be to
+keep it in D. So we end up with:
+
+    D = D1 `union` D2
+    E = (E1 `union` E2) - D
+
+The observed effect from this behaviour is that disabling a patch always
+wins, so as long as any repository you pull from has the patch disabled,
+each pull from that repository will try to disable that patch. Of
+course, since darcs is interactive, it would ask whether you wanted to
+disable that patch -- but it would ask every time, until the remote
+repository got flipped. This could be inconvenient, but there may be
+reasonable UI-only solutions to that problem as well.
+
+## Advanced E/D tracking
+
+I can easily imagine that the above simple system would work
+satisfactorily most of the time. Nevertheless, there is an interesting
+extension that could prove fairly useful.
+
+We may want to record decisions we made about moving a patch from E to D
+or vice versa -- just like we record changes to source code in form of
+patches. This option would be most useful with conflicts. Recall that
+when a conflict arises, both patches are moved into D (since they can't
+both live in E, but they can both live in D).
+
+However, as sketched above, it may be the case that often we actually
+want one of the conflicted sides to remain in E. Sadly, with the
+"simple" E/D tracking as described above, this would not be very
+convenient: all repositories would have to agree on the resolution. That
+may often work in teams that merge often and keep branches generally
+short, but it is quite inconvenient for longer and/or diverging
+branches.
+
+The proposed solution relies on keeping track of an extra set X of
+patches with a different domain. A set of normal patches describes a
+filesystem tree. The patches in X describe a set of constraints on the
+patches that live in E and D. A fixed X gives rise to a partial order on
+the patches that is then used to decide, when pulling, what goes where:
+
+    U = E1 `union` E2
+
+    conflicted E = set of sets of patches that form conflicts within E
+    fixpoint f = until (\a -> f a == a) f
+    maximal S = { s | s <- S. forall s' <- S. s >= s', s }
+    next E = E - { x | c <- conflicted E. forall x <- c.
+                                          (forall y <- c. x <= y) }
+    E = { x | x <- fixpoint next U, x > 0 }
+
+    D = (U `union` D1 `union` D2) - E
+
+This has some counterintuitive implications, unfortunately, since the
+"conlicts with" relation is not transitive. First, the "conflicted E"
+set is computed as the set of nontrivial equivalence classes of E,
+according to a RST closure of the "conflicts with" relation.
+
+It could happen that a patch ends up out of E even though it does not
+conflict with anything in E. This seems to be hard to fix (since the
+reverse approach of adding maximal non-conflicting patches to E does not
+work very well), but hopefully the real-world implications won't be very
+serious.
+
+Moreover, the set E could still be in a conflicted state when the above
+algorithm terminates. In that case, we need to refine the partial order
+on the patches and start over (until the resulting set E is
+conflict-free, i.e. conflicted E is the empty set).
+
+Now that we know how pulls are handled, we should discuss what lives in
+the set X. From the above, it should be obvious that the *effect* of X
+is a partial order on the set of all patches plus 0. We need the 0 so
+that we can get rid of patches (move them from E to D) even when they
+are not in conflict with anything.
+
+Intuitively, x \> y means that x "beats" y -- if these are in a
+conflict, x wins and 0 \> x means that nothing "beats" x -- we prefer to
+have nothing that to have x, so x always ends up in D. Now we need to
+describe the partial order somehow, as a set of patches.
+
+To that effect, we add a notion of constraints, which are statements of
+the form "x \> y" or "0 \> x". If we had a set of such constraints, we
+could construct a minimal partial order that satisfies both these
+constraints and patch dependencies (meaning: x depends on y =\> y \> x).
+Of course, we can also imagine a set of constraints that does not give
+rise to a partial order: { x \> y, y \> x } for y /= x is such a set.
+
+At this point, it will start to be easier to imagine X as a *sequence*
+of patches (although the set and the sequence representations are
+otherwise equivalent). The patches in X will be of these forms:
+
+    constraint x > y
+    cancel a > b
+
+The set of constraints is then constructed from an empty set by
+successively adding constraints from constraint patches and removing any
+constraints mentioned by a "cancel". If the resulting set is not
+consistent (i.e. there is no partial order satisfying the constraints in
+the set), we are in a conflicted state for X, which can be resolved by
+adding an appropriate "cancel" type patch at the end of the sequence.
+
+XXX Merging of Xes needs to be thought out and written down.
+
+# User Interface
+
+Unpull becomes a safe operation distinct from obliterate. Unpull says
+"move this patch from E to D". With the advanced E/D tracker, it should
+probably also record that the unpulled patch is < 0.
+
+## Branching
+
+The repository model is very similar to darcs in that it does not have
+in-repository branching at all. However, it does make it more convenient
+than darcs to implement a bundle-based branching model, since the
+bundles can be conveniently stored in D while inactive and more easily
+recalled.
+
+-   branches as labels (say, :name)
+-   patch matching by label (darcs chan -i -p :myfeature)
+-   enable/disable by label (darcs branch :myfeature, darcs branch
+    -:myfeature)
+    -   creates a local enablement change (moves patch(es) between E/D)
+
+-   create interactively: darcs branch --create
+    -   includes most recent tag that includes no patches explicitly
+        selected
+    -   --base to override the base
+    -   --no-base to avoid automatic base selection
+    -   asks for label for the branch (or could get it from command
+        line)
+
+Under this model, branches are just sets of patches with a common label.
+They can be comfortably applied and un-applied from the repository. In a
+way, this is just an extension of the "bundle model" of branches (unpull
+-o, apply). It should be a bit more convenient to use, though.
+
+## Conflicts
+
+The fact that conflict resolution and branching share a common
+underlying mechanism can lead to some corner cases that need to be
+resolved.
+
+Specifically, we need to look into conflicts between in-repo "branches",
+since these are not "full" branches. Since the global enablement status
+is shared among all in-repo branches, resolving conflicts among local
+branches is a "global" operation.
+
+If enabling a branch would constitute a conflict, we may be asked to
+mark it up and allow resolution... this would use the normal conflict
+resolution mechanism, i.e. disable some of the patches on the branch;
+
+I think the "alternative" meta VCS leads to nicer semantics here and
+probably less manual work in resolving conflicts between branches. The
+deal is that once you record the new constraints leading to conflict
+resolution, these are remembered and used even if you disable and
+re-enable the branch.
+
+# Addenda
+
+## Backward compatibility
+
+(possibly upon request per repo)
+
+If the enabled set (E) is written out as a (hashed\_)inventory, this
+will constitute a valid darcs repository for previous darcsen... The
+caveat is, that migration of patches between E and D will be ignored by
+old darcsen.
+
+We can (ab)use the motd mechanism to announce any patches that are
+currently disabled, so the users can manually unpull them if they want.
+Maybe even by providing the appropriate darcs command (or at least
+listing the hashes along with descriptions).
+
+## Pros
+
+-   partially backward compatible (on the level of patch exchange) with
+    both darcs1 and darcs2 (i.e. this is orthogonal to patch format or
+    patch semantics change)
+-   gives enough leverage for easy in-repo branching (a long-standing
+    feature request)
+-   fixes exponential merges in both darcs1 and darcs2 repos
+-   solves the conflict problem outside of patch theory
+
+## Cons
+
+-   the constraint mechanism (conceptual complication of matters...
+    arguably, it's no worse than mergers or conflictors; it does not
+    strictly need explicit UI exposure either)
+-   complicates the notion of a repository a little (but less so than
+    allowing arbitrary branching -- we just have a 2-way split, and all
+    the rest is patch matching/selection ... we play on darcs strengths
+    here)
+-   solves the conflict problem outside of patch theory (i.e. it doesn't
+    magically make patch theory conflict-proof)
+
+# The bottom line
+
+There's none yet. This document is (still) a work in progress.

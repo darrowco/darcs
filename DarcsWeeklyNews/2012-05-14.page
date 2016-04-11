@@ -1,0 +1,147 @@
+# News and discussions
+
+1.  Darcs 2.8.1 was released, the only change is a build dependency that
+    will make it buildable with the next Haskell Platform:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2012-May/026506.html>
+    -   <http://hackage.haskell.org/package/darcs-2.8.1>
+
+2.  Meanwhile in HEAD, a new test strategy has been implemented:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2012-May/026503.html>
+
+3.  On the developers' mailing list, we are discussing how to make the
+    darcs development process more friendly:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-devel/2012-May/013820.html>
+
+# Issues resolved in the last week (3)
+
+issue1921 Owen Stephens
+  ~ -   return Nothing in splitOnTag if the tag isn't in the patchset
+    -   http://bugs.darcs.net/issue1921
+
+issue2095 Ganesh Sittampalam
+  ~ -   avoid new GHC encoding behaviour using a global setting
+    -   http://bugs.darcs.net/issue2095
+
+issue2161 Owen Stephens
+  ~ -   don't use a separate type-variable for recorded/tentative in WhatsNew
+    -   http://bugs.darcs.net/issue2161
+
+
+# Patches applied in the last week (77)
+
+2012-05-14 Simon Michael
+  ~ -   home page: 2.8.1 release, trim news
+
+2012-04-01 Ganesh Sittampalam
+  ~ -   enable issue1763 test on Windows as it seems to work
+    -   resolve conflicts in GHC encodings fix
+    -   resolve issue2095: avoid new GHC encoding behaviour using a global setting
+    -   resolve conflict between issue2161 fix and witness macro removal
+
+2012-03-21 Owen Stephens
+  ~ -   resolve issue2161 - don't use a separate type-variable for recorded/tentative in WhatsNew
+
+2012-05-12 Simon Michael
+  ~ -   home page: link hosting sites as suggested by Radoslav Dorcik
+
+2012-04-21 Marc Simpson
+  ~ -   Add new 'usageInfo' implementation (Darcs.Usage); employ in Darcs.Command.
+
+2012-05-12 Guillaume Hoffmann
+  ~ -   Accept issue2138 whatsnew --summary not reporting conflicts
+    -   fix duplicate appearance of darcs test in manual
+    -   fix failing test for issue2100
+    -   make exit code of darcs add non-zero if any adds fail
+
+2012-01-19 Ganesh Sittampalam
+  ~ -   resolve conflict in version number
+    -   TAG 2.9.1
+    -   bump version to 2.9.1
+
+2011-09-07 Eric Kow
+  ~ -   Accept issue2100: darcs add should move on from first failure.
+
+2012-05-10 Simon Michael
+  ~ -   home page: trim news
+    -   home page: update news
+    -   site: more css color cleanup
+    -   home page: or tweak
+    -   site: border color fix
+    -   site: css cleanups, pre bottom border
+    -   home page: move or
+    -   site: underline links only on hover
+    -   update Summersault thanks per markstos
+    -   home page: box shadow for examples, add the dark bg style but don't use it
+    -   home page: less top padding, splash fits on iphone screen
+    -   home page: download box shadow
+
+2012-04-11 Owen Stephens
+  ~ -   Use a couple of @-patterns in Patch.Depends
+    -   Rename getTagsRight -> getUncovered, and move helpers into where block.
+    -   More tweaking of haddock of splitOnTag in Patch.Depends
+    -   Change name of infoAndDeps and add haddock to better express intent
+    -   Tweak/add more haddock to Patch.Depends
+    -   Reduce some duplication and tweak identifier names in Patch.Depends
+    -   Rename eatOne -> unwrapOneTagged and extract common code in Patch.Depends
+    -   Tidy up and style changes for Exec
+    -   Indentation and line-wrapping in English
+    -   Add some Haddock and tweak some identifier names in Patch.Depends
+    -   Fixup a couple of occurences of with_partial_intersection in Patch.Depends
+    -   Resolve issue1921: return Nothing in splitOnTag if the tag isn't in the patchset
+    -   Tweak issue1921 test to check for graceful failure
+    -   Tweak a few identifiers and implementation of helpers for getTagsRight
+    -   Remove unused getPatchesInTag function from Patch.Depends
+    -   Rename and refactor simpleTag in Patch.Depends, to better express intent
+    -   A few more operator spacing tidy-ups in Patch.Depends
+    -   Accept issue1921: attempting to apply a patch bundle based on missing tag dies.
+    -   Tidy/style Patch.Depends
+
+2012-05-11 Michael Hendricks
+  ~ -   Fix utf8 test for rollback --no-record default
+
+2012-04-29 Florent Becker
+  ~ -   Tweak rollback help
+    -   Give feedback when no hunks are selected in rollback --no-record
+    -   Change rollback help to reflect --no-record as the default
+    -   Make rollback --no-record the default
+
+2012-05-05 Yuriy Vostrikov
+  ~ -   Fix "darcs diff" handling of directory argument.
+
+2012-05-04 Michael Hendricks
+  ~ -   Accept Bitcoin donations via CoinCard
+
+2012-04-01 Florent Becker
+  ~ -   Make findUncommon and findCommonWithThem into findCommonAndUncommon
+    -   More precise witnesses for with_partial_intersection
+    -   in with_partial_intersection, we only need to assert that the middle witness (wA) is correct
+
+2012-03-30 Owen Stephens
+  ~ -   Add failing test for issue2047.
+
+2012-05-02 Simon Michael
+  ~ -   home page: browsable darcs repo renamed to darcs-screened
+    -   home page: anchor fix
+    -   home page: drop "The" from the sidelinks
+    -   home page: donate link in the footer
+    -   home page: more linkage, wording tweaks
+    -   stylesheet indentation
+    -   shrink h1 font a tad
+    -   home page: fix confusing comment
+    -   home page: wording
+    -   home page: merge two example sections
+    -   home page: try more linkage in quick start intro
+    -   home page: polish
+    -   home page: wording
+    -   home page polish
+    -   home page clarifications, incorporate Florent Becker's feedback
+    -   home page: wasteful but stylish whitespace, we're scrolling anyway
+    -   Smart -> Simple in slogan
+    -   new home page layout and content
+
+2012-03-15 Owen Stephens
+  ~ -   Changes --xml would incorrectly report the originating patch of a given filename (in the case of renames)
+

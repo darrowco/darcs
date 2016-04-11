@@ -1,0 +1,103 @@
+# News and discussions
+
+1.  The next Hacking Sprint will take place in Paris soon. Please add
+    yourself to the wiki page if you consider attending:
+
+    -   [http://wiki.darcs.net/Sprints/2011-04](http://wiki.darcs.net/Sprints/2011-04)
+    -   [http://www.haskell.org/pipermail/haskell-cafe/2011-February/089640.html](http://www.haskell.org/pipermail/haskell-cafe/2011-February/089640.html)
+
+2.  Radoslav Dorcik compiled an e-book from Darcs' Wikipedia article and
+    its related pages, and made it available under the epub format
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2011-February/026025.html](http://lists.osuosl.org/pipermail/darcs-users/2011-February/026025.html)
+
+3.  We discussed our review policy and settled on a more relaxed
+    approach to it:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-devel/2011-February/012413.html](http://lists.osuosl.org/pipermail/darcs-devel/2011-February/012413.html)
+
+# Issues resolved in the last week (2)
+
+issue1737 bsrkaditya
+  ~ -   darcs mv does not warn when moving old to new if \> 2 args
+    -   [http://bugs.darcs.net/issue1737](http://bugs.darcs.net/issue1737)
+
+issue2041 Alexey Levan
+  ~ -   prevent Darcs from following the directory symlinks
+    -   [http://bugs.darcs.net/issue2041](http://bugs.darcs.net/issue2041)
+
+# Patches applied in the last week (38)
+
+2011-02-24 Ganesh Sittampalam
+  ~ -   bump QuickCheck and associated deps to fix build problem
+
+2011-02-12 Iago Abal
+  ~ -   Add Darcs.Test.Util.TestResult module to darcs.cabal
+    -   Replace use of Maybe Doc by TestResult in unit testing code
+    -   Add TestResult data type and related utilities
+    -   Fix arbitraryTree frequencies to significantly reduce empty
+        trees
+    -   Warn about the use of localIdentity for testing
+    -   Fix ArbitraryStateIn s (Tree p) instance to avoid generation of
+        a (non-senseful) initial sequence of empty trees
+    -   Fix bug in arbitraryTree causing it to break depth(result) <=
+        maxDepth postcondition
+    -   Add defaultToks to the export list of Darcs.Commands.Replace
+    -   Clarify a commentary on commuteFiledir
+    -   Remove trailing space
+
+2011-02-22 bsrkaditya
+  ~ -   resolve issue1737: darcs mv does not warn when moving old to new
+        if \> 2 args
+
+2011-01-14 Florent Becker
+  ~ -   Correct comments in Patch.Depends
+
+2010-12-18 Eric Kow
+  ~ -   Haddock some of Darcs.Patch.Depends.
+
+2011-02-22 Guillaume Hoffmann
+  ~ -   haddock for doesDirectoryReallyExist
+
+2011-02-09 Alexey Levan
+  ~ -   Resolve issue2041: prevent Darcs from following the directory
+        symlinks
+    -   Test for issue2041
+
+2011-02-07 Ganesh Sittampalam
+  ~ -   Darcs.Witnesses.Sealed: add trailing newline to silence compiler
+        warning
+    -   Darcs.URL: missing newline at end of file
+    -   Darcs.Patch.Bracketed: missing newline at end of file
+    -   Darcs.Patch.Bracketed.Instances: missing newline at end of file
+    -   Darcs.Patch.Dummy: missing newline at end of file
+    -   Darcs.Witnesses.Ordered: missing newline at end of file
+    -   Darcs.Witnesses.Eq: missing newline at end of file
+    -   Darcs.Repository.LowLevel: missing newline at end of file
+    -   Darcs.Patch.Prim.V1: missing newline at EOF
+
+2011-02-12 Alexey Levan
+  ~ -   Add Darcs.Commands.Util to darcs.cabal
+    -   Maybefy lists in patch selection code
+    -   Move commonly used functions from (Darcs.Command.)WhatsNew to
+        Util
+
+2011-02-18 Iago Abal
+  ~ -   (Dirty) Fix of hpc.README for automatic generation of coverage
+        report
+    -   Add -fhpc to darcs-test
+
+2010-11-30 Eric Kow
+  ~ -   Fix backslash escaping in my APPDATA patch.
+    -   Fix inconsistency in documentation on Windows paths.
+
+2010-11-21 Petr Rockai
+  ~ -   Fix darcs-test on Win32 + GHC 6.12+.
+
+2011-02-14 Ganesh Sittampalam
+  ~ -   TAG 2.7.3
+    -   bump version to 2.7.3
+    -   record the GHC requirements in the cabal file
+    -   Use NoMonoLocalBinds extension to keep GHC 7 happy
+
+

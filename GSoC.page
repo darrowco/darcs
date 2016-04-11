@@ -1,0 +1,92 @@
+---
+categories : Recruitment
+...
+
+
+# What this is about
+
+
+See the [official GSoC FAQ and timelines](https://developers.google.com/open-source/gsoc/faq).
+
+The Google Summer of Code (GSoC) is a program that helps students getting
+an experience of contributing to some free software project.
+Darcs has been participating for several years to this program as
+a way to 1) enable existing contributors to dedicate fully to darcs
+for a few months, and also 2) enable students to have an experience
+in a free software organization.
+
+Check out the [student guide](GSoC/Guide) to know what you're
+getting into.
+
+# Project ideas
+
+You can find some ideas for a Google Summer of Code student project
+on the [projects page](Projects) of this website.
+
+Note that these themes are just to get you started. We welcome
+submissions beyond these initial ideas. Get in touch with us!
+<darcs-users@darcs.net> or \#darcs on freenode.
+
+All of these projects require good Haskell skills.
+We trust and appreciate students who have contributed to darcs before applying :-)
+
+# Application process
+
+1.  Sketch out an idea. Can you make Darcs faster? Can you make it more
+    useful? It would make sense to get in touch with
+    <darcs-users@darcs.net> for some help.
+
+2.  Get in touch with the Darcs team if you have not done so already
+
+3.  Write up your proposal (this should take a day or two). See the
+    previous applications if you're having trouble getting started.
+
+4.  Submit your application to [the GSoC website](http://www.google-melange.com/gsoc/homepage/google/gsoc2014)
+    Register as a student first then submit your application.
+
+# Older projects
+
+1.  2015
+    -   [Darcsden improvements](GSoC/2015-Darcsden) (Daniil Frumin)
+
+1.  2014
+    -   [Hashed Files and Cache](GSoC/2014-Hashed-Files-And-Cache) (Marcio Diaz)
+    -   [History Reordering](GSoC/2014-History-Reordering-Performance-and-Features) (Ale Gadea)
+
+1.  2013
+    -   [Better Record](GSoC/2013-BetterRecord) (José Neder)
+    -   [Darcsden](GSoC/2013-Darcsden) (BSRK Aditya)
+
+1.  2012
+    -   [Patch Index](GSoC/2012-PatchIndex) (BSRK Aditya)
+
+1.  2011
+
+    -   [Darcs Bridge](GSoC/2011-Bridge) (Owen Stephens)
+    -   [V3 Primative
+        Patches](http://socghop.appspot.com/gsoc/proposal/review/google/gsoc2011/mornfall/1)
+        (Petr Rockai)
+
+2.  2010
+
+    -   [Darcs network performance](GSoC/2010-Network) (Alexey Levan)
+    -   [Improvements to darcs caching mechanism](GSoC/2010-Cache)
+        (Adolfo Builes)
+
+3.  2009 - [Hashed storage](GSoC/2009-Hashed) (Petr Rockai)
+
+    -   [Petr's
+        application](http://web.mornfall.net/blog/summer_of_code.html)
+        (Slightly post-edited after acceptance)
+
+4.  2007 - Darcs 2 research (Jason Dagit)
+
+# See also
+
+-   Darcs [mentoring organization application 2013](GSoC/DarcsApplication)
+-   Darcs [GSoC student guide](GSoC/Guide)
+-   [HOWTO: Write a Summer of Code
+    application](http://drupal.org/node/59037) (from Drupal)
+-   [GSoC 2010 Frequently Asked
+    Questions](http://socghop.appspot.com/document/show/gsoc_program/google/gsoc2010/faqs)
+

@@ -1,0 +1,441 @@
+---
+title: Darcsden improvements (GSoC 2015 project)
+author: Daniil Frumin
+...
+
+# Current status
+
+- [The blog](https://parenz.wordpress.com/tag/darcs/)
+- The repositories:
+    - <http://hub.darcs.net/co-dan/darcsden>
+    - <http://hub.darcs.net/co-dan/darcs-soc>
+    - <http://hub.darcs.net/co-dan/darcsden-local>
+
+# Meetings
+
+## First meeting
+
+01/06/2015
+
+### Progress so far
+
+1. Basic local (i.e. under a given root directory) viewing
+   functionality; ability to browse local repositories, view files,
+   list repositories (under user or global)
+2. Nested repositories (rough edges!)
+3. Metadata fetching from `_darcs/darcsden`
+  
+### Testing
+
+- Writing tests is got to be the most boring part of programming...
+- But they are useful.
+- How to do UI test? Set up the Selenium testing environment.
+- Darcsden needs more fine-grained automatic tests.
+- What to implement:
+    1. HTTP tests: do not use the HTTP library, use conduit-http or
+       something else. In HTTP tests it is hard to test the output for
+       matches; HTTP tests will be used for testing handlers (whether
+       they fail or not).
+    2. Doing HTTP tests is the easiest method of testing handlers, routes, and viewes.
+    3. Particular functions can be tested directly.
+
+### Coding/recording style
+
+- Submitting patches upstream ASAP
+- Pulling from upstream frequently
+
+
+## Second meeting
+
+10/06/2015
+
+### Progress so far
+
+1. Parent repositories, branches, compare files
+2. (Almost) automatic testing for some of the functionality
+    - Tests check for status codes (i.e. check for exceptions/404s)
+    - Tests for descriptions
+    - More to do: tests for parents, patches, comparisons
+3. Some patches for 'vanilla' darcsden.
+
+### Issues
+
+I had to modify darcs and hsp to get everything working. Why?
+
+**Relative vs absolute paths**
+
+Most of the operations in darcs rely on the current directory, so
+darcsden sometimes uses commands like withCurrentDirectory. This is
+bad if you have relative paths. There are two ways of taclking this
+
+1. Modifying darcs with additional functionality.
+2. Making absolute paths required in parts of darcsden and making sure
+that this is preserved under functions.
+
+Previously I used to modify darcs, but meddling with folder handling in darcs can be proven dangerous.
+
+**HSP and strange HTML**
+
+As for the hsp problems, it used to generate very weird HTML, that is
+parsable in theory, but, as it turns out, not in practice. Possible
+solutions (other than patching hsp): removing whitespaces inside tags
+& filing a report for `taggy`.
+
+To get an impression of the HTML, it looked like this:
+
+```
+<html
+><head
+  ><title
+    >hub.darcs.net</title
+    ><link rel="shortcut icon" href="http://hub.darcs.net/public/images/favicon.ico"
+    ><link rel="stylesheet" href="http://hub.darcs.net/public/bootstrap/css/bootstrap.min.css" type="text/css"
+    ><link rel="stylesheet" href="http://hub.darcs.net/public/css/main.css" type="text/css"
+    ><link rel="stylesheet" href="http://hub.darcs.net/public/css/combined.css" type="text/css"
+    ><script src="http://hub.darcs.net/public/js/combined.js" type="text/javascript"
+    ></script
+    ></head
+  ><body
+```
+  
+**Routes**
+
+Majority of the issues with nested repositories are actually issues
+with nested directories. The biggest question right now is how do we
+handle the routing process? We don't want to break the current routing
+too much, because that would require some severe changes to the
+codebase.
+
+Possible hacks/solutions: moving repoURL function in the typeclass,
+and overloading it in such a way that repoURL "/my/repo/" =
+"/localrepo?path=/my/repo&dispatch=", then then (repoURL "/my/repo" ++
+"/patches") would be "/localrepo?path=/my/repo&dispatch=/patches". The
+downside is that we would have to implement dispatching ourselves,
+duplicating code and data. Another idea is to end the repo path part
+with double slash: //. For example,
+`http://localhost/local/darcs/screened//patches`. Probably we can
+modify the routing mechanism somehow to account for that.
+
+### Future ideas
+
+**Command line tooling**
+
+Command line tools: running `darcsden-open` in a directory should
+start a darcsden instance (if it's not already running), and open a
+web browser pointing to the web page with that repository. Running
+something like `darcsden-init` should initialize darcs repo (if not
+already initialized), prompt user for metadata, and symlink the
+repository to a darcsden directory (unless the repository is already
+indexed by darcsden).
+
+**Local-only functionality**
+
+One important functionality that should be present for the *local*
+darcsden is the ability to see unrecorded changes (most preferably
+they should be marked and easily distinguished).
+
+If darcsden is running fully locally (as opposed to single-user public
+serving darcsden), then the user should basically be always logged in
+as an admin. (modulo making sure someone else can't get access by
+finding the right port!)
+
+**Other stuff**
+
+Listing the directories and searching for darcs repositories: could it
+be possible to use pipes/dirstream for that? Might give better results
+if you have a sophisticated directory structure and a lot of
+repositories. We would have to run everything in SafeT/Pipes, but we
+can utilize `BackendPermanentM` for that. 
+
+
+```
+<notdan> Heffalump: can you grab this? http://hub.darcs.net/co-dan/darcsde​n-local/patch/20150610201308-21ae5
+<Heffalump>	(random feature request: be able to darcs pull single patches from URLs like the above)
+```
+
+## N-th meeting
+
+(I sort of forgot to summarize a couple of last meetings and now I lost track of the meeting count)
+
+### Progress
+
+Command line tool `den` is in development. Multiple bug/tweaks resolves in darcsden-local. Routing issues have been completely fixed (or, rather, avoided altogether).
+
+### Near-future plans
+
+1. Merge the changes from upstream (oh boy, I can already imagine
+   sorting out the conflicts; that's what you get for not doing your
+   homework and merging early!)
+2. Extract darcsden-local into a runtime parameter (what about -DHUB?
+   let's hear from sm on that)
+3. Customize the frontpage business (add a frontpage of the type
+   `[User bp] -> [Repository bp] -> DDXML` to the settings)
+4. (Related to 2) Add "darcden-in-local-mode" flag to the settings or
+   somewhere like that. This will make sure that darcsden-local is
+   sort of integrated in the "core" of darcsden, but that's not a
+   problem. Based on this flag we will be displaying and turning
+   on/off certain features like unrecorded changes, repository
+   renaming, etc
+5. The `den` program should start the darcsden-local server if it's
+   not already running. Use a lock file in /tmp for that, or
+   something.
+6. The HTML file with redirect hack for `den`.
+
+## Meeting on the 12th of July
+
+### Status of darcsden-local
+
+- The local branch compiles with freshly released darcs-2.10.1.
+- The local username/password is stored in the configuration file.
+- Merged with some upstream changes.
+- New frontpage for the local instance.
+- The list of repositories is computed at the startup and cached (need
+  to figure a way to force the re-computation -- another handler?).
+- `--local` and `--hub` are run-time flags.
+- New typeclass for maximized customization and code reuse:
+  `DenInstance`. This typeclass allows us to override the front page.
+  In the future we shall add more features to it.
+- Live instance at <http://den.updog.xyz/local>.
+
+### Todos
+
+1. Rename `EInstance` to `DenConfig`
+2. Merge with upstream once again.
+3. Redo the indexing of repositories.
+4. Merge `darcsden-cli` into the main repo.
+5. Make sure that the
+   [patches button](http://den.updog.xyz/local/nope/darcsden-local/browse/src/DarcsDen/Pages/PageUtils.hs#173)
+   doesn't cause the darcsden to list all the repositories/repository
+   forks.
+6. Write a blog post about using existential types for
+   picking/packaging up backends
+
+The goal is to merge darcsden-local in one or two weeks.
+
+### The indexing mechanism
+
+Instead of searching for the repositories in a directory we should
+maintain an explicit list of repositories (in `~/.darcs/` or
+`~/.darcsden/`). Existing repositories can be added to that list from
+the command line.
+
+*Alternative idea:* use search patterns to specific only a small
+ subset of directories to search. `foo/*` looks for repositories in
+ `foo` and `foo/**` looks for repositories in `foo` and subdirectories
+ of `foo`.
+
+## Mini-meeting on the 15th
+
+- A huge rebase of the patches
+- The repository list is grabbed from ~/.darcs/darcsden_repos (or windows equivalent). if the file is not present we do a recursive search of the repositories in `homeDir`
+- `den --add repo1 repo2` for adding repositories to the list
+
+### Issue
+
+How to make sure that `den` and `darcsden` are in sync?
+
+I used to have code in `darcsden` that would touch a file in the /tmp
+folder, and then `den` would check for that file before starting a
+server. If the file is present it would not start the webserver, it
+would just open the URL. There are a number of issues with this
+approach
+
+1. Portability
+2. Hard to remove that temp file on exit (where exactly do we hook in signal handlers?)
+3. That file would have to be either hardcoded or read from the
+   configuration file. Either way any other program can touch that
+   file.
+
+A separate issue: `den` tries to start a web-server, but the port is
+already in use. This resuts in an exception that we can catch and try
+to start a web server on a different port. Problem: startHTTP never
+returns, so we never know if we have actually been successful at
+starting the server. But if we don't know the port that we are using,
+we cannot launch a web browser!
+
+
+An alternative would be to ping the hostname/port see if its running.
+Repeat until we find a fresh port. Potential issues:
+
+1. Something other than darcsden can be running on that port. Or,
+   darcsden can be running at that port. We have no idea.
+2. Port is busy, but the server is not accepting connections.
+3. Connection times out/takes a lot of time to establish -- this
+   introduces a lag in the program.
+
+The copout: just try to bind on the port mentioned in the settings; if
+it's already allocated -- too bad; exit the program.
+
+### Todos
+
+- one idea for the cli tool - it should automatically add a repo if you launch the tool on that repo.
+- "Last modified": the root directory modification date is a pretty
+  bad measurement; check the timestamp of `_darcs/patches`
+
+## Meeting on the 23rd of July
+
+What's on the agenda: rebase, try to merge, repeat. The prime goal at
+this point is to do what it takes to help Simon merge the -local
+branch.
+
+Some progress have been made towards the "record" feature. The UI is
+very clunky for now, but the basic idea is that you select the changes
+from the list (hold down Ctrl to select multiple changes). After you
+press the record button you are taken to the next screen where you
+have a "full" list of patches (the ones that you've selected + deps)
+where you can enter your message and confirm the record. The full list
+of changes can be obtained in two ways. One way (which is implemented
+now) is to interpret a selected change as a "definite yes". That means
+get that change and everything it depends on.
+
+The UI is implemented as Selectable widget from JQuery UI. It would be
+much nicer to have a drag&drop UI where you would be able to drag the
+changes and it would drop both the change and it's dependencies. For
+that I need to
+
+1. Precompute the dependency graph for the unrecorded changes on the server
+2. Serialize that to JSON
+3. Write the JavaScript part (yuck!) for reading that JSON and
+handling the UI
+
+NB: to compute the dependency graph we should try to commute changes
+until we get a conflict
+
+### Issues
+
+Race condition in darcsden-cli? The browser can error out because it
+may try to connect to the server before the server is started. Use
+MVars for synchronization.
+
+### How to rewrite history?
+
+Rewriting history is art. We need to make the history cleaner so it is
+easier to merge the branch, but we also don't want to get rid of,
+well, the history of the repository.
+[Heffalump and sm offer some advice and discuss the matter](http://irclog.perlgeek.de/darcs/2015-07-23#i_10944715).
+
+# Project idea
+
+I (Daniil Frumin) want to work on the improvements for the darcsden project. Darcsden
+is a web platform, akin to github or bitbucket, for hosting darcs
+repositories. There is a couple of improvements I had in mind in particular.
+
+### Idea 1: Develop Darcsden as a local darcs UI
+   Right now it is not a trivial task to install darcsden. It uses a
+third-party software like Redis and CouchDB. However, I believe that
+Darcsden can be a good choice for local (or lightweight single user)
+darcs hosting/UI. I plan on abstracting Darcsden from the concrete DB
+interface, making it more flexible, so it could work with CouchDB and
+with plain text files as well. Making issue tracking use plain text
+files is also a first step to a distributive issue tracking.
+
+As Ganesh noted, reusing darcsden for the purpose of local GUI can be
+beneficial. So, after implementing this idea, a user could use
+darcsden locally, or on her server, as a replacement for cgit/git-web.
+
+### Idea 2: Enhance the easiness of obtaining code from Darcsden
+
+A user should have an option to download the current source code in
+.zip or .tar.gz format. It should also be possible for user to
+download a .zip archive based on the specific set of patches she
+picks.
+
+### Idea 3: Improved patch submission
+
+Ideally, the users should be able to contribute to projects on
+Darcsden without configuring any third-party software (like sendmail),
+and without forking the repository (like it is done on GitHub).
+
+The idea is that a user X works on a repository R that he cloned from
+DarcsDen's user Y. When X wants to submit his patches he should be
+able to "send" a bundle of patches via HTTP to darcsden. The patches
+thus will be registered in Y's repository and Y can apply them.
+
+Partial bits of HTTP push support are already implemented, at least
+the HTTP support on the darcs part, but the code might have bitrotted
+by now, due to the lack of integration on the darcsden side.
+
+
+Ideas (1) and (2) are "plan minimum", the bare minimum that I would
+like to achieve. If everything goes smoothly, I will be able to finish
+idea (3) as well.
+
+# Frequently Raised Questions
+
+- _In what ways will this project benefit the wider Haskell
+  community?_
+  
+Darcs is a very interesting DVCS, and Darcsden is a de-facto web
+interface used for darcs hosting. The popular website
+http://hub.darcs.net, which hosts a variety of Haskell-related
+projects, is powered by Darcsden.
+
+- _Can you give some more detailed design of what precisely you intend
+  to achieve?_
+
+1. During the community bonding period, and the beginning of the
+working period, I would like to spend time working on abstracting the
+database interface further, which is necessary for the idea (1). I
+would also like to start fostering discussion about the possible
+design choices necessary for part (3), i.e. how the submitted bundles
+should be presented?
+
+2. During the next stage, up to mid-term evaluations, I plan on making
+Darcsden available for local use, without any other third-party
+software. I plan on having at least a beta-version available for the
+mid-term deadlines. This would involve implementing additional
+backends (based on SQLite or plain-text files). I would also like to
+start working on making darcsden available as a single-user instance
+(similar to gitweb).
+
+3. During the third stage, until the beginning of September, I plan on
+finishing the work on idea (1) and idea (2). If I have further time, I
+would like to start implementing the HTTP patch push support for
+Darcsden. This would require making some design decision beforehand
+(see point (1)).
+
+4. From the beginning of September and until the "pencils down"
+deadline, I plan on finishing things up, and writing the
+documentation, where necessary.
+
+- _What relevant experience do you have? e.g. Have you coded anything
+  in Haskell? Have you contributed to any other open source software?
+  Been studying advanced courses in a related topic?_
+
+I have been coding in Haskell for a bunch of years now. In 2013 I
+successfully completed a Haskell GSoC:
+<http://www.google-melange.com/gsoc/project/details/google/gsoc2013/difrumin/5662278724616192>.
+I wrote an interactive pastebin that compiled Haskell code to
+JavaScript, using GHCJS, and rendered Haskell diagram as images, or as
+interactive widgets.
+
+I have contributed to a bunch of open-source Haskell projects,
+including Diagrams, GHCJS, Hastache, and Darcsden itself. Granted, it
+has been over a year since I wrote my last patch to Darcsden/darcs,
+but I still remember my way around the code, and I will be able to
+familiarize myself with the updated codebase fairly quickly.
+
+- _Why do you think you would be the best person to tackle this
+  project?_
+
+  Firstly, I love darcs, and I use it for my personal projects and
+  writings. Secondly, I love programming in Haskell. In fact, Haskell
+  spoiled me to the point that I curse myself when I have to code
+  something not in Haskell. Finally, I have previously contributed to
+  Darcsden and darcs.
+
+- _In what ways do you envisage interacting with the wider Haskell
+  community during your project? e.g. How would you seek help on
+  something your mentor wasn't able to deal with? How will you get
+  others interested in what you are doing?_
+
+I would blog regularly about my progress, and post updates to the
+`darcs-devel` mailing list, mentioning problems and pitfalls I've
+encountered on the way. I would also be up for having weekly/bi-weekly
+public "meetings" in the IRC channel, if that would be deemed
+necessary. If I get stuck and my mentor is not being able to deal with
+some problems I will not hesitate to seek help on haskell-cafe mailing
+list or on reddit/stackoverflow. I also plan on rolling out a
+work-in-progress version of the project online for people to play
+with. The code for the project will be available on
+<http://hub.darcs.net>.

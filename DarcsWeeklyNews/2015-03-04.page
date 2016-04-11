@@ -1,0 +1,269 @@
+# News and discussions
+
+1.  The Darcs 2.10 release is near! Please test the release branch and tell
+    us if you find a bug.
+
+    -   <http://darcs.net/Releases/2.10>
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2015-March/027105.html>
+
+2.  Joachim Breitner has shut down his darcswatch service after 7 years
+    of activity:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2015-February/027102.html>
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2015-February/027104.html>
+    -   <http://www.joachim-breitner.de/blog/672-DarcsWatch_End-Of-Life%E2%80%99d>
+
+# Issues resolved (11)
+
+issue822 Ernesto Rodriguez
+  ~ -   Generalized the IO Type for better error messages and exception handling
+    -   <http://bugs.darcs.net/issue822>
+
+issue2260 Ganesh Sittampalam
+  ~ -   skip internal patches when counting
+    -   <http://bugs.darcs.net/issue2260>
+
+issue2385 Guillaume Hoffmann
+  ~ -   invoke pager without temporary file
+    -   <http://bugs.darcs.net/issue2385>
+
+issue2410 Guillaume Hoffmann
+  ~ -   detect replaces even with tokens of different lengths
+    -   <http://bugs.darcs.net/issue2410>
+
+issue2411 Guillaume Hoffmann
+  ~ -   ignore swap moves with --look-for-moves
+    -   <http://bugs.darcs.net/issue2411>
+
+issue2414 Guillaume Hoffmann
+  ~ -   use parseFlags instead of toMatchFlags where needed
+    -   <http://bugs.darcs.net/issue2414>
+
+issue2418 Guillaume Hoffmann
+  ~ -   add and check on-disk patch index version
+    -   <http://bugs.darcs.net/issue2418>
+
+issue2422 Ganesh Sittampalam
+  ~ -   drop unneeded LambdaCase extension
+    -   <http://bugs.darcs.net/issue2422>
+
+issue2427 Ben Franksen
+  ~ -   start conversion from intermediate tree state
+    -   <http://bugs.darcs.net/issue2427>
+
+issue2431 Ben Franksen
+  ~ -   rollback Control.Monad.Catch generalizations
+    -   <http://bugs.darcs.net/issue2431>
+
+issue2432 Ganesh Sittampalam
+  ~ -   use the merged version of the local patches
+    -   <http://bugs.darcs.net/issue2432>
+
+issue2437 Guillaume Hoffmann
+  ~ -   fix cloning to ssh by forgetting source repo later
+    -   <http://bugs.darcs.net/issue2437>
+
+
+# Patches applied (111)
+
+2015-03-02 Ganesh Sittampalam
+  ~ -   resolve issue2432: use the merged version of the local patches
+    -   fix warning
+
+2015-02-22 Guillaume Hoffmann
+  ~ -   resolve issue2437: fix cloning to ssh by forgetting source repo later
+    -   bump version to 2.11.0
+    -   bump version to 2.10.0
+
+2015-02-10 Ganesh Sittampalam
+  ~ -   -D_REENTRANT shouldn't be conditional on -frtsopts
+
+2015-02-27 Guillaume Hoffmann
+  ~ -   license DateTime module as BSD3, with original author approval
+
+2015-02-25 Ganesh Sittampalam
+  ~ -   move the bits of the datetime package we need into a Darcs.Util.DateTime module
+
+2015-02-26 Guillaume Hoffmann
+  ~ -   NEWS update for Darcs 2.8.x releases
+
+2015-02-21 Ben Franksen
+  ~ -   resolve issue2431: rollback Control.Monad.Catch generalizations
+    -   cleanup: removed old disabled code for isInteractive
+    -   re-implemented getOutput in terms of the option spec
+    -   cleanup: renamed applyas to applyAs
+    -   purged RemoteApply of DarcsFlag remains
+    -   fix: moved import of applyAs from Darcs.UI.RemoteApply to Darcs.UI.Flags
+    -   cleanup: renamed PatchIndexOption to WithPatchIndex
+    -   cleanup: Repository.Format and .Internal haddocks and variable names
+    -   fixed type of identifyRepositoryFor according to TODO in comment
+    -   cleanup: import anchoredRoot instead of internal representation
+
+2014-12-13 Ganesh Sittampalam
+  ~ -   tweak takeHeadRebase docs/message a bit
+    -   support GHC 7.10/base 4.8
+
+2015-01-26 Ben Franksen
+  ~ -   fix: use getExecutablePath only if ghc version >= 7.6
+    -   resolved issue2333: use getExecutablePath instead of getProgName
+
+2015-02-10 Ganesh Sittampalam
+  ~ -   skip issue2333 test on GHC 7.4
+
+2015-01-25 Ben Franksen
+  ~ -   accept issue2333: Error message when pushing and darcs not in path
+    -   cleanup: tentativelyReplacePatches is only used internally
+    -   cleanup: slightly streamlined doRecord
+    -   cleanup: indentation of commandControlList
+    -   fixed completion for help command
+    -   fixed failing fromJust in look-for-replaces implementation
+    -   adding -K option to less fixes "leaking last line" after Ctrl-C
+
+2015-02-12 Guillaume Hoffmann
+  ~ -   resolve issue2385: invoke pager without temporary file
+
+2015-02-19 Ganesh Sittampalam
+  ~ -   resolve issue2260: skip internal patches when counting
+
+2015-02-18 Guillaume Hoffmann
+  ~ -   remove in-depth help of repo format error, redundant with scp's errors
+    -   resolve issue2410: detect replaces even with tokens of different lengths
+    -   remove last dependency on extensible-exceptions
+    -   remove always true condition ghc >= 6.8 in cabal file
+    -   no longer use extensible-exceptions since we require ghc 7.4
+    -   bump dependencies lower bounds implied by requiring ghc 7.4
+
+2015-02-10 Ben Franksen
+  ~ -   cleanup: restructured haddocks in the options core module, simplified parseFlags
+    -   restore cabal haddock by removing an out-commented line of code
+    -   cleanup: purged code for obsolete --debug-verbose flag
+    -   fix: failing-issue1327.sh should fail for the right reason
+    -   removed block buffering for bundle transfer in push and remote apply
+
+2014-12-13 Guillaume Hoffmann
+  ~ -   resolve Issue2411: ignore swap moves with --look-for-moves
+    -   comment for normPath with examples
+    -   patch index: change order of on-disk pids
+    -   check on-disk version of patch index at right place
+    -   patch index: adapt removePidSuffix to the new order of pids
+
+2014-12-10 Ganesh Sittampalam
+  ~ -   need to un-reverse the pids for the patch-index-test
+    -   use the strict state monad for working with PatchIndex
+    -   maintain the list of PatchIds inside the PatchIndex structure
+    -   Keep the PatchId list in reversed order in memory
+    -   Move the handling of individual PatchMods into applyPatchMods
+
+2014-11-19 Guillaume Hoffmann
+  ~ -   make Darcs.Util.Path.normPath cheaper on well formed paths
+    -   make Darcs.Util.Path.decodeWhite cheaper on paths that do not need it
+    -   resolve issue2418: add and check on-disk patch index version
+    -   no longer use indexing for on-disk patch index, make infomap a bloom filter
+    -   reimplement getPatches with less code
+    -   comments for convert --export
+
+2015-02-09 Ganesh Sittampalam
+  ~ -   Windows build fix
+
+2015-01-14 Ernesto Rodriguez
+  ~ -   Fixed error message for invalid http repos.
+    -   issue822: Generalized the IO Type for better error messages and exception handling
+
+2015-01-26 Ben Franksen
+  ~ -   fixed incomplete patterns in Darcs.Repository
+    -   cleanup: group type signatures with definitions in D.U.Printer
+    -   add --[no-]compress option to push command (with --compress the default)
+    -   optimization: compress patch data before sending over ssh
+    -   cleanup: removed no longer used option compressActions
+    -   minimally improved tests/convert_export.sh by testing for identical file content
+    -   test all available commands in disable.sh
+    -   fixed two failing tests for issue2186
+    -   use files instead of pipe in tests/convert_export.sh
+    -   cleanup: removed flag membership tests (marks, patchIndex, lazy)
+    -   cleanup: fixed indentation of convert command definitions
+    -   cleanup: group type signatures with definitions (withLock,releaseLock)
+    -   rolled back some accidental changes to messages and comments
+
+2014-12-31 Ganesh Sittampalam
+  ~ -   Make more of an effort to encode output correctly
+    -   rename 'rebase changes' to 'rebase log'
+
+2015-01-24 Ben Franksen
+  ~ -   improved zsh completion script
+
+2014-11-19 Guillaume Hoffmann
+  ~ -   remove unused FileName related function
+
+2014-11-14 Ben Franksen
+  ~ -   In CommandControl, push the existential down into the alternatives
+
+2014-11-18 Ganesh Sittampalam
+  ~ -   resolve conflicts
+    -   Make the options type used by a command into a type parameter.
+    -   fix the --to-patch and --to-match flags
+
+2014-12-09 Guillaume Hoffmann
+  ~ -   remove execSSH unused since removal of the put command
+    -   accept issue2432: pull --reorder fails to commute patches
+
+2015-02-02 Ben Franksen
+  ~ -   resolve issue2427: start conversion from intermediate tree state
+
+2014-11-17 Ganesh Sittampalam
+  ~ -   Uncouple the --mail and --sendmail-command options
+
+2014-11-17 Ben Franksen
+  ~ -   use decodeString to convert command line args up front
+    -   move Iso and IsoFunctor from Darcs.UI.Options.Core to Darcs.UI.Options.Iso
+
+2014-11-15 Owen Stephens
+  ~ -   Abstract out some common code in UI/Options/Util
+    -   Use fromMaybe d x instead of maybe d id x
+    -   Improve --not-in-remote, allowing multiple repos and use default
+    -   Remove some trailing spaces
+
+2014-12-05 Ganesh Sittampalam
+  ~ -   always compile with mmap support
+
+2014-11-13 Ben Franksen
+  ~ -   cleaned up some duplicate build-depends in darcs.cabal
+
+2014-11-17 Guillaume Hoffmann
+  ~ -   resolve issue2414: use parseFlags instead of toMatchFlags where needed
+
+2014-11-12 Ben Franksen
+  ~ -   removed a wrong comment in Darcs.UI.Options.All
+    -   added some empty lines and fixed a comment typo in Darcs.UI.RemoteApply
+
+2014-11-12 Ganesh Sittampalam
+  ~ -   minimise imports of DarcsFlag's constructors
+
+2014-11-09 Ben Franksen
+  ~ -   removed tests for flag membership in Darcs.UI.CommandsAux
+
+2014-12-11 Ganesh Sittampalam
+  ~ -   Rename the 'utf8' test to 'latin9-input'
+
+2014-11-08 Ben Franksen
+  ~ -   fix the convert command (convert.sh test failed)
+
+2014-11-27 Guillaume Hoffmann
+  ~ -   remove redundant import
+
+2014-11-25 Lancelot Six
+  ~ -   Use darcsdir instead of literal "_darcs"
+
+2014-11-25 Lele Gaifax
+  ~ -   Suggest creating the initial git.marks in the incremental fast-export example
+    -   Use a double end-of-line to separate the patch name from the log in fast-export
+    -   Fix the git fast-import options in the incremental example
+
+2014-11-25 Ganesh Sittampalam
+  ~ -   resolve issue2422: drop unneeded LambdaCase extension
+
+2014-11-12 Guillaume Hoffmann
+  ~ -   use bytestring functions dropWhile and break instead of ours
+
+2014-11-19 Ben Franksen
+  ~ -   fix: in utf.sh, add --skip-long-comment else an editor is opened
+

@@ -1,0 +1,83 @@
+This page is aimed at Subversion (SVN) users who want to know how
+Darcs differs from it.
+
+# Advantages of darcs over SVN
+
+-   **Every working copy of the repository is a fully functional
+    repository** whereas in SVN, there is one central repository and
+    one or more working copies that need to access the repository for
+    common operations.
+
+-   **Darcs behaves gracefully when the server/central repository
+    fails** With Darcs, if your "server" gets messed up for whatever
+    reason, your users can still exchange patches amongst themselves.
+    Moreover, creating a new central repository is as easy as running
+    `darcs clone` from one of the working copies.
+
+-   **Darcs users can work offline and still record changes as they are
+    made** whereas SVN does not provide a way to record your work when
+    you don't have access to your server.
+
+-   **Simple merging and branching** A new branch is just another local
+    copy of the repository. You can selectively move patches between
+    branches, and to/from the server. In a lot of cases, merging
+    requires no user input.
+
+-   **Darcs is more interactive, creating more efficient workflows**
+    Darcs is easy to learn and pleasant to use because it is
+    *interactive*. As you record, push or pull patches, you are given
+    the opportunity to review details, be selective, and create a
+    workflow that suits you.
+
+-   **Darcs makes it easier to accept contributions from non-commiters**
+    E-mailing a patch is the usual alternative to directly committing
+    into the project. With darcs, this process is fully automated, just
+    use `darcs send` and you will be interactively prompted for which
+    patches to send.
+
+# Unsupported features of SVN
+
+-   **Partial repository checkout** Subversion allows you to check out
+    working copies of a portion of a tree. You can check out only what
+    you need and never see changes other users are making to other parts
+    of the repository.
+
+-   **Support for file permissions and symlinks** Subversion uses
+    "svn:executable" and "svn:special" file properties to support
+    executables and symlinks. Darcs currently doesn't support arbitrary
+    file properties, any special file permissions or symlinks
+    (cross-platform support for the latter two would involve
+    considerable amount of work). If you attempt to add a symlink, Darcs
+    will issue a warning and will not add it.
+
+-   **keywords** are informational strings that can be added to
+    files managed by SVN. They look like this:
+
+        $Id: File2.java,v 1.3 2004/06/02 17:30:42 JHunter Exp $
+
+    Darcs intentionally doesn't support this concept, since this implies
+    modifying your source code.
+
+# Advantages of SVN over darcs
+
+-   **Better related tools and GUI** Projects like TortoiseSVN makes
+    adoption among less technically inclined or GUI dependent developers
+    easier. Darcs isn't as well integrated with popular web-based
+    repository / development timeline / patch visualisation tools (on
+    the other hand, see [TracDarcs](RelatedSoftware/Trac) for a trac
+    plugin and [other related software](RelatedSoftware) ).
+
+-   **SVN is faster for large projects** Darcs is currently falling
+    behind when it comes to speed with large projects. Performance is
+    one of our main concerns and we keep on enhancing this aspect of
+    Darcs with each release (see [our benchmarks](Benchmarks)).
+
+-   **Better handling of binary files** Darcs can handle binary files
+    but saves each version of a binary file as a complete file, whereas
+    Subversion only stores the diff between versions of a binary. See
+    <http://bugs.darcs.net/issue1233> .
+
+# See also
+
+-   [RosettaStone]()
+-   [Converting]()

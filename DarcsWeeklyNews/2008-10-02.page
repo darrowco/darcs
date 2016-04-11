@@ -1,0 +1,173 @@
+# News and discussions
+
+1.  Third pre-release of darcs 2.1.0. Release pushed back to 17 October
+    latest for more testing. We're getting very close to the finish
+    line!
+    -   [http://www.darcs.net/darcs-2.0.3pre3.tar.gz](http://www.darcs.net/darcs-2.0.3pre3.tar.gz)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-October/014218.html](http://lists.osuosl.org/pipermail/darcs-users/2008-October/014218.html)
+
+2.  Darcs ideas in other VCS. Kirill Smelkov has kind words for us on
+    behalf of the NAVY project, which is moving away from darcs. Best of
+    luck to Kirill with whatever revision control system NAVY choose!
+    While we are delighted that "Good ideas behind [darcs] were adopted
+    by youth", we still have a thing or two to show these
+    whippersnappers.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-September/014095.html](http://lists.osuosl.org/pipermail/darcs-users/2008-September/014095.html)
+
+3.  Haddock + Hoogle == Javadoc on steroids. Simon Michael has combined
+    haddock and hoogle to give us a lovely darcs code browser. In the
+    meantime, Florent Becker has been adding value to this browser by
+    sending in lots of haddock patches. Many thanks to Simon and
+    Florent!
+    -   [http://joyful.com/repos/darcs-sm/api-doc](http://joyful.com/repos/darcs-sm/api-doc)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-September/014084.html](http://lists.osuosl.org/pipermail/darcs-users/2008-September/014084.html)
+
+4.  Patch theory update. Ian gives us his latest progress on
+    documenting, prototyping and improving darcs patch theory. "[S]ome
+    proofs are finally starting to appear, albeit rather handwavey for
+    now". Go Ian!
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-September/014168.html](http://lists.osuosl.org/pipermail/darcs-users/2008-September/014168.html)
+
+# Reviewers
+
+Thanks to our patch reviewers for this week for giving David a hand!
+
+-   Simon Michael
+
+# Issues resolved in the last week (5)
+
+issue1003 David Roundy
+  ~ -   don't sever transfer-mode connection on IO error.
+    -   [http://bugs.darcs.net/issue1003](http://bugs.darcs.net/issue1003)
+
+issue1043 David Roundy
+  ~ -   fix bug in mergeAfterConflicting.
+    -   NB. half-resolved, more to follow!
+    -   [http://bugs.darcs.net/issue1043](http://bugs.darcs.net/issue1043)
+
+issue1078 Dmitry Kurochkin
+  ~ -   make ioAbsolute work with symbolic links in file paths.
+    -   [http://bugs.darcs.net/issue1078](http://bugs.darcs.net/issue1078)
+
+issue1102 Eric Kow
+  ~ -   recognise but do not generate patch log 'junk'.
+    -   [http://bugs.darcs.net/issue1102](http://bugs.darcs.net/issue1102)
+
+issue1110 David Roundy
+  ~ -   fix get --hashed.
+    -   [http://bugs.darcs.net/issue1110](http://bugs.darcs.net/issue1110)
+
+# Patches applied in the last week (47)
+
+2008-10-02 Eric Kow
+  ~ -   TAG 2.1.0pre3
+    -   Bump version number to 2.1.0pre3.
+    -   ChangeLog entries for darcs 2.1.0pre3
+
+2008-10-01 David Roundy
+  ~ -   make boring file and tests work with hpc.
+    -   trim exports of IsoDate.
+    -   fix bugs in second issue1110 test.
+
+2008-09-30 Eric Kow
+  ~ -   Add another test case for issue1110.
+
+2008-09-29 David Roundy
+  ~ -   resolve issue1110: fix get --hashed.
+
+2008-09-30 Simon Michael
+  ~ -   generate a tidier hoogle frame, add required files, simplify
+        framed doc generation
+
+2008-09-26
+[florent.becker@ens-lyon.org](mailto:florent.becker@ens-lyon.org)
+  ~ -   haddock documenation for DateTester
+    -   haddock documentation for DateMatcher
+
+2008-09-30 Trent W. Buck
+  ~ -   make installdocs should not install TeX intermediaries.
+
+2008-09-30 Eric Kow
+  ~ -   Add test cases for issue1043.
+
+2008-09-26 David Roundy
+  ~ -   resolve issue1043: fix bug in mergeAfterConflicting.
+    -   add test that show bug works right.
+
+2008-09-29 Eric Kow
+  ~ -   Add a test case for issue1110.
+
+2008-09-28 Simon Michael
+  ~ -   Tone down unnecessarily scary language when cancelling
+    -   darcshoogle script and emacs integration example
+
+2008-09-28 Taylor R Campbell
+  ~ -   Fix doubled verb \`be' in documentation on apply posthooks in
+        \_darcs/prefs/defaults.
+
+2008-09-28 Simon Michael
+  ~ -   the issue864 test was misnamed
+
+2008-09-29 David Roundy
+  ~ -   add tests for pull --union and --intersection.
+    -   add more output to URL bug message.
+    -   answer darcs-doc question: no, that would be wrong.
+
+2008-09-26 Dmitry Kurochkin
+  ~ -   Make UglyFileName.super\_name work with "/foo" paths.
+
+2008-09-27 Simon Michael
+  ~ -   "make api-doc-frames" converts api docs to a frame layout
+    -   hoogleindex no longer depends on api-doc dir
+    -   make hoogle targets more robust
+
+2008-09-26
+[florent.becker@ens-lyon.org](mailto:florent.becker@ens-lyon.org)
+  ~ -   haddockification of IsoDate
+
+2008-09-27 Simon Michael
+  ~ -   fix makefile indentation
+    -   "make hoogleweb" configures the hoogle web interface in hoogle/
+    -   make haddock less noisy
+
+2008-09-26 Eric Kow
+  ~ -   Rollback 'simplify patches in rollback'
+    -   Resolve issue1102: recognise but do not generate patch log
+        'junk'.
+
+2008-09-26 David Roundy
+  ~ -   Roll back Dmitry's drop\_dotdot change in Darcs.Patch.Filename.
+    -   split FileName into two modules.
+
+2008-09-25 Simon Michael
+  ~ -   "make api-doc-with-source" generates docs with links to
+        colourised source code
+
+2008-09-26 David Roundy
+  ~ -   issue27.sh is still sporadically buggy.
+    -   add test that fails sporadically on nfs under ghc 6.6.
+
+2008-09-25 Dmitry Kurochkin
+  ~ -   Move issue1078 test from bugs to tests.
+    -   Resolve issue1078: make ioAbsolute work with symbolic links in
+        file paths.
+    -   Make FileName.drop\_dotdot work with absolute paths.
+
+2008-09-25 Eric Kow
+  ~ -   Force hidden conflicts test to use the darcs-2 format.
+
+2008-09-25 Dmitry Kurochkin
+  ~ -   Use init+pull instead of get in issue27 test.
+
+2008-09-11 Eric Kow
+  ~ -   Exceptions to GPL granted as of 2008-09-11.
+    -   Update manual to reflect --darcs-2 default.
+
+2008-09-25 David Roundy
+  ~ -   resolve issue1003: don't sever transfer-mode connection on IO
+        error.
+
+2008-09-25 Simon Michael
+  ~ -   preliminary hoogle indexing
+
+

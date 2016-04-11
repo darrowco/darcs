@@ -1,0 +1,125 @@
+# News and discussions
+
+1.  Radoslav Dorcik provides a web service to visualize darcs
+    repositories accessible via HTTP:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2011-April/026052.html](http://lists.osuosl.org/pipermail/darcs-users/2011-April/026052.html)
+
+2.  Several users talked about how they use darcs revert/unrevert as an
+    equivalent to git stash/pop:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2011-April/026056.html](http://lists.osuosl.org/pipermail/darcs-users/2011-April/026056.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2011-April/026066.html](http://lists.osuosl.org/pipermail/darcs-users/2011-April/026066.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2011-April/026073.html](http://lists.osuosl.org/pipermail/darcs-users/2011-April/026073.html)
+
+# Issues resolved in the last week (4)
+
+issue1344 Gabriel Kerneis
+  ~ -   abort early if can't send
+    -   [http://bugs.darcs.net/issue1344](http://bugs.darcs.net/issue1344)
+
+issue2012 Gabriel Kerneis
+  ~ -   2012: do not display target address with -o/-O
+    -   [http://bugs.darcs.net/issue2012](http://bugs.darcs.net/issue2012)
+
+issue2013 Gabriel Kerneis
+  ~ -   handle --to flags in darcs send --context
+    -   [http://bugs.darcs.net/issue2013](http://bugs.darcs.net/issue2013)
+
+issue2049 Ganesh Sittampalam
+  ~ -   explicitly check for parent dir when recording an add
+    -   [http://bugs.darcs.net/issue2049](http://bugs.darcs.net/issue2049)
+
+# Patches applied in the last week (53)
+
+2011-04-06 Guillaume Hoffmann
+  ~ -   remove darcs resolve alias for mark-conflicts
+    -   remove mentions of darcs resolve in two tests
+    -   remove mention of darcs resolve in manual
+    -   update help string for mark-conflicts
+
+2011-04-01 Iago Abal
+  ~ -   Fix generation of Darcs2 patches to restore the rate of
+        conflictors
+    -   Make use of bSized for generation of arbitrary trees and files
+    -   Adjust comment making reference to removed code
+    -   Test effect preserving property of join operation
+    -   Replace old RepoModel by Darcs.Test.Patch.RepoModel
+    -   Remove Darcs.Test.Patch.QuickCheck shrinker
+    -   Clean up of Darcs.Test.Patch.WithState
+    -   Several fixes for RepoModel and Prim generators
+    -   Apply patches to RepoModels via Darcs.Patch.Apply.applyToTree
+    -   Add "bounded sized" generator combinator
+    -   Generalize type of applyToTree
+    -   Add more tests about invert and for FL Prim into Unit2 testsuite
+    -   Remove duplicated/unused Arbitrary instance for FL Prim
+    -   Show instance for RepoModel
+    -   ArbitraryState refactoring
+    -   Remove duplication of With\*State code
+    -   Fix With\*State witnesses mess
+
+2011-03-31 Owen Stephens
+  ~ -   Unify hashed-storage version dependencies that caused a build
+        fail.
+
+2011-02-20 Iago Abal
+  ~ -   Add invert-rollback and effect-preserving properties
+    -   Add testing properties for V1 Prim patches
+    -   Improved generators for V1 Prim patches
+    -   Add Darcs.Test.Patch.RepoModel
+
+2011-03-07 Ganesh Sittampalam
+  ~ -   bump parsec dependency
+
+2011-02-16 Iago Abal
+  ~ -   Clarify comment
+    -   Remove unused import
+    -   Add Darcs.Test.Util.QuickCheck containing some auxiliary
+        QuickCheck generators and combinators
+
+2011-04-01 Ganesh Sittampalam
+  ~ -   fixup tests pulled from the 2.5 branch
+
+2011-02-15 Iago Abal
+  ~ -   "Fix" the increase in test execution time
+    -   Remove useless MonadError contraint in
+        Readable/WriteableRepository TreeMonad instances
+
+2010-12-03 Ganesh Sittampalam
+  ~ -   correct character literals
+    -   test that we can't add files inside case changed directories
+    -   resolve conflicts between
+    -   resolve issue2049: explicitly check for parent dir when
+        recording an add
+    -   test for issue2049
+
+2011-04-02 Eric Kow
+  ~ -   Developers should fetch the screened repository.
+
+2011-04-01 Dmitry Tsygankov
+  ~ -   Changed return type of promptYorn to IO Bool
+
+2011-01-20 Gabriel Kerneis
+  ~ -   Fix conflict (because of $- removal)
+    -   resolve issue2013: handle --to flags in darcs send --context
+
+2011-04-01 Dmitry Tsygankov
+  ~ -   Change the type of identifyRepoFormat to match the common use
+        case
+
+2010-12-15 Gabriel Kerneis
+  ~ -   Test issue2012: darcs send -o shall not print a "will be sent
+        to" line
+    -   Test issue1344: fail early if sendmail is not available
+    -   Test issue2013: do not ignore --to in darcs send --context
+    -   resolve issue1344: abort early if can't send
+    -   Export Darcs.Externals.haveSendmail
+    -   resolve issue 2012: do not display target address with -o/-O
+    -   Remove redundant import
+
+2011-02-19 Radoslav Dorcik
+  ~ -   Update test for XML Schema with MIT header.
+    -   Test darcs changes XML with XSD/xmllint.
+    -   Add inferred XML Schema for outputs.
+
+

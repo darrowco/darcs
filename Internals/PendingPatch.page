@@ -1,0 +1,333 @@
+*pending patch is wtf-y* -- Owen Stephens
+
+# Overview
+
+The pending patch seems to play at least four roles:
+
+First, it track changes that were made explicitly via commands like `darcs add`
+and `darcs remove`.  This is necessary even though darcs in principle
+could look for these changes itself because (A) it is potentially expensive (B)
+it could be a distraction for users [prompting about irrelevant things],
+and (C) users would presumably want to express ideas like “stop tracking this
+file, but please don't delete it!” (`darcs remove`)
+
+Second, even if Darcs were to have only implicit adds/removes all the time, it
+would still need a mechanism to help interpret some low-level changes as their
+high-level equivalents.  For example, some hunk changes in working could
+actually be interpreted either as token replace operations or straightforward
+hunk changes; likewise, moving a file could be seen as removing a file with
+the old name and adding a new or a darcs mv operation.  The pending patch
+mechanism is used to avoid these ambiguities by explictly stating where high
+level operations like darcs token replace have taken place.
+
+Third, as an upshot of tracking the removes and high-level primitive patches,
+Darcs also need to know the subset of hunk patches that they depend on.
+In the case of `darcs remove`, for example, we would need to have a hunk patch
+that deletes the file contents before appending the `rmfile` patch to it
+(this is only necessary if we want pending to be a plain old darcs
+patch, which sounds like a sensible thing to want).  As for `darcs replace`
+it can sometimes happen that the new token already exists in your working
+directory, but you want to do the replace anyway.  In these cases, Darcs offers
+the ability to “force” the replace by first creating hunk patches that revert
+the new token back to the old one (so the replace can go on top of those).
+
+Fourth, (actually a generalisation of the second), it allows Darcs to track
+things that simply aren't represented elsewhere in working, ie. changepref
+patches.
+
+# Commands that only edit pending
+
+Most likely any command that uses patches and touches the working directory
+will have run into the pending patch one way or the other.
+
+### whatsnew
+
+The `whatsnew` command does a standard [diff from the unrecorded to
+recorded](#mechanisms) state.
+
+Also, the variant `whatsnew --look-for-adds` shows users a distinction between
+files that were added explictly (upper case A) and those that were found via
+`--look-for-adds` (lower case A).  To support this distinction, `whatsnew` does
+two diffs (both with/without the looked-for adds) and a further diff between
+the diffs.
+
+### add
+
+When you use the `darcs add` command, Darcs needs to update the pending patch
+to remember that you have explicitly expressed an interest in these actions (it
+doesn't need --look-for-adds to find them).  After the usual sanity checks from
+the UI, it converts the adds into primitive patches and applies
+`Darcs.Repository.addToPending`
+
+TODO more of a high-level description that's not based on the actual
+implementation details, once we understand what addToPending fundamentally is.
+
+### remove
+
+TODO
+
+* seems a bit magical, don't really understand this business of gaps,
+  eg. `freeGap (addfile f_fp :>: rmfile f_fp :>: NilFL)`.  What's the
+  significance of the addfile patche followed by the rmfile?
+* addToPending` is involved
+
+### revert and unrevert
+
+Reverting patches should be a fairly straightforward matter of removing things
+from pending. One challenge in getting `revert` right is that we want to offer
+the user the ability to pass `darcs revert` a set of files (ie. “only revert
+patches affecting these files”); but we also want to make sure we don't
+overshoot by leaving behind a pending that only talks about those files.
+In the current implementation, we take a diff from recorded to unrecorded,
+which we split by cherry picking into an “leave alone” sequence followed by the
+patches we want to revert. The new pending patch is built by appending the
+inverted patches onto the recorded/unrecorded diff and hoping that sifting will
+do the right thing. (*EYK: why not just make a new pending out of the
+leave-alone sequence?*)
+
+TODO unrevert
+
+# Commands that edit both pending and recorded
+
+### record, unrecord, and amend-record
+
+Recording a patch involves adding a named patch to the repository. Adding a
+patch to the repository automatically triggers removing its prims from pending.
+In the case of Darcs record, this is a sensible thing to do because we can
+consider these prims as already having been accounted for by the new patch and
+therefore redundant/incorrect.  Think of it as transferring these patches from
+pending to the newly created named patch.  As with any other command that
+modifies the pending patch, this removal is followed by (sifting)[#mechanisms].
+It's not clear to me if in practice this sifted patch is any smaller than our
+reduced pending.
+
+We can reason about unrecording patches the same way as recording.  If
+recording means that we transfer prims from pending to the new patch;
+unrecording means that we have to transfer prims out of the soon-to-be-dead
+patch back into pending.  So just as you *remove* from pending to add patches
+to the repo, you also *add* (prepend!) patches to pending when you remove them
+from the repo.
+
+As currently implemented, `amend-record` involves removing the original patch
+(adding its contents to pending), and adding the updated patch (removing its
+contents from pending).  This is almost like doing unrecord followed by record,
+except that we only have a single sifting phase (add to pending, remove from
+pending, sift). By rights, one would imagine that amend-recording a patch gives
+you the same pending patch as doing a single record would have done.
+
+### apply (and presumably pull)
+
+Applying patches involves the mess that is `tentativelyMergePatches_` (eek!).
+Basically when applying patches we need to worry about two things: conflicts
+between the patches themselves, and further conflicts with the unrecorded
+stuff.
+
+Read this diagram from the bottom up:
+
+              .
+              |  resolution <-- conflict markers
+              |
+              .
+     unrec2  / \  new2  <-- applied to the working we have
+            /   \
+           R2    U
+            \   /
+        new  \ /  unrec
+              R
+
+
+The context R refers to our current recorded state, U to our unrecorded state
+(pending + working).  The new patches are the ones that would get applied on
+pristine, but we also need to account for the unrecorded state, so we have
+new2 which is the result of merging new with unrec.  The resolution patches are
+the conflict markers; they get applied last.
+
+For purposes of *applying* the patches to the working directory, we want new2 +
+resolution because it's simpler to just lay them on top of the unrecorded state
+we have (U).  But for purposes of computing a new pending patch, we need something
+that is going to sit on top of the new recorded state R2, so we take unrec2 +
+resolution.  And where darcs patch theory is nice is that the resolution patch
+is the same for both purposes because we know it starts from the same diamond
+merged place. In any case, the new pending patch is just unrec2 followed by
+resolution, (and as with all other commands that modify pending) minimised with
+sifting.
+
+### obliterate (presumably get --tag too)
+
+Recall that obliterating is effectively just unrecord and revert.  The logic
+seems to be the same although it doesn't literally call unrecord followed by
+revert: ie. it effectively adds patches back to pending (transfering them out
+of the patch we want to obliterate) but subsequently cancels them by adding
+their inverses to pending too.
+
+TODO: again what is the difference between removing patches and adding
+inverted ones?
+
+# Properties
+
+Some basic properties of the pending patch
+
+* Deleting the pending patch does not lead to an inconsistent repository.
+  You may lose some unrecorded changes, but it won't break Darcs
+  (unless you contrive to delete it while Darcs is in the middle of
+  something, in which case, it serves you right)
+
+* Pending applies cleanly on top of the current recorded state.
+  We can say that a repository has the successive states
+
+  1. recorded   (pristine)
+  2. pending    (pending patch only)
+  3. unrecorded (pending + working)
+
+  Implementation detail: We currently do not explicitly track the pending state
+  in the Repository type.  Instead, we track something called the tentative
+  state, which is meant to replace the recorded state (?) after we finalise.
+  Tentative is neither before/after pending. It could include things that are
+  not yet in pending, and it could also miss things that are currently in pending.
+
+# Mechanisms
+
+## Append vs prepend
+
+It could be useful to recognise the distinction between appending new patches
+to pending and prepending.  Appending makes sense when you're adding new
+information (eg. in the case of the `darcs add` command).  Prepending is used
+internally when removing patches because you are transferring information
+from the recorded patch to pending. Think of it as redrawing borders: prepend
+expands pending leftwards into recorded territory; append expands it rightwards
+into unrecorded territory.
+
+## Diff from recorded to unrecord
+
+For repository-local operations like `whatsnew` or `add`, darcs obtains a
+sequence of patches that take it from its recorded state to its unrecorded
+state. This sequence combines information from both the pending patch and a
+diff against the working repository.  To avoid overlaps between
+pending/working, Darcs applies the pending patch and diffs working against the
+resulting tree.  It could in principle just return these two sequences in order
+(pending then diff); in practice, it also massages the combined sequence, which
+may involve patches being reordered through commutation, canceled out,
+coalesced etc.  Basically you should not rely on there being any visible
+distinction between the pending patch and the working diff.
+
+For efficiency, it's possible to control what directories/files Darcs looks
+into when computing its diff; however, the patches we return may contain
+results that are not related to the files in question (see issue1825).
+Commands that use this mechanism may still need to filter the output.
+
+## Sifting for pending
+
+Before writing out the pending patch, we always simplify it by “sifting for
+pending”. We can think of sifting as a clean-up phase.  It's simpler for
+operations that use the pending patch to simply dump things in there to make
+sure pending has the right information; and for other considerations to come in
+as a second pass. Sifting means simplifying the pending patch by
+
+* coalescing it
+* cancelling out adjacent patch/inverse pairs
+* getting rid of extraneous hunk/binary patches
+
+Basically anything that can be inferred from a diff and which isn't needed for
+a dependency (consider darcs replace --force) has to go.
+
+## Consistency check
+
+Two things we check for: if we can't apply pending on write, we say it is
+buggy, but if we can't apply it on read, we say it has conflicts.  Do these
+messages mean the same thing?
+
+# Pitfalls
+
+The pending patch has historically been a [source for
+grief](http://bugs.darcs.net/issue?%40search_text=&title=&%40columns=title&topic=28&id=&%40columns=id&creation=&creator=&activity=&%40columns=activity&%40sort=activity&actor=&nosy=&priority=&%40group=priority&milestone=&status=&%40columns=status&resolvedin=&assignedto=&%40columns=assignedto&%40pagesize=50&%40startwith=0&%40queryname=&%40old-queryname=&%40action=search)
+in Darcs.  Here are some of things that have gone wrong in the past, with some
+attempts at broadly breaking them into categories
+
+* Too much pending: pending patch seems to have things it in it should not have
+* Not enough pending: pending patch seems to be missing prims
+* Confused by rename: some rename somewhere caused a problem
+* Kaboom: pending patch is inconsistent/buggy
+* Performance: some kind of horrible performance thing]
+* Working: things related to the working directory itself (implications of
+  pending patch for what happens to the working dir; whether we're diffing right)
+* Other…
+
+## Open bugs
+
+This is not an exhaustive list, as (A) it's only valid for the time of this
+writing and (B) I only searched for bugs marked with ThePendingPatch topic.
+There may be other such bugs lurking around
+
+* issue1316 [too much pending]: if you record a patch that adds a
+  directory and then you amend away that addir, you get an addir in pending.
+  This can be confusing if you had rm -rf'ed the directory.  Is this actually
+  a bug or just some sort of UI hole?
+* issue1325 [too much pending]: darcs does not forget an addir if you
+  remove the directory before recording it
+* issue814 [performance]: whatsnew does too much work (Jason said something
+  about overly eagerly constructing the pending patch)
+* issue1073 [performance]: changepref patch affects whatsnew -l performance
+* issue1577 [working]: reverting an addfile causes the file to be removed from the
+  working directory (should be just pending, right?)
+* issue2212 [too much pending, working]: if you remove a file before darcs
+  add, the remove winds up in pending
+
+## Resolved issues
+
+* issue709 [too much pending?]: some interaction between look-for-adds and
+  pending (surface symptom was that using setpref caused darcs to think
+  something was removed) (seems to cover issue1012 as well)
+  tentativelyRemoveFromPending had to become a lot fancier)
+* issue1825 [kaboom, working]: invalid pending on revert (the fix for this
+  made unrecordedChanges dig out more prims; I suspect this fix is what causes
+  issue2212)
+* issue1845 [working]: darcs refusing to record files that were removed from
+  working directory (fix was to look for files in both pristine and
+  working).  Interestingly, Petr called the 'pristine' variable
+  'pending' but Ganesh later improved the name
+* issue494 [too much pending; confused by rename]: applying patches leaves
+  unexpected changes in the working directory
+  (I later claim that issue911, issue1065, issue1034 are duplicates of this);
+  the fix for this seems to have been to introduce the notion of cancelling
+  out inverted pairs during sifting
+* issue1740 [working, confused by rename]: posthoc darcs move dir causes darcs to blow
+  up (may not actually be pending related; fixed in (darcs move) UI layer)
+* issue2076 [working, confused by rename]: another posthoc move one fixed in the the UI
+  layer
+
+## Mystery bugs
+
+We gave up on understanding/reproducing these.  There may be something worth
+noticing in here
+
+* issue1152 - [kaboom] ask-deps => buggy-pending (given up because could not
+  reproduce)
+* issue1022 - [too much pending] seemingly spurious remove patches in whatnew
+* issue1612 - [not enough pending] darcs removing seeming not to add the
+  needed hunk patches to pending (can't boil down or reproduce?)
+* issue890 - [kaboom] add r => Yikes! Pending has conflicts (nb.
+  that is read time; not write time that darcs reports that), can't reproduce,
+  maybe fixed in old darcs
+
+# Questions
+
+* how does Darcs behave when you add things to pending and then change your mind?
+* [Owen] why do we have to commute with pending on record?
+* does --look-for-adds also mean “look for removes?” or does darcs systematically look for removes?*
+* how do conflicts with pending work?
+* when do we want to prepend (see tentativelyRemove; amend, get, unrecord) and
+  when do we want to append to pending (get, rollback, unrecord, unrevert)?
+* why do we have different behaviours (removing from pending vs adding inverses?)
+* what is the essence of issue494 and how does cancelling out inverses address
+  the problem?
+* why the issue1825 change?
+
+# See also
+
+Previous attempts at grappling with pending. Read at your own risk!  Remember
+that the tale of a bunch of blind men and their first encounter with an
+elephant…
+
+* [2007 on pending and sifting](http://lists.osuosl.org/pipermail/darcs-devel/2007-August/006218.html)
+* [2010-02 conversation](http://irclog.perlgeek.de/darcs/2010-02-08#i_1968312)
+* [2010-04 conversation](http://irclog.perlgeek.de/darcs/2010-04-14#i_2230037)

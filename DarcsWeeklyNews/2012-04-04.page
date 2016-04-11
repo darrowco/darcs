@@ -1,0 +1,262 @@
+# News and discussions
+
+1.  The Southampton sprint is over! We'll put together a blog report soon.
+
+2.  Florent and Ganesh prepared a release candidate of Darcs 2.8, try it!
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2012-April/026445.html>
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2012-April/026448.html>
+
+3.  What would be the next big feature of Darcs 2.10? Ganesh proposed rebase,
+    and Michael already provided feedback about this feature:
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2012-April/026443.html>
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2012-April/026455.html>
+
+4.  Eric asked what would be a nice mission statement for Darcs.
+    A few propositions have been made so far:
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2012-March/026433.html>
+
+
+# Issues resolved in the last week (3)
+
+issue2125 Owen Stephens
+  ~ -   only warn about forcing replaces, when a force is required.
+    -   <http://bugs.darcs.net/issue2125>
+
+issue2136 Owen Stephens
+  ~ -   Correctly track renames of multiple files in Changes --xml.
+    -   <http://bugs.darcs.net/issue2136>
+
+issue2162 Owen Stephens
+  ~ -   Fix compilation failure with GHC 6.12
+    -   <http://bugs.darcs.net/issue2162>
+
+
+# Patches applied in the last week (199)
+
+2012-04-03 Michael Hendricks
+  ~ -   Haddock for Darcs.Patch.Info.patchinfo
+
+2012-04-01 Eric Kow
+  ~ -   Convert Printer.lhs from literate Haskell.
+
+2012-04-02 Owen Stephens
+  ~ -   Tidy and slightly refactor ProgressPatches
+    -   Tweak command name in unrevert
+    -   Remove some duplicate code and slight tidy in Repository.LowLevel
+    -   Tidy/Style Repository.LowLevel
+    -   Style/tidy Respository.Motd
+    -   Remove warnings in Darcs.Test.Patch
+    -   Remove warnings from Patch.Properties.Generic
+    -   Disable all warnings for Arbitrary.PrimV3
+    -   Fix warning in Arbitrary.Generic
+    -   Remove warnings from Arbitrary.PatchV1
+    -   Remove trailing whitespace from Darcs.Test.Patch.V1Model
+    -   Remove compile warnings from Darcs.Test.Patch.V1Model
+    -   Disable all warnings for Test.Patch.V3Model
+    -   Remove warnings in Darcs.Test.Patch.RepoModel
+    -   Use System.IO.Unsafe for unsafePerformIO, not Foreign
+    -   Remove an unused import in Test.Patch.Properties.V1Set2
+    -   Remove compile warnings in Test.Patch.Properties.Check
+    -   Remove do-notation warning from Workaround
+    -   Remove do-notation warning from Compat
+    -   Remove do-notation warning from External
+    -   Remove do-notation warning from Repository.HashedIO
+    -   Remove do-notation warning from Repository.Merge
+    -   Remove do-notation warning from Repository.Internal
+    -   Remove do-notation warning from Commands.Get
+    -   remove two do-notation warnings from Commands.Unrecord
+    -   Remove two do-notation warnings from Commands.Optimize
+    -   Remove do-notation warning in Commands.Tag
+    -   Remove four do-notation warnings in Commands.Record
+    -   Remove two do-notation warnings in SignalHandler
+    -   Remove two do-notation warnings in Lock
+    -   Remove do-notation warning in RunCommand
+    -   Remove two do-notation warnings in Repository
+    -   Remove a do-notation warning in URL.
+    -   Tidy/style Repository.ApplyPatches
+
+2012-03-31 Eric Kow
+  ~ -   Remove unused "gadts.h" import from Progress
+    -   Replace CPP witness macros with plain Haskell in Darcs.Witnesses.Unsafe.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Witnesses.Show.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Witnesses.Sealed.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Witnesses.Ordered.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Witnesses.Eq.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Resolution.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Repository.State.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Repository.Repair.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Repository.Prefs.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Repository.Old.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Repository.Merge.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Repository.LowLevel.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Repository.InternalTypes.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Repository.Internal.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Repository.HashedRepo.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Repository.HashedIO.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Repository.Format.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Repository.Cache.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Repository.ApplyPatches.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Repository.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.ProgressPatches.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.Viewing.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.V2.Real.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.V2.Non.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.V1.Viewing.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.V1.Show.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.V1.Read.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.V1.Core.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.V1.Commute.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.V1.Apply.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.TouchesFiles.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.Summary.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.Split.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.Show.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.Set.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.Repair.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.Read.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.Prim.V3.Show.hs
+    -   Replace CPP witness macros with plain Haskell in Darcs.Patch.Prim.V3.Details.hs
+    -   Replace witness CPP macros with plain Haskell in Darcs.Witnesss.WZipper
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Prim.V3.Core
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Prim.V3.Commute
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Prim.V3.Coalesce
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Prim.V3.Apply
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Prim.V1.Show
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Prim.V1.Read
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Prim.V1.Details
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Prim.V1.Core
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Prim.V1.Commute
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Prim.V1.Coalesce
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Prim.V1.Apply
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Prim.Class
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Permutations
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Patchy
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.PatchInfoAnd
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Named
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Merge
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Match
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Invert
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Inspect
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Format
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.FileHunk
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Effect
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Dummy
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Depends
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.ConflictMarking
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Conflict
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Commute
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Choices
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Bundle
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Bracketed.Instances
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Bracketed
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch.Apply
+    -   Replace witness CPP macros with plain Haskell in Darcs.Patch
+    -   Replace witness CPP macros with plain Haskell in Darcs.Diff
+    -   Replace witness CPP macros with plain Haskell in Darcs.CommandsAux
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.WhatsNew
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Util
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Unrevert
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Unrecord
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Test
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Tag
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.ShowRepo
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.ShowIndex
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.ShowFiles
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Send
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Rollback
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Revert
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Replace
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Repair
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Remove
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Record
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Put
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Push
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Pull
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Optimize
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.MarkConflicts
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Get
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.GZCRCs
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Convert
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Changes
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Apply
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Annotate
+    -   Replace witness CPP macros with plain Haskell in Darcs.Commands.Add
+    -   Replace witness CPP macros with plain Haskell in Darcs.Arguments
+    -   Replace witness CPP macros with plain Haskell in Darcs.Annotate
+    -   Replace witness CPP macros with plain Haskell in test_stub
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.WithState
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.WSub
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.V3Model
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.V1Model
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.Properties.V1Set2
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.Properties.V1Set1
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.Properties.Real
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.Properties.GenericUnwitnessed
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.Properties.Generic
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.Properties.Check
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.Examples.Set2Unwitnessed
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.Examples.Set1
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.Arbitrary.Real
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.Arbitrary.PrimV3
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.Arbitrary.PrimV1
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.Arbitrary.PatchV1
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch.Arbitrary.Generic
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Patch
+    -   Replace witness CPP macros with plain Haskell in Darcs.Test.Misc
+
+2012-03-31 Simon Michael
+  ~ -   another fix for utf8.sh test, update to current rollback ui
+
+2012-03-27 Michael Hendricks
+  ~ -   List conflicted files one per line
+
+2012-03-24 Guillaume Hoffmann
+  ~ -   make darcs test more consistent
+    -   update manual for darcs test and repair --dry-run
+    -   make check an alias for repair --dry-run
+    -   add regression test to check warning message presence for darcs test
+    -   switch to test --trackdown and test --bisect
+    -   adapt testsuite to test --trackdown and test --bisect
+    -   adapt test suite to switch from darcs check to darcs test
+    -   introduce darcs test, doing the same as did check --test without repo check
+    -   Remove the function delimiters
+
+2012-02-14 Will Langstroth
+  ~ -   Organize export list in Darcs.Patch
+    -   Haddock-friendly formatting for Darcs.Patch.Apply
+
+2012-01-31 Owen Stephens
+  ~ -   Fix improper handling of FileNames that are prefixes-of, but not parents-of a target FileName.
+    -   Add current_name attribute to created_as in changes --xml on multiple files.
+    -   Resolve Issue2136: Correctly track renames of multiple files in Changes --xml.
+    -   Rename withFilePaths -> withFileNames, since it operates on FileNames not FilePaths.
+    -   Replace applyToFilepaths with applyToFilePaths to match casing of FilePath
+    -   Add new helper function to determine if a given filename is the parentOrEqual of another.
+    -   Use <$> instead of fmap in Patch/Apply.hs
+    -   Refactor movedirfilename to use stripPrefix lib function, rather than equivalent hand-rolled code.
+
+2012-03-29 Andreas Brandt
+  ~ -   Added comments for withDir and some style improvements
+
+2012-03-26 Guillaume Hoffmann
+  ~ -   style and cleanup Darcs.Repository.Internal
+
+2012-02-24 Dave Love
+  ~ -   Reinstate newlines lost in fix for issue1681
+
+2012-03-26 Guillaume Hoffmann
+  ~ -   style and cleanup Darcs.Commands.Get and Darcs.Repository
+
+2012-03-30 Owen Stephens
+  ~ -   Add check for token in working copy to issue2125 test. Remove obsolete test for issue864.
+    -   Follow up to resolve issue2125, with style changes
+    -   Resolve issue2125: only warn about forcing replaces, when a force is required.
+    -   Accept issue 2125: darcs replace always warns about forcing, even when unnecessary
+    -   Refactor/tidy-up Commands/Replace
+    -   Extract common token-breaking code in Patch/TokenReplace
+    -   Tidy Patch/TokenReplace
+    -   camelcase a few identifiers in Commands/Replace
+    -   Tidy Commands/Replace
+    -   Resolve issue2162
+    -   Style, tidy and start commenting Real.hs
+

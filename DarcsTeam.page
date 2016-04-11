@@ -1,0 +1,179 @@
+Like many free and open source projects, darcs is running on spare time
+and pure enthusiasm. We need your help! Here are the roles which we are
+currently filling and that we would like to fill.
+
+# Core team
+
+We hope to grow the core team over time. Members of the team will be
+asked to review patches on a regular basis and to push them into
+mainline Darcs as they see fit.
+
+Interested in joining? It's the best way to get to know the Darcs code.
+Subscribe to darcs-users and start reviewing some patches today. We'll
+be sure to notice! After some point, we'll invite you on board, after
+having started a discussion and building up a consensus among current
+team members.
+
+-   [Florent Becker](People/FlorentBecker) (gal\_bolle)
+-   [Guillaume Hoffmann](People/GuillaumeHoffmann) (gh\_)
+-   [Ganesh Sittampalam](People/GaneshSittampalam) (Heffalump)
+-   [Owen Stephens](People/OwenStephens) (owst)
+-   [Michael Hendricks](People/MichaelHendricks) (mndrix)
+-   Simon Michael
+-   Ben Franksen (bf)
+
+## Inactive
+
+We hope to see these core team members again!
+
+-   [Trent Buck](People/TrentBuck) (twb) (bash and user documentation)
+-   [Jason Dagit](People/JasonDagit) (lispy) - unavailable 2010-05-05
+-   [Dmitry Kurochkin](DmitryKurochkin) - unavailable 2009-08-31
+-   [Petr Rockai](People/PetrRockai) (mornfall)
+-   [Reinier Lamers]() (tux\_rocker)
+-   [Eric Kow](People/EricKow) (kowey)
+
+# Managers
+
+## Maintainer
+
+-   [Guillaume Hoffmann](People/GuillaumeHoffmann) (gh\_)
+
+Previously: Eric Kow (2008-2015) and David Roundy (2002-2008).
+
+## Release manager
+
+-   Jobs
+
+    -   Perform releases (used to be according to a fixed schedule of
+        every 6 months)
+    -   Release announcements
+    -   Write [ChangeLog](ChangeLog) entries
+
+-   See [ReleaseManagement](Development/ReleaseManagement) for help
+-   filled by: [Guillaume](People/GuillaumeHoffmann)
+
+## Issue manager
+
+-   Jobs
+
+    -   Ensure bug-tracker is triaged:
+        <http://bugs.darcs.net>
+    -   Review bug-tracker on regular basis
+    -   Co-ordinate with release manager
+
+-   filled by: nobody, help wanted!
+
+## Patch manager
+
+-   Jobs
+
+    -   Ensure that patches are reviewed in a timely manner
+    -   Chase up on people as amendments are requested.
+
+-   filled by: nobody, help wanted!
+
+## Documentation manager
+
+-   Jobs
+
+    -   website updates, odd jobs - [Simon Michael](http://joyful.com)
+    -   FAQ maintenance - nobody, help wanted!
+    -   wiki gardening - "
+    -   tutorials and docs - "
+
+## Communications team
+
+-   Jobs
+
+    - HCAR - Guillaume
+    - [blog.darcs.net](http://blog.darcs.net) - Guillaume
+    - [planet.darcs.net](http://planet.darcs.net) - [Simon Michael](http://joyful.com)
+    - [Darcs News](DarcsWeeklyNews) - [Guillaume](People/GuillaumeHoffmann)
+
+## Marketing team
+
+Making sure people understand what darcs does that other distributed
+RCSes do not
+
+-   [MaxBattcher](MaxBattcher)
+-   [GuillaumeHoffmann](People/GuillaumeHoffmann)
+-   [Andreas Wagner](People/AndreasWagner) (pointfree) - [darcs schwag](http://darcs.spreadshirt.com), etc.
+
+## Events manager
+
+The events manager makes sure that we can have regular [hacking
+sprints](Sprints), twice a year. Part of this job includes fundraising.
+
+-   Jobs
+
+    -   find venues for [Sprints](Sprints)
+    -   prepare sprints, organise beginner tasks, get people up to speed
+    -   co-ordinate with Haskell Hackathon and other hacking projects
+    -   obtain sponsorship or funding if needed
+
+-   filled by: nobody, help wanted!
+
+# Platform czars and liaisons
+
+Packagers produce official darcs.net binaries in conjunction with the
+source tarball releases:
+
+-   Windows packager - nobody, help wanted!
+-   MacOS X packager - [Tamas Herman](People/TamasHerman)
+
+Platform czars are our go-to people for issues specific to a popular
+platform. They also steer Darcs development so that our support for
+these platforms is as strong as possible.
+
+-   Windows czar - help wanted!
+-   Mac czar - help wanted!
+
+Platform liaisons help us to translate from one community culture to
+another.
+
+-   Debian liaison - [TrentBuck](People/TrentBuck)
+    ([PetrRockai](People/PetrRockai) in the assistant role)
+-   Ubuntu liaison - help wanted!
+
+# Infrastructure
+
+-   Sysadmin - [EricKow](People/EricKow) (help wanted!)
+-   Mail moderators - [EricKow](People/EricKow) (help wanted!)
+-   Roundup man - [EricKow](People/EricKow) (help wanted!)
+-   Buildbot wrangler - nobody, help wanted!
+
+# Oversight Committee
+
+Slightly edited (bullet points) from the Software Freedom Conservancy
+[agreement](http://darcs.net/darcs-sponsorship-agreement.pdf):
+
+The Oversight Committee, initially composed of
+
+-   Tommy Pettersson,
+-   Ian Lynagh,
+-   Ganesh Sittampalam,
+-   Mark Stosberg and
+-   Zooko Wilcox O'Hearn,
+
+shall represent the Project in its official communication with the
+Conservancy. Members of the Oversight Committee may be added or removed
+from the Committee at any time by a majority vote of all of the members
+of the Oversight Committee. The Oversight Committee will elect a single
+individual to communicate with the Conservancy (the "Representative")
+and shall notify the Conservancy promptly following the election of a
+new Representative. The Representative will have the authority to
+instruct the Conservancy on the Project's behalf on all matters. This
+section may be modified by a vote of at least 3/4 of all of the members
+of the Oversight Committee, with the consent of the Conservancy, such
+consent not to be unreasonably withheld.
+
+**Commentary**: Technically speaking, the Oversight Committee and
+Representative language only really concerns our relationship with the
+SFC; but in practice, we also use this as part of our project
+governance. So how does this work in practice? The Oversight Committee
+are not necessarily involved in day-to-day governance of the Darcs
+project (though its members may be). They delegate this job to a
+Benevolent-Dictator-esque figure (currently Guillaume Hoffmann). Their role is
+basically to act as a safety mechanism, allowing for an orderly change
+in leadership should the need arise.

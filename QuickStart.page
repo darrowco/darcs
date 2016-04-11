@@ -1,0 +1,132 @@
+---
+title: Darcs Quick Start
+toc: no
+...
+
+# Setting up a repository
+
+## Creating a new repository on hub.darcs.net (optional)
+
+You can create you own repository on <http://hub.darcs.net>,
+a repository hosting service.
+
+## Cloning an existing repository
+
+If you have an existing repository, you can clone it:
+
+~~~bash
+$ darcs clone user@hub.darcs.net:user/repo
+Copying patches, to get lazy repository hit ctrl-C...
+Finished cloning. 
+~~~
+
+## Start a new repository from scratch locally
+
+~~~bash
+$ darcs init
+  Repository initialized.
+~~~
+
+# Working with repositories
+
+## Adding new files
+
+~~~bash
+$ echo foo > my_file  # create a new file
+$ darcs whatsnew -l   # show unrecorded files
+a ./my_file
+$ darcs whatsnew      # show unrecorded changes of files tracked by Darcs
+No changes!
+$ darcs add my_file   # track file
+  Adding 'my_file'
+$ darcs whatsnew
+addfile ./my_file
+hunk ./my_file 1
++foo
+~~~
+
+## Recording changes
+
+`darcs record` helps you creating a *patch* in you repository (in other systems
+this would be called a *commit*):
+
+~~~bash
+$ darcs record -m "patch name"
+addfile ./my_file
+
+# then follow on-screen instructions
+~~~
+
+## Pushing the changes to a remote repository
+
+If you already defined the repository (e.g, in case you cloned
+your repository from an existing one)
+
+~~~bash
+$ darcs push 
+~~~
+
+If you did not yet:
+
+~~~bash
+$ darcs push repository_address
+~~~
+
+# Other commands
+
+## diffs
+
+  --------------------  ----------------------------------------------------
+  `darcs diff`          show unrecorded changes as a diff
+  `darcs diff -p NAME`  show changes of last patch matching NAME as a diff
+  --------------------  ----------------------------------------------------
+
+## undo
+
+  -----------------  --------------------------------------------------------
+  `darcs revert`     revert unrecorded changes in the working copy
+  `darcs unrecord`   un-record a patch in this repo, preserving working copy
+  `darcs obliterate` completely erase a patch from this repo and working copy
+  `darcs rollback`   apply inverse of recorded patch to working copy
+  ---------------------------------------------------------------------------
+
+## moving patches
+
+  ---------------------------- ----------------------------------------------------------
+  `darcs clone USER@HOST:PATH`
+  `darcs pull`                 merge new patches from upstream, updating the working copy
+  `darcs push`                 add our new patches to the upstream repo
+  ---------------------------------------------------------------------------------------
+
+## more
+
+  -------------------            -----------------------------------------------
+  `darcs log`                    list patches
+  `darcs send`                   send patches by mail (see [Send](/Using/Send))
+  `darcs amend`                  modify existing patch
+  `darcs help`                   get help
+  ------------------------------------------------------------------------------
+
+# Interactive hotkeys
+
+Most commands show an interactive selection interface.
+The most basic keys are:
+
+* **y**: select current item
+* **n**: refuse current item
+* **a**: exit and run command with all items
+* **q**: exit  without running command
+
+# Links
+
+* [A brief introduction to
+Darcs](http://www.carpetcode.org/work-with-darcs.html), from
+Carpetcode.org
+* [Understanding
+Darcs](http://en.wikibooks.org/wiki/Understanding_darcs) the
+wikibook
+* [Darcs, mini-guía para proyectos en
+grupo](http://www.losersjuegos.com.ar/foro/viewtopic.php?t=293)
+* [Utilizando
+Darcs](http://listas.fi.uba.ar/pipermail/mat7507f/2007-September/004666.html)
+

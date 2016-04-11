@@ -1,0 +1,150 @@
+# News and discussions
+
+1.  News from Aditya's Summer of Code work on patch index:
+
+    -   <http://bsrkaditya.blogspot.com.ar/2012/06/gsoc-patch-index-week-2.html>
+    -   <http://bsrkaditya.blogspot.com.ar/2012/06/gsoc-patch-index-week-3-4.html>
+    -   <http://bsrkaditya.blogspot.com.ar/2012/06/gsoc-patch-index-week-5.html>
+    -   <http://bsrkaditya.blogspot.com.ar/2012/07/gsoc-patch-index-week-6.html>
+    -   <http://bsrkaditya.blogspot.com.ar/2012/07/gsoc-patch-index-week-7.html>
+
+2.  We are now using the wiki as the home page. Be sure to visit it and give
+    us feedback:
+
+    -   <http://darcs.net>
+
+3.  Eric Kow documented the workflow of having a group of users working with
+    the same repository:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2012-June/026523.html>
+    -   <http://darcs.net/Using/GroupRepo>
+
+# Issues resolved in the last week (3)
+
+issue2193 Guillaume Hoffmann
+  ~ -   make that finalizeTentativeChanges no longer run tests
+    -   http://bugs.darcs.net/issue2193
+
+issue2198 Guillaume Hoffmann
+  ~ -   move repo testing code to Darcs.Repository.Test
+    -   http://bugs.darcs.net/issue2198
+
+issue2200 Owen Stephens
+  ~ -   darcs replace complains if no filepaths given
+    -   http://bugs.darcs.net/issue2200
+
+
+# Patches applied in the last week (70)
+
+2012-07-04 Guillaume Hoffmann
+  ~ -   update help strings of --hashed and --darcs-2 
+    -   move functions from Darcs.Utils to Repository and UI modules
+
+2012-07-10 Owen Stephens
+  ~ -   Fix an implementation style wart in Replace, from fix for issue2125.
+
+2012-07-09 Guillaume Hoffmann
+  ~ -   update darcs wiki repository url
+
+2012-06-27 Owen Stephens
+  ~ -   Remove reference to old patch-name flag in amend help
+
+2012-07-02 Guillaume Hoffmann
+  ~ -   delete remaining tests for rollback --record, fix pull.sh
+    -   remove rollback --record functionality
+    -   use nubSort function from data-ordlist instead of own
+
+2012-07-01 Eric Kow
+  ~ -   Simplify issue2200 test (Fails on Mac otherwise)
+
+2012-06-21 Guillaume Hoffmann
+  ~ -   move Darcs.Witnesses to Darcs.Patch.Witnesses
+    -   remove redundant hashed_inventory creation during get
+    -   move Darcs.Flags to Darcs.UI.Flags
+    -   remove Darcs.Flags import from all Darcs.Repository* modules
+    -   remove Darcs.Flags import from Darcs.Repository.State
+    -   remove Darcs.Flags import from Darcs.Repository.Motd
+    -   remove Darcs.Flags import from Darcs.Repository.Prefs
+    -   remove Darcs.Flags import from Darcs.Repository.Format
+    -   remove Darcs.Flags import from Darcs.Repository.Test
+    -   remove DarcsFlag from Repository datatype, use Darcs.Repository.Flags more
+    -   introduce Darcs.Repository.Flags and start using it
+    -   remove Darcs.Patch.Match dependency on Darcs.Flag
+    -   explicit imports for Darcs.Patch.Match
+    -   fix compilation on non-windows oses after Patchy change
+
+2012-05-17 Ganesh Sittampalam
+  ~ -   Darcs.Patch.Invert: missing newline at end of file
+    -   make Patchy smaller
+    -   use RepoPatch instead of Patchy constraint for matchers
+    -   relax type signature
+    -   add merge combinators
+    -   add utility function for changing type of a ListFormat
+    -   add commutation combinators for Named
+    -   drop unnecessary superclasses and move Invert FL/RL instances
+    -   break CommuteFn infrastructure out into separate module
+    -   add helper class for debugging patches
+    -   drop MyEq superclass from Patchy
+    -   get rid of joinPatches
+    -   drop some unnecessary Patchy constraints
+
+2012-05-31 Guillaume Hoffmann
+  ~ -   finer-grained import for Darcs.Repository.Match
+    -   move Darcs.ProgressPatches to Darcs.Patch.Progress
+    -   move MonadProgress into Darcs.Patch
+
+2012-05-31 Ganesh Sittampalam
+  ~ -   move formatText out from GZCRCs into Utils
+
+2012-05-31 Guillaume Hoffmann
+  ~ -   move Compat and Diff to Repository, start taking apart Darcs.Utils
+
+2012-06-08 Alejandro Gadea
+  ~ -   Hlint suggestion.
+
+2012-05-30 Ganesh Sittampalam
+  ~ -   fix build on Windows
+    -   accept issue2199: darcs get --tag gets too much
+    -   fix warning that was showing up on Windows
+
+2012-05-26 Eric Kow
+  ~ -   Eric no longer at University of Brighton.
+
+2012-05-16 Ganesh Sittampalam
+  ~ -   add comment about a dubious looking bit of code
+
+2012-05-29 Guillaume Hoffmann
+  ~ -   move Email External PrintPatch and SelectChange into UI
+    -   move function getTermNColors from D.External to D.ColorPrinter
+    -   move RemoteApply to UI
+    -   split Match in Repository-specific and Patch-specific modules
+    -   move Resolution into Repository
+    -   introduce and populate the UI module, move Annotate into Patch
+    -   rm Darcs.Patch.MatchData making patterns simply String, style Arguments
+    -   move function showFriendly from Darcs.Arguments to Darcs.PrintPatch
+    -   make that no repository-related modules depend on Darcs.Arguments
+    -   move malicious path test functions from Darcs.CommandAux to Darcs.Path
+    -   split External into Repository-specific and unspecific modules
+    -   move Lock into Repository, merge IO into Repository.ApplyPatches
+    -   move pending-patch-writing writePatch to Darcs.Repository.LowLevel
+    -   move command-helping functions from Darcs.Arguments to Darcs.Commands
+    -   introduce Darcs.Path to centralize path handling
+    -   resolve issue2198 move repo testing code to Darcs.Repository.Test
+
+2012-05-18 matt@mattcox.ca
+  ~ -   Adapt to tar 0.4.0.0 API changes
+
+2012-05-26 Guillaume Hoffmann
+  ~ -   resolve issue2193 make that finalizeTentativeChanges no longer run tests
+    -   tests for issues 1845 1266 1932 2066 now passing
+
+2012-05-30 Owen Stephens
+  ~ -   enable 8bit escaping in issue1739 test
+
+2012-05-14 Guillaume Hoffmann
+  ~ -   TAG 2.9.2
+
+2012-05-30 Owen Stephens
+  ~ -   resolve issue2200: darcs replace complains if no filepaths given
+    -   Fix failing test due to modified replace behaviour
+

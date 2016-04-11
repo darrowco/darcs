@@ -1,0 +1,26 @@
+# News and discussions
+
+1.  Ganesh proposed a simple change in conflict marking:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-September/025351.html](http://lists.osuosl.org/pipermail/darcs-users/2010-September/025351.html)
+
+2.  The commiters of the Darcs team now use an additional public branch
+    for sharing unreviewed or lightly reviewed work in progress:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-September/025312.html](http://lists.osuosl.org/pipermail/darcs-users/2010-September/025312.html)
+
+# Issues resolved in the last week (0)
+
+# Patches applied in the last week (4)
+
+2010-09-17 Eric Kow
+  ~ -   Avoid issue1599 timeout for people behind proxy servers.
+    -   Tidy up issue1599 test a tiny bit.
+
+2010-09-08 Ganesh Sittampalam
+  ~ -   cut witnesses build down
+
+2010-09-01 Eric Kow
+  ~ -   Tidy up test harness warnings.
+
+

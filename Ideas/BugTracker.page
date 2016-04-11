@@ -1,0 +1,85 @@
+This is a slight abuse of the Darcs wiki; apologies.
+
+# Bug report
+
+[Issue2636](http://bugs.darcs.net/issue2363)
+
+# Rambling email by Eric Kow
+
+The following is from an email on how a Darcs-based bug tracking system
+might work, mildly edited for RST. Eric would definitely welcome work to
+massage this into something readable.
+
+* * * * *
+
+As an aside, I've put a little bit of thought into this on the bus: one
+thing you'd want to support is people concurrently creating objects (eg.
+messages, patches) and pushing them to the repository. This means you
+need a mechanism to (a) avoid collisions and (b) cope gracefully with
+conflicts.
+
+Consider (a): it's not advisable IMHO to treat the set of messages as
+just a single text file, because if two people simultaneously append to
+that file a spurious conflict is created. Better would be to use some
+sort of directory structure. Moreover, you need some way of naming
+things which is not prone to collisions (if you both create issue42;
+you've got a duplicate patch - yuck).
+
+One solution might to use a scheme where the bug tracker has the
+responsibility of generating a low-collision-probability name, eg. based
+on the hash of the object contents. Of course, you also want the objects
+to be easily identifiable by users (eg. issue42 as opposed to
+issue4ab38292ff832e78821c49), so what I would propose is to have some
+threshold (say 4 digits) where we say that collisions are sufficiently
+infrequent but the identifiers are still fairly human readable, and then
+just cope gracefully with what conflicts arise. *Note: bugs-everywhere
+seems to adopt a scheme similar to this*
+
+I still like thinking in a Roundup-y way (Roundup just manages objects
+that you define which in turn just point to other objects) because it's
+very simple and very general. Instead of storing objects in a database,
+we could store them in the filesystem.
+
+You could have a directory like this:
+
+    issue42/
+     - reporter [file with contents : 4383] (meaning user4383)
+     - nosy/
+        - 43
+        - 476
+        - 9
+     - messages/
+        - 3893
+        - 3988
+        - 1234
+    user4383/
+     - name [file with contents "Ganesh Sittampalam"]
+     - nosy/
+        - 43
+        - 4
+     - vacation [file with contents False]
+    message3893
+     - from [file with contents 4383] (meaning user4383)
+
+I think you get the picture. This would not be very user friendly
+without a nice frontend; so you can't really just manipulate the darcs
+repository with your text editor (you could, but it just wouldn't be
+fun).
+
+One possible angle of attack is just to modify roundup to (a) have a
+filesystem backend (instead of databases - it's already generic enough
+to handle different db backends) and (b) to support non-sequential
+naming of objects (which shouldn't be a problem).
+
+Anyway, not something I plan to work on anytime soon.
+
+# See also
+
+-   [http://bugseverywhere.org](http://bugseverywhere.org) -
+    BugsEverywhere, bug tracker with VCS support, including Darcs!
+-   [http://issues.roundup-tracker.org/issue2550637](http://issues.roundup-tracker.org/issue2550637)
+    - Project to support a VCS backend to roundup
+-   [http://issues.roundup-tracker.org/issue2550547](http://issues.roundup-tracker.org/issue2550547)
+    - Project for mere VCS integration (bah!)
+-   idea by Petr for "bug tracking patches" as part of Darcs
+

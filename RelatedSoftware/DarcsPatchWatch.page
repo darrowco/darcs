@@ -1,0 +1,17 @@
+# Watching patches on IRC
+
+The DarcsPatchWatch plugin for
+[lambdabot](http://www.cse.unsw.edu.au/~dons/lambdabot.html:) watches a
+darcs repository and reports changes applied to the repository to an IRC
+channel.
+
+The channel to which change messages are sent is hardcoded into the
+plugin's source code. The list of repositories can be changed
+dynamically:
+
+-   `@repos`: list all registered darcs repositories
+-   `@repo-add path`: add a repository
+-   `@repo-del path`: delete a repository
+
+`path` must be an absolute path name. This means that only repositories
+accessible over the local filesystem are supported.

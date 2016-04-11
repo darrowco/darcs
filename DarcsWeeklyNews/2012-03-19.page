@@ -1,0 +1,151 @@
+# News and discussions
+
+1.  The Shouthampton sprint will happen from March 30th until April 1st,
+    it is still possible to participate by adding oneself to the wiki
+    and following the directions:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2012-February/026379.html](http://lists.osuosl.org/pipermail/darcs-users/2012-February/026379.html)
+    -   [http://wiki.darcs.net/Sprints/2012-03](http://wiki.darcs.net/Sprints/2012-03)
+
+2.  A one-day sprint happened in Córdoba, Argentina, on March 9th:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2012-March/026417.html](http://lists.osuosl.org/pipermail/darcs-users/2012-March/026417.html)
+
+# Issues resolved in the last week (3)
+
+issue1812 Miguel Pagano
+  ~ -   follow emacs convention for backup files
+    -   [http://bugs.darcs.net/issue1812](http://bugs.darcs.net/issue1812)
+
+issue2116 Andreas Brandt
+  ~ -   darcs dist --index no longer fails
+    -   [http://bugs.darcs.net/issue2116](http://bugs.darcs.net/issue2116)
+
+issue2132 Florent Becker
+  ~ -   ignore edit of 'BEFORE' part for hunk-edit in revert
+    -   [http://bugs.darcs.net/issue2132](http://bugs.darcs.net/issue2132)
+
+# Patches applied in the last week (62)
+
+2012-03-09 Guillaume Hoffmann
+  ~ -   Make bash completion script work when darcs is not installed
+        system-wide
+
+2012-02-26 Florent Becker
+  ~ -   resolve issue2132 ignore edit of 'BEFORE' part for hunk-edit in
+        revert
+    -   More explicit help for revert patch-editing
+
+2012-02-21 Owen Stephens
+  ~ -   Clean up type-variables in signatures of Patch/Set.hs
+    -   Add comments/haddock to Patch/Set.hs
+    -   Tidy up, refactor and comment Commands/WhatsNew
+
+2012-03-08 Guillaume Hoffmann
+  ~ -   redundant exit line in Whatsnew
+
+2012-03-11 Owen Stephens
+  ~ -   Remove a couple of unused imports from Replace
+    -   Add help text for --look-for-adds output in WhatsNew
+    -   Remove a few unused imports from Commands/Help
+    -   Remove a couple of unused imports in WhatsNew command
+    -   Remove a bunch of compiler warnings for V3 prims.
+    -   Remove unecessary imports from ColorPrinter
+    -   Remove unecessary imports from External
+    -   Remove redundant constraint in Patch/Show type-sig.
+
+2012-03-07 Andreas Brandt
+  ~ -   Style Darcs.SelectChanges
+
+2012-03-12 Owen Stephens
+  ~ -   Clean up and style changese for CommandLine
+
+2012-01-24 Will Langstroth
+  ~ -   add some space, put escape type declaration next to function
+        definition
+    -   Style Darcs.Utils
+    -   Minor formatting of Darcs.Commands.Dist
+
+2012-01-24 Andreas Brandt
+  ~ -   Resolve issue2116: darcs dist --index no longer fails
+
+2012-03-13 Owen Stephens
+  ~ -   Tidy up and style changes for DateMatcher
+    -   Tidy up and style chages for darcs.hs
+
+2012-02-29 Andreas Brandt
+  ~ -   Refactor: Extract function for handling extra arguments
+
+2012-01-23 Owen Stephens
+  ~ -   Fixup failing tests due to record exiting with error when
+        nothing to record.
+
+2012-02-19 Andreas Brandt
+  ~ -   Fix FilePath import
+    -   Pull getDistName out of IO
+    -   Removed unnecessary whitespace/comment
+    -   Fix import of System.FilePath
+    -   Refactor: Use takeFileName instead of own function
+    -   Refactor: Use list comprehension instead of recursion
+
+2012-03-07 Guillaume Hoffmann
+  ~ -   remove some useless do's
+
+2012-01-31 Will Langstroth
+  ~ -   Clean up Darcs.Ssh imports
+
+2012-02-23 Michael Hendricks
+  ~ -   Clarify pull --no-allow-conflicts description
+    -   Fix typo in amend-record --unrecord description
+
+2012-02-14 Will Langstroth
+  ~ -   More style and tidying of Darcs.Commands.Add
+    -   Style Darcs.Commands.Add
+    -   Style Darcs.Commands.AmendRecord
+    -   Format export in Ratified
+    -   Readability tweaks to Workaround
+    -   More readability tweaks for Data.Ssh
+    -   Haddock header and module clean-up for Darcs.Ssh
+    -   Readability tweaks for Darcs.Ssh
+    -   Readability tweaks for Darcs.Flags
+    -   Tidy up Darcs.Global
+    -   Some cleanup for Darcs.Patch.Format
+    -   Readability for Darcs.Patch.Merge
+    -   Readability tweaks to Progress
+    -   Readability tweaks on Darcs.Diff
+
+2012-01-22 Owen Stephens
+  ~ -   Make record respect quiet flag. If no changes to record, exit
+        with failure.
+    -   Move some type signatures next to their corresponding function
+        definitions in Named.
+
+2012-01-26 Will Langstroth
+  ~ -   Haddock headers
+
+2012-01-22 Owen Stephens
+  ~ -   Use Maybe to better express intent of potential error message
+        when looking for file-specific changes
+    -   Fix some compile warnings for Annotate
+
+2012-01-19 Ganesh Sittampalam
+  ~ -   --hide-successes option for test suite
+
+2012-03-09 Miguel Pagano
+  ~ -   resolve issue1812: follow emacs convention for backup files
+
+2012-03-05 Michael Hendricks
+  ~ -   Haddock for functions related to parsing PatchInfo
+    -   Improve documentation for --external-merge
+    -   Clarify that diff uses an external utility
+
+2012-03-09 Miguel Pagano
+  ~ -   Replace safeHead with listToMaybe from Data.Maybe
+
+2012-03-09 Mathías Etcheverry
+  ~ -   Use all as suggested by hlint
+
+2012-03-09 Miguel Pagano
+  ~ -   Respecting curl flag for test
+
+

@@ -1,0 +1,150 @@
+# News and discussions
+
+1.  Darcs 2.1.0 released! With 20 bug fixes and 7 new features. Notable
+    changes: darcs-2 repositories by default, HTTP robustness and better
+    pending patch handling.
+    -   [http://www.darcs.net/darcs-2.1.0.tar.gz](http://www.darcs.net/darcs-2.1.0.tar.gz)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-October/014504.html](http://lists.osuosl.org/pipermail/darcs-users/2008-October/014504.html)
+
+2.  Optimising darcs annotate. Darcs annotate is too slow. Proposed
+    solution: create a cache mapping filenames to patches. Stay tuned
+    for fast annotate in the future...
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-October/014371.html](http://lists.osuosl.org/pipermail/darcs-users/2008-October/014371.html)
+
+3.  Eleven new contributors since darcs 2.0.2. Thanks, Alex, Florent,
+    Gaetan, Judah, Matthias, Max, Nathaniel, Steve, Taylor, Thorkil, and
+    Vlad!
+
+# Reviewers
+
+Thanks to our patch reviewers for this week for giving David a hand!
+
+-   Trent Buck
+-   Tommy Pettersson
+
+# Issues resolved in the last week (6)
+
+issue1104 Dmitry Kurochkin
+  ~ -   stop progress reports in exec.
+    -   [http://bugs.darcs.net/issue1104](http://bugs.darcs.net/issue1104)
+
+issue1109 Dmitry Kurochkin
+  ~ -   stop progress reports in exec\_interactive.
+    -   [http://bugs.darcs.net/issue1109](http://bugs.darcs.net/issue1109)
+
+issue1111 Tommy Pettersson
+  ~ -   patchset\_intersection used wrong selection for partitionRL
+    -   [http://bugs.darcs.net/issue1111](http://bugs.darcs.net/issue1111)
+
+issue1124 Thorkil Naur
+  ~ -   Test pull.sh failed when run as root
+    -   [http://bugs.darcs.net/issue1124](http://bugs.darcs.net/issue1124)
+
+issue1128 Benjamin Franksen
+  ~ -   must call execSendmail inside body of withOpenTemp
+    -   [http://bugs.darcs.net/issue1128](http://bugs.darcs.net/issue1128)
+
+issue1131 Dmitry Kurochkin
+  ~ -   accept download requests for different files.
+    -   [http://bugs.darcs.net/issue1131](http://bugs.darcs.net/issue1131)
+
+# Patches applied in the last week (35)
+
+2008-10-09 Eric Kow
+  ~ -   TAG 2.1.0
+    -   Rollback send-external test.
+    -   ChangeLog entries for 2.1.0 (tweaks).
+
+2008-10-01 [zooko@zooko.com](mailto:zooko@zooko.com)
+  ~ -   disable tests/issue1078\_symlink.sh on Windows
+
+2008-10-08 Eric Kow
+  ~ -   Bump version number to 2.1.0.
+    -   Canonize Benjamin Franksen.
+    -   ChangeLog entries for darcs 2.1.0.
+
+2008-10-07
+[florent.becker@ens-lyon.org](mailto:florent.becker@ens-lyon.org)
+  ~ -   haddock documentation for Printer
+
+2008-10-08 Dmitry Kurochkin
+  ~ -   Use copyFile+renameFile for safe copy in URL.waitNextUrl.
+
+2008-10-08 David Roundy
+  ~ -   add simple test of interactive record.
+
+2008-10-08 Thorkil Naur
+  ~ -   resolve issue1124: Test pull.sh failed when run as root
+
+2008-10-08 Dmitry Kurochkin
+  ~ -   Resolve issue1131: accept download requests for different files.
+
+2008-10-07 David Roundy
+  ~ -   add test for send --sendmail-command.
+
+2008-10-07 [ben.franksen@online.de](mailto:ben.franksen@online.de)
+  ~ -   fixed accidental merge of two lines in default boring; removed
+        pattern for directory "dist"
+
+2008-10-07
+[benjamin.franksen@bessy.de](mailto:benjamin.franksen@bessy.de)
+  ~ -   resolve issue1128: must call execSendmail inside body of
+        withOpenTemp
+
+2008-10-07 Eric Kow
+  ~ -   Nicer bug output (it was missing a space).
+
+2008-10-02
+[florent.becker@ens-lyon.org](mailto:florent.becker@ens-lyon.org)
+  ~ -   haddock documentation for ColorPrinter
+
+2008-10-02 David Roundy
+  ~ -   disable progress reports when connecting to an ssh server.
+
+2008-10-02 Dmitry Kurochkin
+  ~ -   Resolve issue1109: stop progress reports in exec\_interactive.
+    -   Resolve issue1104: stop progress reports in exec.
+
+2008-10-06 David Roundy
+  ~ -   fix tab in Replace that broke haskell-policy.sh test.
+
+2008-10-05 Tommy Pettersson
+  ~ -   hint about replace --force [issue864]
+
+2008-10-04 Eric Kow
+  ~ -   Add a toolbox.sh to tests
+
+2008-10-05 Tommy Pettersson
+  ~ -   fix issue966 test, use better temp dir name, and start clean
+    -   fix wrong ../path in failing issue1013 test
+
+2008-10-04 David Roundy
+  ~ -   mv issue1111 to tests/
+
+2008-10-04 Tommy Pettersson
+  ~ -   resolve issue1111: patchset\_intersection used wrong selection
+        for partitionRL
+    -   use longer patch names in issue1111 test for safer grep result
+
+2008-10-03 Matthias Kilian
+  ~ -   The pager defaults to less(1), not more(1)
+
+2008-10-04 Eric Kow
+  ~ -   Fix cd bugs in conflict-doppleganger test.
+
+2008-10-03 Tommy Pettersson
+  ~ -   fix test issue1110, remove duplicates of cd ..
+
+2008-10-03 Eric Kow
+  ~ -   Add a shell test template.
+
+2008-09-27 Eric Kow
+  ~ -   Reformat Darcs.CommandsAux comments as haddock.
+
+2008-10-03 Tommy Pettersson
+  ~ -   haddock documentation for ColorPrinter
+
+2008-10-01 David Roundy
+  ~ -   only show 'diffing dir' when debugging.
+
+

@@ -1,0 +1,15 @@
+# Issues resolved in the last week (1)
+
+issue1269 Ben Moseley
+  ~ -   setpref predist - exitcode ignored bug
+    -   [http://bugs.darcs.net/issue1269](http://bugs.darcs.net/issue1269)
+
+# Patches applied in the last week (2)
+
+2009-04-01 Trent W. Buck
+  ~ -   Relegate outdated documentation to appendices.
+
+2009-03-30 Ben Moseley
+  ~ -   resolve issue1269: setpref predist - exitcode ignored bug
+
+

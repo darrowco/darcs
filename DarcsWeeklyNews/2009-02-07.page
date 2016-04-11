@@ -1,0 +1,53 @@
+# News and discussions
+
+1. Darcs 2.2.1 should be released next week. Petr Rockai has put online
+  ~ the first release candidate:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-February/017528.html](http://lists.osuosl.org/pipermail/darcs-users/2009-February/017528.html)
+  ~ -   [http://repos.mornfall.net/darcs/darcs-2.2.1rc1.tar.gz](http://repos.mornfall.net/darcs/darcs-2.2.1rc1.tar.gz)
+
+2. As part of work to make darcs rely more on external haskell modules,
+  ~ Judah Jacobson's Haskeline patches are being examinated and
+    discussed:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-February/017563.html](http://lists.osuosl.org/pipermail/darcs-users/2009-February/017563.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-February/017667.html](http://lists.osuosl.org/pipermail/darcs-users/2009-February/017667.html)
+
+# Issues resolved in the last week (0)
+
+# Patches applied in the last week (15)
+
+2009-02-06 Petr Rockai
+  ~ -   Update tests/network/changes.sh (we don't use $DARCS for ages
+        now).
+
+2009-02-05 Eric Kow
+  ~ -   Update shell\_harness to work with new
+        Distribution.ShellHarness.
+
+2009-02-05 Petr Rockai
+  ~ -   Cabal: In test, use the darcs binary in the build directory.
+    -   Interestingly, witnesses also need send\_email.c on win32.
+    -   Look for diff & sendmail at runtime, not compile time.
+    -   One more witnesses build fix (-lz).
+
+2009-02-03 Judah Jacobson
+  ~ -   Remove a redundant clause from the Cabal file."
+    -   Tell Cabal about send\_email.c on Windows.
+    -   Don't use the bytestring-mmap package on Windows.
+
+2009-02-04 Petr Rockai
+  ~ -   Handle empty files in mmapFilePS. Also cater for FD shortage.
+
+2009-01-31 Eric Kow
+  ~ -   doc: Correct path to darcs cache on Windows
+
+2009-02-03 Petr Rockai
+  ~ -   System.Posix is also needed by witnesses on win32.
+    -   Cabal: Do not make absence of a diff tool fatal.
+    -   Pass -DWIN32 when compiling witnesses, on win32.
+    -   Outsource the (optional) mmap support to bytestring-mmap.
+
+

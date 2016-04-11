@@ -1,0 +1,173 @@
+# News and discussions
+
+1.  BSRK Aditya's Summer of Code, supervised by Eric Kow and Benedikt Schmidt,
+    ended successfully. The Patch Index optimization is now merged into screened
+    and provides faster ``annotate`` and ``changes``:
+
+    -   <http://hub.darcs.net/darcs/darcs-screened/patch/20120824160813-ae621>
+    -   <http://darcs.net/Using/PatchIndex>
+
+2.  Ganesh Sittampalam merged his ``rebase`` branch into HEAD:
+
+    -   <http://hub.darcs.net/darcs/darcs-screened/patch/20120827130551-81bb2>
+    -   <http://darcs.net/Ideas/RebaseDesign>
+
+3.  Simon Michael announced darcsden 1.0, the software behind the repository
+    hosting and branch/fork managing website <http://hub.darcs.net>:
+
+    -   <http://hub.darcs.net/simon/darcsden-1.0/browse/ANNOUNCE.md>
+    -   <http://hub.darcs.net/>
+
+4.  Alexey Levan built a MSI installer for darcs 2.8.1:
+
+    -   <http://darcs.net/binaries/windows/darcs-2.8.1-win1.msi>
+    -   <http://darcs.net/binaries/windows/darcs-2.8.1-win1.msi.md5>
+
+
+# Issues resolved in the last week (3)
+
+issue2204 Eric Kow
+  ~ -   do not send mail by default.
+    -   <http://bugs.darcs.net/issue2204>
+
+issue2235 Dave Love
+  ~ -   Accept RFC2822 dates
+    -   <http://bugs.darcs.net/issue2235>
+
+issue2237 Owen Stephens
+  ~ -   2237 prevent patch index creation for non-hashed repos
+    -   <http://bugs.darcs.net/issue2237>
+
+
+# Patches applied in the last week (74)
+
+2012-09-09 Owen Stephens
+  ~ -   In Patch/Depends, use an existing function, removing duplication
+    -   accept issue2238 passing -l twice to whatsnew gives incorrect output
+
+2012-09-11 Dave Love
+  ~ -   Resolve issue2235:  Accept RFC2822 dates
+    -   Fix previous "hlint: removed redundant $" patch
+
+2012-09-12 Owen Stephens
+  ~ -   Remove a few trailing spaces in FileMod
+    -   Remove unnecessary explicit forall's from FileMod type sigs
+    -   resolve issue 2237 prevent patch index creation for non-hashed repos
+
+2012-09-09 BSRK Aditya
+  ~ -   Move patch index creation on existing repositories to the end of command execution
+    -   Update patch index when creating or modifying a repository.
+    -   Move readRepo to new Darcs.Repository.Read module.
+
+2012-08-18 Guillaume Hoffmann
+  ~ -   remove now useless nesting of RepoType into Repository
+
+2012-08-04 Eric Kow
+  ~ -   Tighten up pending flag pattern matching.
+    -   Tidy up pending formatting and hlintesque issues more.
+    -   Commend and haddock a tiny bit of pending patch code.
+    -   Tidy Darcs.Repository.Internal.siftForPending code style.
+
+2012-08-14 Ganesh Sittampalam
+  ~ -   resolve conflicts in addition of PrimV1Job
+    -   add PrimV1Job kind of RepoJob to support darcsden
+
+2012-08-18 Guillaume Hoffmann
+  ~ -   darcs repair does not use compress flags, take advantage of this
+    -   rm compression flags when possible since pristine files are always compressed
+
+2012-08-25 BSRK Aditya
+  ~ -   Add a test command
+    -   Allow user interrupt when building patch index on existing repsitories
+    -   Use patch index in darcs annotate and changes
+    -   Print a message when building patch index on old repos
+    -   darcs show patch-index subcommands.
+    -   Add optimize --patch-index (and --disable-patch-index).
+    -   Tidy up patch-index code and remove unused parts.
+    -   Import and adapt original patch-index code from Benedikt.
+
+2012-09-02 Owen Stephens
+  ~ -   Grammar tweak of missing subcommand error message
+    -   Tidy/Style Patch/Format
+    -   Remove duplicate code in UI/PrintPatch
+    -   Style/Tidy UI/PrintPatch
+    -   Tidy/Style Patch/Viewing
+    -   Tidy/Style Patch/Show
+    -   Fix Send help showing description and vice-versa
+
+2012-08-25 Eric Kow
+  ~ -   Move darcs send messages to Darcs.UI.Message.
+    -   Resolve issue2204: do not send mail by default.
+    -   Create Darcs.UI.Message hierarchy.
+
+2012-08-11 Ben Franksen
+  ~ -   Add option -a to darcs changes in Setup.lhs
+
+2012-08-21 Ganesh Sittampalam
+  ~ -   add another test case for issue1316
+
+2012-08-09 Eric Kow
+  ~ -   Accept issue1316: amending out an adddir leaves detritus in pending.
+
+2012-08-19 Owen Stephens
+  ~ -   Tidy/Style Commands/Unrecord
+
+2012-08-09 Eric Kow
+  ~ -   Rename filterFLFL to filterOutFLFL.
+
+2012-08-18 Owen Stephens
+  ~ -   Tidy/Style Commands/ShowTags
+    -   Hlint suggestions to use unless
+
+2012-08-09 Eric Kow
+  ~ -   Zooko calls himself Zooko.
+
+2012-08-05 Owen Stephens
+  ~ -   Remove some duplicate code in URL.hs
+    -   Tidy/Style URL.hs
+    -   Move download filename creation into separate function in URL
+    -   Tidy/Style/Haddock URL/Request
+
+2012-07-25 Guillaume Hoffmann
+  ~ -   remove GNUmakefile duplicate line
+    -   reintroduce GNUmakefile for make tags
+    -   remove now gone documentation files from darcs.cabal
+    -   document command flags in darcs help markdown
+    -   extend record command help with data from manual
+    -   complete send command help with data from manual
+    -   extend pull command help with data from manual
+    -   extend apply command help with data from manual
+    -   copy --creator-hash flag help from manual to annotate command help
+    -   extend push command help with data from manual
+    -   introduce darcs help markdown, convert help messages to markdown
+    -   remove website and manual
+
+2012-07-21 Owen Stephens
+  ~ -   accept issue2213 - last regrets doesn't respect dependencies in reverse order
+
+2012-07-21 BRSK Aditya
+  ~ -   Collect all applications of ./ ++ to one place
+    -   Fix annotate on directories
+
+2012-07-15 Petr Rockai
+  ~ -   Replace test_stub.hs with an #ifdef. Fixes Cabal's sdist.
+
+2012-07-12 Guillaume Hoffmann
+  ~ -   rm no longer used UI flags AnyOrder and NoUpdateWorking
+
+2012-07-16 Petr Rockai
+  ~ -   Fix set-default-hint.sh, send without -O will fail without sendmail.
+    -   Fix issue1344 test to cope with set -o pipefail.
+    -   Do not insist that echo and cat need to live in /bin.
+
+2012-06-06 Owen Stephens
+  ~ -   accept issue2203
+    -   Add failing test for issue2208
+    -   Add failing test for issue2212
+
+2012-07-15 Luke Worth
+  ~ -   Refactor --patch X to use same code as --match 'name X'
+
+2012-07-18 Owen Stephens
+  ~ -   Remove duplicate issue2066 test
+

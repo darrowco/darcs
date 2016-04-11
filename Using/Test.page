@@ -1,0 +1,93 @@
+---
+title:Darcs Test
+...
+
+The purpose of the command is trackdown the state of the repository when
+given test command succeed. Usually it is looking for last compilable
+state or for state when some unit test has been passing.
+
+Without any flag, the command run a given test (or if none give, the test
+defined by setpref) on the last recorded version of the repository,
+and outputs whether the test has been successful or not.
+
+With the `--linear` flag, the command looks for the last state
+of the repository when the test has been passing.
+
+The `--bisect` flag is also a tracking-down option and has advantages but also
+disadvantages. Text should help user understand when to use
+--linear and when to use --bisect.
+
+`--backoff` is similar to `--bisect` and may be faster on bigger repositories.
+
+
+-   Usage: `darcs test [OPTION]... [[INITIALIZATION] COMMAND]`
+-   Example: `darcs test --linear "cabal configure && cabal build"`
+
+For the detail explanation see [darcs
+test](http://darcs.net/manual/bigpage.html#SECTION006104000000000000000)
+in Manual.
+
+# Linear
+
+The behavior is simple, it unpulls the patches until test succeed.
+
+![image](trackdown_linear.png)
+
+Note: Each number is patch.
+
+# Bisect
+
+With `--bisect` option the trackdown searches using bisect algorithm. It
+starts from the half of repository and jumps next into left or right
+half depending on test result.
+
+![image](trackdown_bisect.png)
+
+# Backoff
+
+`--backoff` is aimed at finding regressions which are closer to the
+head than to the middle of the repository.  It will perform relatively
+better on repositories with more patches.
+Example: on darcs's repository, it performs between 30 and 70% faster
+than bisect.  
+
+The search strategy starts by unapplying 4 patches (chosen to match
+the break-even point with linear search).  If the test fails, it
+unapplies 8 more patches and tests again.  On each test failure, it
+removes twice the number of patches as before.  Once the test passes,
+it bisects the patches it just skipped.
+
+# Bisect vs Linear
+
+1.  Linear - Problem with not found
+
+    > When the command fails for whole history it will be found after
+    > tracking down the complete history.
+
+2.  Bisect - Problem with jumps
+
+    > Jump into half is basically pull or unpull half of the patches
+    > depending on the half. Jump has O(n/2) complexity and not O(1).
+
+3.  Bisect - Problem with found state
+
+    > If there are more states of the repository where command start and
+    > stop working than there is not guarantee which is in result.
+
+![image](trackdown_bisect_vs_linear.png)
+
+# Summary
+
+1.  Use Bisect when
+    - it is not clear if the test can success in repository
+    - it is known that success is far from head
+    - it is known that that failure happened once
+
+2.  Use Linear when
+    - it is known that error is not far from head
+    - it is not known that failure happened once and most recent
+      success is expected as result
+
+3.  Use Backoff when
+    - bisect and linear are too slow
+

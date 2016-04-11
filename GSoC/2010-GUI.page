@@ -1,0 +1,83 @@
+# About me
+
+I'm a french student at EPITA, an engineering school specialized in
+computer science, in Paris. I'm also an organizer of Prologin, a
+national computer science competition for students aged of 20 or less (
+more information available here:
+[http://www.prologin.org](http://www.prologin.org) ).
+
+Personally, I started programming years ago, and was introduced to the
+"functional" world by some friends soon after that. I started
+programming with OCaml but quickly shifted to Erlang, which I've been
+using for a few years now. During that time I've contributed to an open
+source project in Erlang, called nitrogen, whose aim is to offer a
+performant and easy-to-use event-driven web framework for Erlang.
+
+I've also been writing articles related to computer science, in French,
+on my blog (written in Erlang) which you can visit at
+[http://da-bhm.org](http://da-bhm.org) .
+
+If you want to contact me, you can reach me at
+\`[refis.thomas@gmail.com](mailto:refis.thomas@gmail.com)\` or on IRC
+(on the networks freenode and epiknet) under the nickname : \`drk-sd\`.
+
+# Why darcs
+
+It would probably surprise a lot of people but darcs has been the first
+VCS I ever used. Of course I've had to use git and mercurial since, but
+was never satisfied by them, as they are, in my opinion, not as flexible
+as darcs is. That is why I keep using darcs for my personal projects.
+
+However, my experiences with the other VCS have been useful, as I
+realized what /tools/ darcs still lacks to become a /popular/ project.
+That's why when I heard that darcs was a potential mentoring
+organisation for the summer of code, I saw a great occasion to help on
+improving darcs.
+
+# My project
+
+My first idea, was to develop a GUI for darcs, such as gitk for git. It
+still is a (major) part of my project, but when I was thinking about how
+to organize such an application and how to make it interact with darcs,
+I encountered a problem. Indeed, while I was starting reading darcs
+codebase I discovered that the "IOs" have not been separated from the
+actual "operations".
+
+After discussing with Eric Kow (a.k.a. \`kowey\`) about that problem,
+I've come to the conclusion that it would be impossible for me, or
+anyone else to develop an application which would use darcs' core
+modules. The command line interface and darcs' core modules are too
+deeply bound to envisage such an application.
+
+Knowing that, I figured that if I wanted to successfully and *elegantly*
+build a GUI application on top of darcs, I would have to modify the
+codebase to separate the IO parts from the "other" parts. Of course I
+see this not only as a duty for building the GUI I envisage, but also as
+a necessity for darcs itself.
+
+Such a work has already been started by Florent Becker (a.k.a.
+\`gal\_bolle\`), and I plan to continue it.
+
+## How I plan to organize it
+
+As you've certainly guessed, the first part of my work will be to
+reorganize darcs' codebase to separate the IOs from the rest. I believe
+that'll take me a few weeks. Sadly, I won't be totally free to work on
+that until the end of June, as my exams take place in June. I will try
+to start working on it during May, but as I said it won't be a full-time
+activity until the end of June. However, I expect to have finished it by
+mid-July.
+
+That being done, I'll begin to work on the GUI. For the moment I
+envisage doing it with Gtk2Hs. The first thing I want to implement is
+visualizer for the patches tree and a way to see the changements induced
+by a certain patch. That shouldn't take more than a week or two to be
+completed.
+
+## And after that
+
+After doing what I listed above, I don't know how much time will be left
+before the end of the summer. I hope enough for me to implement a few
+more functionalities. But even if not, I sure will continue to work on
+it, although I will certainly slow down because of the school and
+everything.

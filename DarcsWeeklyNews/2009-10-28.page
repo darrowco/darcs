@@ -1,0 +1,59 @@
+# News and discussions
+
+1.  Judah Jacobson put online a document formalizing patch theory using
+    inverse semigroups:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-October/021886.html](http://lists.osuosl.org/pipermail/darcs-users/2009-October/021886.html)
+    -   [http://www.math.ucla.edu/\~jjacobson/patch-theory](http://www.math.ucla.edu/~jjacobson/patch-theory)/
+
+2.  Jason Dagit announced that the third darcs hacking sprint will also
+    involve a group of hackers in Portland, in parallel with the Vienna
+    meeting:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-October/021916.html](http://lists.osuosl.org/pipermail/darcs-users/2009-October/021916.html)
+
+# Issues resolved in the last week (2)
+
+issue1563 Eric Kow
+  ~ -   official thank-you page.
+    -   [http://bugs.darcs.net/issue1563](http://bugs.darcs.net/issue1563)
+
+issue1652 Eric Kow
+  ~ -   suggest cabal update before cabal install.
+    -   [http://bugs.darcs.net/issue1652](http://bugs.darcs.net/issue1652)
+
+# Patches applied in the last week (21)
+
+2009-10-24 Eric Kow
+  ~ -   Simplify donations page and make look more like other pages.
+    -   Resolve issue1563: official thank-you page.
+    -   Simplify OT convergence test.
+
+2009-10-11 Trent W. Buck
+  ~ -   Accept issue1645: w -l should ignore symlinks.
+
+2009-10-20 Eric Kow
+  ~ -   Update links to wiki in README.
+    -   Resolve issue1652: suggest cabal update before cabal install.
+
+2009-10-19 Petr Rockai
+  ~ -   Convert contextual patch printing from Slurpy to TreeIO.
+    -   Port list\_\* in Darcs.Arguments to Tree (away from Slurpy).
+    -   Move a couple of low-level pending bits to (new)
+        Repository.LowLevel.
+
+2009-10-06 Florent Becker
+  ~ -   Use Commands.putInfo in Get
+    -   remove Darcs.Commands.Loggers
+    -   Use Commands.put\* in Darcs.Commands.Put
+    -   Use Commands.put\* in Send
+    -   Use Commands.putInfo in Push
+    -   Use Commands.putInfo in Check
+    -   use Commands.put\* in Convert
+    -   Use Darcs.Commands.putVerbose in Apply
+    -   Use new Darcs.Commands.Put\* in Add
+    -   typo in Hopefully.lhs
+    -   Haddock documentation for Darcs.Patch.Core.Named
+    -   add utility functions to Commands.lhs
+
+

@@ -1,0 +1,72 @@
+Darcs is not a particularly policy-driven project; we tend to make
+decisions using case-by-case consensus. On the other hand, we sometimes
+find it helpful to maintain a small set of rules for the sake of
+consistency or efficiency. We will document these rules here as we grow
+them.
+
+# Buildbot
+
+See [BuildBot](BuildBot) for details
+
+# Communications
+
+-   darcs-users: all discussions (user and developer); open to all
+-   darcs-devel: automated traffic only (bugtracker, buildbot); open to
+    all
+-   darcs-private: sensitive discussions only, to be avoided where
+    possible; open to \`darcs core team\` members (see top of
+    [DarcsTeam](/DarcsTeam))
+
+# Commit-bits
+
+Rough consensus from the current pool of commit bit holders. May be
+revised as the pool grows.
+
+# Contribs
+
+We welcome small third-party tools (eg. shell completion scripts) in our
+contribs/ directory. Our only requirement is that they be maintained.
+Bugs related to a contrib script can be tracked on
+<http://bugs.darcs.net> if there is not already a
+tracker for them. Note that if the tool or script appears to be
+unmaintained - for example if we receive a bug report but get no
+response from the maintainer - then we reserve the right to remove the
+script outright. We will normally wait at least a month and make
+multiple attempts to contact the maintainer. Re-submissions are of
+course welcome when a maintainer is available.
+
+# Copyright
+
+-   Author keeps copyright
+-   GPL (or more liberal) for source code
+-   MIT for test suites
+
+# Dependencies
+
+Libraries we depend on should be GPL-compatible. If the patch author
+introduce a new dependency that is not cabal installable, he or she
+should post a heads-up on the mailing list as this will likely break
+people's builds of Darcs.
+
+# GHC and Haskell-Platform versions
+
+We will support the last two stable branches of GHC (for which a Haskell
+Platform has been released).
+
+As a reference, here are the versions provided by Ubuntu:
+
+* [GHC](http://packages.ubuntu.com/search?keywords=ghc)
+* [Haskell-Platform](http://packages.ubuntu.com/search?keywords=haskell-platform)
+
+Concretely, we support GHC versions as old as the one provided by the
+current Debian stable.
+
+# Politics
+
+Benevolent Dictator chosen by an Oversight Committee and deposed with a
+vote of at least 3/4 of its members.
+
+See the [SFC
+agreement](http://darcs.net/darcs-sponsorship-agreement.pdf) for details
+(though the agreement technically only covers our relationship with the
+SFC, we use it as the basis for our political system)

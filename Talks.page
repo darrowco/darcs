@@ -1,0 +1,95 @@
+Here are links to the slides and papers from some darcs-related work:
+
+1.  [Homotopical Patch Theory](http://dlicata.web.wesleyan.edu/pubs/amlh14patch/amlh14patch.pdf)
+    - Carlo Angiuli, Ed Morehouse, Daniel R. Licata, Robert Harper, ICFP 2014
+
+1.  [A Categorical Theory of Patches](http://www.pps.univ-paris-diderot.fr/~smimram/docs/mimram_ctp.pdf)
+    - Samuel Mimram and Cinzia Di Giusto, May 23, 2013
+
+1.  [Darcs - what, why and how](https://www.youtube.com/watch?v=7d3Qnr5F9zs)
+    - video of talk at London HUG by Ganesh Sittampalam, 2013-04-24
+
+1.  [Analysis, Modeling and Testing of Darcs Patch Theory
+    Kernel](http://sites.google.com/site/iagoabal/projects/mfes_darcs.pdf)
+    - Iago Abal, 2011-06-05
+
+1.  [Where do we go from here?](Talks/state-of-darcs-2011.pdf) - Ganesh
+    Sittampalam, 2011-04-01
+
+    -   How does Darcs fit into an increasingly Git-centric world? "If
+        Darcs didn't exist, it would still be worth writing today"
+
+1.  [Darcs in 2010](http://prezi.com/is5nzudw8jxq/darcs-in-2010/) - Eric
+    Kow, 2010-09-10 Where we are in 2010 and we want to go from here
+
+    -   [YouTube
+        version](http://www.youtube.com/playlist?list=PL35AD943038BF7129)
+        2010-09-12
+
+1.  An [introduction to darcs in
+    french](http://tausendblum.lautre.net/darcsystuff/presentation.pdf)
+    - Florent Becker, aimed at getting researchers at his lab interested
+    into darcs.
+
+1.  [A formalization of darcs patch theory using inverse semigroups](ftp://ftp.math.ucla.edu/pub/camreport/cam09-83.pdf)
+    - Judah Jacobson, 2009
+
+1.  [2009 OSU Master's
+    Thesis](https://ir.library.oregonstate.edu/xmlui/bitstream/handle/1957/11180/thesis.pdf)
+
+    -   "Type Correct Changes: A Safe Approach to Version Control
+        Implementation." Jason Dagit, 2009-03-20 The use of Haskell
+        GADTs to make darcs code more transparent, robust and
+        approachable
+    -   [A compact (36 pages) version](http://www.cs.famaf.unc.edu.ar/~hoffmann/dagit.pdf)
+
+1.  [Why do we continue to develop
+    Camp?](http://www.youtube.com/watch?v=iOGmwA5yBn0) - Ian Lynagh
+    2008-12-02, YouTube
+
+1.  [2008 Galois Tech
+    Talk](http://www.galois.com/~dons/slides/08-10-dagit.pdf)
+
+    -   "Type Correct Changes: A Safe Approach to Version Control
+        Implementation." Jason Dagit, 2008-10-09 The use of Haskell
+        GADTs to make darcs code more transparent, robust and
+        approachable
+
+1.  [2008 ACM talk](http://files.codersbase.com/droundy-08.pdf)
+    -"Haskell, static typing, type witnesses and darcs." David Roundy,
+    2008-10-05 Introducing darcs and the type witness work
+
+1.  [2006 CS Colloquiem
+    Talk](http://www.physics.oregonstate.edu/~roundyd/talks/cs_colloquiem.pdf)
+    from OSU, 20 November 2006. "Verifying the darcs patch code." David
+    Roundy
+
+1. [2006 FOSDEM
+    talk](http://physics.oregonstate.edu/~roundyd/talks/fosdem-2006.pdf)
+    from February 2006. "Implementing the darcs patch formalism ... and
+    verifying it" David Roundy
+
+    This talk covers the patch formalism and the use of GADT type
+    witnesses to enforce patch relationships.
+
+    There's also a [video
+    (270M)](http://ftp.belnet.be/mirrors/FOSDEM/2006/FOSDEM2006-darcs.avi)
+    of the talk (albeit a bit blurry) available.
+
+1. [2005 Haskell Workshop
+    talk](http://physics.oregonstate.edu/~roundyd/talks/hw_2005.pdf)
+    from 2005. "Darcs: Distributed Version Management in Haskell" David
+    Roundy
+
+    Talks about experiences of darcs with the Haskell language.
+
+1. [2005 CUFP
+    talk](http://physics.oregonstate.edu/~roundyd/talks/cufp_2005.pdf).
+    "The Myth and Reality of using Haskell in the 'Real World'". David
+    Roundy
+
+    Addresses experiences with finding contributors for darcs, given
+    that it's written in the Haskell language.
+
+(Note: Anyone who cares to would be welcome to write better
+summaries...)

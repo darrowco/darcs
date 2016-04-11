@@ -1,0 +1,154 @@
+# Abstract
+
+Hashed files in darcs follow the same idea as in git repositories or
+the bittorrent protocol: a file is saved on the disk using its own
+hash as name. Darcs uses them in many places. However some aspects
+could be improved. This project aims at improving manageability of the
+global cache, and at adding a few features to take advantage of it.
+
+Complete garbage collection of repositories: darcs only knows how to
+clean up the _darcs/pristine.hashed directory. This directory contains
+the recorded state of the working copy. We should extend garbage
+collection to the patches and inventories of repositories. As of now,
+the only way to clean them is to do a new repository clone. See
+<Using/GrowingInventoriesProblem> and <http://bugs.darcs.net/issue1987>.
+
+Performance of the global cache: darcs maintains a global cache in
+~/.cache/darcs/, that is shared between all repositories of a user.
+This makes some operations faster (typically, repository cloning) and
+saves disk space by using hard links (with filesystems that support
+them).  However when the cache gets too big, it becomes a problem on
+its own, since many widely used filesystems do not cope well with
+directories with zillions of files inside. The idea is to implement
+"bucketed" global cache, that is, to use prefix directories to slow
+down growth of the maximum number of hashed files per directory.  See
+<http://bugs.darcs.net/patch72>.
+
+Garbage collection of global cache: there is currently no way to trim
+down the global cache to a reasonable size, apart from deleting it
+manually and entirely. We will implement global cache garbage
+collection that takes into account the repositories present in the
+home directory of the users.
+
+A "darcs undo" command to undo history-changing operations: Darcs
+emphasises undo-ability by providing various anti-commands
+(revert/unrevert, record/unrecord, pull/unpull...). In designing
+software user interfaces, it is preferable to have the option to make
+an “undo” rather than prompting the user with "are you sure?". However
+some local operations of darcs are still not undoable. Amend-record
+enables to amend some patch in the history, but is not undo-able.
+Obliterate (unpull) provides the option  to save the deleted patches
+to a bundle (which can be re-applied later), which makes it sort of
+undoable, but the user has to think about it before.
+
+Fortunately we can improve this situation: darcs does not delete
+previous history states (represented by inventories files) unless
+manual garbage collection is ran. Thus if we log the previous states
+of the history of a repository, we will be able to come back in time,
+thus undoing history-changing operations. This will provide more
+safety to users. Moreover implementing the "darcs undo" command might
+allow us to remove some confirmation prompts from other operations.
+
+A "darcs undelete" command to rebuild repositories from scratch: going
+further, we will implement a "darcs undelete" command that will be
+able to dig in the global cache to bring back to life repositories.
+This can be useful when the user accidentally deletes a repository, or
+when they do not know which repository has some patch and wants to
+reconstruct some working copy corresponding to it.
+
+# Benefits to the community
+
+Darcs uses the approach of 1 repository = 1 branch, which makes user
+rely on managing branches of a single project as distinct
+repositories. The global cache helps improving performance in that
+context, being a pool of files used across distinct repositories.
+
+By implementing a faster and garbage-collectable global cache, we will
+make it more manageable. Moreover, we will use it in order to augment
+the "undoability" of darcs, making it more user friendly. This work
+will not involve any backwards-incompatible change to the current
+repository format.
+
+# Project design
+
+* `Complete repository garbage collection and regression tests`
+
+  We will implement garbage collection of inventory files and of patch files.
+
+* `Bucketed cache with automatic migration`
+
+  Instead of having one directory with all the files
+(~/.cache/darcs/pristine.hashed/), the idea is to have 256 directories
+named ~/.cache/darcs/pristine.hashed/00/ …
+~/.cache/darcs/pristine.hashed/ff/ with the same files (without the
+first 2 letters of the name). The algorithm for the automatic
+migration is <http://bugs.darcs.net/msg10318>.
+
+* `Benchmarks normal vs. bucketed cache`
+
+  We will measure performance on different file systems like ext3,
+ext4, FAT, NTFS. We will follow <http://bugs.darcs.net/msg8597>.
+
+* `Global cache garbage collection`
+
+Implement a command "darcs optimize --global-cache" that will take
+as arguments one or more folders, find all the repositories inside
+those folders and only keep hashed files that correspond to these
+repositories.
+
+* `"darcs undo"`
+
+Propose a user interface and implement it. This will be an interface
+similar to the ones of the SelectChanges module. One issue is how to
+represent a single history state to the user. We may pipe the whole
+history into a pager or propose to interactively explore it.
+  Inside of a repository, we have to maintain some logfile with the
+hashes of the latest inventories.
+See also [issue75](http://bugs.darcs.net/issue75) (it seems that "darcs undo"
+would automatically solve the problem).
+
+* `"darcs undelete"`
+
+Propose a user interface for "darcs undelete". Like with "darcs
+undo" we have to present to the user history states in some
+understandable way.
+Without parameters “undelete” should propose the inventories from
+newest to oldest. The command shall accept patch pattern flags, and
+also the --matches flags to retrieve states corresponding to some
+patches in particular.
+
+# Timeline
+
+week 1 (31/03-06/04): implement complete garbage collection for repositories (inventories, patches).  Write bash scripts to generate dirty repositories and test that they get properly cleaned. These scripts will be integrated with the darcs tests suit.
+
+week 2, 3 (7/04-20/04): design benchmarks for global cache performance; implement bucketed cache (which includes code to detect if cache is non-bucketed and automatically migrate it). 
+
+week 4, 5 (21/04-27/04 and 16/06-22/06): implement global cache garbage collection.
+
+week 6, 7, 8, 9 (23/06-20/07): implement darcs undo.
+
+week 10, 11, 12, 13 (21/07-17/08): implement darcs undelete.
+
+# Deliverables
+
+* Complete garbage collection of repositories with regression tests.
+* Bucketed cache with automatic migration.
+* Benchmarks normal vs. bucketed cache.
+* "darcs optimize --global-cache" for global cache garbage collection.
+* Propose a user interface for "darcs undo" and implement it.
+* Propose a user interface for "darcs undelete" and implement it.
+
+# Challenges
+
+* Ensure good performance of global cache garbage collection.
+* Dealing with user expectations with regard to the command "darcs undo".
+
+# About Me
+
+My name is Marcio Díaz, I'm a PhD student in computational logic.
+
+I've used haskell in several projects at university including my thesis.
+
+Also, I've worked in software development using several programming languages ​​such as C, C++, Java.
+
+I think darcs is a great software and this is a good opportunity to start contributing.

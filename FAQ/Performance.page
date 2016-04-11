@@ -1,0 +1,187 @@
+---
+title: Frequently Asked Questions (Performance)
+...
+
+# General performance questions
+
+## Is the exponential merge problem fixed yet?
+
+*Answer from 2012-08-02*
+
+No.
+
+Darcs 2 (introduced in 2008-04) reduces the name of scenarios that will trigger
+an exponential merge. Repositories created with Darcs 2 should have fewer
+exponential merges in practice.  For older repositories, see [Should I convert
+my repository to the Darcs 2
+format?](/FAQ#should-i-convert-my-repository-to-the-darcs-2-format).
+
+Darcs 2.10 introduces the feature `darcs rebase` that helps you to
+avoid situations that trigger an exponential merge.
+
+Fixing the underlying patch theory problems will potentially take us a very long
+time, but we are working on it.
+
+## How can I make darcs go faster?
+
+**Use the latest Darcs**
+
+New releases of Darcs often include performance improvements.
+
+Upgrading from Darcs 1 (on both client and server sides) to Darcs 2.x
+will reduce the number of ssh-connections to at most 2 (this has
+an added bonus of not making you type your password a lot!). Moreover,
+a global cache is created in `.cache/darcs` (`.darcs/cache` before darcs 2.10),
+making `clone` and `pull` commands faster.
+
+If you can't convince the remote end to make Darcs 2 available,
+you can set up connection sharing on the SSH
+level by adding this to you \~/.ssh/config:
+
+    Host *
+    ControlMaster auto
+    ControlPath ~/.ssh/master-%r@%h:%p
+
+Also, large or complex conflicts can cause darcs 1 to use
+an exponential amount of CPU power to solve the problem, giving the
+appearance that darcs is "spinning" or "hanging". Darcs 2 mostly avoids
+the problem in practice, but you should use the new darcs 2 format
+repositories instead. See [Conflicts FAQ](conflicts) for details.
+
+**Use the lazy clone feature**
+
+If you know that the remote repository will remain available,
+you should consider using the `darcs clone --lazy` feature to clone it.
+This will only fetch the
+data which is strictly necessary for darcs to copy the repository,
+and fetch any future patches only on demand.
+
+**Use a local hard disk**
+
+Your darcs global cache (`.cache/darcs` since darcs 2.10, .darcs/cache before)
+should live on a local drive.
+If your home directory is on NFS (for example), it may be a good
+idea to do something like
+
+    mv ~/.darcs /my/local/disk/
+    ln -s /my/local/disk/.darcs .
+
+**Tag your repository**
+
+The first issue is that darcs may be attempting to retrieve all patches
+in the remote repository from the last tag. Here are some things to try.
+
+1.  Look in the `_darcs/hashed_inventory` file of
+    the remote repository. How many patches are there in that inventory?
+    These are all patches that darcs is liable to retrieve, even if you
+    already have them.
+2.  What happens when you create a tag in the remote repository or push
+    it over? By rights, the size of the inventory should drop to zero
+    (starting from the tag you just pushed). If not, upgrade to a later
+    version of Darcs. In the meantime, `darcs optimize reorder` should fix it,
+    emptying out your inventory.
+
+**Check for network problems**
+
+1.  See if the same darcs operation is significantly faster when dealing
+    with a repository that is on the same machine.
+2.  If you are using ssh, check how long it takes to make a single SSH
+    connection. If you are using a darcs 2 client on both ends, you
+    automatically get SSH connection sharing, so this should not be an
+    issue.
+
+**Check for conflicts**
+
+Finally, do you have any conflicts or merging to do? If so, you may be
+dealing with the infamous exponential time conflicts bug (for example,
+if you a series of nested conflicts, or you have two large and identical
+darcs patches to merge). See the [Conflicts FAQ](conflicts) for a
+possible workaround to this. But note that this should only affect you
+if you are actually *merging* patches. If you are just pushing to or
+pulling from the trunk without any merging, you are not dealing with a
+conflicts issue.
+
+**Talk to the Darcs Team!**
+
+We're interested in improving Darcs performance. We think that we've
+been making some good progress, and we want to hear back from you if you
+are experiencing any slowness so that we can have a better idea what to
+fix.
+
+Please contact us at <darcs-users@darcs.net>
+
+## How well does darcs scale?
+
+There are three directions in which a VC system can scale: long
+histories, a large source tree, and large single commits.
+
+Darcs scales well in the first direction, if you know what you're doing.
+In other words, Darcs should have no problem dealing with 10 years of
+history and tens of thousands of commits, although it might require some
+manual intervention every few months (`darcs optimize clean`).
+Making sure to tag regularly
+also helps with this sort of scaling.
+
+In the other two directions, darcs now scales moderately well, due to
+recent improvements. Darcs should be able to handle a repository the
+size of the linux kernel, and should be able to handle patches that make
+changes of the size of the linux kernel.
+
+Here are some data points about people's experiences using darcs on
+larger projects. Note the date that these were published -- darcs has
+been improving in scalability with each release:
+
+-   <http://article.gmane.org/gmane.comp.version-control.darcs.user/7082>
+-   <http://thread.gmane.org/gmane.comp.version-control.darcs.user/7295>
+
+## My repository is becoming big, how can I reduce its size?
+
+Run `darcs optimize clean`.
+
+## How do I recover from darcs hanging?
+
+On repositories with darcs 1 semantics (when `darcs show repo` shows `darcs-1`
+in the `Format:` line`), darcs has been known to 'spin' and take a tremendously
+long time to complete certain tasks. Although rare, it's useful to
+know how to recover from such a situation.
+
+If you can't wait for darcs to finish, you should be able to safely use
+`Control-C` to cancel the operation and try another approach. Unless you
+are doing one of the `un-` commands at the time, you shouldn't be able
+to mess up your repo. You may need to clean up a lock file named
+`_darcs/_lock` (documented elsewhere on the wiki), and run `darcs check`
+and `darcs repair` to check and repair any inconsistencies that may have
+developed.
+
+# darcs clone issues
+
+# darcs pull issues
+
+## `darcs pull` hangs after asking me what patches I want
+
+This may be related to the infamous exponential merge problem.
+Have a look at the [conflicts FAQ](conflicts) for more help
+
+# darcs record issues
+
+## `darcs record` runs out of memory!
+
+Do you have a single very large patch? As of now, darcs does not cope very well
+with large patches (see [issue80](http://bugs.darcs.net/issue80)). The typical
+case that bites people is trying to recursively import your entire repository
+with `darcs add -r .`. As a workaround, try recording in smaller chunks.
+
+## `darcs record` takes forever
+
+What is the size of your pending patch?
+
+     ls -lh _darcs/patches/pending
+
+If it is very large (say, over 2MiB), it may be worthwhile to try again with a clean pending
+
+     mv _darcs/patches/pending _darcs/patches/pending.bak
+
+N.B. this will make darcs become unaware of any add/remove/replace actions that have been performed (any changes to the working directory *will* still be present though).
+
+Darcs's poor handling of the “pending patch” is one performance area that we need
+to work on improving.

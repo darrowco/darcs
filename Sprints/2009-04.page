@@ -1,0 +1,237 @@
+# Report
+
+[http://blog.darcs.net/2009/04/darcs-hacking-sprint-2-report.html](http://blog.darcs.net/2009/04/darcs-hacking-sprint-2-report.html)
+
+# Date and venue
+
+When: 17-19 April 2009 Where: Haskell Hackathon 5, Utrecht
+
+# Progress
+
+## Friday
+
+Lots of discussions held (incomplete list, help fill this in):
+
+-   Patchwork
+-   Wolfgang pointed me to the DarcsAPI wrapper... could this be used to
+    refactor Darcs.Command?
+-   [WolfgangJeltsch](WolfgangJeltsch), [EricKow](People/EricKow)
+-   darcs PhD
+-   [ReinierLamers](ReinierLamers), [EricKow](People/EricKow),
+    [GaneshSittampalam](People/GaneshSittampalam),
+    [IanLynagh](People/IanLynagh)
+-   Improved patch notation, possible new patch theory
+-   MarnixK and everybody
+-   HTML and ReST documentation: HTML for math and tables is OK as a
+    stopgap measure
+-   Thomas Schilling and Operational Transformations
+-   TODO: what's the link to that paper?
+-   Thomas Schilling and demo of darcs changes --context (git vs darcs)
+-   hashed-storage: what indexing of timestamps is for
+-   [PetrRockai](People/PetrRockai), [EricKow](People/EricKow)
+-   darcs3 and camp roadmap
+-   [IanLynagh](People/IanLynagh),
+    [GaneshSittampalam](People/GaneshSittampalam),
+    [EricKow](People/EricKow) -darcs3 and camp roadmap
+-   camp theory
+-   [IanLynagh](People/IanLynagh), lots of people
+
+Code implemented
+
+-   darcs changes --max-count (unfortunately, this doesn't seem to be
+    very efficient)
+
+## Saturday
+
+Darcs Q&A session
+
+-   everybody
+
+More discussions
+
+-   [IssueManagement](IssueManagement)
+-   [ThorkilNaur](ThorkilNaur) and [EricKow](People/EricKow)
+-   What does `darcs annotate do when there is a conflict?`
+-   [ArjanBoeijink](ArjanBoeijink) and [EricKow](People/EricKow)
+-   darcs sources
+-   [PetrRockai](People/PetrRockai) and [EricKow](People/EricKow)
+-   Issues
+
+    -   Zooko stale remote
+        -[http://bugs.darcs.net/issue1153](http://bugs.darcs.net/issue1153)
+    -   Meaningless local paths
+        -[http://bugs.darcs.net/issue1159](http://bugs.darcs.net/issue1159)
+    -   Meaningless local paths that are accidentally meaningful (NFS
+        automounter)
+
+-   Plan
+-   check for availability of repo root (that we're fetching from), and
+    if not available
+-   remote: ignore the entry for this darcs (we want to keep the entry
+    in case it's just transient error)
+
+    -   "WARNING: can't use <foo\> please remove it from
+        \_darcs/prefs/sources"
+
+-   local: remove the entry
+-   fix unionCaches - optional, but could be nice
+-   long term? on timeout: disable all sources from a given host for
+    this darcs (URL, Ssh [transient])
+-   Why does `cabal install` for gorsvet keep trying to reinstall darcs
+    even though I already have it?
+-   [DuncanCoutts](DuncanCoutts) and [EricKow](People/EricKow)
+-   Answer: because the version of your dependency (darcs) you have
+    installed would create an inconsistent install plan, so cabal must
+    do the safe thing and reinstall it instead of trying to use what you
+    have
+
+    -   In this particular case, hackage darcs (2.2.1) says it wants
+        parsec < 3, but unstable darcs says it's OK with parsec 3
+
+-   Fix:
+
+    -   If your build changes dependencies, bump version numbers (of
+        darcs.cabal, and also on dependencies on unstable darcs)
+    -   Unstable darcs should always have a different version number
+        than released darcs (PetrRockai chooses scheme)
+
+-   zlib plan
+-   [DuncanCoutts](DuncanCoutts) and
+    [GaneshSittampalam](People/GaneshSittampalam)
+-   Idea: The zlib API should provide a little lower-level interface
+    based on a custom Stream type, that can end either OK (End) or in a
+    (structured) error: data Stream = Chunk [ByteString](ByteString)
+    Stream | End (...) | Error (...). Compatibility is provided by
+    folding the Stream into a lazy bytestring.
+-   Plan: implementation by Ganesh? (Duncan needs to work on thesis
+    -   Haskell platform)
+
+Testing
+
+-   hashed-storage/gorsvet
+-   [PetrRockai](People/PetrRockai) and [EricKow](People/EricKow)
+-   TODO: make gorsvet optimize (basically the index rebuild
+    functionality of hashed-storage) go fast when there already is a
+    (possibly out of date) index
+-   PLAN for darcs:
+
+    -   start with adding hooks into darcs that use hashed-storage to
+        keep an up-to-date index around (and possibly make darcs
+        optimize create the index if it's missing
+    -   start flipping individual commands to use the hashed-storage
+        primitives for diffing (whatsnew first, others later)
+    -   a bad index should only cause performance issues, not
+        correctness issues (as long as we don't run into a sha256
+        collision, anyway :P...)
+
+Code implemented
+
+-   replacing indexed lists by maps in Darcs.Patch.Check
+
+## Sunday
+
+Discussions
+
+-   breakfast and walk
+-   add-add conflicts, unique state (merging unrelated repos)
+-   temporary use of unique identifiers
+-   hashed-storage, packs, blobs
+-   [GaneshSittampalam](People/GaneshSittampalam),
+    [IanLynagh](People/IanLynagh),
+    [NicolasPouillard](People/NicolasPouillard),
+    [EricKow](People/EricKow): associating file names with unique
+    identifiers, notion of semi-conflicts
+-   filecache and hashed storage
+-   [BenediktSchmit](BenediktSchmit) and [PetrRockai](People/PetrRockai)
+
+Documentation
+
+-   headPermutations, bits of Darcs.Patch classes, bits of
+    Darcs.Patch.Non
+
+Code
+
+-   --max-count fixed to actually be faster!
+    [PetrRockai](People/PetrRockai)
+-   zlib extended with enough information needed to recover from bad CRC
+    patches - [GaneshSittampalam](People/GaneshSittampalam) (pending
+    approval from Duncan)
+-   Some failed attempts to make unit tests faster. Refactored
+    Darcs.Patch.Check.superdirs\_exist -[ReinierLamers](ReinierLamers)
+
+# Projects
+
+-   Darcs-2 Fundamentals
+-   zlib issue - [DuncanCoutts](DuncanCoutts) (at least making the new
+    zlib library)
+-   issue701 forensics - [EricKow](People/EricKow)
+-   documenting Darcs.Patch.Real (issue701) - [EricKow](People/EricKow)
+-   [http://bugs.darcs.net/issue1327](http://bugs.darcs.net/issue1327)
+-   gz auditing - [ThorkilNaur](ThorkilNaur)
+-   commute properties - maybe
+    [GaneshSittampalam](People/GaneshSittampalam)
+-   type witness cleanup - [BenMoseley](BenMoseley)
+-   minimal patch context generation and hashing - maybe
+    [ArjanBoeijink](ArjanBoeijink)
+-   Camp/Darcs-3
+-   [IanLynagh](People/IanLynagh)
+-   [ArjanBoeijink](ArjanBoeijink)
+-   [FlorentBecker](FlorentBecker)
+-   Performance
+-   hashed-storage
+-   filecache - [BenediktSchmidt](BenediktSchmidt)
+-   life without compressed patches - costs? benefits?
+    [PetrRockai](People/PetrRockai)
+-   packs: [PacksSpecification](PacksSpecification). Caution: please
+    implement within hashed-storage!
+-   Benchmarking
+
+    -   see [StandardDarcsBenchmarks](StandardDarcsBenchmarks)
+    -   slowfs
+    -   visualisation
+
+-   Testing
+-   Quick testsuite that runs in less than 5s
+    -[ReinierLamers](ReinierLamers)
+-   Better [QuickCheck](QuickCheck) testing framework
+    -[ReinierLamers](ReinierLamers)
+
+    -   Easily define quickcheck properties anywhere in darcs source
+    -   Control which properties get checked using command-line flags
+    -   Use HPC to measure coverage
+
+-   [ProbablyEasy](ProbablyEasy) bugs
+-   Features
+-   [http://bugs.darcs.net/issue291](http://bugs.darcs.net/issue291)
+    - hunk editing; TODO: check with hoelzro (GaneshSittampalam
+    expressed an interest)
+-   [http://bugs.darcs.net/issue126](http://bugs.darcs.net/issue126)
+    -   hunk splitting
+
+-   And more!
+
+# Attendee checklist
+
+1.  [Register](http://haskell.org/haskellwiki/Hac5/Register) for Hac5!
+2.  Add yourself to the [attendee
+    list](http://haskell.org/haskellwiki/Hac5/Attendees) (or ask Eric to
+    do it if you don't have a [HaskellWiki](HaskellWiki) account)
+3.  Add yourself to the [Hac5 projects
+    page](http://www.haskell.org/haskellwiki/Hac5/Projects) under darcs
+4.  Install GHC (\>= 6.6) with Cabal 1.6 and cabal-install 0.6 on your
+    laptop
+5.  Get a [community.haskell.org
+    account](http://community.haskell.org/admin/account_request.html)
+6.  Tell Eric about your account, if you have not done so already
+7.  Make sure you can compile the latest darcs
+    `darcs get http://darcs.net`
+8.  darcs get http://code.haskell.org/darcs/buildbot
+
+    (and try the quickstart) just in case we want to have lots of
+    buildbots during the sprint
+
+# See also
+
+-   [http://haskell.org/haskellwiki/Hac5](http://haskell.org/haskellwiki/Hac5)
+-   [Roadmap](Roadmap) - the bigger picture
+

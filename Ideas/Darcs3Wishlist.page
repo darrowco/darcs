@@ -1,0 +1,46 @@
+Things that we would like darcs 3 to do differently from current darcs
+("getting it right the first time around").
+
+But on the other hand, beware [THE SECOND-SYSTEM
+EFFECT](http://en.wikipedia.org/wiki/Second-system_effect)...
+
+-   New diff methods: [block move](http://docs.lib.purdue.edu/cgi/viewcontent.cgi?article=1377&context=cstech) diffs ([discussion](
+http://thread.gmane.org/gmane.comp.version-control.darcs.user/26797/focus=26800)), binary [issue1233](http://bugs.darcs.net/issue1233) and word-based (word-by-word instead of line-based) [issue2315](http://bugs.darcs.net/issue2315)
+-   Partial checkout: [issue2329](http://bugs.darcs.net/issue2329)
+-   Integrated distributed wiki, bug tracker, and social web interface: [issue2363](http://bugs.darcs.net/issue2363)
+-   UTF-8 metadata
+-   Unicode filenames?
+    [issue1863](http://bugs.darcs.net/issue1863)
+-   conflict marking
+-   robustness wrt unsupported filenames (internal representation of
+    file id?)
+-   patch format and bundle format
+-   support for merging unrelated repositories?
+-   better preferences system (maybe be done earlier)
+-   symlink support?
+    [issue820](http://bugs.darcs.net/issue820)
+-   using a .darcsrepo directory instead of \_darcs
+    [issue129](http://bugs.darcs.net/issue129)
+-   sha1 hashing everywhere (patches, repos, repos state)
+-   handling of various patch types: "usual" patches, bug patches (a la
+    bugs everywhere), etc. (
+    [issue1786](http://bugs.darcs.net/issue1786) )
+-   a packed+hashed format for repositories
+    ([issue1535](http://bugs.darcs.net/issue1535))
+-   improved handling of filenames:
+    [AddAddConflicts](Ideas/AddAddConflicts) [HARD]
+-   patch format that properly supports the distinction between tag and
+    non-tag patches
+-   fix commute with respect to null-hunks (Hunk line [] [])
+-   improve support for token-replace patches (doc refers to some
+    limitations due to the current patch format), maybe it does not
+    worth it ?
+
+# See also
+
+-   [Petr Rockai's summer of code 2011 on V3 prims](GSoC/2011-V3Prims)
+-   <http://projects.haskell.org/camp>
+-   [Target-3.0
+    bugs](http://bugs.darcs.net/issue?@search_text=&title=&@columns=title&topic=33&id=&@columns=id&creation=&creator=&activity=&@columns=activity&@sort=activity&actor=&nosy=&priority=&@group=priority&status=&@columns=status&assignedto=&@columns=assignedto&@pagesize=50&@startwith=0&@queryname=&@old-queryname=&@action=search)
+    on the bug-tracker
+

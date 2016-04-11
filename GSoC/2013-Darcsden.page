@@ -1,0 +1,124 @@
+# About the project
+The goal of this project is to increase the functionality of Darcsden. Darcsden is an open source repository hosting platform for darcs, written in Haskell. The main features are authentication from Github/OpenID, Password Recovery, Editing repository files online, and Comparison between a repository and its forks.
+ 
+- Proposal: [Enhancing Darcsden](http://www.google-melange.com/gsoc/proposal/review/google/gsoc2013/bsrkaditya/32002)
+- Aditya's [blog](http://bsrkaditya.blogspot.com/) and [google plus page](https://plus.google.com/100079137931669012933/posts):
+    - [GSoC 2013: Enhancing Darcsden Preweek 1](http://bsrkaditya.blogspot.com/2013/06/gsoc-2013-enhancing-darcsden-preweek-1.html)
+    - [GSoC 2013: Enhancing Darcsden](http://bsrkaditya.blogspot.com/2013/05/gsoc-2013-enhancing-darcsden.html)
+    - [GSoC 2013: Enhancing Darcsden Week 1-3](http://bsrkaditya.blogspot.com/2013/07/gsoc-2013-enhancing-darcsden-week-1-3.html)
+    - [Gsoc 2013: Enhancing Darcsden - Week 4](http://bsrkaditya.blogspot.com/2013/07/gsoc-2013-enhancing-darcsden-week-4.html)
+- Aditya's [dev instance](http://www.darcsden-gsoc.biz:8900/)
+- Aditya's [patches not yet deployed on hub.darcs.net](http://hub.darcs.net/simon/darcsden/patches)
+
+See also:
+
+- Gwern's [Haskell Summer of Code](http://www.gwern.net/Haskell Summer of Code) analysis, with predictions
+
+
+# Benefits to the community
+Many open source projects expect a good hosting platform for the VCS they pick. Darcsden is a repository hosting platform for darcs, hosted at darcs.net. However, it is missing many of the features that some of the more sophisticated platforms offer. This project would hopefully increase the attractiveness of using darcs as a vcs.
+
+# Project Design
+
+The must have features are:
+
+* Login with github/openid: Lets existing users link their darcsden account to their openid/github accounts. Allow login/account creation with openid/github credentials. This reduces the burden of registration, password remembrance, etc.
+* Change password: Give user the option to change password by sending email to the user to reset their password. This is one of the most requested features for darcs hub.
+* File edit: File edit: Add an option to edit a file on the repository through the web, and then record the changes. This is especially useful for quick or casual edits. This feature mirrors github's Online Editing feature.
+* Comparing a repository with one of its forks: Show how many patches each of the fork is ahead/behind by wrt the repository, and a further option to display the patches by which the repositories differ. Darcs has an inbuilt function, which finds the uncommon patches between the patch sets of two repositories. This is useful for identifying the relationship between the two repositories. This feature mirrors github's analyze branches feature.
+
+These are the nice to have features:
+
+* Packs support: Give options to create/remove packs. Packs lead to faster repository get for large repos. One of the problems with packs is that if n patches are applied onto the repository after packs was built, then during get all those patches are then applied to the pack, which makes get slower. Hence, packs has to be synchronized with the repository every so often. Ideally darcsden would do this automatically.
+* Patch bundles: Lets users upload patches to a repository, which the repository owner can then decide to apply or reject. The bundles could also be received using darcs send. darcs send supports sending to http urls via post, and thus darcsden also can recive patches this way. This feature is an equivalent for github's pull requests. Patch bundles simplifies the process of sending, and applying patches to a repository.
+* Changes and Annotate on files: Give options to view changes and annotate of a file. Changes and annotate are basic features of darcs, and thus darcsden can support them. This feature is in the equivalent of changes and blame view in Github.
+* Website hosting, with hakyll support: If the repository has hakyll code, generate and host the website. This feature is in lieu of github pages.
+* Patch index support: Give options to create/remove patch index. Create patch index by default at repository initialization. Patch index speeds up changes and annotate on a file.
+
+# Timeline
+
+* Week 1,2: Auth using openid/github
+* Week 3: Resetting password
+* Week 4: File editing in darcsden
+* Week 5: Show relationships between repository, and its forks
+* Week 6: Midterm evaluation
+* Week 7: Packs Support
+* Week 8: Patch bundles
+* Week 9: Changes and Annotate on files
+* Week 10,11,12: Buffer:
+     - Website hosting via hakyll
+     - Patch index support
+
+# Challenges
+
+- Lack of experience with:
+    - CouchDB
+    - Hakyll
+    - OpenID
+
+# About Me
+ I am a final year Bachelors student, enthusiastic about Haskell. I have previous participated in GSoC last year under Haskell organization for darcs. I use darcs as my main vcs, and love contributing to it.
+
+# Todo
+
+## Added 9th Aug 2013
+
+- ~~Give a more helpful message when showing only a few patches~~
+- ~~Add the secondary repo into the url of repository compare~~
+- ~~Revise patch history~~
+- Discuss with simon about the next merge
+- ~~get the POST request of darcs send to work~~
+
+## Added 12th Aug 2013
+
+- ~~Setup server at www.darcsden-gsoc.biz~~
+- ~~Changes and annotate on files~~
+
+## Added 19th Aug 2013
+
+- ~~more helpful darcsden-test~~
+- ~~week 8 blogpost~~
+- ~~patch to darcs screened exporting getChangesInfo~~
+- ~~make darcs send default behaviour to be sending a POST request, instead of creating a file~~
+- figure out a way to authenticate bundles from darcs send (dropped)
+- ~~modify annotate to use patch index if possible~~
+
+## Added 26th Aug 2013
+
+- ~~week 9 blogpost~~
+- hakyll support (dropped)
+
+## Added 30th Aug 2013
+
+- ~~when using darcs send, print a warning if issue tracker is disabled~~
+- ~~add a parser for email address in darcs send~~
+- ~~rename misspelled and misnamed patches~~
+- ~~test for changes~~
+- ~~test for annotate~~
+- ~~test for bundles~~
+
+## Added 2nd Sep 2013
+
+- ~~improve layout of repository comparision, branches page~~
+- ~~improve ui of annotate~~
+- ~~hide our repository column in branches page~~
+- ~~add highlighting support for more extensions~~
+
+## Added 9th Sep 2013
+
+- Change darcs client side to be more aware of http request success and failures
+- Consistency of oauth buttons with other form buttons
+- ~~Anonymous send to darcsden~~
+
+## Added 12th Sep 2013
+
+- ~~darcs send should email repo owner if issue tracker is not enabled~~
+
+## Added 17th Sep 2013
+
+- no limit on number of patches being displayed
+
+## Added 19th Sep 2013
+
+- rename disf
+- consistency in highlight

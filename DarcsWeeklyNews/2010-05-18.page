@@ -1,0 +1,68 @@
+# News and discussions
+
+1.  Unexpectedly, we got a second student funded by the Google Summer of
+    Code this year. Adolfo Builes will work on improving the global
+    cache:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-May/024019.html](http://lists.osuosl.org/pipermail/darcs-users/2010-May/024019.html)
+    -   [http://abuiles.blogspot.com/2010/05/improving-darcs-performance-my-gsoc.html](http://abuiles.blogspot.com/2010/05/improving-darcs-performance-my-gsoc.html)
+
+2.  Darcs 2.4.4 is going to be released in one week if no bug is
+    discovered in its current source (most importantly under Windows):
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-May/024030.html](http://lists.osuosl.org/pipermail/darcs-users/2010-May/024030.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-May/024032.html](http://lists.osuosl.org/pipermail/darcs-users/2010-May/024032.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-May/024037.html](http://lists.osuosl.org/pipermail/darcs-users/2010-May/024037.html)
+
+3.  We are looking for a new release manager:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-May/024038.html](http://lists.osuosl.org/pipermail/darcs-users/2010-May/024038.html)
+
+# Issues resolved in the last week (1)
+
+issue1841 Jeremy Cowgar
+  ~ -   Apply binary mode to ssh process and patch file handles.
+    -   [http://bugs.darcs.net/issue1841](http://bugs.darcs.net/issue1841)
+
+# Patches applied in the last week (22)
+
+2010-05-13 Guillaume Hoffmann
+  ~ -   accept issue1845 darcs wants file paths from root of working
+        copy
+
+2010-05-12 Jeremy Cowgar
+  ~ -   Resolve issue1841: Apply binary mode to ssh process and patch
+        file handles.
+
+2010-05-11 Petr Rockai
+  ~ -   Use System.FilePath.Posix instead of System.FilePath.
+
+2010-05-11 Eric Kow
+  ~ -   Rename head\_permutationsFL to simpleHeadPermutationsFL.
+
+2010-05-11 Petr Rockai
+  ~ -   Avoid --debug in issue381.sh which currently breaks on GHC
+        6.12/win32.
+    -   Fix spurious backslashes in URIs on win32.
+
+2010-05-10 Eric Kow
+  ~ -   Camel case Darcs.Test.Patch.\*.
+    -   Camel case Darcs.Compat.
+    -   Camel case Darcs.Witnesses.Show.
+    -   Camel case is\_file function in Darcs.URL.
+    -   Camel case miscellaneous remaining functions.
+    -   Camel case Darcs.Population and Darcs.PopulationData.
+    -   Camel case Darcs.Test.Email.
+    -   Camel case URL and HTTP modules.
+    -   Camel case Darcs.Patch.\*.
+    -   Camel case most of Darcs.Repository.\*.
+    -   Camel case Darcs.Patch.Bundle.
+    -   Camel case Darcs.Repository itself.
+    -   Camel case Darcs.Repository.HashedRepo and DarcsRepo.
+    -   Camel case Darcs.Repository.LowLevel.
+
+2010-05-11 Trent W. Buck
+  ~ -   Fix "./Setup test trackdown-bisect" from sdist tarball.
+    -   Tell "runghc Setup sdist" about Darcs.Witnesses.WZipper.
+
+

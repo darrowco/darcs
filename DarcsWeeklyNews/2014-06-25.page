@@ -1,0 +1,135 @@
+# News and discussions
+
+1.  We have a few updates from the Google Summer of Code projects.
+    Alejandro Gadea about history reordering:
+
+    -   <http://alegdarcs.blogspot.com.ar/2014/05/first-week-19-23-may.html>
+    -   <http://alegdarcs.blogspot.com.ar/2014/06/second-week-26-30-may.html>
+    -   <http://alegdarcs.blogspot.com.ar/2014/06/third-week-02-06-june.html>
+
+2.  Marcio Diaz about the cache system:
+
+    -   <http://marcioodiaz.blogspot.com.ar/2014/06/gsoc-progress-report-2-bucketed-global.html>
+
+3.  Incremental fast-export is now provided to ease maintenance of git mirrors:
+
+    -   <http://hub.darcs.net/darcs/darcs-screened/patch/20140609190214-5ef8f>
+
+# Issues resolved (8)
+
+issue2244 Ale Gadea
+  ~ -   darcs tag should warn about duplicate tags
+    -   <http://bugs.darcs.net/issue2244>
+
+issue2314 Benjamin Franksen
+  ~ -   output-auto-name in defaults file
+    -   <http://bugs.darcs.net/issue2314>
+
+issue2361 Ale Gadea
+  ~ -   optimize --reorder runs forever with one repository
+    -   <http://bugs.darcs.net/issue2361>
+
+issue2364 Sergei Trofimovich
+  ~ -   fix file corruption on double fetch
+    -   <http://bugs.darcs.net/issue2364>
+
+issue2364 Sergei Trofimovich
+  ~ -   don't break list of 'bad sources'
+    -   <http://bugs.darcs.net/issue2364>
+
+issue2388 Owen Stephens
+  ~ -   check if inventories dir has been created
+    -   <http://bugs.darcs.net/issue2388>
+
+issue2394 Guillaume Hoffmann
+  ~ -   make optimize a supercommand
+    -   <http://bugs.darcs.net/issue2394>
+
+issue2396 Guillaume Hoffmann
+  ~ -   make convert a supercommand and enhance help strings
+    -   <http://bugs.darcs.net/issue2396>
+
+
+# Patches applied (39)
+
+2014-06-24 Guillaume Hoffmann
+  ~ -   update issue2388 test to optimize supercommand
+
+2014-05-11 Owen Stephens
+  ~ -   Resolve issue2388: check if inventories dir has been created
+    -   Accept issue 2388
+
+2014-05-30 Ganesh Sittampalam
+  ~ -   indentation fix for Windows-only module
+
+2014-05-11 Benjamin Franksen
+  ~ -   fixed a typo in a comment in Darcs.Util.Diff.Patience
+    -   Allow options with path arguments to be specified in defaults file
+    -   fixed cut-n-paste error in haddock comment
+    -   resolve issue2314: output-auto-name in defaults file
+
+2014-05-11 Owen Stephens
+  ~ -   Accept issue2386
+
+2014-06-12 Guillaume Hoffmann
+  ~ -   remove patch index flags from rollback command
+    -   resolve issue2396: make convert a supercommand and enhance help strings
+    -   factorize boilerplate of optimize subcommands
+    -   resolve issue2394: make optimize a supercommand
+    -   adapt testsuite to new optimize supercommand
+
+2014-05-11 Benjamin Franksen
+  ~ -   make optimize command respect --quiet by using putInfo
+    -   darcs.cabal: make Haskell2010 the default-language for all stanzas
+
+2014-06-18 Guillaume Hoffmann
+  ~ -   explain commandProgramName
+
+2014-05-07 Benjamin Franksen
+  ~ -   fixed missing option for author in rebase-nochanges.sh test
+    -   added _test_playground to boring file
+    -   added cabal sandbox generated stuff to boringfile
+    -   avoid a syntax error with haddock-2.13.2
+
+2014-04-29 Sergei Trofimovich
+  ~ -   resolve issue2364: fix file corruption on double fetch
+
+2014-04-30 Owen Stephens
+  ~ -   Use DeriveFunctor instead of manual instance for PatchMod
+
+2014-06-09 Guillaume Hoffmann
+  ~ -   marksfile support for convert --export
+
+2014-06-11 Ale Gadea
+  ~ -   Documentation of function Darcs.Repository.Internal.misplacedPatches .
+    -   Documentation for Darcs.Patch.Witnesses.Sealed module.
+    -   Documentation for Darcs.Patch.Witnesses.Ordered module.
+
+2014-06-03 Ganesh Sittampalam
+  ~ -   conditionalise replHook using Template Haskell
+
+2014-06-05 Ale Gadea
+  ~ -   Resolve Issue2361: optimize --reorder runs forever with one repository
+
+2014-05-16 Guillaume Hoffmann
+  ~ -   implement doFastZip to create zip archive from pristine tree
+
+2014-05-29 Ganesh Sittampalam
+  ~ -   re-advertise GHC 7.8 support
+    -   clean out some obsolete conditionalisation
+    -   bump version to 2.9.9
+
+2014-05-19 Guillaume Hoffmann
+  ~ -   rm latex2html file
+
+2014-05-13 Sergei Trofimovich
+  ~ -   resolve issue2364: don't break list of 'bad sources'
+
+2014-04-27 Owen Stephens
+  ~ -   Accept issue2382: darcs is confused if a dir is moved inplace of a file
+    -   Accept issue2383
+    -   Accept issue2380: darcs wont rename a file to the name of a deleted file
+
+2014-05-07 Ale Gadea
+  ~ -   Resolve Issue2244: darcs tag should warn about duplicate tags
+

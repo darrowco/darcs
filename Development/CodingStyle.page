@@ -1,0 +1,170 @@
+# Darcs Code Style
+
+> Darcs code can be a little hostile. —Florent
+
+## Coding Style
+
+-   In an effort to increase new-coder approachability, existing-coder
+    sanity and general maintainability of the codebase, Darcs has
+    adopted Johan Tibell's style guidelines, [found
+    here](https://github.com/tibbe/haskell-style-guide/blob/master/haskell-style.md).
+-   All submitted patches should adhere to this guide.
+-   All patches should be checked with
+    [hlint](http://community.haskell.org/~ndm/hlint/) before submission.
+-   Try to avoid cryptic short identifiers (gcau, wspr).
+-   Any exceptions to the guide will be listed below.
+
+## Exceptions
+
+-   Long import lists should be wrapped before 80 characters thus:
+
+<!-- -->
+
+    import Darcs.Foos.Bars 
+        ( bars, moreBars, wibbles
+        , wobbles, barWobbles 
+        )
+
+That is, wrapped with the first identifier on each new line aligned with
+the first identifier on the first line. See the section on imports for more details.
+
+-   Indentation of type-signatures should be one identifier per-line
+    *only* if you want to comment on each individual parameter:
+
+Good:
+
+    -- |foo some As and Bs
+    foo :: [A] -> [B] -> [C]
+
+Also good:
+
+    -- |Mmm, per-param comments
+    foo :: [A]  -- The As
+        -> [B]  -- The Bs
+        -> [C]
+
+Bad:
+
+    -- |foo some As and Bs with bad indentation!
+    foo :: [A]
+        -> [B]
+        -> [C]
+
+## Comments
+
+Further to the style guidelines we'd really like to add more comments to
+the codebase, too much of the code has unclear intentions, with no
+elucidative comments. The general principle is:
+
+-   If you've written it - Haddock it!
+-   If you've read it and understood it - Haddock it!
+-   If you've read it and can't understand it - Haddock it, with a
+    question!
+-   If you're working in an area of code, ensure it ends up Haddock'd!
+
+It boils down to "What's the intuition?" for a given function.
+
+## Import lists
+
+The coding style is being update (as of now, Feb 2014).
+
+- The imported entities from each module should be listed explicitly.
+
+- The general rule for a single import is `import [qualified] ModuleName ( import1, import2, ... )`
+
+Note the spaces surrounding parenthesis.
+
+- If the import declaration does not fit on a single line (80 characters or so), the (explicit) list of imported entities should start on a new line, indented. Additionally, the commas are supposed to be aligned like this:
+
+<!-- -->
+
+    import MyModule 
+        ( Stuff (..), bla1, bla2
+        , foo, bar, baz
+        )
+
+
+Again, each line should not be too long.
+
+- The entity list goes as following: first, data declarations in constructors, then values and functions.
+
+- Imports should usually be divided into 3 groups (see [Tibbe's style guide](https://github.com/tibbe/haskell-style-guide/blob/master/haskell-style.md#imports) for more details). Inside the groups imports should be sorted alphabetically.
+
+## Minor stylistic details
+
+-   no trailing whitespace
+-   avoid needless parens (for example when using ++)
+-   use fmap to simplify returning a result in a monad (e.g
+    `` lines `fmap` readFile foo ``)
+-   avoid long lines if possible. A rule of thumb is 65 lines (+10,
+    under special circumstances) just as the fmt(1) command suggests
+-   if your patch fixes issueXYZ, then start the patch name with
+    "resolve isssueXYZ: my comments"
+
+# Existing Codebase Grievances
+
+New developers (and old developers alike), state here your griefs
+against the code, and your proposed solution to them, for the community
+to turn them into new good habits. Help the Darcs readability
+[revolution](http://en.wikipedia.org/wiki/Cahiers_de_doléances)!
+
+Please be positive in your comments: no finger-pointing, and as much
+references to concrete code as possible. Have a nice Catharsis!
+
+-   Functions which output a message to the user (such as "do you want
+    to record this patch?") should have the message in a comment near
+    them, so that they can be found by grepping. Ideally (?) these
+    functions should be in the Darcs.Command.\* modules, and
+    Darcs.Internal.\* should only have non-interactive functions.
+-   When a module A re-exports a function f from another module B, in a
+    module C which needs f, import it from B rather than A, so as to
+    avoid too many indirections when looking for f.
+
+    -   Would the exception here be unless we are trying to get some
+        kind of encapsulation going, as with Darcs.Patch and
+        Darcs.Repository?
+    -   Of course, on the other hand, using that exception might also be
+        a hint that there might be some over-encapsulation (aka YAGNI)
+        going on. Its probably something that's not worth actually
+        chasing in existing code, but it's a good question to ask
+        oneself before writing new code. Especially module A (the
+        re-exporter) in my example above.
+
+-   unsafeCoerceP should not be used except in the core. smart\_diff is
+    a similarly dangerous function and should be carefully used.
+
+## Wolfgang's Feedback
+
+Experiences from grapefruit [GraphicalInterface](GraphicalInterface)
+hackers
+
+-   currently the terminal-based user interface code of Darcs and the
+    actual application logic are too much intermixed.
+
+## Iago's Feedback
+
+These mostly come from a discussion that happened on irc:
+<http://irclog.perlgeek.de/darcs/2010-12-09>
+
+-   Order of definitions in a file makes a big difference. If definition
+    A depends on B, then we should try to define B near A, not 500 lines
+    away.
+-   Type witnesses are hard to read for newcomers.
+-   cleverCommute could be documented so I can read "it makes use of
+    this clever trick"
+-   First time you read commuteFiledir you ask, what are the cases does
+    it not handle?
+-   tests that call things identity when they really aren't
+
+More feedback:
+<http://irclog.perlgeek.de/darcs/2010-12-15\#i\_3089249>
+
+-   patch-pair generator for commutation tests only produces 4-7% useful
+    cases
+-   someone decided that arbitraryTree should produce empty trees 40% of
+    times, but not justified (performance?)
+
+## Daniil's feedback
+
+- Maybe something like [Stylsh-haskell](https://github.com/jaspervdj/stylish-haskell) can be used to provide automation. At least for the pragmas/imports part
+- Coding style for imports should be documented in more details

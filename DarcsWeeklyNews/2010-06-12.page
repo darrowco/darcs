@@ -1,0 +1,83 @@
+# News and discussions
+
+1.  Lele Gaifax released a new version of the trac+darcs plugin:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-June/024281.html](http://lists.osuosl.org/pipermail/darcs-users/2010-June/024281.html)
+    -   [http://progetti.arstecnica.it/trac+darcs](http://progetti.arstecnica.it/trac+darcs)/
+
+2.  We are still looking for a release manager for the release of darcs
+    2.5. Eric summarized the discussions concerning recruitment and the
+    responsibilities and challenges related to this job:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-June/024268.html](http://lists.osuosl.org/pipermail/darcs-users/2010-June/024268.html)
+
+3.  Roadmap: rebase won't be in 2.5, annotate will be improved:
+
+    -   [http://irclog.perlgeek.de/darcs/2010-06-08\#i\_2415755](http://irclog.perlgeek.de/darcs/2010-06-08#i_2415755)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-June/024227.html](http://lists.osuosl.org/pipermail/darcs-users/2010-June/024227.html)
+
+# Issues resolved in the last week (2)
+
+issue1210 Adolfo Builes
+  ~ -   global cache gets recorded in \_darcs/prefs/sources
+    -   [http://bugs.darcs.net/issue1210](http://bugs.darcs.net/issue1210)
+
+issue1874 Eric Kow
+  ~ -   recognise network tests on cabal test command line.
+    -   [http://bugs.darcs.net/issue1874](http://bugs.darcs.net/issue1874)
+
+# Patches applied in the last week (21)
+
+2010-06-11 Eric Kow
+  ~ -   Resolve issue1874: recognise network tests on cabal test command
+        line.
+
+2010-06-10 Florent Becker
+  ~ -   haddocks for SelectChanges
+    -   better message when skipping already decided patches
+
+2010-06-09 Eric Kow
+  ~ -   Accept issue1871: darcs record . failure for changes in subdir.
+
+2010-06-07 Petr Rockai
+  ~ -   Extend the issue1014 test to check that named patches are not
+        duplicated.
+    -   Haddock merge2FL and fastRemoveFL in Patch.Depends.
+    -   Limit index updates to relevant subtree in a few cases.
+    -   Fix a bunch of "unused" warnings.
+
+2010-06-08 Eric Kow
+  ~ -   Shorten issue1210 test name.
+
+2010-06-08 Adolfo Builes
+  ~ -   Add test for issue1210: global cache gets recorded in
+        \_darcs/prefs/sources
+
+2010-06-08 Petr Rockai
+  ~ -   Fix typo in the BSD version of date arithmetic (testsuite).
+    -   Let's try to work with BSD date as well.
+    -   Fix a race condition in the match-date test.
+    -   Skip issue1763 test (non-ascii filenames) on win32.
+
+2010-06-01 Eric Kow
+  ~ -   Cut unused NonPatch type synonym.
+
+2010-01-14 Daniel Dickison
+  ~ -   Accept issue1726: Files with \_darcs prefix are always boring
+
+2010-05-29 Eric Kow
+  ~ -   Fix comment for encodeWhite/decodeWhite.
+
+2010-06-07 Petr Rockai
+  ~ -   Make install-deps more relaxed about "cabal update" failures.
+    -   Another install-deps fix: read -d, fails at last field instead
+        of EOF.
+
+2010-06-07 Eric Kow
+  ~ -   Canonize A. Builes, R. Dorcik, R. Plasil, S. Wehr and T. Refis.
+
+2010-06-06 Adolfo Builes
+  ~ -   Resolve issue1210: global cache gets recorded in
+        \_darcs/prefs/sources
+
+

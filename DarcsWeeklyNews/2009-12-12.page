@@ -1,0 +1,161 @@
+# News and discussions
+
+1.  Jason Dagit told us about his experiments to make darcs more
+    memory-efficient:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-December/022517.html](http://lists.osuosl.org/pipermail/darcs-users/2009-December/022517.html)
+
+2.  A discussion occured about the (currently inexistent) handling of
+    symlinks in darcs:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-December/022432.html](http://lists.osuosl.org/pipermail/darcs-users/2009-December/022432.html)
+    -   [http://wiki.darcs.net/Darcs3Wishlist](http://wiki.darcs.net/Darcs3Wishlist)
+
+# Issues resolved in the last week (8)
+
+issue223 Benedikt Huber
+  ~ -   add --remote-darcs flag for remote darcs executable
+    -   [http://bugs.darcs.net/issue223](http://bugs.darcs.net/issue223)
+
+issue1216 Trent W. Buck
+  ~ -   list Match section in ToC.
+    -   [http://bugs.darcs.net/issue1216](http://bugs.darcs.net/issue1216)
+
+issue1308 Luca Molteni
+  ~ -   push should warn about unpulled patches *before* patch-selection
+    -   [http://bugs.darcs.net/issue1308](http://bugs.darcs.net/issue1308)
+
+issue1336 David Markvica
+  ~ -   poor error message on --last "" (empty string to numbers parser)
+    -   [http://bugs.darcs.net/issue1336](http://bugs.darcs.net/issue1336)
+
+issue1377 Benedikt Huber
+  ~ -   getProgname for local darcs instances
+    -   [http://bugs.darcs.net/issue1377](http://bugs.darcs.net/issue1377)
+
+issue1424 David Markvica
+  ~ -   1424: darcs get wrongly reports "using lazy repository" if you
+        ctrl-c old-fashioned get
+    -   [http://bugs.darcs.net/issue1424](http://bugs.darcs.net/issue1424)
+
+issue1594 Dave Love
+  ~ -   define PREPROCHTML in makefile
+    -   [http://bugs.darcs.net/issue1594](http://bugs.darcs.net/issue1594)
+
+issue1709 [quiark@centrum.cz](mailto:quiark@centrum.cz)
+  ~ -   Short version of progress reporting was wrong.
+    -   [http://bugs.darcs.net/issue1709](http://bugs.darcs.net/issue1709)
+
+# Patches applied in the last week (52)
+
+2009-12-07 Jason Dagit
+  ~ -   rename toCommute to toFwdCommute and fromCommute to toRevCommute
+    -   remove no longer meaningful comments
+    -   remove commutex
+
+2009-12-11 Florent Becker
+  ~ -   Reconciliate show version with CamelCasings
+
+2009-11-25 [thomashartman1@gmail.com](mailto:thomashartman1@gmail.com)
+  ~ -   sensible defaults for versioned show files
+    -   add versioned show files functionality (darcs show files -p
+        'some patch')
+
+2009-12-09 Trent W. Buck
+  ~ -   LaTeX typo: verbXfooX, not verbXfooverbX.
+
+2009-11-23 Dave Love
+  ~ -   Resolve issue1594: define PREPROCHTML in makefile
+
+2009-12-02 [quiark@centrum.cz](mailto:quiark@centrum.cz)
+  ~ -   resolve issue1709: Short version of progress reporting was
+        wrong.
+
+2009-11-15 David Markvica
+  ~ -   Resolve issue1336: poor error message on --last "" (empty string
+        to numbers parser)
+    -   Resolve issue 1424: darcs get wrongly reports "using lazy
+        repository" if you ctrl-c old-fashioned get
+
+2009-11-30 Trent W. Buck
+  ~ -   Resolve issue1216: list Match section in ToC.
+
+2009-11-24 Eric Kow
+  ~ -   Less implementation-oriented haddock for Darcs.Patch.Choices.
+
+2009-11-25 Trent W. Buck
+  ~ -   Accept issue1702: optimize --relink doesn't relink the cache.
+
+2009-11-20 Florent Becker
+  ~ -   Allow --no-foo to negate all --foo options
+    -   Consistently use "no-" prefix for new negative flags
+    -   Add --to-all-files option to darcs changes
+    -   add --forward (opposite of --reverse)
+    -   add --case-cautious and --reserved-cautions
+    -   add --skip-boring
+    -   clean up queries in Darcs.Flags
+    -   add --no-happy-forwarding
+    -   add --apply-on-disk as counterpart to --store-in-memory
+    -   add a --traditional counterpart to --unified
+    -   add --dont-delete-log-file option
+    -   Add --dont-ignore-times counterpart to --ignore-times
+
+2009-10-10 Eric Kow
+  ~ -   Accept issue1325: hunk patches interfere with pending
+        minimisation.
+    -   Camel case Darcs.Match and its exports.
+    -   Camel case Darcs.Repository.Format and its exports.
+    -   Camel case Darcs.Commands and its exports.
+    -   Camel case Darcs.Commands.\* and their exports.
+    -   Camel case helper functions exported by Darcs.Commands.Help.
+    -   Camel case Darcs.Arguments and exports.
+    -   Camel case Darcs.Patch exported functions.
+    -   Camel case and rename Prim patch predicates.
+
+2009-11-18 Benedikt Huber
+  ~ -   resolve issue223, add --remote-darcs flag for remote darcs
+        executable
+
+2009-11-22 Trent W. Buck
+  ~ -   Appease haddock.
+
+2009-11-21
+[caitt@users.sourceforge.net](mailto:caitt@users.sourceforge.net)
+  ~ -   Add myself to .authorspelling file.
+
+2009-11-14 Petr Rockai
+  ~ -   More elaborate test for repair of a corrupt repository.
+
+2009-11-17 Benedikt Huber
+  ~ -   resolve issue1377: getProgname for local darcs instances
+
+2009-11-14 Jason Dagit
+  ~ -   replace commutex with commute in elegant\_merge
+    -   clean up elegant\_merge
+
+2009-11-15 Luca Molteni
+  ~ -   resolve issue1308 push should warn about unpulled patches
+        *before* patch-selection
+
+2009-11-13 Florent Becker
+  ~ -   Add --dry-run to obliterate, since you'd better be sure
+
+2009-11-15 [pivo@pobox.sk](mailto:pivo@pobox.sk)
+  ~ -   use guards instead of ifs
+
+2009-11-14 Eric Kow
+  ~ -   Hlint away a concatMap.
+    -   Replace a (sequence.map) with mapM per hlint.
+
+2009-11-15 Joachim Breitner
+  ~ -   hlint error: Use unless
+    -   hlint error: Use unless
+
+2009-11-15 Eric Kow
+  ~ -   Camel-case helper functions exported by Darcs.Commands.
+    -   Camel case Darcs.Commands.CommandControl constructors.
+
+2009-11-15 Joachim Breitner
+  ~ -   hlint warning: Use mapM instead of sequence
+
+

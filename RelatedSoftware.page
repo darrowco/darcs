@@ -1,0 +1,113 @@
+# Repository Browsers
+
+-   [darcsden](http://hub.darcs.net) - a Darcs hosting website you can
+    install on your servers
+-   [Darcsweb](http://blitiri.com.ar/p/darcsweb/) - A web-based repo
+    browser.
+    ([example](http://www.divineinvasion.net/darcsweb/darcsweb.cgi))
+-   [patch-tag](http://blog.patch-tag.com/2010/07/21/patch-tag-lessons-learned-and-announcing-open-source/)
+    -a Darcs hosting website
+    ([example](http://allmydata.org/trac/darcs-2/browser))
+-   [FusionForge](http://www.fusionforge.org/) 5.0 (formerly GForge)
+    supports Darcs via a plugin
+-   [dawb](http://rampa.sk/static/dawb.html) - is simple web-based
+    changes browser (with RSS support)
+
+# User Interface
+
+-   [meld](http://meld.sourceforge.net/), a graphical diff viewer,
+    handles darcs repositories: just type "meld ." inside of a darcs
+    repo to see the unrecorded changes (no longer works as of Meld 3.15
+    but we're working on reintroducing darcs support)
+-   [diffuse](http://diffuse.sourceforge.net/), a graphical diff viewer,
+    handles darcs repositories: just type "diffuse -m" inside of a darcs
+    repo to see the unrecorded changes
+-   [Darcs support for the Emacs text editor](RelatedSoftware/Emacs)
+-   [darcs.vim](http://www.vim.org/scripts/script.php?script_id=1683) - basic Darcs support for vim
+-   [Shell Completions](RelatedSoftware/ShellCompletion) for bash, zsh,
+    tcsh and emacs.
+-   [Lispworks](http://www.kantz.com/jason/programs/vc/vc-for-lw.html)
+    - Version Control for Lispworks, allows darcs use from the Lispworks
+    IDE
+-   [Gnus](RelatedSoftware/Gnus) - A small recipe for Gnus to apply
+    patches from the mail client.
+-   [commit-patch](http://porkrind.org/commit-patch) - Commit a patch
+    file to a darcs, hg or cvs repo. Includes convenient emacs hooks.
+-   From [Ideas/GraphicalInterface#See also](Ideas/GraphicalInterface#see-also):
+    -   <http://www.datafed.net/darcs/> (TortoiseDarcs, Windows GUI for Darcs)
+    -   [EclipseDarcs](http://eclipsedarcs.sourceforge.net/) (last version:
+        4.1, March 2008). See also
+         <http://cohatoe.blogspot.com/search/label/eclipsedarcs>
+        and
+        <http://web.archive.org/web/20071012050446/eclipsedarcs.org/doku.php?id=eclipsedarcs>
+
+# Continuous Integration
+
+-   [darcs plugin for
+    Hudson/Jenkins](http://blog.weltraumschaf.de/2011/02/15/darcs-in-hudsonjenkins-ci/)
+    ([repository](https://github.com/Weltraumschaf/hudson-darcs))
+
+# Graphs and Statistics
+
+-   [darcs-graph](http://hackage.haskell.org/package/darcs-graph) Render
+    graphs of commit activity of a darcs repository
+-   [darcsstats](http://vmiklos.hu/project/darcsstats/) Generates a HTML
+    page with statistics of author contributions
+
+# Activity Notifications
+
+-   [DarcsMonitor](RelatedSoftware/DarcsMonitor) - will send email to a
+    specified recipient about new changes added to a specific darcs
+    repository.
+-   [darcs-notify](http://porkrind.org/darcs-notify) - sends email about
+    patches that are pushed to, pulled to, or unpulled from a specific
+    darcs repository.
+-   [darcs-patch-watch](RelatedSoftware/DarcsPatchWatch) - a
+    [lambdabot](http://www.cse.unsw.edu.au/~dons/lambdabot.html) plugin
+    for posting repository changes to an IRC channel.
+
+# Project management / bug tracking
+-   [trac-darcs](http://hub.darcs.net/lelit/trac-darcs) - a Darcs
+    plugin to [Trac](http://trac.edgewall.org/)
+-   [Redmine](http://www.redmine.org/projects/redmine) - a project management web application
+-   [ChillProject](https://www.chiliproject.org/projects/chiliproject) - a Redmine fork
+-   [darcs-history](RelatedSoftware/DarcsHistory) - tracking patch movement history of a repository
+
+# Patch Review Process
+
+-   [DPM Darcs Patch Manager](http://hackage.haskell.org/package/DPM)
+-   [Roundup](http://roundup.sourceforge.net/) is an issue tracker that
+    is also used by the darcs team for their reviewing process.
+
+# Distributed issue trackers
+
+-   [Bugs Everywhere](http://bugseverywhere.org)
+-   [Ditz](http://ditz.rubyforge.org)
+
+# Plugins
+
+-   [musdex](http://lists.osuosl.org/pipermail/darcs-users/2010-March/023171.html)
+    - a pre and posthook that enables darcs to version compressed files,
+    typically .odt or .docx files.
+
+# Other
+
+-   [Gitit](http://gitit.net) a wiki engine that can use darcs as backend.
+-   [DarcsWatch](http://darcswatch.nomeata.de/) tracks patches submitted
+    to projects and their status. It can be used to track personal
+    submissions or watch a community mailing list.
+-   [darcsver](http://pypi.python.org/pypi/darcsver/) - generate a
+    version number from darcs history
+-   [darcs-mirror](http://ydirson.free.fr/soft/graph-includes/darcs-mirror),
+    a small script to push using FTP (requires lftp) to a web-site.
+    Useful when FTP is the only write access to your public web pages.
+-   [Trac integration](RelatedSoftware/Trac) - Instructions on how to
+    set up a trac server, thus getting a sourceforge like environment
+-   [darcs-server](http://www.equational.org/darcs-server/) - An
+    authenticating push / pull protocol for darcs.
+-   [buildbot](http://buildbot.sourceforge.net/) can track and build
+    projects from darcs repositories.
+-   [darcs-reannotate](RelatedSoftware/DarcsReannotate) : a small
+    program that will reformat "darcs annotate" to make it easier to
+    read (only useful for darcs 2.5.x or older).
+

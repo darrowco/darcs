@@ -1,0 +1,175 @@
+# Darcs 2
+
+Darcs 2 was
+[released](http://article.gmane.org/gmane.comp.version-control.darcs.devel/7809)
+in April 2008 and is the currently maintained version of Darcs.
+
+Darcs 2 introduces format changes designed to improve performance and
+safety. The changes are the hashed repository format and the darcs-2
+patch format. The hashed repository format can be used in a manner that
+is interchangeable with older darcs -- darcs 1 cannot read the hashed
+format, but darcs 2 allows you to exchange patches between repositories
+in new and old formats. The darcs-2 patch format requires a repository
+conversion that is not backwards-compatible, so projects switching to
+darcs-2 patch format will have require that all their users upgrade to
+darcs 2.
+
+## Darcs-2 the patch format
+
+Darcs 2 brings a new patch format, which features a new merge algorithm
+that introduces two major user-visible changes
+
+1.  It should no longer be possible to confuse darcs or freeze it
+    indefinitely by merging conflicting changes.
+2.  Identical primitive changes no longer conflict. See below for a
+    discussion of these implications.
+
+**Creating a repository in the darcs-2 patch format**
+
+By default, `darcs init` creates repositories with the darcs-2 patch
+format.
+
+Converting an existing repository to the darcs-2 patch format is as easy
+as:
+
+    darcs convert oldrepository newrepository
+
+Perform this command once per project, since the result of the
+conversion depens on the order of patches in your repository. Projects
+should switch to darcs-2 patch format in unison.
+
+**Changes in semantics**
+
+When using the darcs-2 patch format, darcs treats identical primitive
+patches as the *same* patch. In particular, dependencies (except those
+explicitly created by the use with --add-deps) are always dependencies
+on a given *primitive* patch, not on a given named patch. This means
+that the change named "foo" may in effect depend on *either the change
+named "bar" or the change named "baz"*.
+
+**A simple example**
+
+Let me illustrate what could happen with a story. Steve creates changes
+"A" and "B":
+
+    steve$ echo A > foo
+    steve$ darcs add foo
+    steve$ darcs record -m Anote
+    steve$ echo B > foo
+    steve$ darcs record -m Bnote
+
+Meanwhile, Monica also decides she'd like a file named foo, and she also
+wants it to contain A, but she also wants to make some other changes:
+
+    monica$ echo A > foo
+    monica$ darcs add foo
+    monica$ echo Z > bar
+    monica$ darcs add bar
+    monica$ darcs record -m AZnote
+
+At this point, Monica pulls from Steve:
+
+    monica$ darcs pull ../steve
+
+but she decides she prefers her AZ change, to Steve's A change, and
+being a harsh person, she decides to obliterate his change:
+
+    monica$ darcs obliterate  --match 'exact Anote' --all
+
+At this point, with the darcs-1 patch format, darcs would complain,
+pointing out that patch B depends on patch A. However, with the darcs-2
+patch format, darcs will happily obliterate patch A, because patch AZ
+provides the primitive patches that B depends upon.
+
+## Hashed repository format
+
+You can adopt the hashed repository format without converting your
+repositories to the darcs-2 patch format. Darcs 2 operating on a
+repository in the hashed format can exchange patches with repositories
+with darcs-1 format patches using push and pull. Though, darcs 1 will be
+unable to exchange patches with that repository. Hence, the hashed
+format is always safe on a "client" machine, but if you have other
+people pulling from your repo, or sending to it, then you have to make
+sure they have darcs 2 before going hashed.
+
+The hashed repository format has a number of changes that are visible to
+users.
+
+1.  Darcs get is now much faster, and always operates in a "lazy"
+    fashion, meaning that the working copy is copied first, and then
+    patches are downloaded on demand. This does not require to create
+    checkpoints on the source repository (contrarily to --partial, now
+    deprecated).
+2.  The \_darcs/pristine directory no longer holds a plain copy of the
+    working tree. This dramatically reduces the danger of third-party
+    programs recursing into the pristine directory and corrupting files.
+3.  Darcs now caches patches and file contents to reduce bandwidth use
+    and save disk space. This feature greatly speeds up operations like
+    `get` and `pull`, and is automatic. Be careful that the directory
+    \~/.darcs/cache may become large over time.
+4.  It allows for greater atomicity of operations. For instance, there
+    is no need for darcs push to require a repository lock, so you could
+    record patches while waiting for a push to finish.
+
+[Why you should use a hashed
+    format](http://www.haskell.org/pipermail/haskell-cafe/2010-October/084638.html)
+
+**Creating a repository in the hashed format**
+
+`darcs initialize` creates repositories in the hashed format with
+darcs-2 patch semantics by default. To do the same with darcs-1 patch
+semantics, use the `--hashed` flag. With Darcs 2.4.4, you can also
+upgrade an existing repository in-place with:
+
+    darcs optimize --upgrade
+
+With Darcs older than 2.4.4, you can use the following steps:
+
+    darcs get ./myrepo ./hashedrepo                        # turn myrepo into a hashed repo
+    cp ./myrepo/_darcs/prefs/*  ./hashedrepo/_darcs/prefs/ # these are local settings of the repo
+    mv ./myrepo ./oldrepo
+    mv ./hashedrepo ./myrepo
+
+Then `./oldrepo` is your backup and `./myrepo` is now the hashed version
+of your repo.
+
+# Advantages of upgrading
+
+Upgrading can go in three phases.
+
+**Phase 1: just the client**
+
+If you use Darcs 2 on repositories created with Darcs 1, you get
+
+-   greater stability
+-   faster HTTP access
+-   faster ssh operations (needs darcs 2 on the other end too)
+-   more progress reporting for long operations
+
+However, there are performance regressions on old-fashioned
+repositories, so you'll want to move on to phase 2 fairly quickly.
+
+**Phase 2: hashed repositories**
+
+Moving your repository to the hashed format requires a Darcs 2 client.
+As a result, you would get
+
+-   full compatibility with old darcs 1 repositories
+-   more corruption-proofing
+-   better handling of case-insensitive file systems
+-   darcs get --lazy (a safer alternative to partial repositories)
+
+**Phase 3: the darcs-2 patch format**
+
+You should only consider this phase if conflicts are a problem for you
+in practice. See the [FAQ entry on upgrading
+formats](http://wiki.darcs.net/FAQ#should-i-convert-my-repository-to-the-darcs-2-format)
+
+If you start using the new darcs-2 patch format, you lose backwards
+compatibility, but then you also get
+
+-   improved merging (most 'exponential' merges just zip right through)
+-   no more [hidden conflicts](FAQ/ConflictsDarcs1) causing data loss
+-   more intuitive handling of duplicate patches (identical patches no
+    longer conflict)
+

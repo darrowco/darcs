@@ -1,0 +1,215 @@
+## Week-by-week log/todo
+
+## Abstract
+
+The goal of this project is to improve history reordering and make the most
+of it. Automatic history reordering is an operation that is the basis of many
+commands of darcs. We want to take advantage of it by adding two features: a
+minimizing context feature for "darcs send", and a dependency graph generation
+that would enable a third party software and darcsden to visualize a darcs
+repository in a non-linear way. As a prelude to this work, we will measure and
+x performance of automatic history reordering.
+
+## About the project
+
+Darcs is a revision control system that presents a simple interface to the
+user, while automatically doing some operations that can reorder the history
+on demand. This enables it to make some operations like cherry-picking
+(transferring a single patch from a branch to another) more intuitive than 
+with other systems.
+
+Good performance is always something desirable in any software, in the particular 
+case of Darcs, history reordering happens more often that one can imagine, for 
+example making a "pull" to reclaim patches implies realign the inventory. The 
+same happens with "push". Thus, even the simplest use of darcs involves this 
+operation.
+
+The history of a darcs repository is, at the implementation level, an ordered 
+sequence of patches. The recorded state of a repository is the result of applying 
+these patches in this order to an empty state. Darcs is able to reorder a sequence 
+of patches in a given history while maintaining the final recorded state of a 
+repository. This is essential when comparing two repositories to transfer one 
+patch from one to another.
+
+Repositories can contain tags, that are special "empty" patches that represent
+a certain set of patches of a repositories. For instance, the user may create
+tags that represent stable versions of a project (and call them 0.1, 0.2, 1.0, 
+2014-release, etc.).
+When retrieving patches from a remote repository, darcs just puts them "on top"
+of the history of the current repository. With time, this can cause unnecessary 
+divergences between various repositories, especially when tags are exchanged. 
+For instance, consider the following repository with 3 patches:
+
+<center>
+$$[A,B,X]$$
+</center> <br/>
+
+If we retrieve patch $C$ and tag $T$ from another repository, with tag $T$ tagging 
+the set of patches $[A,B,C]$, our repository becomes:
+
+<center>
+$$[A,B,X,C,T]$$
+</center> <br/>
+
+In this history, the tag $T$ is "dirty" because it has an unrelated patch ($X$) 
+at the left of it. The command "optimize --reorder" reorders the history as 
+follows:
+
+<center>
+$$[A,B,C,T,X]$$
+</center> <br/>
+
+The command "darcs optimize --reorder" must be manually run in order to "push"
+tags as early as possible in the history of a repository, thus avoiding 
+"dirty tags".
+
+Reordering the history this way enhances performance of operations that involve
+comparing repositories; like pull, push and send. This is because comparing two 
+repositories involves identifying the common part of both repositories up to 
+the last tag, only if this tag is clean in both repositories.
+Furthermore, patch bundles created by "darcs send" (a command that generates 
+patches as files to be sent by mail), are smaller when histories are reordered
+this way (patch files include some context up to the last clean patch).
+
+Now, the command "darcs optimize --reorder" has a few shortcomings:
+
+* It is abnormally slow in some cases. We even have cases where it seems to hang forever.
+We will collect and generate different test repositories to evaluate the performance
+of reordering. As well as measure it in time and in space (using profiling).
+
+* When a repository has two tags such that neither is a superset of the 
+other, "optimize --reorder" is not idempotent. That is, when this command is 
+run once, one tag is brought up front, and when run again, the other one is brought 
+up front. This seems to be a hole in the specification of the command, and 
+could make two repositories look different while sharing the same history 
+(up to reordering).
+
+<a name=minimize>Furthermore</a>, we want to take advantage of history reordering to solve
+a problem that affects developers who use darcs. The command "send" is
+similar to "push", to the extent that it is run in some local
+repository, communicates with a remote repository and proposes the
+user to choose the patches they want to send to it. The difference is
+that "push" directly applies the selected patches to the remote
+repository, while "send" generates a patch bundle (ie, a text file)
+that is to be transmitted to the owner of the remote repository. They
+later can apply it to their repository with the command "apply".
+The workflow that involves "send" and "apply" permits collaboration to
+a project without having to give push privileges to contributers. It
+can also be used on purpose to make all contributions happen in the
+open (typically on a mailing list), thus promoting code review. This
+is actually how the development of darcs is occurring.
+
+<a name=contextproblem>Now</a>,  bundles work well when one uses them "as expected", that is, a
+bundle created from repository $L$(ocal) to $R$(emote)$1$ will always apply
+to $R1$. But if one wants to apply it to another repository $R2$ that
+lacks some patches of $R1$, the command will fail. This is because
+bundles specify the exact context (ie, set of patches) that the
+destination repository should have.
+For instance, darcs developers use two development branches:
+"screened", where submissions first go without review, and "reviewed"
+where they go once reviewed. There is no particular order of review of
+patches, hence it can happen that some patch $P1$ appear in the context
+of the bundle of some patch $P2$, with $P1$ and $P2$ being independent, and
+that some developer wants to apply $P2$ first to "screened". Such a
+bundle cannot be applied.
+So the idea is implement the feature "--minimal-context" for the
+command "send". This flag would create bundles without any unnecessary
+patch in their context. We will see whether this option should be
+activated by default in every cases or only some of them, since it is
+computationally costful in general.
+
+Finally, we want to implement the functionality that given the repository we can
+generate the dependency graph of patches. The history of a darcs repository is 
+linear; contrarily to Git or Mercurial, there is no representation as a directed
+acyclic graph. However, we can construct a directed acyclic graph that represents
+the dependencies of patches between them. This construction involves exhaustive
+trying to reorder patches (to discover implicit dependencies between them).
+Of course for performance reasons, this implementation should probably work by
+default up to the last tag of the repository and have the option to dig up to
+the last $N$ tags of the history, or completely.
+
+Now, with the posibility of generate the dependency graph of patches we can add
+two interesting things:
+
+* Implement the command "darcs show dependencies", a command that would export
+the dependency graph of patches of a repository, letting a third-party software 
+display it. The output format could be discussed, for the moment a output to 
+Graphviz seems a good idea. The command will have a option that permits configure
+the dig up.
+
+* Implement the view of dependency graph of patches to darcsden, with some kind
+of configuration panel that permits configure the dig up.
+
+
+## Project Design
+
+* Understand and document the current implementation of "optimize --reorder"
+
+* Measure it in time and space consumption using real-world and script-generated repositories
+
+* Thinking in the option --minimize-context, the option doesn't exist for the command send.
+  However having understood the algorithm of reordering seems a good step for the implementation.
+
+* Implementing "generate the dependency graph of patches", the command "darcs show dependencies"
+  and integrate the implementation with darcsden.
+	  
+* Weekly documentation is going to be available in my blog.With a final review at the end of the project in darcs wiki.
+
+
+## Timeline
+
+* week 1: Understand the optimize --reorder implementation: collect examples (real-world and script-generated),
+  profile, document (on wiki and code comments)
+
+* week 2-4: Improve patch reordering implementation, documenting whether it should be idempotent.
+
+* week 5-8: Implement darcs send --minimize-context.
+
+* week 9-12: Implementing "generate the dependency graph of patches", the command "darcs show dependencies"
+  and integrate the implementation with darcsden.
+
+## Benefits to the community
+
+History reordering is omnipresent in darcs. Understanding and improving this 
+operation will enhance the general experience of darcs. Moreover, reordering is
+involved in the calculation of the dependency graph of the patches of a repository,
+which is a long wanted feature.
+
+## Deliverables
+
+* Faster "optimize --reorder".
+
+* "darcs send --minimize-context".
+
+* "darcs show dependencies".
+
+* View of dependency graph of patches for darcsden.
+
+## Challenges
+
+Performance of history reordering is affected by patch-index, a cache data 
+structure that should be updated  each time history is changed. One way of 
+dealing with this would be to measure performance without and with patch-index.
+If there are improvements that can be made to the maintenance of patch-index, 
+we should look into it.
+
+## Responsibilities outside the project
+
+As part of my Phd. i'm taking the course of Domain Theory that involves a 
+"Take-Home" (i am not sure exact when) and the study and oral presentation of
+a paper related to the course in the last weeks. The course load is four
+hours per week initiating the 10 of march and finishing 19 of june.
+
+## About Me
+
+I am Ale from Argentina, currently i'm a Phd. student in computer  science. I 
+have been working in haskell for the past 3 years in  differents open source 
+project from a group called Theona ($$\star$$), the most  interesting things that I have pick up
+from the experience in those 3 years is  that working in haskell is fantastic 
+and working in a friendly  environment is the best of the best!
+
+($$\star$$) For the curious, here are the main repositories:
+<a href="https://github.com/alexgadea/equ-gui">Equ</a>,
+<a href="https://github.com/alexgadea/fun-gui">Fun</a>,
+<a href="https://github.com/manugunther/sat">Sat</a> and
+<a href="https://github.com/alexgadea/hal-gui">Hal</a>

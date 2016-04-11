@@ -1,0 +1,25 @@
+## EYK comments on [25 May draft][2012-05-25]
+
+* Draft: [25 May][2012-05-25]
+* Maybe you need some motivation on automatic update and these checks.
+  Why is it something that you'd need to check?  What's the alternative
+  to automatic update?  For example, you could maybe mention the
+  possibility of the repo being updated by older non-pi darcs.
+* isPatchIndexSync #2:
+
+     - computing their hashes, whose hashes, the patches in the the patchset? Maybe a tad more formal?
+
+* What is show patch-index-status for? Is it for debugging? Does it have
+  some general use for darcs users?  Is it only for when something goes wrong?
+* May be worth mentioning that these functions update the patch index files on disk
+
+### Technical comments
+
+* Automatic update: you may want to watch out for the undo commands like
+  obliterate
+* Automatic creation: what happens if you start using darcs-pi on a repository that
+  was created by non-pi darcs, but which was not already obtained by darcs get (consider:
+  user upgrades to darcs 2.10 and just starts using it on their pre-existing repos?)
+
+
+[2012-05-25]: http://wiki.darcs.net/Internals/PatchIndexAutomation?revision=20120525082918-7359d-7303be34c10d27ded8f7197e5728153c47abff99

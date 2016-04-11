@@ -1,0 +1,193 @@
+# Translations with other distributed VCS
+
+## Basic distributed version control
+
+The following commands have the same name in darcs, git and hg,
+with minor differences due to difference in concepts:
+
+* init
+* clone
+* pull
+* push
+* log
+
+## Branching
+
+  --------------------------------------------------
+  concept           darcs       git           hg
+  ----------------- ----------- ------------- ------
+  branch            *na*        branch        branch
+
+  switch branch     *na* [1]    checkout      update
+  --------------------------------------------------
+
+-   [1] No in-repo branching yet, see
+    [issue555](http://bugs.darcs.net/issue555)
+
+## Adding, moving, removing files
+
+  --------------------------------------------------------
+  concept           darcs       git           hg
+  ----------------- ----------- ------------- ------------
+  track file        add         add           add
+
+  copy file         *na*        *na*          copy
+
+  move/rename file  move        mv            rename
+  --------------------------------------------------------
+
+## Inspecting the working directory
+
+  --------------------------------------------------
+  concept           darcs       git           hg
+  ----------------- ----------- ------------- ------
+  working dir       whatsnew -s status        status
+  status
+
+  high-level local  whatsnew    *na*          *na*
+  diff
+
+  diff local        diff [1]    diff          diff
+  --------------------------------------------------
+
+-   [1] we tend to use the high-level local diff (darcs whatsnew)
+    instead. This displays the patches themselves (eg 'mv foo bar') and
+    not just their effects (eg 'rm foo' followed by "add bar")
+
+## Committing
+
+  ------------------------------------------------------
+  concept           darcs       git           hg
+  ----------------- ----------- ------------- ----------
+  commit locally    record      commit        commit
+
+  amend commit      amend       commit        commit
+                                --amend       --amend
+
+  tag               tag         tag           tag
+  changes/revisions
+  ------------------------------------------------------
+
+## Inspecting the repository history
+
+  ---------------------------------------------------------
+  concept           darcs       git           hg
+  ----------------- ----------- ------------- -------------
+  log               log         log           log
+
+  log with diffs    log -v      log -p        log -p
+
+  manifest          show files  ls-files      manifest
+
+  summarise         push        log           outgoing
+  outgoing changes  --dry-run   origin/master
+                                ..
+
+  summarise         pull        log           incoming
+  incoming changes  --dry-run   ..origin/mast
+                                er
+
+  diff repos or     diff        diff          incoming
+  versions                                    /outgoing/dif
+                                              f
+                                              -r
+
+  blame/annotate    annotate    blame         annotate
+  ---------------------------------------------------------
+
+## Undoing
+
+  ------------------------------------------------------
+  concept           darcs       git           hg
+  ----------------- ----------- ------------- ----------
+  revert a file     revert foo  checkout foo  revert foo
+
+  revert full       revert      reset --hard  revert -a
+  working copy
+
+  undo commit       unrecord    reset --soft  rollback
+  (leaving working
+  copy untouched)
+
+  amend commit      amend       commit        commit
+                                --amend       --amend
+
+  destroy last      obliterate  *delete the   strip [1]
+  patch/ changeset              commit*
+
+  destroy any       obliterate  rebase -i,    strip [1]
+  patch/ changeset              *delete the
+                                commit*
+
+  create            rollback    revert        backout
+  anti-changeset
+  ------------------------------------------------------
+
+-   [1] requires extension (mq for strip)
+
+## Collaborating with others
+
+  -----------------------------------------------------
+  concept           darcs       git           hg
+  ----------------- ----------- ------------- ---------
+  send by mail      send        send-email    email [1]
+
+  -----------------------------------------------------
+
+-   [1] requires extension (patchbomb for email)
+
+## Advanced usage
+
+  ---------------------------------------------------------
+  concept           darcs       git           hg
+  ----------------- ----------- ------------- -------------
+  port commit to X  rebase      rebase/cherry transplant
+                                -pick
+  ---------------------------------------------------------
+
+# Translations from Subversion
+
+  ------------------------------------------------------------------------
+  Subversion idiom      Similar darcs idiom
+  --------------------- --------------------------------------------------
+  svn checkout          darcs clone
+
+  svn update            darcs pull
+
+  svn status -u         darcs pull --dry-run (summarize remote changes)
+
+  svn status            darcs whatsnew --summary (summarize local changes)
+
+  svn status | grep '?' darcs whatsnew -ls | grep \^a (list potential
+                        files to add)
+
+  svn revert foo.txt    darcs revert foo.txt (revert to foo.txt from repo)
+
+  svn diff              darcs whatsnew (for local changes)
+
+  svn diff              darcs diff (for local and recorded changes)
+
+  svn commit            darcs record + darcs push
+
+  svn diff | mail       darcs send
+
+  svn add               darcs add
+
+  svn log               darcs log
+  ------------------------------------------------------------------------
+
+# Discrepencies between DVCS
+
+Git has the notion of an index (which affects the meanings of some of
+the commands), Darcs just has its simple branch-is-repo-is-workspace
+model.
+
+# See also
+
+-   [Features]()
+-   [Differences from Git](DifferencesFromGit)
+-   [Differences from Subversion](DifferencesFromSubversion)
+-   Wikipedia's [comparison of revision control
+    systems](http://en.wikipedia.org/wiki/Comparison_of_revision_control_software)
+
+

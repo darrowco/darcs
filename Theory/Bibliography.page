@@ -1,0 +1,128 @@
+Essential reading for would-be patch theorists.
+
+# Survey papers
+
+-   *Current Concepts in Version Control Systems* (Petr Baudis [pasky]),
+    2009:
+    <http://pasky.or.cz/\~pasky/paper-r1.pdf>
+-   [Making Sense of Revision-Control
+    Systems](http://cacm.acm.org/magazines/2009/9/38901-making-sense-of-revision-control-systems/fulltext)
+    (Bryan O'Sullivan), 2009
+
+# Revision Control Systems
+
+Darcs itself:
+
+-   [A formalization of Darcs patch theory using inverse
+    semigroups](http://www.math.ucla.edu/~jjacobson/patch-theory/)
+-   [Camp](http://projects.haskell.org/camp) (work on patch theory 3)
+
+Seemingly Darcs-like:
+
+-   [SO6/LibreSource
+    Synchronizer](http://dev.libresource.org/home/doc/so6-user-manual)
+-   [FoCAL](http://lists.osuosl.org/pipermail/darcs-users/2009-January/016988.html)
+
+Other work:
+
+-   [Mark
+    merge](http://lists.nongnu.org/archive/html/monotone-devel/2005-08/msg00264.html)
+    - look, proofs!
+
+# Recent revision control research
+
+-   [A Principled Approach to Version
+    Control](http://people.cs.uu.nl/andres/VersionControl.html) by
+    Andres Löh, Wouter Swierstra and Daan Leijen. A talk about the paper
+    can be found
+    [here](http://www.cs.nott.ac.uk/~wss/Publications/PrincipledVersionControl.pdf).
+
+-   Discussion on FoCAL
+    <http://lists.osuosl.org/pipermail/darcs-users/2009-January/016988.html>
+
+# Operational Transformations
+
+As suggested by Team ECOO
+
+-   The SOCT4 algorithm used by SO6 Nicolas Vidot, Michelle Cart, Jean
+    Ferrié and Maher Suleiman, Copies convergence in a distributed
+    real-time collaborative environment, Proceedings of CSCW 2000
+    <http://portal.acm.org/citation.cfm?doid=358916.358988>
+
+-   OT as used by Google Wave David A. Nichols, Pavel Curtis, Michael
+    Dixon and John Lamping, High-latency, low-bandwidth windowing in the
+    Jupiter collaboration system, Proceedings of UIST 1995
+    <http://portal.acm.org/citation.cfm?doid=215585.215706>
+
+-   Proofs of correctness of Ressel's adOPTed algorithm (Lushman and
+    Cormack)
+
+        @article{Lushman2003303,
+        title = "Proof of correctness of Ressel's adOPTed algorithm",
+        journal = "Information Processing Letters",
+        volume = "86",
+        number = "6",
+        pages = "303 - 310",
+        year = "2003",
+        note = "",
+        issn = "0020-0190",
+        doi = "DOI: 10.1016/S0020-0190(03)00227-8",
+        url = "http://www.sciencedirect.com/science/article/B6V0F-48B03YH-4/2/233bc2df2d13ce5767d6dea56ed15cc2",
+        author = "Brad Lushman and Gordon V. Cormack",
+        keywords = "Distributed computing",
+        keywords = "Distributed systems",
+        keywords = "Concurrency control",
+        keywords = "Groupware"
+        }
+
+Articles we've stumbled upon
+
+-   [Operation-based
+    Merging](http://portal.acm.org/citation.cfm?doid=142868.143753)
+    - Lippe 2002 (this has a notion of commuting operations... hmm)
+-   [Consistency in Distributed Databases: A Group-like Algebra and its
+    Applications](http://web.comlab.ox.ac.uk/oucl/work/bill.roscoe/publications/33.ps)
+    Roscoe 1990
+-   [Undo Actions in Collaborative Work, Prakash & Knister
+    1992](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.47.6074)
+-   [Undoing Actions in Collaborative Work: Framework and Experience,
+    Prakash & Knister
+    1994](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.48.6443)
+
+# Conflict-free revision control (eg. with GUIDs)
+
+-   Discussion within the Darcs community
+
+    -   FoCAL:
+        <http://lists.osuosl.org/pipermail/darcs-users/2009-January/016988.html>
+    -   apfelmus and GUIDs:
+        <http://lists.osuosl.org/pipermail/darcs-users/2009-October/021981.html>
+
+-   CRDT (Commutative Replicated Data Types)
+
+    -   [Logoot : a Scalable Optimistic Replication Algorithm for
+        Collaborative Editing on P2P
+        Networks](Logoot%20:%20a%20Scalable%20Optimistic%20Replication%20Algorithm%20for%20Collaborative%20Editing%20on%20P2P?%20Networks).
+        Stéphane Weiss and Pascal Urso and Pascal Molli, 2009, ICDCS
+    -   [Multi-synchronous Collaborative Semantic
+        Wikis](http://www.loria.fr/~skaf/pmwiki/uploads/Main/Skaf09wise.pdf).
+        Charbel Rahhal and Hala Skaf-Molli and Pascal Molli and Stéphane
+        Weiss, 2009. International Conference on Web Information
+        Systems.
+    -   [UniWiki: A Reliable and Scalable Peer-to-Peer System for
+        Distributing Wiki
+        Applications](http://www.loria.fr/~oster/pmwiki/pub/papers/OsterRR09a.pdf).
+        Gérald Oster and Pascal Molli and Sergiu Dumitriu and Ruben
+        Mondejar. 2009
+
+# Useful for future research
+
+-   Editing tree-structured documents (eg XML) Claudia-Lavinia Ignat and
+    Moira C. Norrie, Multi-level editing of hierarchical documents.
+    Journal of Computer Supported Cooperative Work, 17(5-6):423-468,
+    December 2008.
+    <http://www.springerlink.com/content/472w061011830726>
+-   [The relation of version control to concurrent
+    programming](http://www.informatik.uni-freiburg.de/~wehr/publications/Bieniusa_The_relation_of_version_control_to_concurrent_programming_TR.pdf)
+    (Is this useful?)
+

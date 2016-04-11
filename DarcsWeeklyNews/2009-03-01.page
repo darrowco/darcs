@@ -1,0 +1,36 @@
+# News and discussions
+
+1. Eric Kow issued a call for mentors for Google Summer of Code 2009:
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-February/018002.html](http://lists.osuosl.org/pipermail/darcs-users/2009-February/018002.html)
+
+2. Gitit test instance now running. We are testing a darcs-based wiki
+  ~ as a replacement for the current wiki of darcs.net:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-February/017992.html](http://lists.osuosl.org/pipermail/darcs-users/2009-February/017992.html)
+
+# Issues resolved in the last week (0)
+
+# Patches applied in the last week (10)
+
+2009-02-28 Reinier Lamers
+  ~ -   Add an executable to darcs.cabal to build unit tests
+
+2009-02-28 David Roundy
+  ~ -   fix error on homepage.
+
+2009-02-21 Eric Kow
+  ~ -   Sunset the external-bytestring flag (it goes out after 2009-07).
+    -   Simplify flag names to just refer to hackage names.
+    -   Cabal: require utf8-string by default.
+
+2009-02-25 Trent W. Buck
+  ~ -   Remove unused import.
+    -   Avoid "unused import" warning.
+    -   Fix FTBFS on Windows.
+
+2009-02-21 Eric Kow
+  ~ -   Restore 'or later' in doc warning about GHC 6.4 and control
+        characters.
+    -   Note GHC 6.6 as the new build requirement.
+
+

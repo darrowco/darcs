@@ -1,0 +1,204 @@
+# News and discussions
+
+1.  Work on hashed-storage, implemented by Petr and reviewed by Ganesh,
+    was finally merged into the main darcs repository. Eric provided
+    explanations for people who want a faster darcs now:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-October/021826.html](http://lists.osuosl.org/pipermail/darcs-users/2009-October/021826.html)
+
+2.  Ganesh sent a patch providing a "no conflicting patch" filter to
+    darcs pull, discussion ensued:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-September/021642.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021642.html)
+
+3.  Jason investigated on performance of the current implementation of
+    regular expression handling:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-October/021721.html](http://lists.osuosl.org/pipermail/darcs-users/2009-October/021721.html)
+
+4.  Eric talked about Summer of Code 2010 and how to raise our chances
+    to have someone paid to work on darcs again next summer:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-October/021761.html](http://lists.osuosl.org/pipermail/darcs-users/2009-October/021761.html)
+
+# Issues resolved in the last week (5)
+
+issue1447
+[mf-hcafe-15c311f0c@etc-network.de](mailto:mf-hcafe-15c311f0c@etc-network.de)
+  ~ -   different online help for send/apply --cc
+    -   [http://bugs.darcs.net/issue1447](http://bugs.darcs.net/issue1447)
+
+issue1488 Petr Rockai
+  ~ -   darcs-hs does not suffer from this.
+    -   [http://bugs.darcs.net/issue1488](http://bugs.darcs.net/issue1488)
+
+issue1583 Eric Kow
+  ~ -   on darcs get, suggest upgrading source repo to hashed.
+    -   [http://bugs.darcs.net/issue1583](http://bugs.darcs.net/issue1583)
+
+issue1618 Kamil Dworakowski
+  ~ -   1618: preserve log on amend failure
+    -   [http://bugs.darcs.net/issue1618](http://bugs.darcs.net/issue1618)
+
+issue1620 Kamil Dworakowski
+  ~ -   amend lies about living logfile
+    -   [http://bugs.darcs.net/issue1620](http://bugs.darcs.net/issue1620)
+
+# Patches applied in the last week (108)
+
+2009-10-08 Ganesh Sittampalam
+  ~ -   fix warnings
+
+2009-10-08 Eric Kow
+  ~ -   Fix bug in show\_contents.sh test.
+    -   Remove redundant import of (</\>).
+
+2009-10-05 Petr Rockai
+  ~ -   Resolve conflicts in Commands.Remove.
+    -   Resolve conflicts in Commands.Apply.
+    -   Resolve conflicts in Commands.AmendRecord.
+    -   Resolve conflicts in darcs.cabal.
+    -   Replace uses of readDarcsPristine with readRecorded.
+    -   Use --ignore-times with check to skip index check.
+    -   Make readRecorded independent of hashed-storage's
+        readDarcsPristine.
+    -   Add a bunch of haddocks to Repository.State.
+    -   Resolve conflict between optimize --upgrade and optimize
+        --pristine.
+    -   Resolve conflict in darcs.cabal (hashed-storage dependency).
+    -   Add a missing copyright notice to Darcs.Diff.
+
+2009-09-25 Jason Dagit
+  ~ -   allow State.hs to compile with type witnesses
+
+2009-09-23 Petr Rockai
+  ~ -   Clarify that empty path list means everything, restrictSubpaths.
+    -   Don't forget to limit pending to relevant paths, in
+        unrecordedChanges.
+    -   Add Darcs.Diff and Darcs.Repository.State created in the Gorsvet
+        refactor.
+    -   Remove the remnants of Gorsvet.
+    -   Explode Gorsvet into a number of more appropriate places.
+    -   Move the FooDirectory instances from Gorsvet to Darcs.IO.
+    -   Reformat the export list of Darcs.Repository.
+    -   Resolve issue1488: darcs-hs does not suffer from this.
+    -   Unreadable pristine ought not be fatal for repair.
+    -   Remove code for repair-from-checkpoint.
+    -   Update to latest hashed-storage API: updateIndex is global now.
+    -   Resolve conflict with haskell\_policy -\> hlint.
+    -   We no longer use pristine timestamps in any way.
+    -   Detect and fix bad index in darcs repair.
+    -   Drop unused import.
+    -   Fix up for hashed-storage API shuffling.
+    -   Resolve conflict (duplicate, even) with Trent.
+    -   Resolve conflict with Eric's cleanup.
+    -   Remove extraneous invalidateIndex from revert.
+    -   Add a --pristine option to optimize.
+    -   Make darcs optimize rearrange pristine.hashed when needed.
+    -   Fix compilation after minor hashed-storage API rename.
+    -   Use withDirectory to implement mInCurrentDirectory.
+    -   Implement index checking functionality in darcs check.
+    -   Adapt to the new safety-improved readIndex API.
+    -   Add a testcase of diffing various trailing/missing newline
+        combinations.
+    -   Clean up unused bits and imports in Repository.Checkpoint.
+    -   Remove now-unused Darcs.Diff module.
+    -   Use treeDiff in external\_merge instead of unsafeDiff.
+    -   Remove unused syncPristine from Repository.Pristine.
+    -   Take a Tree instead of Slurpy in external\_resolution.
+    -   Preliminary version of the replace command with
+        s/unsafeDiff/treeDiff/.
+    -   Port to new readIndex interface in hashed-storage 0.4.
+    -   Haddock invalidateIndex.
+    -   Port to generalised Tree types (mostly just signature wibbling).
+    -   Get rid of wait\_a\_moment, since we do not use pristine
+        timestamps anymore.
+    -   Port to hashed-storage 0.4 Hash changes.
+    -   Obliterate timestamp manipulation in HashedIO.
+    -   Obliterate all instances of sync\_repo and friends, since they
+        are useless now.
+    -   Re-implement make\_remove\_patch in remove command, replacing
+        Slurps with Trees.
+    -   Avoid removing in-use files on win32.
+    -   Remove now-unused checkPristineAgainstSlurpy.
+    -   Port the replay (check/repair) functionality to hashed-storage.
+    -   Optimize darcs show contents --match (avoid slurping pristine).
+    -   Proper implementation for mDoesFileExist/mDoesDirectoryExist in
+        Gorsvet.
+    -   Provide readPending that also provides the "pending conflicts"
+        check natively.
+    -   Resolve conflict.
+    -   Clean up unused imports in WhatsNew.
+    -   Remove unused import from Gorsvet.
+    -   Invalidate the index in add\_to\_pending, as it was getting
+        rebuilt too soon.
+    -   Clean up unused bits from Repository.Internal.
+    -   Move add\_to\_pending to Repository, use unrecordedChanges.
+    -   Move tentativelyMergePatches and friends to a new module,
+        Repository.Merge.
+    -   Unexport get\_unrecorded\* from Repository, remove unused
+        functions from Internal.
+    -   Use index-based diffing in "darcs wh -l".
+    -   Also use index-based diffing in unrecord/obliterate.
+    -   Make revert use index-based diffing.
+    -   Use index-based diffing in unrevert.
+    -   Flip AmendRecord to index-based diffing, too.
+    -   Use index-based diffing in Remove.
+    -   Flip "darcs mark-conflicts" over to index-based diffing.
+    -   Flip "darcs changes" to index-based diffing.
+    -   Use index-based diffing in Record.
+
+2009-10-07
+[mf-hcafe-15c311f0c@etc-network.de](mailto:mf-hcafe-15c311f0c@etc-network.de)
+  ~ -   Resolve issue1447: different online help for send/apply --cc
+
+2009-09-23 Eric Kow
+  ~ -   Resolve issue1583: on darcs get, suggest upgrading source repo
+        to hashed.
+
+2009-10-02
+[benjamin.franksen@bessy.de](mailto:benjamin.franksen@bessy.de)
+  ~ -   added regression test for issue1632
+
+2009-10-03 Trent W. Buck
+  ~ -   Marginalia regarding TeX documentation.
+    -   Avoid fugly "tests\_network-.dir".
+    -   Fix plurality in a docstring.
+    -   Mention darcs changes --repo.
+    -   Partially rewrite "darcs apply" help.
+    -   Partially rewrite "darcs annotate" help.
+
+2009-09-30 Eric Kow
+  ~ -   Also test for apply posthook in issue942.
+    -   Camel-case functions exported by Darcs.Patch.Choices.
+
+2009-09-24 Kamil Dworakowski
+  ~ -   resolve issue1620: amend lies about living logfile
+    -   camelCase clarify\_errors
+    -   Resolve issue 1618: preserve log on amend failure
+    -   remove trailing whitespace
+    -   accept issue1618: amend should preserve the logfile
+    -   accept issue1620: record lies about leaving the logfile
+
+2009-09-28 Ganesh Sittampalam
+  ~ -   fix witnesses in Darcs.Commands.Remove
+
+2009-09-28 Thorkil Naur
+  ~ -   Option comments to the top in Split.hs for GHC 6.8.3
+
+2009-09-09 Ganesh Sittampalam
+  ~ -   add newly-witnessed modules to witnesses.hs
+    -   need RankNTypes for some of the newly witnessed modules
+    -   add witnesses to Darcs.Commands.Send
+    -   add witnesses to Darcs.Commands.Push
+    -   add witnesses to Darcs.Commands.Apply
+    -   add witnesses to Darcs.Commands.Pull
+    -   add witnesses to Darcs.Commands.TrackDown
+    -   add witnesses to Darcs.Commands.Remove
+    -   add witnesses to Darcs.Commands.Diff
+    -   improve documentation of Darcs.Patch.Split
+
+2009-03-29 David Roundy
+  ~ -   clean up types in win32/System/Posix.hs
+
+

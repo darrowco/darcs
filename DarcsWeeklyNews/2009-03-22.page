@@ -1,0 +1,75 @@
+# News and discussions
+
+1. A big THANK YOU for the 23 donors of the darcs fundraising drive.
+  ~ We managed to raise $1000 for darcs in one week!
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-March/018447.html](http://lists.osuosl.org/pipermail/darcs-users/2009-March/018447.html)
+  ~ -   [http://darcs.net/donations.html](http://darcs.net/donations.html)
+
+2. This money is going to be put into use very soon:
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-March/018511.html](http://lists.osuosl.org/pipermail/darcs-users/2009-March/018511.html)
+
+3. Discussions about reusing the curl bindings present on hackage
+instead of
+  ~ darcs' own. The author, Sigbjorn Finne, has been contacted for some
+    improvements on the bindings:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-March/018463.html](http://lists.osuosl.org/pipermail/darcs-users/2009-March/018463.html)
+
+4. Darcs was not accepted as a Google Summer of Code mentoring
+organisation,
+  ~ but we still may fit as a Haskell.org project:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-March/018516.html](http://lists.osuosl.org/pipermail/darcs-users/2009-March/018516.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-March/018532.html](http://lists.osuosl.org/pipermail/darcs-users/2009-March/018532.html)
+
+# Issues resolved in the last week (2)
+
+issue1358 Reinier Lamers
+  ~ -   encode non-ASCII characters in mail headers
+    -   [http://bugs.darcs.net/issue1358](http://bugs.darcs.net/issue1358)
+
+issue1393 Trent W. Buck
+  ~ -   swap "darcs mv" and "darcs move".
+    -   [http://bugs.darcs.net/issue1393](http://bugs.darcs.net/issue1393)
+
+# Patches applied in the last week (15)
+
+2008-12-09 David Roundy
+  ~ -   cut confusing use of the Reader monad from Printer.
+    -   eliminate gratuitous use of Reader monad in Printer.
+    -   use exitWith under record, when no patches are selected (to not
+        run posthook).
+    -   clean up Depends a wee tad
+
+2009-03-17 Trent W. Buck
+  ~ -   Refactor "darcs replace" help.
+    -   Consistently use EMPHASIS (not *emphasis*) in help.
+
+2009-02-14 David Roundy
+  ~ -   fix bug in put of darcs-1 format repositories.
+
+2009-03-15 Trent W. Buck
+  ~ -   Resolve issue1393: swap "darcs mv" and "darcs move".
+
+2009-03-16 Eric Kow
+  ~ -   Fix a minor conflict between Reinier's and my patches.
+
+2009-03-15 Reinier Lamers
+  ~ -   Kill unused imports in External.hs
+    -   resolve issue1358: encode non-ASCII characters in mail headers
+    -   Add tests for email header formatting
+
+2009-03-16 Petr Rockai
+  ~ -   Make the curl/http flags reflect exactly what darcs is built
+        with.
+
+2009-03-15 Eric Kow
+  ~ -   Accept issue1396: darcs does not detect changepref conflicts.
+
+2009-03-16 Petr Rockai
+  ~ -   Announce repository format before running the testsuite for it.
+
+

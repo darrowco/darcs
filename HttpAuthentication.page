@@ -1,0 +1,62 @@
+*Note: these directions correspond to a
+[TracDarcs](RelatedSoftware/Trac) installation - you might need to
+modify user names and directories to fit your system*
+
+# Client-side
+
+What we want is for the user to be able to do something like this:
+`darcs clone http://bubba:stupidpassword@someserver.com/privateDarcs/someRepo`
+
+(Whereas on the other hand
+`darcs clone http://someserver.com/privateDarcs/someRepo` should fail)
+
+# Server-side
+
+## Creating the directory
+
+1. Create a directory for all "private" darcs repositories:
+
+           mkdir /var/privateDarcs
+           chown root:darcs /var/privateDarcs
+
+2. If you are using jailkit as described in TracOnDarcs:
+
+           mv /var/privateDarcs /var/jail/var
+           ln -s /var/jail/var/privateDarcs var
+
+## Creating the password file
+
+1. Create the passwords file:
+
+           htpasswd -c /var/privateDarcs-passwords someUser
+
+2. Add whatever users you want:
+
+           htpasswd /var/privateDarcs-passwords someOtherUser
+
+   Note: I personally like to have one user per repository or project.
+   This is really weak protection anyway; more an extra layer
+   of obscurity than anything else.
+
+3. Set permissions on the file:
+
+           chown www-data:www-data /var/privateDarcs-passwords
+           chmod 640 /var/privateDarcs-passwords
+
+## Apache Configuration
+
+1. Add the following into your `/etc/apache2/apache2.conf`:
+
+           <Directory /var/privateDarcs/*>
+             AuthType Basic
+             AuthName "Private repository"
+             AuthUserFile /var/privateDarcs-passwords
+           </Directory\>
+
+           # for each repository
+
+           <Directory /var/privateDarcs/someRepository\>
+             Require user bubba mary
+           </Directory\>
+
+           Alias /privateDarcs/ "/var/privateDarcs/"

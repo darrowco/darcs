@@ -1,0 +1,116 @@
+# Named patch
+
+We call "named patch" what users would directly call "patch" in darcs.
+A named patch is what we create when we run `record` in a repository.
+The history of a repository is made of named patches.
+
+A named patch is a collection of *primitive patches*, recorded together
+with the following attributes:
+
+name
+  ~ a single line of text
+
+date
+  ~ the timestamp taken at record-time
+
+author
+  ~ an arbitrary text, usually in the format
+    "`John De Bar <john@debar.fam>`"
+
+log
+  ~ a longer description of the patch, possibly multiline. When parsing
+    a patch, the first space character is removed from each line of the
+    log. When computing a patch's hash, trailing newlines are removed
+    from each log line before concatenating.
+
+patch salt
+  ~ the hexadecimal representation of some random number from 0 to 2\^128.
+    It's random noise inserted into the log to help patch hashes stay
+    unique. (see [issue27](http://bugs.darcs.net/issue27), and the
+    function `Darcs.Patch.Info.addJunk`).
+    This is actually stored inside the log, but not shown in most of
+    the user interface (you may see it preceded by `Ignore-this:`).
+
+All these attributes are specified or determined when the patch is
+*recorded* or *amended* and are meant to be **read-only** after then.
+
+There are two other attributes on which the user has no impact:
+
+inverted
+  ~ a boolean flag, that indicates if the patch is a result of a
+    *rollback* (NB. obsolete since [DarcsTwo](DarcsTwo) uses a different
+    way of doing rollbacks, but the flag is still there for backward
+    compatibility). The inverted state is indicated by a '\*' or '-'
+    character immediately preceding the patch's date.
+
+hash
+  ~ this is a *compact* representation of the tuple that is (supposed to
+    be) globally unique
+
+## Hash computation
+
+The unique hash id of any patch is computed by the following Haskell
+code in `src/Darcs/Patch/Info.hs`:
+
+    makePatchname :: PatchInfo -> SHA1
+    makePatchname pi = sha1PS sha1_me
+            where b2ps True = BC.pack "t"
+                  b2ps False = BC.pack "f"
+                  sha1_me = B.concat [_piName pi,
+                                      _piAuthor pi,
+                                      _piDate pi,
+                                      B.concat $ _piLog pi,
+                                      b2ps $ isInverted pi]
+
+In other words, the hash is the SHA1 code of the tuple
+(name, author, date, log, inverted).
+
+As you can notice, the *hunks* (that is the
+[PrimitivePatch](PrimitivePatch) collection, the actual changes the
+[NamedPatch](NamedPatch) is carrying) aren't included in the formula.
+This is a **strong** assumption in darcs: there cannot be different
+patches with the *exact* same set of *attributes*, and in turn with the
+same *hash*.
+
+## On-disk patch name
+
+Named patches are stored in the meta directory `_darcs/patches`.
+
+Historically the actual filename was made from the *hash* of the patch
+(preceded by the UTC time stamp, in ISO format and
+a prefix of the author hash; see `Darcs.Patch.Info.makeFilename`).
+But [DarcsTwo](/DarcsTwo) introduced the [HashedFormat](HashedPristine),
+which uses a completely different scheme.
+
+A [HashedFormat](HashedPristine) repository stores its patches in
+filenames composed by two parts:
+
+1.  a ten digits zero-padded number, the uncompressed size of the whole
+    patch
+2.  the SHA256 64-digits signature of the whole patch
+
+This has several benefits:
+
+a.  darcs is able to assert that the *mean* of a patch wasn't mangled in
+    any way, because the filename is basically a *checksum* of the whole
+    patch, hunks included
+b.  it allows a better way of *sharing patches* between repositories,
+    see [CacheSystem](CacheSystem)
+
+Since, as darcs commutes the patch with the others in the repository,
+the patch itself (its *hunks*, I mean) **may** change at any time:
+
+a.  there's **no** one-to-one relation between a particular *hash name*
+    and the name of the file containing the patch
+b.  there can be multiple *instances* of the same patch, collected under
+    the `_darcs/patches` metadir: of course, at any given time, at most
+    **one** of them are effectively listed in the
+    [RepositoryInventory](RepositoryInventory)
+
+Note also that even if the patch **is** compressed on disk, its filename
+does *not* end with `".gz"` ----
+
+# See also
+
+-   [Hashes](Hashes)
+

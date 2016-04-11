@@ -1,0 +1,82 @@
+# News and discussions
+
+1.  Reinier Lamers announced the release schedule of darcs 2.4 (freeze:
+    December 31st, release: January 30th):
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-December/022597.html](http://lists.osuosl.org/pipermail/darcs-users/2009-December/022597.html)
+
+2.  Eric Kow asked the team to contribute benchmarks showing the
+    performance improvements of the next stable version:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-December/022599.html](http://lists.osuosl.org/pipermail/darcs-users/2009-December/022599.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-December/022631.html](http://lists.osuosl.org/pipermail/darcs-users/2009-December/022631.html)
+
+3.  Ganesh Sittampalam summed up his work in progress regarding versions
+    2.4 and 2.5:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-December/022603.html](http://lists.osuosl.org/pipermail/darcs-users/2009-December/022603.html)
+
+# Issues resolved in the last week (2)
+
+issue1362 Joachim Breitner
+  ~ -   Mention repo name in mail send body
+    -   [http://bugs.darcs.net/issue1362](http://bugs.darcs.net/issue1362)
+
+issue1392
+[caitt@users.sourceforge.net](mailto:caitt@users.sourceforge.net)
+  ~ -   use parsec to parse .authorspelling
+    -   [http://bugs.darcs.net/issue1392](http://bugs.darcs.net/issue1392)
+
+# Patches applied in the last week (32)
+
+2009-12-26 Joachim Breitner
+  ~ -   Also import (<\>)
+    -   Resolve issue1362: Mention repo name in mail send body
+
+2009-12-24 Ganesh Sittampalam
+  ~ -   move witnesses code into its own namespace
+    -   simplify code
+    -   Change get\_patches\_beyond\_tag so the return type matches the
+        actual data
+    -   update comment
+    -   drop \#ifdef
+    -   drop a bunch of old C helper code
+
+2009-12-18 Florent Becker
+  ~ -   fix conflict between commutex -\> commute rename and
+        utf8-metadata
+
+2009-11-22 Reinier Lamers
+  ~ -   Kill unused import warning in Darcs.Utils
+    -   Make darcs depend on a haskeline that doesn't choke on malformed
+        UTF-8
+    -   Fix another conflict between UTF-8 and main branch
+    -   Autodetect UTF-8 encoded metadata
+    -   Resolve conflicts with import warnings and with the addition of
+        a newline to the author file
+    -   Add tests for function of UTF-8 marker line and for NFC
+        normalization
+    -   Stop handling all command line arguments as Unicode text
+    -   Add C wrappers for ICU functions to work around changing symbol
+        names
+    -   Resolve conflict about the handling of the author pref file
+    -   Resolve conflict with darcs-hs merge
+    -   Normalize Unicode of the patch metadata for comparison.
+    -   Test that patches with non-latin1 metadata can be safely moved
+        between repos
+    -   Move locale conversion out of IO monad
+    -   Test that darcs tag stores metadata in UTF-8
+    -   Make \_darcs/prefs/author be locale-encoded
+    -   Make amend-record store metadata as UTF-8
+    -   Add tests for rollback's storing metadata as UTF-8
+    -   Make UTF-8 test a bit more compact
+    -   Add tests to check that amend-record stores metadata in UTF-8
+    -   Resolve conflicts between UTF-8 and main branch
+    -   Add test for UTF-8 metadata
+    -   Make record store patch metadata in UTF-8
+
+2009-12-20
+[caitt@users.sourceforge.net](mailto:caitt@users.sourceforge.net)
+  ~ -   resolve issue1392: use parsec to parse .authorspelling
+
+

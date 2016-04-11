@@ -1,0 +1,111 @@
+# News and discussions
+
+1.  Darcs 2.5 was released!
+
+    -   [http://wiki.darcs.net/Releases/2.5](http://wiki.darcs.net/Releases/2.5)
+
+2.  The report from the Orleans Sprint was posted:
+
+    -   [http://blog.darcs.net/2010/10/darcs-hacking-sprint-5-report.html](http://blog.darcs.net/2010/10/darcs-hacking-sprint-5-report.html)
+
+# Issues resolved in the last week (3)
+
+issue182 Eric Kow
+  ~ -   hidden darcs status alias for darcs whatsnew -ls
+    -   [http://bugs.darcs.net/issue182](http://bugs.darcs.net/issue182)
+
+issue734 Gabriel Kerneis
+  ~ -   --set-scripts-executable for "darcs dist"
+    -   [http://bugs.darcs.net/issue734](http://bugs.darcs.net/issue734)
+
+issue1809 Ganesh Sittampalam
+  ~ -   don't call modernizePatch during conversion
+    -   [http://bugs.darcs.net/issue1809](http://bugs.darcs.net/issue1809)
+
+# Patches applied in the last week (51)
+
+2010-10-21 Florent Becker
+  ~ -   convert.sh should not be reserved to subjects of Her Majesty
+
+2010-10-16 Ganesh Sittampalam
+  ~ -   resolve issue1809: don't call modernizePatch during conversion
+
+2010-10-25 Gabriel Kerneis
+  ~ -   resolve issue734: --set-scripts-executable for "darcs dist"
+
+2010-10-30 Reinier Lamers
+  ~ -   Add darcs 2.5 to website
+
+2010-10-27 [me@mornfall.net](mailto:me@mornfall.net)
+  ~ -   Fix harness.sh to also work on windows.
+    -   Avoid mkdir test, seems to throw off windows.
+    -   Do not use tar -f, it breaks on windows.
+    -   Add missing FFI to LANGUAGE pragmas in some .hsc files.
+
+2010-10-27 Petr Rockai
+  ~ -   Fix build when the HTTP library is not available.
+
+2010-10-18 Eric Kow
+  ~ -   Fix patch382: darcs show tags --repo.
+    -   darcs show tags --repo (instead of --repodir).
+
+2010-10-08 Ganesh Sittampalam
+  ~ -   build test harness with witnesses and drop separate build
+    -   add witnesses to Darcs.Test.Unit
+    -   add witnesses to Darcs.Test.Patch.Unit
+    -   add witnesses to Darcs.Test.Patch.Unit2
+    -   abstract out functions with restricted types
+    -   break Darcs.Test.Patch.Unit up to facilitate witnessing
+    -   add witnesses to Darcs.Test.Patch.Test
+    -   fix warnings
+    -   get rid of some unused instances
+    -   fold simpleSmartMerge/smartMerge consistency checks into
+        property
+    -   re-enable simpleSmartMerge test
+    -   get rid of elegantMerge test
+    -   Show instance for RL
+
+2010-10-09 Guillaume Hoffmann
+  ~ -   fix a sed regexp in hidden\_conflicts2.sh
+
+2010-10-04 Ganesh Sittampalam
+  ~ -   simplify smartMerge/simpleSmartMerge
+
+2010-10-09 Alexey Levan
+  ~ -   Add flag for using repository packs
+    -   Use custom HTTP request for fetchFileLazyPS
+    -   Moved inventories to patches tarball
+    -   Make gzipped inventories parse correctly in readInventoryPrivate
+    -   Improve getting of packed repositories
+    -   Remove warnings about name shadowing
+    -   Perform cleanup on exceptions in doOptimizeHTTP
+    -   Replace tmp- prefixes with meta- in packs
+
+2010-10-06 Ganesh Sittampalam
+  ~ -   get rid of some joinPatches calls
+    -   move conflict marking out into separate module
+    -   remove unused export
+    -   update some comments
+    -   replace some unexpected cases with failure
+    -   fail in branch that should be unreachable
+    -   drop unused Eq instance for FL
+    -   get rid of some joinPatches calls
+    -   Move some Eq/Show instances to where they belong
+    -   fix off-by-one error with Hunk patches in QuickCheck tests
+
+2010-09-25 Eric Kow
+  ~ -   Document \_darcs/prefs/boring and include in manpage.
+
+2010-10-05 Ganesh Sittampalam
+  ~ -   get rid of commas in extension specifications
+    -   clean up use of language extensions
+    -   introduce type class for checkAPatch
+    -   change hang into error when bad hunk encountered during
+        resolution
+    -   include old text in conflict marks
+
+2010-09-15 Eric Kow
+  ~ -   Resolve issue182: hidden darcs status alias for darcs whatsnew
+        -ls
+
+

@@ -1,0 +1,26 @@
+# The Darcs library
+
+Darcs is available as a Haskell library, but it is very much a work in
+progress. We currently lack a stable API, but we hope to develop one in
+the future.
+
+# Potential uses
+
+-  [Graphical user interface](GraphicalInterface)
+-  Dependency visualiser
+-  Branch visualiser -
+   [issue1200](http://bugs.darcs.net/issue1200)
+-  Line range change viewer -
+   [issue1445](http://bugs.darcs.net/issue1445)
+-  Fancy darcs replace -
+   [issue887](http://bugs.darcs.net/issue887)
+
+# Actual users
+
+  name                darcs repo                                             hackage
+  ------------------- ---------------------------------------------          ------------------------------------------------------
+  ipatch              <http://darcs.nomeata.de/ipatch>                       <http://hackage.haskell.org/package/ipatch>
+  DPM                 <http://www.stefanwehr.de/darcs/DPM>                   <http://hackage.haskell.org/package/DPM>
+  darcsden            <http://hub.darcs.net/simon/darcsden/changes>          <http://hackage.haskell.org/package/darcsden>
+  darcs-bridge        <http://hub.darcs.net/owst/darcs-bridge-export-branch>
+

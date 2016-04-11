@@ -1,0 +1,54 @@
+# Petr's plan ( replacing for
+[http://lists.osuosl.org/pipermail/darcs-users/2010-June/024389.html](http://lists.osuosl.org/pipermail/darcs-users/2010-June/024389.html)
+)
+
+Btw., we may need a way to mark sources as "problematic". I mean things
+like unresolvable hostnames or unreachable addresses, or even
+nonexistent directories: these should all be sorted last in their
+respective groups. So we would have:
+
+local caches
+
+local repositories
+
+local bad caches & repositories
+
+remote unauth repositories
+
+remote bad unauth repositories
+
+remote auth repositories
+
+remote auth bad repositories
+
+Probably triggering a WARNING whenever we reach a "bad" cache or
+repository (which is still actually bad -- if it works again, it needs
+to be restored). This is probably not completely trivial to achieve and
+has some interesting strings attached to it (like backward compatibility
+of the sources file...).
+
+# Comments
+
+For local entries removing shouldn't make any harm, so local sources
+which no longer exist could be just dropped from the cache.
+
+> -   remote: ignore the entry for this darcs (we want to keep the entry
+>     in case it's just transient error)
+
+I think this is a more tricky thing, especially because I can't just
+ignore an entry because it fails, we need to consider also my current
+connection settings, that the server could be done, etc. A possible way
+to handle this could be creating a kind of "black list" which could
+allow us to know which repos are not reachable at the moment . The next
+time the cache gets loaded, it include the source in the "black list"
+but trying first the ones that worked, then if for some reason it has to
+fetch something from one of the "black list" and they are still not
+reachable they could be eliminated, or prompting to the user something
+like: "The repository X seems to have expired, darcs is considering to
+delete it, should I ?" Yes/No answer.
+
+# Links to issues
+
+[http://bugs.darcs.net/issue1599](http://bugs.darcs.net/issue1599)
+
+[http://bugs.darcs.net/issue1153](http://bugs.darcs.net/issue1153)

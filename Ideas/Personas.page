@@ -1,0 +1,68 @@
+Personas are fictional users sometimes used in the Interaction Design or User Experience communities to help shape thinking about around a product.  [Designing for the Digital Age](http://www.goodreads.com/book/show/3880458-designing-for-the-digital-age) presents them as something that would emerge out of a research process, each persona representing a cluster of user characteristics gleaned from the data.  I don't think we can afford to go quite that formal with it, but I do think that even without the research data, it could be helpful for us to use proto personas as a way to help us remember the key question: **who are we designing for?**
+
+# Features
+
+* Name: we want to think of personas as real people (the idea is to hijack the empathetic bits our brains that reason around people), so no silly made-up sounding names.  No Alice or Bob either.
+* Backstory/Goals: nothing irrelevant, just stuff that adds a bit more context to what people are trying to do, and helps make it clear that you can't really boil down what people are trying to do to a set of dry tasks.  What are they *really* after.
+* Multidimensionality: the search space is huge; it's not just about skill level, but things like repo size, etc.  We want personas to act as beacons in this space, people that represent interesting combinations
+
+# Dimensions
+
+What would be interesting dimensions to cover?
+
+* skill level
+* setting (corporate, open source home hacking, pet projects)
+* repo size
+* platform
+* role (repo maintainer, committer, bystander)
+
+# Some attempts
+
+Remember that these are crude not-really-personas.  Not here that in my first attempt, I've only really stuck to the one dimension of skill level.  We should probably flesh this out
+
+Other dimensions we could cover: operating system (!), setting (corporate, open source home user, etc), loads more…
+
+* Emily   : power user (has specific ideas how she wants to use things)
+* Darrel  : power user [Perl hacker extraordinaire, Gentoo user [wouldn't Darrel just be using Git anyway?]]
+* Tina    : “naive” user (not reading the docs, not following the news)
+* Stephan : “naive” user [potential backstory: professor of Bioinformatics? managing hackerly PhD students, commits occasional bits of code, but not *really* a coder]
+* Angela  : “naive” user
+* Brett   : innocent bystander, not a Darcs user
+
+# Scenarios
+
+(These scenarios I'd kicked around as thinking behind the patch index UI.
+We could maybe generalise them out of this.  I guess we'll have to come up
+with scenarios for each task we want?)
+
+The reason each scenario here has a little story behind it to help us think
+about the context behind what users are doing. For example, in the fifth case,
+the point really isn't “darcs get --lazy”; the point is the wider context of
+(A) people want fast (B) stale instructions will appear on the Internet and
+take a long time to go away (if we ever decide to deprecate lazy, it'll take
+ages for it to fade).  Look at the big picture.
+
+1. Space is precious: Emily has limited disk space and really doesn't have much
+   use or patience for something like the patch index. On the other hand, she
+   does have to run the occasional annotate and those tend to be rather slow…
+
+2. Space is precious 2: Darrel wants to use the patch index feature in his
+   normal work, but he also has “backup” repositories on the company server
+   that he only ever pushes patches to without much other interaction.
+
+3. Midstream upgrade: Tina is currently using Darcs 2.8 (pre patch-index) on
+   the 8 kilopatch (kp?) repository on her laptop. She also mirrors it on
+   Darcsden which will be on Darcs 2.8 for a while. She saw a tweet saying that
+   Darcs 2.10 was supposed to be faster and figured she might as well grab a
+   binary and see what happpens.
+
+4. Mismatched Darcsen: Stephan and Angela have been work on together on the
+   same research codebase. They share a group repo on their department's NFS
+   shared drive, but Stephan being the sort of eager guy he is has already
+   upgraded to Darcs 2.10 and Angela is still on Darcs 2.5.
+
+5. darcs get --lazy: Brett needs to grab the latest Darcs version of the
+   functional-mugs package will probably want to send a patch to fix its build
+   dependencies. The website says “darcs get --lazy
+   http://darcsden.com/joebob/functional-mugs” so Brett dutifully
+   complies.

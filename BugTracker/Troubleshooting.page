@@ -1,0 +1,19 @@
+(For BTS admins)
+
+Bugtracker down? Patches dropped?
+
+Things to keep in mind:
+
+* MX records => osuosl.org
+   
+    - so mail goes there first before being forwarded to darcsvm
+    - darcs-{users,devel} should never touch darcsvm (except to user-name-here@darcs.net)
+
+# Things to try
+
+1. Is the mail server still running?
+
+# See also
+
+* [BugTracker/Infrastructure]()
+* [Debian Exim4 FAQ](http://wiki.debian.org/PkgExim4UserFAQ)

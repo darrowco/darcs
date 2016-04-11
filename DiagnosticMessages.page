@@ -1,0 +1,141 @@
+---
+title: Diagnostic Messages
+...
+
+This page is for documenting the meaning of all the diagnostic messages
+that darcs produces. Once answers are refined here, perhaps they will be
+added to the official documentation.
+
+A lot of effort has gone into making Darcs emit user-friendly error
+messages, and we hope that you no longer find error messages confusing.
+If you do, please do file a bug report.
+
+# Fail: .../\_darcs/inventory: openBinaryFile: does not exist (No such
+file or directory)
+
+You will see this message when you try to 'push' to a location that is
+not a repo. Don't do that.
+
+If you see this message when using 'send', darcs is trying to send to
+what it believes is the last remote repository you used, and failing. It
+won't ask for another repository even if you specify the interactive
+option; you have to pass one as an argument. If all else fails, create a
+new directory with an empty darcs tree (darcs initialize), and send to
+that: this can be useful if you just want to get your patches out of the
+repository using -o.
+
+# Copying patch 938 of 4881...darcs: ...gz: openBinaryFile: does not
+exist (No such file or directory)
+
+You could see this this message when calling "darcs get" on a partial
+repository. One solution is to add "--partial" to the command. For
+"hashed" and "darcs-2" format repositories, this issue no longer comes
+up-- the command succeeds.
+
+# Fail: <stdin\>: hGetChar: end of file
+
+This can happen with darcs record.
+
+It can be caused by piping data into it when it expects to work
+interactively. Here's a workaround if you are trying to pipe in a list
+of files to record like this:
+
+    $ find . -name '*.cgi' | grep www | xargs darcs record
+
+Better yet, you can achieve the same thing like this, and still work
+interactively with `record`:
+
+    $ darcs record `find . -name '*.cgi' | grep www`
+
+# Waiting for lock ..
+
+Followed by "Couldn't get lock", see below.
+
+# Couldn't get lock .../lock
+
+This means that darcs tried to access a repository that is *locked*,
+i.e. marked as being currently accessed by a different copy of darcs.
+
+If you are confident the repo shouldn't be locked (there's no other copy
+of darcs running), you can unlock it manually by deleting the lock file
+`_darcs/lock`. Then, run `darcs check`.
+
+# Skipping depended-upon patch
+
+This can be emitted by `unrecord` if using the `--patch` option has
+found a match that is depended on by other patches. *TODO: How can you
+find out which patch?*
+
+# Unable to apply patch!
+
+This message means that a patch that darcs decided to apply doesn't
+apply cleanly to a repository. Either your repository is corrupt (run
+`darcs check`), or you've found a bug in darcs. In either case, you're
+in trouble.
+
+# darcs failed: Unable to apply inverse patch!
+
+This is similar to the above, but means that it is the inverse of a
+patch that darcs couldn't apply (for example, when doing `unpull` or
+`rollback`).
+
+# Fail: takeLock .../\_darcs/lock in ...: failed (Unknown error: 0)
+
+I got this error working in a repository on a FAT file system (on a USB
+stick) on a Mac OS X machine that had a hostname containing colons (not
+my choice). It appears that darcs' locking mechanism creates a temporary
+file whose name contains (part of) the hostname. On a FAT file system,
+file names can't contain colons. Since my hostname did, darcs was unable
+to create the lock.
+
+My workaround was to set the environment variable DARCS\_SLOPPY\_LOCKS.
+This makes darcs use a different method of locking the repository that
+is not safe over NFS (but perfectly safe on any half-reasonable
+implementation of FAT, which I assume includes Mac OS X) but doesn't
+suffer from the above problem.
+
+A better solution might be to modify the function
+careful\_atomic\_create() in compat.c to somehow treat colons in
+hostnames specially. This is [issue
+163](http://bugs.darcs.net/issue163).
+
+# Heap exhausted; Current maximum heap size is 268435456 bytes (256 Mb)
+
+I got this error on win32 pushing a 394MB local repo with text and large
+binary files to an empty local repo. The error follows up with
+**`` use `+RTS -M<size>' to increase it. ``** This doesn't completely
+describe the commandline to fix this, since you also need to mark the
+beginning of the command line args. A complete command would read
+something like **`darcs +RTS -M512M -RTS push <YOUR_REPO>`**
+
+# darcs: getCurrentDirectory: resource exhausted (Too many open files)
+
+This may happen when attempting to pull many patches at once.
+
+By default, Mac OS X only allows each process to have 256 files open.
+For performance reasons, darcs keeps a lot of files open when pulling
+patches and may exceed this limit. In most cases, the solution is to
+increase the limit. This can be done by using the `ulimit` bash command:
+
+::
+
+> $ ulimit -a core file size (blocks, -c) 0 data seg size (kbytes, -d)
+> 6144 file size (blocks, -f) unlimited max locked memory (kbytes, -l)
+> unlimited max memory size (kbytes, -m) unlimited open files (-n) 256
+> pipe size (512 bytes, -p) 1 stack size (kbytes, -s) 8192 cpu time
+> (seconds, -t) unlimited max user processes (-u) 266 virtual memory
+> (kbytes, -v) unlimited $ ulimit -n unlimited <darcs commands go here\>
+> $ ulimit -n 256
+
+Sometimes, calling `ulimit` will result in the following error:
+
+::
+
+> -bash: ulimit: open files: cannot modify limit: Operation not
+> permitted
+
+If this happens, start a new shell and try it in the new shell. (There
+should be a more convenient way to do it but I don't know of one.)
+
+If this doesn't work for some reason, the issue can usually be worked
+around by pulling fewer patches.

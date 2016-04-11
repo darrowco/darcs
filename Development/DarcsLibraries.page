@@ -1,0 +1,106 @@
+This is the perfect project for a non-darcs Haskeller to get on. Good
+for us, good for the whole Haskell community. Approach : identify likely
+haskellers (e.g. authors/maintainers of respective hackage packages) and
+ask for their help?
+
+# We should spin off
+
+Things that probably should be spun off into standard libraries (or
+merged with, replaced with, etc)
+
+-   Diff detection, edit distance, lcs, code
+
+    -   Gwern has imported Lcs.lhs into the lcs package maintained by
+        Igloo; he was just waiting on relicensing permission from Dr.
+        Roundy
+
+-   Crypto stuff (issue2043)
+
+    -   the folks behind the Crypto package seem to say that our
+        implementation of SHA1 (was it sha1?) was faster but more
+        imperative... so what to do here? Can we make the functional
+        crypto faster? Should we submit our code as a fast crypto
+        variant of the pure implementation?
+    -   there is also the SHA package (which says it's slow)
+
+-   Date parsing
+
+-   System.Posix stuff for windows (package: unix-compat ?)
+
+    -   Unfortunately, the unix-compat package does not currently export
+        everything we need (ie. no System.Posix, no System.Posix.IO) and
+        it's unclear to me why the CtrlC.hs module.
+
+-   [Fetching remote files](/Ideas/Downloader) (curl on Hackage, but maybe generic wrapper
+    for curl/libwww/HTTP)
+-   XML handling can probably be reduced; no doubt a lot of the
+    functions in src/Darcs/Patch/Viewing.lhs are redundant with xml or
+    something\^[But then, which XML library? There's more than one.
+    Probably not HaXml as too big a dep.].
+-   Advanced printing: Darcs.ColorPrinter and Printer
+
+    -   [issue1598](http://bugs.darcs.net/issue1598)
+
+-   Progress reporting framework
+
+    -   Need permission from David to BSD-license this
+
+-   Commands/subcommands/arguments infrastructure
+
+    -   [issue1550](http://bugs.darcs.net/issue1550)
+    -   See the [cmdargs
+        library](http://hackage.haskell.org/package/cmdargs)
+
+-   Typed filepaths
+
+    -   [issue1791](http://bugs.darcs.net/issue1791)
+    -   <http://hackage.haskell.org/package/pathtype>
+    -   Talk to Duncan Coutts about this! He's thinking about something
+        like this for Cabal
+
+-   MIME parsing/generation
+
+# We have spun off
+
+-   Gzip/gunzip (interactions with bytestring)
+
+    -   [GaneshSittampalam](People/GaneshSittampalam) has done this (add
+        a Haskell zlib interface)
+
+-   bytestring
+
+    -   done by [DonStewart](People/DonStewart) during darcs hacking
+        sprint \#1 (2008-10)
+
+-   mmap
+
+    -   <http://hackage.haskell.org/cgi-bin/hackage-scripts/package/bytestring-mmap>
+    -   done by [PetrRockai](People/PetrRockai)
+
+-   filepath stuff - we have our idiosyncrasies
+
+    -   From [issue341](http://bugs.darcs.net/msg1202): "I'm not
+        convinced that System.FilePath is a route we'd want to go. We
+        already have code that is almost certainly better tested than
+        System. FilePath and that we understand."
+        --[DavidRoundy](People/DavidRoundy) 2006-11
+    -   Potential pitfalls
+
+        -   encode/decode white
+        -   utf-8 (should not affect filepath; just packing)
+        -   safeFileChar?
+        -   100% backwards-compatibility for internal patch stuff
+            (safest bet is not to change code)
+
+        - subtle semantic differences
+    -   Good news: it's just the FilePath type we're dealing with here
+        (i.e. String), so it should be a relatively painless switch.
+    -   [EricKow](People/EricKow) has done some work to replace some of
+        our ad-hoc code with filepath code; there may be more to go,
+        though
+
+-   slurpies (file trees)
+
+    -   hashed-storage by [Petr Rockai](People/PetrRockai)
+
+

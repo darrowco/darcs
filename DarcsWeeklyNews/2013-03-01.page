@@ -1,0 +1,180 @@
+# News and discussions
+
+1.  Darcs 2.8.4 was released. It supports GHC 7.6 and fixes `get --tag`:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2013-February/026769.html>
+
+
+2.  Here is the report from the 8th darcs hacking sprint:
+
+    -   <http://blog.darcs.net/2013/02/darcs-hacking-sprint-8-report.html>
+
+
+# Issues resolved in the last week (6)
+
+issue904 Nathaniel Filardo
+  ~ -   Fix record on Linux/FUSE/sshfs (fall back to sloppy locks automatically)
+    -   <http://bugs.darcs.net/issue904>
+
+issue2155 Dave Love
+  ~ -   Expurgate the non-functional annotate --xml-output option
+    -   <http://bugs.darcs.net/issue2155>
+
+issue2270 Sebastian Fischer
+  ~ -   fixed darcs changes -i --only-to-files
+    -   <http://bugs.darcs.net/issue2270>
+
+issue2277 Radoslav Dorcik
+  ~ -   rebase suspend and unsuspend supports --summary.
+    -   <http://bugs.darcs.net/issue2277>
+
+issue2282 Ganesh Sittampalam
+  ~ -   don't allow remote operations to copy the rebase patch
+    -   <http://bugs.darcs.net/issue2282>
+
+issue2287 Radoslav Dorcik
+  ~ -   obliterate -O doesn't overwrite existing file.
+    -   <http://bugs.darcs.net/issue2287>
+
+
+# Patches applied in the last week (77)
+
+2013-02-21 Guillaume Hoffmann
+  ~ -   use many-files premade repos in get-http-packed tests to go faster
+    -   reintroduce DARCS_CONNECTION_TIMEOUT doc, talk about undocumented env vars
+
+2013-02-18 Ganesh Sittampalam
+  ~ -   rename FileMod -> [Patch]Index
+
+2013-02-20 Guillaume Hoffmann
+  ~ -   haddock for commandCommand AbsolutePath arguments
+
+2013-02-18 Ganesh Sittampalam
+  ~ -   work around missing feature in haddock
+
+2013-02-17 Guillaume Hoffmann
+  ~ -   make README.test_maintainers.txt point to the appropriate wiki page
+    -   tests: check if darcs-1 in .darcs/defaults instead of hashed, and no longer check OF
+    -   rm testing old-fashioned repo with checkpoint, since what we test already fails because it's OF
+    -   display error message when using init --hashed
+    -   darcs-test UI: print Darcs1 in place of Hashed
+    -   fix tests after changing --hashed into --darcs-1
+    -   rename init --hashed into init --darcs-1
+
+2013-02-17 Ganesh Sittampalam
+  ~ -   a bit of code tidying in Darcs.UI.Commands.Rebase
+
+2013-02-16 Radoslav Dorcik
+  ~ -   Resolve issue2277: rebase suspend and unsuspend supports --summary.
+
+2013-02-16 Ganesh Sittampalam
+  ~ -   tidy imports in Darcs.UI.Commands.Rebase
+    -   make rebase reify/inject hidden
+    -   get rid of withGutsOf which is now redundant
+
+2013-02-16 Guillaume Hoffmann
+  ~ -   document DARCS_GET_FOO and DARCS_APPLY_FOO
+    -   include patterns help to help markdown output
+    -   fix markdown and titles in help markdown
+    -   DARCS_SLOPPY_LOCKS help
+
+2013-02-16 Radoslav Dorcik
+  ~ -   include environment variables in `darcs help markdown` output.
+    -   Ressurection of environment vars desciption from the manual.
+
+2013-02-15 Ganesh Sittampalam
+  ~ -   add a few more tests of darcs changes with moved files
+    -   cosmetic cleanups: remove unnecessary -A in test script and trailing whitespace
+    -   Windows fix for issue2270 test
+
+2013-02-10 Sebastian Fischer
+  ~ -   resolve issue2270: fixed darcs changes -i --only-to-files
+    -   added tests for issue 2270
+
+2013-02-16 Ganesh Sittampalam
+  ~ -   issue1932 test: we can still test the remote parts on Windows
+    -   TAG 2.9.7
+    -   issue1932 test can't possibly work on Windows
+    -   need different path separator on Windows
+    -   add missing -DWIN32 for test harness
+    -   bump version to 2.9.7
+
+2012-12-21 Owen Stephens
+  ~ -   Improve error message for bad match patterns
+    -   Rename a test
+
+2013-02-16 Radoslav Dorcik
+  ~ -   facility for getting unique path name based on base name (<base>_<n>)
+
+2013-02-16 Guillaume Hoffmann
+  ~ -   reintroduce missing when
+
+2013-02-16 Radoslav Dorcik
+  ~ -   test for issue2287 is successful.
+    -   Resolve issue2287: obliterate -O doesn't overwrite existing file.
+
+2013-01-15 Guillaume Hoffmann
+  ~ -   Remove FixFilePath from DarcsFlag
+
+2013-02-16 Radoslav Dorcik
+  ~ -   Get command uses new unique name facility.
+    -   Add failing test for issue2287
+
+2013-02-16 Ganesh Sittampalam
+  ~ -   resolve issue2282: don't allow remote operations to copy the rebase patch
+
+2013-02-16 Owen Stephens
+  ~ -   Accept issue2256 - diff with empty arg string causes failure in updateIndex
+
+2013-02-15 Guillaume Hoffmann
+  ~ -   fix network tests that did not find the right darcs executable
+    -   update lazy-get.sh test to an existing small remote repo
+
+2008-07-11 Nathaniel Filardo
+  ~ -   Resolve issue904: Fix record on Linux/FUSE/sshfs (fall back to sloppy locks automatically)
+
+2013-01-18 Ganesh Sittampalam
+  ~ -   import encoding code from haskeline: cabal changes
+    -   import encoding code from haskeline: switch over
+    -   ROLLBACK: use bytestring-handle instead of haskeline for encoding
+    -   use bytestring-handle instead of haskeline for encoding
+    -   import encoding code from haskeline: Setup.lhs changes
+    -   add copyright notices for the imported haskeline code
+    -   import encoding code from haskeline: move source into Darcs.Util
+    -   import encoding code from haskeline: source files
+    -   bump unix dependency
+    -   bump network dependency
+    -   bump containers dependency
+    -   bump directory dependency
+    -   bump bytestring dependency
+    -   support GHC 7.6 / base 4.6
+
+2013-02-14 Radoslav Dorcik
+  ~ -   Add failing test for issue1579
+
+2012-12-30 Ganesh Sittampalam
+  ~ -   print out locale encoding when running tests
+    -   fix copy-and-paste error in filterOutConflicts refactoring
+
+2013-01-12 Guillaume Hoffmann
+  ~ -   move filterOutConflicts from UI.SelectChanges to Repository.State
+    -   rollback patch index creation code at repo init
+    -   fix repo init message by moving it to UI code
+    -   make darcs init print a confirmation message when successful
+    -   hlint Repository
+    -   inline goToChosenVersion into copyRepoAndGoToChosenVersion
+    -   inline copyRepository into copyRepoAndGoToChosenVersion
+    -   move repository cloning code from UI.Commands.Get to Repository
+
+2012-12-16 Ganesh Sittampalam
+  ~ -   recent test-framework seems to require Typeable
+
+2013-01-13 Dave Love
+  ~ -   Resolve issue2155: Expurgate the non-functional annotate --xml-output option
+
+2013-01-08 Owen Stephens
+  ~ -   Add some trivial haddocks to V1/Commute
+
+2013-01-04 Guillaume Hoffmann
+  ~ -   remove empty Crypt directory
+

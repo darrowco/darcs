@@ -1,0 +1,168 @@
+---
+title: Conflicts handling and conflicts UI
+...
+
+# Abstract
+
+As any version control system, Darcs has to handle the issue of conflicts.
+The current UI of Darcs presents conflicts in an unsatisfactory way to the
+users. On one hand, the information shown is insufficient: the user does
+not know about all the conflicts that occur (only hunk conflicts
+are reported), and neither do they know which precise patches cause
+the conflicts (conflicts are marked without any metada).
+On the other hand, the UI is inadequate: conflicts occur when
+pulling and applying a set of patches, without previous warning nor
+possibility to undo the action.
+
+So the first goal of the present project is to improve conflicts handling
+in each of these aspects.
+
+One consequence of the way Darcs handle conflicts is the `convert export`
+command, which is used to convert Darcs repositories to, say, Git
+repositories.  Because of how Darcs represents conflicts internally,
+the current export code sometimes loses information.
+That is, when two consecutive patches AB conflict with each
+other, the changes of B that conflict with A do not have any
+effect in the working copy. This means that in a Git mirror, the process
+of converting the Darcs patch B to a Git commit actually *loses*
+these conflicting changes.
+
+Hence the second goal is to decide on a solution for this information
+loss problem, and implement it.
+
+# Implementation
+
+Several characteristics of Darcs and its conflicts handling technique seem
+complicate the resolution and mislead the user. Among these, one could note:
+
+* **The absence of information about what kind of conflict occurred**,
+  only visible inside the patch file and supposedly not accesible to users.
+  The user is only prompted with the files that were conflicting. The UI has
+  been improved with patch <http://bugs.darcs.net/patch1077>, but a more
+  accurate list of the conflicts is still necessary. Besides this, Darcs
+  cancels out every conflicting action and replaces them with a
+  non-conflicting one. This clearly does not help in the understanding of
+  the conflict. Properly informing the user is one of the things to do in
+  this project.
+
+* **The absence of markup unless it is a hunk-hunk conflict**. For example,
+  let us have two repositories, A and B, that share the same initial
+  context with a file X. Then A adds a hunk to X and B stops versioning X.
+  After this, if B tries to pull the new patches from A, X will be versioned
+  again in B and two more files (X.\~0\~ and X.\~1\~) will be created by
+  Darcs. Even if the conflicting files are listed, this behaviour is
+  confusing. See the bash script at <http://lpaste.net/129691>.
+  A solution to this could be to have Darcs ask the user about
+  the choices he or she would like to make to resolve each conflict; or the
+  creation of an extra file that specifies every piece of information needed
+  to enable manual resolution. One of the goals here is to decide the
+  best way to deal with conflicts.
+
+* **The unpredictable order of hunks when it is a hunk-hunk conflict.**
+  A solution here is to implement, as an option, a marker that specifies
+  from which patch comes each hunk. This has been implemented already as
+  a proof-of-concept by fellow Darcs hacker Ganesh
+  <http://hub.darcs.net/ganesh/darcs-conflict-marking>.
+  This may be computationally costly feature, so it should
+  probably be not activated by default. However, it my save the user a
+  lot of time to know which patches cause the conflicts.
+
+* **The absence of information about what kind of conflict occurred**,
+  only visible inside the patch file and supposedly not accesible to users.
+  The user is only shown the files that were conflicting. Besides this,
+  Darcs cancels out every conflicting action and replaces them by a
+  non-conflicting one. This clearly does not help in the resolution of
+  the conflict. The user needs to be informed better.
+
+* **Interactive resolution of conflicts.** After a conflict has occurred,
+  the user has to modify the conflicting/new files manually and then record
+  a patch as a way to resolve the conflict. Even though there are some
+  cases in which this is the only possible way to confront a conflict, and
+  external editors can be used to amend this, it would be really useful to
+  have the possibility to resolve the conflicts through the command line
+  interface, interactively.
+
+Now, with regard to the loss of information due to conflicts in
+`convert export`, there are a few (non-exclusive) options from which
+to choose the final design to be implemented, such as:
+
+* **Resume exporting when the source repository is in a non-conflicting
+  state**.
+
+* **Warn users about the conflicts**, and the possibility of losing
+  information because of them.
+
+* **Export into the git mirror repository all conflicting patches
+  using branches** and with a merge representing the resolution patch
+  (the record made after resolving the conflicts). Previous work has
+  been done for [Darcs Bridge](http://darcs.net/DarcsBridgeUsage),
+  which handled branches translation from Darcs to Git.
+
+* **Export into the git mirror repository, passing the content of the
+  conflictor into the commit log message**, so as to save the
+  information somewhere, in a place "visible" by the user.
+
+As can be seen, a main part of the project is to make many sensible
+design decisions and then implement them. A lot of communication with
+the community is expected, but I shall be independent and proactive
+enough to propose several possible solutions myself to the community.
+
+# Timeline and deliverables
+
+* Community bonding period: Get in touch with community, start blogging
+about Darcs and what I am expected to do for the Summer of Code
+(at <http://mldarcs.blogspot.com>), suggest possible solutions to the
+aforementioned issues to the community and begin discussing these topics. 	
+
+* week 1(25/05 - 31/05): Choose the design decisions to be
+  implemented and study them deeply; communicate them to the community.
+  Complete the Internals/Conflicts.page wiki with proper documentation.
+
+* week 2-3 (01/06 - 14/06): Implement the conflict markers for
+  non-hunk-hunk conflicts.
+
+* week 4-5 (15/06 - 28/06): Implement patch name marking for conflicts.
+
+* midterms evaluation
+
+* week 6-7 (29/06 - 12/07): Implement interactive conflict resolution UI.
+
+* week 8 (13/07 - 19/07): Write tests and correct every pending bug with
+  respect to the work done so far. Ensure both darcs-1 and darcs-2
+  semantics are supported correctly.
+
+* week 9-11(20/07 - 09/08): Implement export to Git with branches
+  and merges representing conflicts and resolutions, respectively.
+
+* week 12(10/08 - 16/08): Testing Git exports.
+
+* week 13(17/08 - 21/08): Suggested pencils down date has come.
+  Write a wiki page at <http://darcs.net/Ideas/> to propose ideas
+  for the future, in correspondece to what I will have achieved.
+
+Besides this deliverables, blogging will be done weekly.
+
+# Benefits to the community
+
+Conflicts handling has been in discussion for some years now, and no
+satisfactory solution has been found so far. My goal for this GSoC is
+to find a good solution to the conflicts handling method, making Darcs
+an even better software to try out by every interested user/developer.
+In addition to this, a better way to export from/to git and other VCSs
+will be implemented, and this will make Darcs an easier tool to try out
+and will possibly lessen the migration from Darcs to other VCSs.
+
+Furthermore, note that thorough conflict handling documentation will be
+written, which will improve the whole current documentation, hopefully
+making novice users/new developers join the Darcs community more easily.
+Besides, since I will need to discuss many things with the community
+through public channels, Darcs will be shown to be alive, and this could
+encourage other (potential) developers to contribute to Darcs.
+
+# About Me
+
+My name is Maico Leberle, and I'm finishing my Computer Science degree
+in Argentina. Even though I have contributed to some open source projects
+in Python, C and C++ (participating to coding sprints: PyCamp, HackDay),
+I have been looking forward (for some time now) to contribute in a major
+open source project in Haskell.

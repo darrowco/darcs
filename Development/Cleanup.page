@@ -1,0 +1,47 @@
+Darcs code quality could use a lot of improvement. Slow reformation is
+the name of the game. Keeping heading towards better.
+
+Here's how you can help:
+
+1.  Hlint (also useful for sprints)
+
+2.  [Coding style](CodingStyle)
+
+3.  Hunt for duplicated code
+
+4.  Check module import/export lists
+
+5.  Break huge functions up into small pieces
+
+6.  <http://darcs.net/api-doc> - haddocking darcs module by module
+
+# Coverage issues
+
+1.  [Internals](/Internals) : high-level developer docs; for example, do
+    we have darcs code overview?
+
+2.  Haddocks: we should have full coverage (or know that uncovered ones
+    are obvious)
+
+3.  Tests? But how?
+
+# Bigger projects
+
+1.  Darcs monad: issue1895
+
+2.  Make patch library separate
+
+3.  Kick out
+    -   our getopt stuff for something like cmdlibs/args: issue1550
+    -   path manipulation? issue1791
+    -   spinning off crypto, edit distance libraries and more?
+
+# Nebulous
+
+1.  More 3rd party, less us.
+
+# See also
+
+-   [DarcsLibraries]() we need to clean this page up or
+    move it under Development maybe
+

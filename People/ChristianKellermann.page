@@ -1,0 +1,23 @@
+Christian is currently learning haskell by fixing
+[ProbablyEasy](ProbablyEasy) bugs.
+
+Points of interest so far:
+
+-   Use the shell harness in Makefile
+-   make [ShellHarness](ShellHarness) a module
+-   use [ShellHarness](ShellHarness) in Setup.lhs
+-   move shell\_harness to Distribution/ShellHarness.hs
+-   make finds more portable
+-   remove bash shell\_harness
+-   Add [UserProfile](UserProfile) to test env for Windows
+-   Fix shell\_harness so it uses --ignore-times
+-   shell\_harness script in haskell
+-   resolve issue1000: warn when tags are too short (length name <2)
+-   resolve issue628: reuse the long comment code from Darcs.record
+-   enable the use of $SENDMAIL for darcs send
+-   call $(MAKE) instead of 'make', because GNUMake is not called 'make'
+    everywhere
+
+His usual findings are logged at [his
+blog](http://pestilenz.org/~ckeen/blog/) but it does not contain
+anything haskell related yet.

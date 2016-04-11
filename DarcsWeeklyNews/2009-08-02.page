@@ -1,0 +1,84 @@
+# News and discussions
+
+1. darcs 2.3.0 is now available. More information in the announcement:
+  ~ -   [http://web.mornfall.net/blog/darcs\_2.3.0.html](http://web.mornfall.net/blog/darcs_2.3.0.html)
+    -   [http://www.darcs.net/releases/darcs-2.3.0.tar.gz](http://www.darcs.net/releases/darcs-2.3.0.tar.gz)
+    -   [http://wiki.darcs.net/Binaries](http://wiki.darcs.net/Binaries)
+
+2. Petr Rockai posted two new entries about his Summer of Code work on
+  ~ "Fast darcs":
+
+\*
+[http://web.mornfall.net/blog/soc\_progress\_9.html](http://web.mornfall.net/blog/soc_progress_9.html)
+  ~ -   [http://web.mornfall.net/blog/soc\_progress\_10.html](http://web.mornfall.net/blog/soc_progress_10.html)
+
+3. Max Battcher proposed a way to easily implement in-repo local
+branches
+  ~ a la git or mercurial:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-July/020565.html](http://lists.osuosl.org/pipermail/darcs-users/2009-July/020565.html)
+
+# Issues resolved in the last week (0)
+
+# Patches applied in the last week (38)
+
+2009-07-30 Petr Rockai
+  ~ -   Update hpc.README to use Cabal.
+    -   Add a flag for enabling HPC for the darcs library.
+    -   Combine the HPC tix files after each test in ShellHarness.
+    -   Require haskell zlib, dropping the legacy internal zlib binding.
+
+2009-07-23 Eric Kow
+  ~ -   Fix link to autoconf tarball.
+    -   Update web page for 2.3.0 release.
+    -   Resolve conflict between autoconf removal and version number
+        updates.
+    -   Makefile: fix dependency on no longer existing distclean target.
+    -   Make utf8-string mandatory.
+    -   Remove UTF8 module completely.
+
+2009-07-20 Petr Rockai
+  ~ -   Add support for skipping tests (exit 200).
+    -   Remove the --checkpoint option from the UI.
+    -   Remove the support for writing out new checkpoints.
+
+2009-07-21 Eric Kow
+  ~ -   Remove unused determine\_release\_state.pl.
+    -   Remove ununsed test/shell\_harness.hs.
+
+2009-07-17 Petr Rockai
+  ~ -   Remove autoconf support and cut GNUmakefile to only build manual
+        and tags.
+    -   Slightly refactor the run function in ShellHarness.
+    -   Slightly refactor test machinery in Setup.lhs.
+    -   Use tee in pending\_has\_conflicts.sh for easier debugging.
+    -   Roll back the getSymbolicLinkStatus workaround, since it
+        constitutes a fd leak.
+
+2009-07-16 Eric Kow
+  ~ -   Note darcs 2.3 pre-release and darcs 2.2 stable versions in
+        website.
+    -   Remove website automation from Makefile.
+    -   Rename index.html.in to index.html, forgoing website automation.
+    -   Remove bytestring flag from darcs.cabal.
+
+2009-06-29 Reinier Lamers
+  ~ -   Move email unit tests to Darcs.Test module space
+    -   Teach cabal about new Darcs.Test modules
+    -   Move unit tests to Darcs.Test module space
+    -   Bound size of trees generated in Darcs.Patch.QuickCheck
+    -   Add some comments in Darcs.Patch.QuickCheck
+
+2009-06-21 Petr Rockai
+  ~ -   Avoid getSymbolicLinkStatus in mmap implementation, works around
+        GHC 6.8.2 bug.
+    -   TAG 2.3.0
+    -   Ship the NEWS file in cabal tarballs as well.
+    -   Update NEWS.
+    -   Update autoconf release data to 2.3.0.
+    -   Bump version to 2.3.0.
+    -   TAG 2.2.99.1
+    -   Bump autoconf version to 2.3.0rc1 and hardcode release state.
+    -   Bump version to 2.2.99.1.
+
+

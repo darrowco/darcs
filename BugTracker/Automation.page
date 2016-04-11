@@ -1,0 +1,144 @@
+# Bulk removal from nosy lists
+
+I have a script \~kowey/roundup-tools/remove-nosy.py that helps with
+this
+
+# Bulk change of issue status
+
+We wanted to change all issues marked as resolved-in-unstable before a
+certain date, to resolved. The roundup-admin command-line tool on
+darcs.net was useful for exploring, but not powerful enough for this
+task. An interactive python prompt (in an emacs shell for editability)
+plus the [Roundup design
+document](http://roundup.sourceforge.net/doc-1.0/design.html) was the
+solution, once I figured out the api. Here is a simplified transcript.
+Note I checked the last activity date rather than the date of being
+marked resolved-in-unstable; the latter was too difficult and turned out
+to be unnecessary after inspection.
+
+    $ python
+    Python 2.4.4 (#2, Apr 15 2008, 23:43:20)
+    [GCC 4.1.2 20061115 (prerelease) (Debian 4.1.1-21)] on linux2
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> from roundup import instance
+    >>> t = instance.open('/var/lib/roundup/trackers/darcs')
+    >>> t
+    <roundup.instance.Tracker instance at 0xb7d1110c>
+    >>> db = t.open('admin')
+    >>> db
+    <roundpsycopgsql 0x-488ce294>
+    >>> db.issue
+    <hyperdb.Class "issue">
+    >>> db.issue.list()
+    ['145', '202', '259', '354', '448', ...etc
+    >>> db.issue.count()
+    1054L
+    >>> from pprint import pprint as pp
+    >>> pp(db.issue.getprops())
+    {'activity': <roundup.hyperdb.Date>,
+     'actor': <roundup.hyperdb.Link to "user">,
+     'assignedto': <roundup.hyperdb.Link to "user">,
+     'creation': <roundup.hyperdb.Date>,
+     'creator': <roundup.hyperdb.Link to "user">,
+     'files': <roundup.hyperdb.Multilink to "file">,
+     'id': <roundup.hyperdb.String>,
+     'messages': <roundup.hyperdb.Multilink to "msg">,
+     'nosy': <roundup.hyperdb.Multilink to "user">,
+     'priority': <roundup.hyperdb.Link to "priority">,
+     'status': <roundup.hyperdb.Link to "status">,
+     'superseder': <roundup.hyperdb.Multilink to "issue">,
+     'title': <roundup.hyperdb.String>,
+     'topic': <roundup.hyperdb.Multilink to "keyword">}
+    >>> help(db.issue.get)
+    Help on method get in module roundup.backends.rdbms_common:
+
+    get(self, nodeid, propname, default=[], cache=1) method of roundup.backends.back_postgresql.IssueClass instance
+        Get the value of a property on an existing node of this class.
+
+        'nodeid' must be the id of an existing node of this class or an
+        IndexError is raised.  'propname' must be the name of a property
+        of this class or a KeyError is raised.
+
+        'cache' exists for backwards compatibility, and is not used.
+
+    >>> db.issue.get('792','creation')
+    <Date 2008-04-12.16:41:47.090>
+    >>> db.issue.getnode(792)
+    <roundup.hyperdb.Node instance at 0xb755302c>
+    >>> db.issue.getnode(792).values()
+    ['7', [], 'Account for --remote-repo in defaultrepo code', ['7', '8', '9', '992'], <Date 2008-04-12.16:41:47.090>, ...
+    >>> db.issue.getnode(792).keys()
+    ['status', 'topic', 'title', 'nosy', 'creation', 'messages', 'actor', 'priority', 'assignedto', 'creator', 'activity', ...
+    >>> db.issue.getnode(792).items()
+    [('status', '7'), ('topic', []), ('title', 'Account for --remote-repo in defaultrepo code'), ('nosy', ['7', '8', '9', ...
+    >>> db.issue.getnode(792)['status']
+    '7'
+    >>> db.issue.getnode(792).status
+    '7'
+    >>> db.status
+    <hyperdb.Class "status">
+    >>> db.status.list()
+    ['2', '6', '8', '1', '3', '5', '9', '10', '12', '7', '15', '16', '4']
+    >>> pp([db.status.getnode(id).items() for id in db.status.list()])
+    [[('name', 'deferred'),
+      ('creator', '1'),
+      ('creation', <Date 2005-10-29.17:28:11.830>),
+      ('actor', '1'),
+      ('order', 2.0),
+      ('activity', <Date 2005-10-29.17:28:11.830>),
+      ('id', '2')],
+     [('name', 'testing'),
+      ('creator', '1'),
+      ('creation', <Date 2005-10-29.17:28:11.850>),
+      ('actor', '1'),
+      ('order', 6.0),
+      ('activity', <Date 2005-10-29.17:28:11.850>),
+      ('id', '6')],
+    ...
+    >>> db.issue.find(status='7') # resolved-in-unstable
+    ['145', '200', '22', '207', '580', '136', '510', '209', ...
+    >>> db.issue.filter(None, {'status':'7'}, [], []) # similar to find
+    ['12', '16', '22', '24', '31', '43', '46', '60', '61', ...
+    >>> [db.issue.getnode(id).creation for id in db.issue.filter(None, {'status':'7'}, [], [])]
+    [<Date 2005-11-17.17:30:11.020>, <Date 2005-11-22.12:41:59.780>, ...
+    >>> from roundup.date import *
+    >>> Date('2008-06-24')
+    <Date 2008-06-24.00:00:00.000>
+    >>> issues = ([db.issue.getnode(id) for id in db.issue.filter(None, {'status':'7'}, [], []) if db.issue.getnode(id).activity < Date('2008-06-24')])
+    >>> len(issues)
+    194
+    >>> issues[0].status
+    '7'
+    >>> issues[0].status = '8' # resolved
+    >>> issues[0].status
+    '8'
+    >>> for i in issues: i.status = '8'
+    ...
+    >>> db.commit()
+    $
+
+And again, more briefly:
+
+    $ python
+    Python 2.4.4 (#2, Apr 15 2008, 23:43:20)
+    [GCC 4.1.2 20061115 (prerelease) (Debian 4.1.1-21)] on linux2
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> from roundup.date import *
+    from roundup import instance
+    db = instance.open('/var/lib/roundup/trackers/darcs').open('admin')
+    issue = db.issue.getnode
+    def filterissues(spec={},sort=[],group=[]): return db.issue.filter(None,spec,sort,group)
+
+    >>> >>> >>> >>> ... >>>
+    >>> [i for i in filterissues({'status':'10'}) if issue(i).activity < Date('2008-06-24')] # resolved-in-stable
+    ['37', '65', '69', '113', '127', '141', '143', '147', '173', '186', '218', '259', '264', ...
+    >>> # manually inspect issues in web interface to see if the above is close enough
+    >>> [setattr(issue(i),'status','8') for i in filterissues({'status':'10'}) if issue(i).activity < Date('2008-06-24')] #resolved
+    [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, ...
+    >>> db.commit()
+    >>>
+    $
+
+Note the commit is done soon after opening the db connection, since I'm
+not sure how an open db connection interacts with simultaneous changes
+via the web.

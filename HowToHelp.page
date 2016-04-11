@@ -1,0 +1,53 @@
+---
+categories: Development
+...
+
+Everyone can help darcs be great, and this page is here to tell you how
+**you** can help.
+
+# Non-Haskell folks
+
+You can run darcs on your projects, and let us know how it goes. In
+particular, we'd like to know how it works on your
+repositories. You probably use quite a different set of darcs'
+features than we do. Let us know about:
+
+1.  Bugs (mail us at <bugs@darcs.net>).
+2.  Garden this wiki
+3.  Garden the [wikipedia
+    page](http://en.wikipedia.org/wiki/Darcs) of Darcs and/or
+    translate it in your language if it does not exist.
+4.  Triage the [BugTracker]()! If there are no new bugs to
+    triage, look for stale bug reports or check up on people we need
+    follow-ups from, etc.
+5.  Commands that run unusually slowly
+6.  Run timings (see [Benchmarks]()).
+7.  Feature requests. When you're using darcs is there something that
+    seems like it would make your life easier?
+8.  Your impression: which new features do you like, what do you find
+    confusing?
+9.  Documentation: Read the documentation, and let us know what's
+    unclear. Even better, write improved documentation.
+10. You can also consider [donating](Fundraising).
+
+# If you know how to program in...
+
+## ... C
+
+1. Implement or update [Darcs support for GeanyVC or QCT](Ideas/GraphicalInterface)
+
+## ... Python
+
+1. Implement or update [Darcs support for Meld or RabbitVCS](Ideas/GraphicalInterface)
+
+## ... Haskell
+
+1.  Check the [bug tracker](http://bugs.darcs.net).
+2.  <http://tinyurl.com/darcs-probablyeasy2> - easy bugs to solve
+3.  Come at [Sprints]() and hack on the code!
+4.  Apply for a [Summer of Code](GSoC) student project
+5.  Work on wome [project idea](Projects) for fun and/or for your studies
+6.  Help us use external libraries instead of our own implementations
+    (see [DarcsLibraries](/Development/DarcsLibraries))
+
+

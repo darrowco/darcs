@@ -1,0 +1,134 @@
+# News and discussions
+
+1.  This year's Google Summer of Code projects brought a lot of improvements
+    to darcs and its ecosystem!
+
+    -   BSRK Aditya: Darcsden improvements:
+
+        - <http://joyful.com/blog/2013-09-26-darcsden-darcs-hub-gsoc-complete.html>
+        - <http://bsrkaditya.blogspot.com.ar/2013/09/darcsden-gsoc-final-blog-post.html> 
+
+    -   José Neder: patience diff, file move detection, token replace detection:
+
+        - <http://lists.osuosl.org/pipermail/darcs-users/2013-October/026945.html>
+        - <http://blog.jlneder.com.ar/search/label/darcs>
+
+2.  Gian Piero Carrubba asked why adjacent hunks could not commute:
+
+    - <http://lists.osuosl.org/pipermail/darcs-users/2013-November/026958.html>
+
+3.  We listed the changes that occurred between version 2.8.4 and the current
+    development branch into a 2.10 release page:
+
+    - <http://darcs.net/Releases/2.10?revision=20131028184855-5ef8f-ba33870773ad9ee010a470ac8536b5c7ae331b50>
+
+# Issues resolved (8)
+
+issue346 Jose Luis Neder
+  ~ -   implement "patience diff" from bzr
+    -   <http://bugs.darcs.net/issue346>
+
+issue1828 Guillaume Hoffmann
+  ~ -   file listing and working --dry-run for mark-conflicts
+    -   <http://bugs.darcs.net/issue1828>
+
+issue2181 Guillaume Hoffmann
+  ~ -   put cache in $XDG_CACHE_HOME (~/.cache by default)
+    -   <http://bugs.darcs.net/issue2181>
+
+issue2309 Owen Stephens
+  ~ -   annotate includes line numbers
+    -   <http://bugs.darcs.net/issue2309>
+
+issue2313 Jose Luis Neder
+  ~ -   whatsnew -l: Stack space overflow
+    -   <http://bugs.darcs.net/issue2313>
+
+issue2334 Guillaume Hoffmann
+  ~ -   fix win32 build removing file permission functions
+    -   <http://bugs.darcs.net/issue2334>
+
+issue2343 Jose Luis Neder
+  ~ -   darcs amend-record does not record my change
+    -   <http://bugs.darcs.net/issue2343>
+
+issue2347 Guillaume Hoffmann
+  ~ -   fix amend-record --prompt-long-comment
+    -   <http://bugs.darcs.net/issue2347>
+
+
+# Patches applied (39)
+
+2013-10-28 Guillaume Hoffmann
+  ~ -   record: no longer accept first commented line as patch name
+    -   resolve issue2347: fix amend-record --prompt-long-comment
+    -   refuse incorrect patch names (empty or starting with TAG)
+
+2013-06-15 Jose Luis Neder
+  ~ -   resolve issue2313: whatsnew -l: Stack space overflow 
+    -   tests for issue2313: whatsnew -l: Stack space overflow
+
+2013-02-17 Mark Stosberg
+  ~ -   new failing test for issue2303 - illustrates a Patch Index diagnostic that can be improved.
+    -   failing test for issue2272: darcs rebase unsuspend should succeed despite unrecorded changes
+    -   issue2271: New (passing) test which confirms that darcs optimize --disable-patch-index will fail in the face of a permissions problem.
+
+2013-08-20 BSRK Aditya
+  ~ -   Export getChangesInfo from Changes command module
+
+2013-09-22 Jose Luis Neder
+  ~ -   Add better comments to the issue2343 test file
+    -   resolve issue2343: darcs amend-record does not record my change
+
+2013-08-20 Ganesh Sittampalam
+  ~ -   Introduce a local copy of Data.Map.Strict from containers 0.5,
+    -   Weaken hashable dependency
+
+2013-08-13 Guillaume Hoffmann
+  ~ -   put upper bound on hashable dependency
+
+2013-07-30 Jose Luis Neder
+  ~ -   make darcs-test run tests with both diff algorithms
+    -   resolve issue346: implement "patience diff" from bzr
+    -   name change Lcs.hs -> Diff/Myers.hs
+
+2013-08-05 Guillaume Hoffmann
+  ~ -   resolve issue2334 fix win32 build removing file permission functions
+
+2013-08-27 BSRK Aditya
+  ~ -   When using send command, post the patch if using http,
+    -   Update containers minimum version
+
+2013-08-12 Guillaume Hoffmann
+  ~ -   remove import warning
+    -   put newline after darcs diff changelog output
+    -   change format of patch name file when a text editor is invoked
+    -   remove redundant case in Darcs.UI.Command.Record.getLog
+    -   update unrecord and obliterate help, mention -O flag
+
+2013-07-18 Owen Stephens
+  ~ -   Fix a couple of warnings from annotate with line numbers patch
+    -   Resolve issue2309: annotate includes line numbers
+
+2013-07-25 Guillaume Hoffmann
+  ~ -   fix test for issue1290 for when tests are run in parallel
+    -   announce moved files
+    -   make move patch explicit
+    -   announce removed files
+    -   announce added files
+    -   resolve issue2181: put cache in $XDG_CACHE_HOME (~/.cache by default)
+    -   merge Darcs.Util.IO into Darcs.Util.File
+
+2013-07-17 Owen Stephens
+  ~ -   Move chompNewline from Commands to Util/Text and rename to chompTrailingNewline
+
+2013-07-04 Guillaume Hoffmann
+  ~ -   update help of mark-conflicts
+    -   resolve issue1828: file listing and working --dry-run for mark-conflicts
+
+2013-03-18 Ganesh Sittampalam
+  ~ -   fix warnings introduced by issue1105 fix
+
+2013-02-21 Florent Becker
+  ~ -   Fix issue1105 even in the presence of command-line optinos
+

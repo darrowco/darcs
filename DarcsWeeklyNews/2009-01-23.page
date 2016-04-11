@@ -1,0 +1,118 @@
+This is a catch-up edition of darcs weekly news. Is DWN back for good?
+Stay tuned...
+
+# News and discussions
+
+1.  Darcs backend for Gitit. Have a wiki? Thanks to Gwern Branwern, you
+    can now store the it in a darcs repository, change history and all.
+    -   [http://bugs.darcs.net/msg7114](http://bugs.darcs.net/msg7114)
+    -   darcs get filestore from
+        [http://johnmacfarlane.net/repos/filestore](http://johnmacfarlane.net/repos/filestore)
+
+2.  Darcs 2.2.0 released, with better Windows support, performance and
+    libdarcs. Release Manager Petr Ročkai has done a great job smoothly
+    rolling out this release. More news on 2.2.1 shortly.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-January/017233.html](http://lists.osuosl.org/pipermail/darcs-users/2009-January/017233.html)
+
+3.  Patch-tag.com . Thomas Hartman has announced patch-tag.com, a darcs
+    hosting site built on top of a Haskell stack. Patch-tag is free for
+    open source projects. For private repositories, free trial hosting
+    is available until April 2009 (prices to be announced soon).
+    -   [http://patch-tag.com](http://patch-tag.com)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-January/017323.html](http://lists.osuosl.org/pipermail/darcs-users/2009-January/017323.html)
+
+# The backlog
+
+Things you have missed since the last darcs weekly news
+
+1.  zlib plans - Ganesh Sittampalam and Petr Ročkai have worked out
+    "roadmap for migrating darcs over to the Haskell zlib library and
+    dropping the direct C bindings completely" and fixing the any broken
+    CRC errors in the process
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/016276.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/016276.html)
+
+2.  Benchmark results. Here are the recent results from the Standard
+    Darcs Benchmarks. Thanks also to Nathan Gray for additional real
+    world testing. What can /you/ do to make darcs faster?
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-December/016798.html](http://lists.osuosl.org/pipermail/darcs-users/2008-December/016798.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-December/016892.html](http://lists.osuosl.org/pipermail/darcs-users/2008-December/016892.html)
+    -   darcs get
+        [http://code.haskell.org/darcs/darcs-benchmark](http://code.haskell.org/darcs/darcs-benchmark)
+
+3.  Thorkil Naur (Issue Manager) has outlined some thoughts for running
+    the darcs issue tracker efficiently. Thanks, Thorkil!
+    -   [http://wiki.darcs.net/DarcsWiki/BugTrackerIssueManagement](http://wiki.darcs.net/DarcsWiki/BugTrackerIssueManagement)
+
+4.  HLint report for darcs. Neil Mitchell has set his HLint tool to
+    work, producing lots of helpful advice to improve our coding style.
+    Try HLint today!
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-December/016671.html](http://lists.osuosl.org/pipermail/darcs-users/2008-December/016671.html)
+    -   [http://www-users.cs.york.ac.uk/\~ndm/hlint](http://www-users.cs.york.ac.uk/~ndm/hlint)/
+
+5.  TortoiseDarcs is back! Kari Hoijarvi has dusted off the
+    TortoiseDarcs (a Windows GUI). His new version (2.0.1) works with
+    both darcs 1 and 2.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-January/016983.html](http://lists.osuosl.org/pipermail/darcs-users/2009-January/016983.html)
+    -   [http://datafed.net/darcs](http://datafed.net/darcs)/
+
+6.  vc-darcs.el version 1.9. Juliusz Chroboczek has released version 1.9
+    of vc-darcs, with support for Emacs 22 and darcs 2
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-January/016978.html](http://lists.osuosl.org/pipermail/darcs-users/2009-January/016978.html)
+    -   darcs get
+        [http://www.pps.jussieu.fr/\~jch/software/repos/vc-darcs](http://www.pps.jussieu.fr/~jch/software/repos/vc-darcs)/
+
+7.  Focal: towards a conflict-free revision control system.
+    Jean-Philippe Bernardy and students propose a new theory of patches
+    with no conflicting patches! Instead, the internal representation
+    for state is carefully chosen so that conflicting situations can
+    co-exist. They have also produced a toy implementation that you can
+    play with
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-January/016988.html](http://lists.osuosl.org/pipermail/darcs-users/2009-January/016988.html)
+    -   [http://www.cse.chalmers.se/\~bernardy/focal\_Code\_Anders\_Petter.tar.gz](http://www.cse.chalmers.se/~bernardy/focal_Code_Anders_Petter.tar.gz)
+    -   [http://www.cse.chalmers.se/\~bernardy/AConcflictFreeVersionControlSystem.pdf](http://www.cse.chalmers.se/~bernardy/AConcflictFreeVersionControlSystem.pdf)
+
+# Issues resolved in the last week (1)
+
+issue1292 Judah Jacobson
+  ~ -   re-encode line input from the Haskeline backend.
+    -   [http://bugs.darcs.net/issue1292](http://bugs.darcs.net/issue1292)
+
+# Patches applied in the last week (16)
+
+2009-01-22 Bertram Felgenhauer
+  ~ -   (cabal build) build 'witnesses' only with -ftype-witnesses
+    -   (cabal build) add two missing modules to darcs library
+
+2009-01-22 Judah Jacobson
+  ~ -   Tell the configure script to require haskeline\>=0.6.0.
+
+2009-01-22 Florent Becker
+  ~ -   use forM\_ from the standard library
+
+2009-01-22 Eric Kow
+  ~ -   Remove LANGUAGE GADTs pragma in Darcs.Show (GHC 6.6
+        compatibility)
+
+2009-01-22 Duncan Coutts
+  ~ -   Remove duplication in fields in the .cabal file
+    -   Remove unused ghc -threaded flag in library section
+
+2009-01-22 Trent W. Buck
+  ~ -   Clean up after shell harness.
+    -   Syntax highlighting for new-style NEWS entries.
+    -   NEWS for Darcs 2.2.0.
+    -   Use conventional name "NEWS" for "new in $version" notes.
+
+2009-01-21 Judah Jacobson
+  ~ -   Resolve issue1292: re-encode line input from the Haskeline
+        backend.
+
+2009-01-20 [gwern0@gmail.com](mailto:gwern0@gmail.com)
+  ~ -   mv -fglasgow-exts to Darcs.Show
+
+2009-01-18 Trent W. Buck
+  ~ -   Remove obsolete import.
+    -   Refactor initial argument dispatcher.
+    -   Simplify some of my own code.
+
+

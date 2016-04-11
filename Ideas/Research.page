@@ -1,0 +1,17 @@
+What do we consider to be research problems in Darcs?
+
+-   high-level patches: can eg. tree patches make for a viable revision
+    control system for structured documents (eg. XML)
+-   diff that supports high-level patches: suppose you have a tree
+    patches for XML: how would you diff two files to produce such
+    patches?
+
+# Academic links
+
+-   [SCM 2005](http://users.soe.ucsc.edu/~ejw/scm12/scm12committee.php)
+    - are there later workshops?
+
+# See also
+
+-   [Bibliography](/Theory/Bibliography)
+

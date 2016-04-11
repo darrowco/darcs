@@ -1,0 +1,42 @@
+This is a design proposal for a robust, general purpose, Haskell file downloader.
+
+# Background
+
+Darcs often needs to retrieve files addressed by a URL, for example when retrieving the patch files when calling `darcs get http://example.org/my_darcs_repo`. Currently we use an internal module [URL](http://hub.darcs.net/darcs/darcs-reviewed/browse/src/URL.hs) which talks to a custom Haskell wrapper around [libcurl](http://hub.darcs.net/darcs/darcs-reviewed/browse/src/hscurl.c) (and also supports using the Haskell HTTP library if libcurl is not available). The implementation is sub-optimal and causes [issues](http://bugs.darcs.net/issue1927), [like](http://bugs.darcs.net/issue1914), [these](http://bugs.darcs.net/issue2061).
+
+# Desiderata
+
+* incremental (no need to know it advance what files we want; can add requests as we go)
+* efficient
+    - makes good use of idle time (concurrent downloading?)
+    - minimises ill effects of latency (makes use of things like SPDY or HTTP pipelining, etc when available)
+* provides notion of priority (sometimes we want some files sooner rather than later)
+* easy to debug (provides hooks for quiet/verbose/deafening reporting)
+* handles unusual environments (eg. your university forces you to go through a proxy servers)
+* portable (works on Windows [and easy to install/use for a Haskell app])
+* robust (handles restarts etc)
+
+# (Suboptimal) State of the Art: Darcs 2.8 URL module
+
+1. Each request is performed on a new thread, and only one request is ever made to a thread
+1. Pipelining throttling is performed per-thread (I'm not sure what the underlying c-lib will do when we attempt to request outside of the pipe threshold)
+1. Each thread waits for future requests, and can never terminate - this causes the main thread to exit without being able to check that all downloading threads have exited
+    - This is what causes the "too late to use atexit" errors
+    - Probably also the "getSymbolicLinkStatus file does not exist" errors.
+
+# How a reimplementation would be better
+
+First, any new attempt at writing the downloader should work hard at being general purpose, and being adopted by the wider Haskell community. This includes things like BSD3 license and GitHub hosting.
+
+Second, we should aim to keep the design simple enough to avoid the kind of flakiness we've been plagued with. (*hmm, this sounds vague, eh?*)
+
+# Design considerations
+
+**stub**
+
+# Related work
+
+Let's please please please avoid NIH'ing (Not Invented Here) this.  This ain't 2002 anymore; there actually are packages out there we can build off.  If they are inadequate or can't be adopted, we should say why and not just ignore it.
+
+* [download-curl](http://hackage.haskell.org/package/download-curl)
+* <http://hackage.haskell.org/package/wreq>

@@ -1,0 +1,115 @@
+# News and discussions
+
+1.  Ganesh posted about darcs 2.5.1:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2011-January/025953.html](http://lists.osuosl.org/pipermail/darcs-users/2011-January/025953.html)
+
+2.  We discussed the inclusion of fastconvert as part of darcs 2.8, and
+    reached consensus on darcs' next big goal, modularity:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-November/025860.html](http://lists.osuosl.org/pipermail/darcs-users/2010-November/025860.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-December/025882.html](http://lists.osuosl.org/pipermail/darcs-users/2010-December/025882.html)
+
+# Issues resolved in the last week (3)
+
+issue114 Florent Becker
+  ~ -   allow hunk-splitting in revert
+    -   [http://bugs.darcs.net/issue114](http://bugs.darcs.net/issue114)
+
+issue1922 Florent Becker
+  ~ -   output correct context in darcs unpull -O
+    -   [http://bugs.darcs.net/issue1922](http://bugs.darcs.net/issue1922)
+
+issue1978 Florent Becker
+  ~ -   get does not correctly treat \_darcs/format
+    -   [http://bugs.darcs.net/issue1978](http://bugs.darcs.net/issue1978)
+
+# Patches applied in the last week (49)
+
+2011-01-05 Eric Kow
+  ~ -   Add GPL version to man page.
+    -   Specify GPLv2+ in manual.
+
+2010-11-22 Alexey Levan
+  ~ -   Use getBoolFlag to check for a packs flag
+    -   Fix check for --packs flag
+
+2010-12-16 Eric Kow
+  ~ -   Accept issue2017: apply crash when tag missing from context.
+
+2011-01-07 Ganesh Sittampalam
+  ~ -   hunk editing test
+    -   split a basic class out of ShowPatch that requires fewer deps
+
+2010-11-22 Eric Kow
+  ~ -   Friendlier \_darcs/inventory HINT message.
+    -   Label the unreachable repository note as a HINT.
+    -   Label --set-default note as a HINT.
+
+2010-11-21 Ganesh Sittampalam
+  ~ -   fix warning in Darcs.Patch.Split
+    -   fix warning in Darcs.Patch.Bundle
+
+2010-10-17 Florent Becker
+  ~ -   resolve issue114: allow hunk-splitting in revert
+    -   resolve issue1978
+
+2010-11-22 Ganesh Sittampalam
+  ~ -   make checkUnrecordedConflicts use the correct patch type for the
+        repo
+
+2010-12-22 Eric Kow
+  ~ -   Thanks to Summersault for their generous donation!
+    -   Resolve import conflict in rollback work and record on test
+        failure.
+
+2010-11-15 Florent Becker
+  ~ -   Reinstantiate matchingHead
+    -   Limit unpull and rollback to last tag again
+    -   resolve issue1922: output correct context in darcs unpull -O
+    -   exit faster on null selection in Unrecord
+    -   test for issue 1922
+    -   allow rollback and unpull to work under tags
+
+2010-12-07 Iago Abal
+  ~ -   Update documentation of arbitraryTree.
+    -   Update link to the wiki UnitTests page.
+
+2010-09-22 Eric Kow
+  ~ -   More visible old-fashioned to hashed notice.
+    -   Update SFC address.
+
+2010-12-10 Florent Becker
+  ~ -   Don't require --darcs when it's not needed in darcs-test
+        executable
+
+2010-12-11 Alexey Levan
+  ~ -   Fix linking with libdarcs under Windows
+
+2010-11-22 Ganesh Sittampalam
+  ~ -   simplify readPatch' for Braced
+    -   resolve conflict between patch reading changes and case -\>
+        maybe cleanup
+    -   drop the nested Maybes in the patch parser
+    -   drop the unused and often ignored "want eof" parameter to
+        readPatch'
+    -   don't silently throw away remaining parse input
+    -   get rid of useless instance
+    -   rename Darcs.Hopefully to Darcs.Patch.PatchInfoAnd
+    -   move pending.new reading/writing into Repository.LowLevel
+    -   Get rid of pointless call to effect in Darcs.Resolution
+    -   Remove an unnecessary call to effect in setTentativePending
+    -   move writePatch and gzWritePatch outside ShowPatch
+    -   get rid of some spurious arguments to impossible
+    -   improve name
+    -   Darcs.Patch.Apply doesn't have orphans any more
+    -   generalise type of xmlSummary
+    -   tighten up type of handlePendForAdd
+    -   Tighten up type of applyToWorking
+    -   Tighten up type in Darcs.Rollback
+
+2010-10-17 Florent Becker
+  ~ -   more thorough checks of \_darcs/format handling
+    -   Test for issue1978
+
+

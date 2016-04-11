@@ -1,0 +1,248 @@
+---
+title: Darcs Cache System
+...
+
+The darcs cache system basically helps us to speed up some operations
+and save disk space hardlinking files which are shared among local
+repositories, it keeps caches of patches, inventories and pristine
+files.
+
+The cache system is really helpful when we are pulling from a remote
+repository it allows darcs to avoid downloading patches which had been
+acquired previously, saving **time** and "bandwidth".
+
+We can work with the source files and create per-repository caches,
+read-only caches and even set a primary source repository above any used
+in a `darcs clone` or `darcs pull` command.
+
+The global cache is enable by default in \~/.darcs/cache, if you don't
+have one and you are pulling from another repository (local or remote)
+it will try to search first in \~/.darcs/cache and create the directory
+if it doesn't exist, unless you include the flag --no-cache.
+
+# Questions this document aims to answer
+
+1.  What exactly happens when Darcs attempts to fetch a file with a
+    given hash?
+2.  What is the structure of a cache directory and its relationship with
+    the structure of a Darcs repository?
+3.  How do lazy repositories use the cache system?
+
+# Global Cache Directory
+
+A cache directory is formed by the subdirectories inventories, patches
+and pristine.hashed. The files in each repositories are hardlinked and
+stored in a [hashed format](NamedPatch#on-disk-patch-name). The
+structure of a cache directory mirrors the contect of the \_darcs
+directory.
+
+patches
+  ~ Contains patches used by local repositories. When you pull or clone
+    from a remote or even local repository, the patches are hardlinked
+    to this directory, unless the --no-cache flag is given.
+
+inventories
+  ~ List of the patches.
+
+pristine.hashed
+  ~ Mirror of working checkouts.
+
+# Sources list
+
+The file \_darcs/prefs/sources contains a list of darcs cache sources.
+When darcs gets a repository, it copies the part \_darcs/prefs/sources
+of the repository being fetched, filtering out local paths if the
+repository is not on the same filesystem.
+
+# Retrieving hashed files
+
+We assume we already have identified the hash of the file which we want
+to fetch, the directory for which it belongs, and the repository in
+which it is going to be located.
+
+## Steps
+
+1.  Call a function giving it the hash of the file, the repository in
+    which is going to be located, the directory for which the hashed
+    file belongs, and a flag indicating whether we can copy just from
+    local files or anywhere.
+2.  If the flag indicates that we can copy from anywhere, darcs will try
+    to copy or hardlink the file to the global cache (below).
+3.  Search the file with the given hash in any of the sources in the
+    cache.
+
+    > 1.  Select the first source in the cache list
+    > 2.  Check if the given source is a local repository or a cache.
+    > 3.  If is a local repository and contains the patch, read it from
+    >     that repository.
+    > 4.  If is a cache, try to read the file and create a hardlink to
+    >     it.
+    > 5.  If fetching the file fails in both cases, select the next
+    >     source and go to \#2
+    > 6.  if we run out of sources the function fails.
+
+4.  If the file was read, it returns a tuple with the file and the
+    location from which it was fetched. But if all the list was
+    traversed without results, it will fail.
+
+# Handling unreachable sources
+
+If trying to fetch a file from one of the entries in the sources list
+ends in an error, darcs checks what caused the error, and determinate if
+that entry should or should not be added to the list of bad caches, once
+an entry is added to such a list, it's not longer tried for the rest of
+the session and at the end darcs suggest to the user to remove it from
+the sources files if it is not used. If an error is get from a local
+entry darcs checks if that entry is still reachable, if not, it gets
+added to the list of bad caches, if is reachable so it means that just
+the specific file it was looking wasn't there, so it gets added to a
+list of "reachable" caches, and if an error rise again with that
+repository it doesn't bother checking if the repository exist as it
+already checked it. When the error is using a remote entry, it first
+look at such an error, if the error was cause for a timeout it gets
+added to the bad cache list, if not, it checks if the repository is
+still reachable, and do the same that it does for local entries.
+
+# Lazy repositories and the cache system
+
+When a repository is cloned lazily, darcs adds an entry in
+\_darcs/prefs/sources, so whenever you use a commands which needs to
+work with all the patches, darcs try to fetch the missing patches using
+the entries from the cache, since the original repository was added to
+sources, it is also added to the cache (since darcs relies on the source
+file to load the cache). For example if we clone a repository lazily and
+the we delete the entry for that repository from the sources file, we
+will get an error when we try to use a command which requires all the
+patches, because it won't find in any of the entries of the cache the
+specified file.
+
+# Examples
+
+This is a small example which demonstrates how the operations can
+speed-up when we use the cache, let's say we want to grab a copy of
+Tahoe-LAFS, I use the `clone` command and take its time:
+
+    $ time darcs clone --lazy http://tahoe-lafs.org/source/tahoe-lafs/trunk tahoe-lafs
+    Finished cloning.
+    real   4m54.462s
+    user   0m3.068s
+    sys    0m1.024s
+
+We see it took 4m54.462s (it change depending of the internet connection
+speed). As the --no-cache flag isn't specified so it uses the global
+cache.
+
+If I want to do other `clone` :
+
+    $time darcs clone --lazy http://tahoe-lafs.org/source/tahoe-lafs/trunk tahoe-lafs2
+    Finished cloning.
+    real   0m2.259s
+    user   0m0.420s
+    sys    0m0.144s
+
+We see that this time it just took 2.259s, that's because it didn't have
+to download all the files again as they were already in the global cache
+(\~/.darcs/cache).
+
+Similarly if the global cache is removed and we try to get again:
+
+    $time darcs clone --lazy http://tahoe-lafs.org/source/tahoe-lafs/trunk tahoe-lafs3
+    Finished cloning.
+    real   4m42.037s
+    user   0m3.228s
+    sys    0m0.908s
+
+We can see that it takes the same time as the first clone that we did.
+
+* * * * *
+
+# Internals
+
+The idea here is to dig deeply in the Darcs.Repositories.Cache,and
+showing how it plays with other modules.
+
+### Darcs.Repository.Prefs
+
+This module is in charge of the user configuration settings, it has some
+helper functions which help to the creation of the default prefs
+directory and its contents. It initialize the boring, binaries and motd
+files, also is here where the cache for a given repository is loaded,
+the function "getCaches" does the job.
+
+### Darcs.Repository.Cache
+
+The Cache module is where the core cache functionality is located. This
+module contains the definition of the cache data type which is given by:
+
+> data CacheLoc = Cache !CacheType !WritableOrNot !String
+
+Each repository has a type Cache, which is just a wrap for a list of
+caches, each caches represent a source from which it could pull patches,
+inventories or pristines.
+
+> newtype Cache = Ca [CacheLoc]
+
+The cache module is extensively used by the darcs commands, especially
+for pulling and when where are making copies of other repositories
+(clone).
+
+This module is in charge of fetching a file with a given hash, the
+process is described in [Retrieving hashed
+files](CacheSystem#retrieving-hashed-files)
+
+### Darcs.Repository.HashedRepo
+
+This module handles the operations for hashed repositories, it interacts
+with the cache each time it reads, writes or copies a repository.
+
+### Darcs.Repository.HashedIO
+
+IO operations around hashed repositories.
+
+#### Why are HashedRepo and HashedIO separate modules?
+
+This seems to be a design decision, after digging in the mailing list I
+found
+[http://lists.osuosl.org/pipermail/darcs-users/2008-August/012906.html](http://lists.osuosl.org/pipermail/darcs-users/2008-August/012906.html)
+, where I discover that the operations to deal with a hashed repository
+were at the beginning in Darcs.Repository.Prefs.
+
+The fact of being called HashedIO is also a design decision and its name
+is more informative abour what it actually does, I found
+[http://irclog.perlgeek.de/out.pl?channel=darcs;date=2008-08-14](http://irclog.perlgeek.de/out.pl?channel=darcs;date=2008-08-14)
+where the name of this module was discussed, they also mention
+LazyDirectoryTree and SlurpDirectory as possible name for it.
+
+HashedIO handles low level operations such as reading and writing, for
+example it contains a function mCreateDirectory, which modifies the
+state of the working repository, creating a new directory.
+
+### Darcs.Repository.InternalTypes
+
+Contains the definition of the data type Repository and some helper
+functions which help us to operate over a given repository.
+
+### Darcs.Repository.Repair
+
+Module which helps to perform operations which fix a given repository,
+this module is used by the commands check, optimize and repair.
+
+### Darcs.Repository
+
+Bridge between the module from Darcs.Repository and the rest.
+
+# Future Work
+
+> 1.  Rewrite curl module: The code writing in C used to called libcurl
+>     is doing too much high level code, in theory we should be able to
+>     do all the basic setting in Haskell and then just calling the
+>     function which curl exposes.
+> 2.  Recently Petr
+>     [complained](http://irclog.perlgeek.de/darcs/2010-08-11#i_2691430)
+>     about copyFileUsingCache in Cache.hs, it should be re-factored.
+
+# See Also
+
+-   [Named Patch](NamedPatch).
+-   [Hashed pristine format](HashedPristine).
+

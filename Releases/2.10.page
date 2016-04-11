@@ -1,0 +1,223 @@
+# 2.10
+
+# Availability
+
+Darcs 2.10.3 is available by `cabal install darcs-2.10.3`; you can also download the [source
+tarball](http://hackage.haskell.org/packages/archive/darcs/2.10.3/darcs-2.10.3.tar.gz).
+
+The 2.10 branch is available as a darcs repository from
+<http://darcs.net/releases/branch-2.10>, and an up-to-date zip archive
+can be downloaded from <http://darcs.net/releases/branch-2.10/branch-2.10.zip>.
+
+# What's new in 2.10.3 (released 2016-01-29) #
+
+- implement weak repository hash and show it in "darcs show repo" (Guillaume)
+- whatsnew --machine-readable for more parsability (Guillaume)
+- enhance Git import: empty directories, escape/unescape file names (Owen, Guillaume)
+- force grep to treat output of locale as text (Ganesh)
+- expose API for "darcs diff" (Ganesh)
+- make commit an alias for record (Guillaume)
+- bump dependencies on vector, process, HUnit, binary, transformers,
+  time, HTTP, transformers-compat
+
+# What's new in 2.10.2 (released 2015-11-09) #
+
+ - optimize patch apply code memory use
+ - make patch selection lazier in presence of matchers
+ - switch patches retrieval order when using packs
+ - switch from dataenc (deprecated) to sandi
+ - finish updating help strings with new command names
+ - clean contrib scripts
+ - disable mmap on Windows
+ - enhance darcs send message
+ - fix quickcheck suite
+ - shorter README with quickstart instructions
+ - fixed the following bugs:
+    - issue2457: fix darcs-test command line options
+    - issue2463: building darcs on powerpc
+    - issue2444: added default interactivity parameter to isInteractive
+
+# What's new in 2.10.1 (released 2015-07-09) #
+
+- support terminfo 0.4, network 2.6, zlib 0.6, quickcheck 2.8 and attoparsec 0.13
+- errorDoc now prints a stack trace (if profiling was enabled) (Ben Franksen)
+- beautified error messages for command line and default files (Ben Franksen)
+- generalized doFastZip for darcsden support
+- fixed the following bugs:
+      - issue2449: test harness/shelly: need to handle mis-encoded/binary data (Ganesh Sittampalam)
+      - issue2423: diff only respecting --diff-command when a diff.exe is present (Alain91)
+      - issue2447: get contents of deleted file (Ben Franksen)
+      - issue2307: add information about 'darcs help manpage' and 'darcs help markdown' (Dan Frumin)
+      - issue2461: darcs log --repo=remoterepo creates and populates _darcs (Ben Franksen)
+      - issue2459: cloning remote repo fails to use packs if cache is on a different partition (Ben Franksen)
+
+# What's new in 2.10.0 (released 2015-04-19) #
+
+## New features ##
+
+- [`darcs rebase`](/Using/Rebase): enable deep amending of history
+  (Ganesh Sittampalam)
+- `darcs pull --reorder`: keep local-only patches on top of mainstream patches
+  (Ale Gadea, Ganesh Sittampalam)
+- `darcs dist --zip`: generate a zip archive from a repository
+  (Guillaume Hoffmann)
+- patch bundle contexts are minimized by default.
+  Enables bundles to be applied to more repositories. (Guillaume Hoffmann)
+- [`darcs convert export/import`](/Using/Convert) for conversion
+  to/from VCSes supporting the fast-export protocol (Petr Rockai,
+  Owen Stephens, Guillaume Hoffmann, Lele Gaifax, Ben Franksen)
+- [`darcs test --backoff`](/Using/Test): exponential backoff test strategy,
+  faster than bisect on big repositories (Michael Hendricks)
+- [work normally on sshfs-mounted repositories](/SSH) (Nathaniel Filardo)
+- [automatic detection of file/directory moves, and of token replaces](/Using/Record)
+  (Jose Neder)
+- patience diff algorithm by default (Jose Neder)
+- interactive mode for whatsnew (Dan Frumin) 
+- `tag --ask-deps` to create tags that may not include some patches
+  (Ganesh Sittampalam)
+
+## User Interface ##
+
+- add a last question after all patches have been selected to confirm
+  the whole selection (Florent Becker)
+- [command names](/RosettaStone):
+    - `clone` is the new name of `get` and `put`
+    - `log`   is the new name of `changes`
+    - `amend` is the new name of `amend-record`
+- show output of `log` into a pager by default (Guillaume Hoffmann)
+- the output of `log` is more similar to git's:
+    - show patch hash in UI (hash of the patch's metadata)
+    - put author and date on separate lines (Guillaume Hoffmann)
+- enable to match on patch hash prefix with -h and --hash
+ (Guillaume Hoffmann, Gian Piero Carrubba)
+- better messages:
+    - better error messages for http and ssh errors (Ernesto Rodriguez)
+    - `init`, `add`, `remove`, `move` and `replace` print
+      confirmation messages (Guillaume Hoffmann)
+- `rollback` only happens in the working copy (Florent Becker, Guillaume Hoffmann)
+- `darcs send` no longer tries to send a mail by default (Eric Kow)
+- when no patch name given, directly invoke text editor (Jose Neder, Guillaume Hoffmann)
+- use nano as default text editor instead of vi (Guillaume Hoffmann)
+- keep log files for patch name and mail content in _darcs (Ale Gadea)
+- `optimize` and `convert` are now supercommands (Guillaume Hoffmann)
+- improve `darcs help environment` and `darcs help markdown` (Radoslav Dorcik, Guillaume Hoffmann)
+- warn about duplicate tags when creating a new one (Ale Gadea)
+- allow `darcs mv` into known, but deleted in working, file (Owen Stephens)
+- improve` --not-in-remote`, allowing multiple repos and use default (Owen Stephens)
+
+## Performance ##
+
+- faster `darcs diff` (Petr Rockai)
+- faster `log` and `annotate` thanks to patch index data structure (BSRK Aditya,
+  Benedikt Schmidt, Eric Kow, Guillaume Hoffmann, Ganesh Sittampalam)
+- faster push via ssh by using compression (Ben Franksen)
+- cloning to an ssh destination (formerly `darcs put`) is more efficient
+  (Guillaume Hoffmann)
+- faster internal representation of patch hashes (Guillaume Hoffmann)
+- when cloning from http, use packs in a more predictable way (Guillaume Hoffmann)
+- store global cache in bucketed format (Marcio Diaz)
+
+## Developer-related ##
+
+- require and support GHC 7.4 to 7.10 (Ganesh Sittampalam)
+- replace type witness CPP macros with plain Haskell (Eric Kow)
+- hashed-storage is bundled into darcs (Ganesh Sittampalam)
+- replace C SHA256 bindings with external libraries (Ganesh Sittampalam)
+- move the bits of the datetime package we need into Darcs.Util.DateTime
+  (Ganesh Sittampalam)
+- build Darcs once rather than thrice. (Eric Kow)
+- remove home page and manual from darcs' repository (Guillaume Hoffmann)
+- run tests through cabal test (Ryan Desfosses)
+- run fewer darcs-1 related tests in testsuite (Ganesh Sittampalam)
+- Use custom replHook to fix cabal repl (Owen Stephens)
+- darcs.cabal: make Haskell2010 the default-language for all stanzas (Ben Franksen)
+- always compile with mmap support (Ganesh Sittampalam)
+- new options subsystem (Ben Franksen)
+- various cleanups, code restructurations and refactoring, haddocks
+  (Will Langstroth, Owen Stephens, Florent Becker, Guillaume Hoffmann,
+  Michael Hendricks, Eric Kow, Dan Frumin, Ganesh Sittampalam)
+
+## Issues resolved in Darcs 2.10 ##
+
+- issue346: implement "patience diff" from bzr (Jose Neder)
+- issue642: Automatic detection of file renames (Jose Neder)
+- issue822: generalized the IO Type for better error messages and exception handling (Ernesto Rodriguez)
+- issue851: interactive mode for whatsnew (Dan Frumin)
+- issue904: Fix record on Linux/FUSE/sshfs (fall back to sloppy locks automatically) (Nathaniel Filardo)
+- issue1066: clone to ssh URL by locally cloning then copying by scp (Guillaume Hoffmann)
+- issue1268: enable to write darcs init x (Radoslav Dorcik)
+- issue1416: put log files in tempdir instead of in working dir (Ale Gadea)
+- issue1514: send --minimize-context flag for send (Guillaume Hoffmann)
+- issue1624: bucketed cache (Marcio Diaz)
+- issue1828: file listing and working --dry-run for mark-conflicts (Guillaume Hoffmann)
+- issue1987: Garbage collection for inventories and patches (Marcio Diaz)
+- issue2181: put cache in $XDG_CACHE_HOME (~/.cache by default) (Guillaume Hoffmann)
+- issue2193: make that finalizeTentativeChanges no longer run tests (Guillaume Hoffmann)
+- issue2198: move repo testing code to Darcs.Repository.Test (Guillaume Hoffmann)
+- issue2200: darcs replace complains if no filepaths given (Owen Stephens)
+- issue2204: do not send mail by default (Eric Kow)
+- issue2237: prevent patch index creation for non-hashed repos (Owen Stephens)
+- issue2235: Accept RFC2822 dates (Dave Love)
+- issue2246: add default boring entry for emacs session save files (Owen Stephens)
+- issue2253: attempting to use the patch index shouldn't create it on OF repos (Owen Stephens)
+- Issue2278: Document default value for --keep-date / --no-keep-date (Mark Stosberg)
+- issue2199: getMatchingTag needs to commute for dirty tags (Ganesh Sittampalam)
+- issue2247: move patch index creation into the job running code (Ganesh Sittampalam)
+- issue2238: let optsModifier remove all occurrences of LookForAdds (Gian Piero Carrubba)
+- issue2236: make 'n' an alias for 'q' in lastregret questions (Gian Piero Carrubba)
+- issue2155: Expurgate the non-functional annotate --xml-output option (Dave Love)
+- issue2248: always clean up rebase-in-progress state (Ganesh Sittampalam)
+- issue2270: fixed darcs changes -i --only-to-files (Sebastian Fischer)
+- issue2282: don't allow remote operations to copy the rebase patch (Ganesh Sittampalam)
+- issue2287: obliterate -O doesn't overwrite existing file. (Radoslav Dorcik)
+- issue2227: move the rebase patch to the end before an amend-record (Ganesh Sittampalam)
+- issue2277: rebase suspend and unsuspend supports --summary. (Radoslav Dorcik)
+- issue2311: posthook for 'get' should run in created repo (Sebastian Fischer)
+- issue2312: posthooks for 'record' and 'amend-record' should receive DARCS_PATCHES (Sebastian Fischer)
+- issue2163: new option for amend, select author for patch stealing. (Radoslav Dorcik)
+- issue2321: when no patch name given, directly invoke text editor (Jose Neder)
+- issue2320: save prompted author name in ~/.darcs/author instead of ./_darcs/prefs/author (Jose Neder)
+- issue2250: tabbing in usageHelper - pad by max length of command name (BSRK Aditya)
+- issue2309: annotate includes line numbers (Owen Stephens)
+- issue2334: fix win32 build removing file permission functions (Guillaume Hoffmann)
+- issue2343: darcs amend-record does not record my change (Jose Neder)
+- issue2335: one liner when adding tracked files if not verbose (Guillaume Hoffmann)
+- issue2313: whatsnew -l: Stack space overflow (Jose Neder)
+- issue2347: fix amend-record --prompt-long-comment (Guillaume Hoffmann)
+- issue2348: switch to cabal's test framework (Ryan Desfosses)
+- issue2209: Automatically detect replace (Jose Neder)
+- issue2332: ignore case of characters in prompt (Guillaume Hoffmann)
+- issue2263: Option --set-scripts-executable is not properly documented (Ale Gadea)
+- issue2367: rename amend-record to amend, make --unrecord more visible (Guillaume Hoffmann)
+- issue2345: solution using cabal's checkForeignDeps (Dan Frumin)
+- issue2357: switching to regex-compat-tdfa for unicode support (Dan Frumin)
+- issue2379: only use packs to copy pristine when up-to-date (Guillaume Hoffmann)
+- issue2365: correctly copy pristine in no-working-dir clones (Guillaume Hoffmann)
+- issue2244: darcs tag should warn about duplicate tags (Ale Gadea)
+- issue2364: don't break list of 'bad sources' (Sergei Trofimovich)
+- issue2361: optimize --reorder runs forever with one repository (Ale Gadea)
+- issue2364: fix file corruption on double fetch (Sergei Trofimovich)
+- issue2394: make optimize a supercommand (Guillaume Hoffmann)
+- issue2396: make convert a supercommand and enhance help strings (Guillaume Hoffmann)
+- issue2314: output-auto-name in defaults file (Ben Franksen)
+- issue2388: check if inventories dir has been created (Owen Stephens)
+- issue2249: Rename isFile to isValidLocalPath and WorkRepoURL to WorkRepoPossibleURL (Mateusz Lenik)
+- issue2153: allow skipping backwards through depended-upon patches (Andreas Brandt)
+- issue2380: allow darcs mv into known, but deleted in working, file (Owen Stephens)
+- issue2403: need to avoid moving the rebase patch to the end (Ganesh Sittampalam)
+- issue2409: implement darcs rebase apply (Ganesh Sittampalam)
+- issue2385: invoke pager without temporary file (Guillaume Hoffmann)
+- issue2333: better error message when pushing and darcs not in path (Ben Franksen)
+
+
+## Known issues ##
+
+These are known new issues in darcs 2.10:
+
+- issue2269: rebase should warn about stolen patches at suspend, not unsuspend
+- issue2272: darcs rebase unsuspend should automate or semi-automate handling unrecorded changes
+- issue2276: darcs rebase unsuspend needs UI improvements for "You are not... Amend anyway?"
+- issue2359: convert --export mishandles Unicode filenames
+- issue2372: Please remove "HINT: I could not reach..." message
+- issue2436: rollback --patches takes ages before first prompt
+- issue2445: internal error if suspended patch is pulled into repository again

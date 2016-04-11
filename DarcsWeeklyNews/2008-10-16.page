@@ -1,0 +1,264 @@
+# News and discussions
+
+1.  Improving the darcs build system? David Roundy is doing some
+    interesting work on building darcs with his franchise build system.
+    There are also attempts by other folks to Cabalise darcs.
+    Discussions are underway about the future of building darcs.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-October/014642.html](http://lists.osuosl.org/pipermail/darcs-users/2008-October/014642.html)
+    -   [http://wiki.darcs.net/index.html/CabalWishlist](http://wiki.darcs.net/index.html/CabalWishlist)
+    -   darcs get
+        [http://code.haskell.org/darcs/cabalised](http://code.haskell.org/darcs/cabalised)
+
+2.  Type Correct Changes: A Safe Approach to Version Control
+    Implementation Jason Dagit gave a Galois tech talk on the use of
+    Haskell GADTs to make darcs code more transparent, robust and
+    approachable.
+    -   [http://www.galois.com/blog/2008/10/09/type-correct-changes-a-safe-approach-to-version-control-implementation](http://www.galois.com/blog/2008/10/09/type-correct-changes-a-safe-approach-to-version-control-implementation)/
+    -   [http://www.galois.com/\~dons/slides/08-10-dagit.pdf](http://www.galois.com/~dons/slides/08-10-dagit.pdf)
+
+3.  Haskell, static typing, type witnesses and darcs. David Roundy gave
+    a darcs talk at the ACM (5 October), presenting darcs and also
+    explaining how the type witnesses are helping us to avoid errors in
+    the code.
+    -   [http://files.codersbase.com/droundy-08.pdf](http://files.codersbase.com/droundy-08.pdf)
+
+4.  Darcs hacking sprint only 9 days away!
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-October/014541.html](http://lists.osuosl.org/pipermail/darcs-users/2008-October/014541.html)
+
+# Reviewers
+
+Thanks to our patch reviewers for this week for giving David a hand!
+
+-   Trent W. Buck
+-   Jason Dagit
+-   Nathan Gray
+-   Simon Michael
+
+# Issues resolved in the last week (3)
+
+issue1062 Eric Kow
+  ~ -   ignore setCooked and setEcho errors.
+    -   [http://bugs.darcs.net/issue1062](http://bugs.darcs.net/issue1062)
+
+issue1105 Dmitry Kurochkin
+  ~ -   check if default options are valid.
+    -   [http://bugs.darcs.net/issue1105](http://bugs.darcs.net/issue1105)
+
+issue1139 David Roundy
+  ~ -   make special cases handle no arguments gracefully.
+    -   [http://bugs.darcs.net/issue1139](http://bugs.darcs.net/issue1139)
+
+# Patches applied in the last week (96)
+
+2008-10-14
+[benjamin.franksen@bessy.de](mailto:benjamin.franksen@bessy.de)
+  ~ -   finished cleanup of default\_boring entries
+
+2008-10-14 David Roundy
+  ~ -   simplify pull\_many\_files.sh.
+
+2008-10-14 Eric Kow
+  ~ -   Use fgrep in printer.sh test (more portable than grep -F)
+
+2008-10-13 David Roundy
+  ~ -   have makefile make hspwd rather than shell\_harness.
+    -   slightly hokey approach to solving pwd problem.
+
+2008-10-12 Matthias Kilian
+  ~ -   Remove bashisms and GNUisms
+
+2008-10-05 Eric Kow
+  ~ -   Restore quiet grep in portable\_pwd
+    -   Disable a test that triggers a setCooked failure under Windows.
+
+2008-10-05 David Roundy
+  ~ -   further makefile cleanups.
+
+2008-10-05 Eric Kow
+  ~ -   Simplify testing in makefile.
+    -   Revise test documentation to reflect consolidation to shell
+        tests.
+    -   Remove Perl test harness and convenience copies.
+    -   Do not use Perl test harness.
+    -   Hopefully fix issue595 test on Solaris.
+
+2008-10-05 David Roundy
+  ~ -   fix bug in external.sh translation.
+
+2008-10-05 Eric Kow
+  ~ -   Translate printer test into shell.
+    -   Translate still more Perl tests into shell.
+    -   Translate pull\_many\_files tests into shell and avoid redoing
+        work.
+
+2008-10-04 Eric Kow
+  ~ -   Skip filepath test which does not work on Windows.
+    -   Fix non-portable use of grep -q in tests.
+    -   Make sed usage more portable in hidden\_conflict2 test.
+
+2008-10-04 Eric Kow
+  ~ -   Translate some more Perl tests into shell.
+
+2008-10-13 David Roundy
+  ~ -   add test that timestamps are properly set.
+    -   simplify write\_default\_prefs.
+
+2008-10-12 [ben.franksen@online.de](mailto:ben.franksen@online.de)
+  ~ -   documented provenance of .tmp\_versions and .DS\_Store files in
+        default boring
+
+2008-10-11 David Roundy
+  ~ -   resolve issue1139: make special cases handle no arguments
+        gracefully.
+    -   remove reimplementation of zipWith.
+    -   fix incompatibilities with ghc 6.6
+    -   refactor Match to handle --store-in-memory itself.
+    -   make writeSlurpy work properly when given "."
+    -   add tests for issue1139.
+
+2008-10-11 Trent W. Buck
+  ~ -   Copyright and licensing notes and rationales.
+
+2008-10-11 Dmitry Kurochkin
+  ~ -   Document DARCS\_KEEP\_TMPDIR in manual.
+    -   Documentation for DARCS\_KEEP\_TMPDIR.
+
+2008-10-10 David Roundy
+  ~ -   add new test that optimize --reorder behaves itself on lazy
+        repos.
+    -   give more debug output in test.
+
+2008-10-10
+[florent.becker@ens-lyon.org](mailto:florent.becker@ens-lyon.org)
+  ~ -   add a --prompt-for-dependencies to restore the default behaviour
+
+2008-10-11 [ben.franksen@online.de](mailto:ben.franksen@online.de)
+  ~ -   cleanup default boring
+
+2008-10-08 Eric Kow
+  ~ -   Fix spurious diff and missing cd in diff test.
+    -   Help the test harness clean to up after tests.
+
+2008-10-10 Dmitry Kurochkin
+  ~ -   Minor refactor in URL.urlThread.
+
+2008-10-10 David Roundy
+  ~ -   clean up code formatting in Hopefully.
+    -   clean up unused exports in Hopefully.
+
+2008-10-01
+[florent.becker@ens-lyon.org](mailto:florent.becker@ens-lyon.org)
+  ~ -   haddock documentation for Hopefully
+
+2008-10-10 Eric Kow
+  ~ -   resolve issue1062: ignore setCooked and setEcho errors.
+
+2008-10-10 David Roundy
+  ~ -   add missing createLink to win32/System/Posix/Files.hsc.
+    -   make make\_changelog default to quiet output.
+    -   remove unused and unneeded Workarounds.
+    -   rename lazy-deps to dont-prompt-for-dependencies.
+
+2008-10-08 Florent Becker
+  ~ -   basic tests for --lazy-deps
+    -   added a --lazy-deps option
+    -   refactor of SelectChanges
+
+2008-09-24 David Roundy
+  ~ -   rewrite push\_coalesce\_patch to avoid calls to lengthFL.
+    -   change a bit of code to accept FilePathLike arguments.
+
+2008-09-26 [me@mornfall.net](mailto:me@mornfall.net)
+  ~ -   Implement Commands.Check in terms of Repository.Repair
+        functionality.
+    -   Implement Commands.Repair in terms of Repository.Repair
+        functionality.
+    -   Export testTentative from Darcs.Repository.
+    -   Implement Repository.Repair to provide primitives for check and
+        repair commands.
+
+2008-09-24 David Roundy
+  ~ -   keep changepref patches from breaking the toSimple optimization.
+    -   make various autoconf simplifications.
+
+2008-10-05 Eric Kow
+  ~ -   Translate merging\_newlines bug into shell and restore bug
+        context.
+    -   Remove residual Perlisms in match-date.
+
+2008-09-28 Eric Kow
+  ~ -   Use example.com in external.pl tests.
+
+2008-10-04 David Roundy
+  ~ -   fix incorrect merging\_newlines.sh test.
+
+2008-10-04 Eric Kow
+  ~ -   Move merging\_newlines test to bugs and add a simpler version.
+
+2008-10-09 David Roundy
+  ~ -   Restore send-external.sh test.
+    -   use minimum Cachable time in corner case where f/=f' and c/=c'.
+    -   add test of Ignore-this functionality.
+    -   warn users if they try to record a change beginning with
+        Ignore-this:.
+    -   allow users to add their own ignored information to patches.
+    -   remove excessive indentation that made the code very hard to
+        read.
+
+2008-10-08 Dmitry Kurochkin
+  ~ -   When requesting same URL with different cachability choose least
+        cachable.
+
+2008-10-08 Thorkil Naur
+  ~ -   Improve test pull.sh cleanup
+
+2008-10-06 Stephen Hicks
+  ~ -   Allow dist command to take a tag argument (issue 286).
+
+2008-10-08 David Roundy
+  ~ -   clean up RepoPath a bit (removing unused methods from classes).
+    -   clean up exportation of SlurmMonad private internals.
+
+2008-10-07 Petr Rockai
+  ~ -   Optimize clean\_hashdir's use of cleanCaches.
+
+2008-10-07 Florent Becker
+  ~ -   partial haddock documentation of Arguments.lhs
+
+2008-10-05 David Roundy
+  ~ -   mv nfs-failure test to the bugs/ folder, since it fails.
+
+2008-10-05 Eric Kow
+  ~ -   Translate some Perl bugs into shell.
+    -   Translate date matching test to shell.
+    -   Translate some more Perl tests into shell.
+    -   Move non-date-matching code out of match.pl
+    -   Fix minor bug in conflict-doppelganger test.
+
+2008-09-25 Eric Kow
+  ~ -   Update tests to reflect --darcs-2 default.
+
+2008-10-04 Eric Kow
+  ~ -   Translate some more Perl tests into shell.
+
+2008-10-03 Tommy Pettersson
+  ~ -   remove -q from diff in test, not supported on solaris
+
+2008-10-03 Eric Kow
+  ~ -   Translate some Perl tests into shell.
+    -   Convert tag.pl test into shell.
+
+2008-10-01 David Roundy
+  ~ -   make default\_boring and default\_binaries NOINLINE
+    -   fix bug in 1105 fix that led to improper overrides of defaults
+    -   add test that overriding of defaults works right.
+
+2008-09-29 Dmitry Kurochkin
+  ~ -   Test for issue1105.
+    -   Resolve issue1105: check if default options are valid.
+
+2008-09-26 Eric Kow
+  ~ -   Restore 'simplify patches in rollback'.
+    -   Restore issue27 patches.
+
+

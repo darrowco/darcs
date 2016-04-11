@@ -1,0 +1,110 @@
+# News and discussions
+
+1.  Confirmed: the next Hacking Sprint will be in IRILL, Paris on
+    February 15, 16 and 17:
+
+    -   <http://darcs.net/Sprints/2013-02>
+    -   <http://www.irill.org/>
+
+2.  Darcs HEAD has been fixed to work with GHC 7.6 without encoding
+    bugs, go ahead and try it!
+
+    -   <http://bugs.darcs.net/issue2286>
+    -   <http://hub.darcs.net/darcs/darcs-screened/patch/20130118225947-81bb2>
+
+# Issues resolved in the last week (4)
+
+issue2199 Ganesh Sittampalam
+  ~ -   getMatchingTag needs to commute for dirty tags
+    -   <http://bugs.darcs.net/issue2199>
+
+issue2236 Gian Piero Carrubba
+  ~ -   make 'n' an alias for 'q' in lastregret questions
+    -   <http://bugs.darcs.net/issue2236>
+
+issue2238 Gian Piero Carrubba
+  ~ -   let optsModifier remove all occurrences of LookForAdds
+    -   <http://bugs.darcs.net/issue2238>
+
+issue2247 Ganesh Sittampalam
+  ~ -   move patch index creation into the job running code
+    -   <http://bugs.darcs.net/issue2247>
+
+
+# Patches applied in the last week (45)
+
+2012-12-30 Ganesh Sittampalam
+  ~ -   add some comments about "nearby" darcs, and print out the one that was found
+    -   make darcs-test look "nearby" for a darcs exe to use
+    -   canonize myself in .authorspellings
+    -   minor refactoring
+    -   Expose some of the innards of ShowAuthors for use in the API
+    -   Don't expose intermediate details externally in Darcs.Patch.Annotate
+    -   annotate needs to use posix filepaths
+    -   provide a better error message on failure
+    -   be a bit more robust when deleting the patch index
+
+2012-12-20 BSRK Aditya
+  ~ -   Report an error if --disable-patch-index fails
+
+2012-12-28 Ganesh Sittampalam
+  ~ -   fix test on windows: replace shell script with haskell program
+    -   need to do case-insensitive comparison on Windows
+
+2012-10-19 Mark Stosberg
+  ~ -   PatchIndex: Add test coverage for a patch-indexed repo being accessed by older darcs.
+    -   Start documenting key flags in README.
+
+2012-11-11 Ganesh Sittampalam
+  ~ -   bump version to 2.9.6
+    -   TAG 2.9.6
+    -   need to treat paths in prefs/binaries as Posix, even on Windows
+
+2012-09-29 Owen Stephens
+  ~ -   Implement Repository/Prefs.normalise in terms of standard FilePath functions
+
+2012-10-26 Ganesh Sittampalam
+  ~ -   get rid of unsafePerformIO in cleanLocalDate
+    -   get rid of unused readLocalDate
+
+2012-12-21 Owen Stephens
+  ~ -   Refactor implementation of environment help
+
+2012-12-19 Gian Piero Carrubba
+  ~ -   avoid displaying 'Unknown ...' in the output of `darcs help environment`
+
+2012-11-11 Ganesh Sittampalam
+  ~ -   break out Darcs.Util.AtExit from Darcs.Util.Global
+    -   move remains of Darcs.Util to be Darcs.Util.File
+
+2012-09-15 Eric Kow
+  ~ -   Remove redundant Module field from module haddocks.
+
+2012-11-02 Ganesh Sittampalam
+  ~ -   break out Darcs.Util.Environment
+    -   move breakCommand into Darcs.Util.Text
+    -   break out Darcs.Util.Exception from Darcs.Util
+    -   break out Darcs.Util.Prompt from Darcs.Util
+    -   break out Tree functions from Darcs.UI.Commands.Util
+    -   break Darcs.Util.Ssh out from Darcs.Util.Global
+    -   resolve issue2247: move patch index creation into the job running code
+    -   test that patch index is re-created if not present
+    -   resolve issue2199: getMatchingTag needs to commute for dirty tags
+
+2012-12-13 Gian Piero Carrubba
+  ~ -   resolve issue2236: make 'n' an alias for 'q' in lastregret questions
+
+2012-12-18 Ganesh Sittampalam
+  ~ -   tweak test to make sure that patches are actually selected
+    -   fix test following change in output
+    -   fix test for Windows
+    -   use throwIO instead of throw
+    -   restrict imports
+    -   provide verbose diagnostics for "can't suspend"
+    -   replace debug function in ssh Connection with string
+    -   reorganise use of unsafePerformIO in transcoding a bit
+    -   replace instance Show Doc with an explicit function
+
+2012-12-16 Gian Piero Carrubba
+  ~ -   resolve issue2238: let optsModifier remove all occurrences of LookForAdds
+

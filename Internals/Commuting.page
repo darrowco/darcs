@@ -1,0 +1,37 @@
+## Hunk patches
+
+### Adjacent hunks
+
+Adjacent hunks are not allowed to commute because there is no
+sensible way to preserve their line-number order under commutation.
+
+![image](/Using/hunk-dependency.png)\
+
+To elaborate on this, it helps to say that when we have two hunk
+patches on the same file, we can think of one of them as being
+“northern” (nearer the top of the file), and the other as being
+“southern” (nearer the bottom). Consider for example p4 and p5 in the
+diagram above (*).  Here we can say that p4 is the southern patch
+(@line6 +duty), whereas p5 is the northern patch (@line4 +clean). The
+northern patch can always be seen as adding (or removing!) padding to
+the textual context on which southern patch applies. This isn't so
+obvious because in this particular example, the northern patch occurs
+after the southern patch.  But if we commuted them we have to adjust
+p4 to (@7+duty) while leaving p5 intact.  The southern patch shifts
+(it's affected by the padding) and the northern patch always stays the
+same (it provides the padding so what does it care?).
+
+Reasoning on static northern patches and shifty southern patches works
+so long as the patches are non-adjacent.  Suppose that after p5 we had
+a p6b (@5+plastic => all the clean *plastic* seats were duly
+occupied).  If we followed the same reasoning about leaving the
+northerly p5 alone (@4+clean), and shifting the southern p6b back to
+account for the missing padding, we'd get two patches that apply at
+the same line… To be clear, having two successive hunk patches at the
+same line is not intrinsically bad; but allowing two such patches to
+commute creates an ambiguity under cherry picking: Is it “all the
+clean plastic seats were duly occupied” or “all the plastic clean
+seats were duly occupied”?  We wouldn't be able tell because our
+compass would be broken!
+
+

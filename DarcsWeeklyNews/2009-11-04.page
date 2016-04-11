@@ -1,0 +1,81 @@
+# News and discussions
+
+1.  The darcs team is now using roundup as a patch tracker! Eric Kow
+    announced this new feature which now handles all patches send with
+    darcs send:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-October/021957.html](http://lists.osuosl.org/pipermail/darcs-users/2009-October/021957.html)
+
+2.  Discussion about the formalization of darcs patch theory continued,
+    involving the most prominent darcs theorists around!
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-October/021970.html](http://lists.osuosl.org/pipermail/darcs-users/2009-October/021970.html)
+    -   [http://www.math.ucla.edu/\~jjacobson/patch-theory](http://www.math.ucla.edu/~jjacobson/patch-theory)/
+
+3.  Reinier Lamers submitted a patch enabling storage of textual patch
+    metadata in UTF-8, fixing one of darcs's oldest bugs. Review
+    pending:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-November/022050.html](http://lists.osuosl.org/pipermail/darcs-users/2009-November/022050.html)
+    -   [http://bugs.darcs.net/issue64](http://bugs.darcs.net/issue64)
+
+# Issues resolved in the last week (2)
+
+issue1554 Trent W. Buck
+  ~ -   allow opt-out of -threaded (fix ARM builds).
+    -   [http://bugs.darcs.net/issue1554](http://bugs.darcs.net/issue1554)
+
+issue1588 Ganesh Sittampalam
+  ~ -   add --skip-conflicts option
+    -   [http://bugs.darcs.net/issue1588](http://bugs.darcs.net/issue1588)
+
+# Patches applied in the last week (21)
+
+2009-10-25 Petr Rockai
+  ~ -   A vastly more efficient implementation of LookForAdds.
+    -   Bump the hashed-storage dependency to \>= 0.4.1.
+
+2009-10-15 Florent Becker
+  ~ -   Refactor Darcs.Commands.Send
+    -   Refactor Darcs.Commands.Push
+
+2009-11-01 Eric Kow
+  ~ -   Make applyItNow type signature work with GHC 6.8.3.
+    -   Fix import conflict between Florent and Ganesh's patches.
+
+2009-10-08 Florent Becker
+  ~ -   Refactor Darcs.Commands.Apply
+
+2009-10-31 Eric Kow
+  ~ -   Add an extra newline in help text stored in author prefs.
+
+2009-10-15 Florent Becker
+  ~ -   Refactor Darcs.Commands.AmendRecord
+    -   Refactor Darcs.Commands.Rollback
+    -   Remove useless import of Verbose in Darcs.Commands.Unrecord
+
+2009-10-11 Trent W. Buck
+  ~ -   Partially rewrite "darcs record" help.
+    -   Rewrite $DARCS\_EMAIL documentation.
+
+2009-10-10 Eric Kow
+  ~ -   Canonize Kari Hoijarvi, Matthias Fischmann, Thomas Hartman.
+
+2009-10-31 Trent W. Buck
+  ~ -   Resolve issue1554: allow opt-out of -threaded (fix ARM builds).
+    -   Typo: s/legal time/legal people/.
+
+2009-10-10 Eric Kow
+  ~ -   Generalize, tidy up and expand license exceptions file.
+
+2009-10-31 Ganesh Sittampalam
+  ~ -   rename a local variable that doesn't have to be a list
+
+2009-10-30 Eric Kow
+  ~ -   Cabal flag for static binary (-fstatic)
+
+2009-10-29 Ganesh Sittampalam
+  ~ -   add some haddock and rename a variable
+    -   Resolve issue1588: add --skip-conflicts option
+
+

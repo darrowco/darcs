@@ -1,0 +1,71 @@
+# Getting started
+
+'darcs send' is the command to compress all patches you did in your
+local repository to a file, so you can send them through email
+or other file transferring methods.
+
+By default, running `darcs send` will generate a patch bundle file
+that you  can email by hand.
+
+# Sending mails directly from Darcs
+
+If you want to be able to send patches to authors directly from Darcs
+you may need to configure your system for sending email directly from
+the command line.
+
+Note this is separate from your GUI email client's configuration.
+
+First, try testing `darcs send --mail` again using `--to me@my.address` to send
+some patches to yourself. You should receive the message promptly. If
+not, some configuration is needed. Many people use the Postfix mail
+software and might find
+[this](http://www.postfix.org/STANDARD_CONFIGURATION_README.html#null_client)
+helpful.
+
+# An easy alternative: MSMTP
+
+To send patch bundles directly from darcs using the command `darcs send --mail`
+you need to have some sendmail program configurated. msmtp enables you to use
+a third-party mail acccount to do so (gmail for instance).
+
+Under Ubuntu you will need the packages `msmtp-mta` and `ca-certificates`.
+
+You will need to create a configuration file `~/.msmtprc`.
+Here is mine to use with gmail (on my Ubuntu box):
+
+    from you@gmail.com
+    user you@gmail.com
+    host smtp.gmail.com
+    port 587
+    tls on
+    auth on 
+    syslog on
+    tls_trust_file /etc/ssl/certs/ca-certificates.crt
+
+You can put your password directly in that file but I'd rather not.
+This means each time you'll do `darcs send --mail` you'll be prompted for
+your gmail password.
+
+The `~/.msmtprc` file needs to have permissions set to 0 for group and others,
+otherwise msmtp will refuse to send any mail.
+
+# Troubleshooting: the recipient didn't get my patches
+
+Have you successfully sent a patch to yourself?
+
+If yes, there may still be problems causing some mail providers to
+silently ignore the message as spam. For example, in your email client
+view the message source and look for a bogus from domain, like
+`From: me@myhost.local`, and if you're using Postfix see
+[this](http://www.postfix.org/SOHO_README.html#fantasy).
+
+Another thing to consider is if the remote end has some kind of
+spam-prevention mechanism. For example, the darcs team bug tracker is
+backed by a moderation system: patches from new submitters must be
+approved manually (subsequent patches will go through automatically).
+
+# Applying the patches you receive
+
+~~~bash
+$   darcs apply -f file_name
+~~~

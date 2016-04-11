@@ -1,0 +1,128 @@
+# Projects
+
+Here are the projects I consider myself responsible for. For what it's
+worth, I'm using hsgtd for the moment to keep myself organised, but
+please feel free to poke me if you feel I'm not being on top of things
+enough.
+
+-   [Sprints](../Sprints) - around Mar/Apr or Oct/Nov
+-   [Fundraising](../Fundraising) - Status: next session, early 2011
+-   [GoogleSummerOfCode](../GoogleSummerOfCode) - Status: 2010,
+    potential students, need to decide on projects
+-   [BugTracker](../BugTracker)
+
+# Everything Darcs
+
+For the [2010-03 sprint](/Sprints/2010-03), here is the list of things
+on Eric's mind:
+
+## Performance
+
+-   darcs get (packs? revlog?) - still open
+-   [issue1106](http://bugs.darcs.net/issue1106) - O(n) on patches -
+    Petr
+-   no slurps - Petr
+-   filecache - Benedikt - ZURICH
+-   hunk handle - Jason
+-   benchmarking - Eric, Petr, Max
+-   hashed file cache
+
+    -   breaking up the global cache - Luca - ZURICH
+    -   [issue1599](http://bugs.darcs.net/issue1599) automatic
+        invalidation of bad cache - Renier
+    -   [issue1503](http://bugs.darcs.net/issue1503)
+
+-   show contents --match - why slow?
+
+## Basic behaviour
+
+-   UTF-8 - Reinier
+-   darcs 2 theory holes :-(
+-   new format mechanism - Petr
+-   setpref system
+
+## Code quality
+
+-   witnesses - Ganesh/Jason - SHORT
+-   [darcs library](Ideas/DarcsLibraries) - MEDIUM
+-   select changes - Florent
+-   getopt, flags
+-   permission from David to release libraries under BSD3
+-   hashed storage completion?
+
+## Cool features
+
+-   rebase - Ganesh - ZURICH
+-   SVN/git integration
+-   curses-based GUI - Florent
+-   minimal context stuff
+-   short secure version identifiers -
+    [issue992](http://bugs.darcs.net/issue992) (!)
+-   fast, in-repo branching - [issue555](http://bugs.darcs.net/issue555)
+
+## User experience
+
+-   Windows installer - Salvatore
+-   Wiki/FAQ cleanup - Guillaume
+-   show history - Eric
+-   progress indicators - (!)
+-   documentation rewrite - Trent's
+    [vision](http://irclog.perlgeek.de/darcs/2010-03-02#i_2054933)
+-   tortoise Darcs
+-   meaningful conflict markers - (!) - MEDIUM
+-   cabal-install 1.8 - ZURICH
+
+## Long term
+
+-   camp?
+-   iolaus?
+-   GUID-based commute
+-   darcs 2 theory problems
+-   darcs team does not know darcs 2 theory well :-(
+-   links w/ research community
+
+## Darcs project
+
+-   more/better testing!
+-   supported platforms - [Tahoe buildbot policy
+    -](http://allmydata.org/trac/tahoe-lafs/wiki/BuildbotPolicy)
+-   GSoC! - ZURICH
+-   issue manager :-(
+-   patch manager :-(
+-   benchmarking
+-   recruitment/treadmill
+-   grumpy old man
+-   darcs homepage in the wiki?
+
+# Other projects
+
+-   [DarcsLibraries](../DarcsLibraries) - support Gwern, Petr, etc in
+    any way they needs
+-   [YouTooCanHackOnDarcs](../YouTooCanHackOnDarcs) - Status: inactive
+-   [TipOfTheMonth](../TipOfTheMonth) - show folks what darcs can do
+-   [Roadmap](../Roadmap)
+-   [PatchTheory](../Theory) documentation - many discussions, no
+    summaries... what to do?
+
+# Support
+
+-   [DarcsInternals](/DarcsInternals)
+
+# VCS research topics
+
+Kicking around ideas
+
+-   semantic revision control (ARRAY\_SIZE example)
+-   tree-structured documents (XML)
+-   links with the OT stuff
+-   ??? applications which are version control in disguise
+
+# See also
+
+-   [http://koweycode.blogspot.com](http://koweycode.blogspot.com)
+    - Eric rambles incoherently on about his hobby hacking activities
+-   [Understanding darcs
+    src](http://eric.kow.free.fr/download/understanding-darcs)
+    -   the Omnigraffle src for my darcs diagrams. Includes a stencil
+
+

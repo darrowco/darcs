@@ -1,0 +1,65 @@
+# Report
+
+<http://blog.darcs.net/2015/09/darcs-hacking-sprint-9-report.html>
+
+# When
+
+The sprint will be hosted in Paris, France on September 18th, 19th and 20th
+(Friday to Sunday). We have access to a meeting room from 10h00 to 18h00
+each day (except from 10h30 on Friday).
+
+# Where
+
+The sprint is kindly hosted by [IRILL](http://www.irill.org/), in the
+13th arrondissement or Paris, near the metro stop Place d'Italie.
+
+See <http://www.irill.org/about/access> for more information.
+
+# Accomodation
+
+TODO check hostel [Absolute Paris](http://www.absolute-paris.com/).
+
+# Who
+
+-   Guillaume Hoffmann (gh) (arriving gare de l'Est Thurs 21:46,
+    leaving IRILL on sunday at 18:00)
+-   Ganesh Sittampalam (Heffalump) (arriving gare du nord Thurs 23:17, Eurostar leaves GdN Sunday 20:13)
+-   Eric Kow (kowey)
+-   Thomas Miedema
+-   Dan Frumin (notdan) (arriving at Paris-Nord on Friday evenin, leaving by Thalys at 18:25 on Sunday)
+-   Vinh Dang (saturday and sunday)
+-   you!
+
+# What
+
+- 2015 GSoC outcome
+- plans for 2.10.2
+- plans for 2.12
+- [what we need in ghc 8](https://mail.haskell.org/pipermail/ghc-devs/2015-September/009952.html)
+- new manual
+
+# Sprint backlog
+
+## Friday
+
+- breakfast and chat
+- Guillaume claims http://bugs.darcs.net/issue2436 , started exploring interactive selection
+  and patch choices code with help from Ganesh, Eric
+- Thomas looked at darcs + ghc 8 ( https://ghc.haskell.org/trac/ghc/ticket/10653 )
+- [what we need in ghc 7.10.3](https://mail.haskell.org/pipermail/ghc-devs/2015-September/009953.html)
+  -> nothing it seems
+
+## Saturday
+
+
+- The manual status: in the old days of darcs, the documentation was present as LaTeX comments in the source code; that proved to be prone to users ignoring it. In the last iteration of darcs the manual was a HTML file generated from some introductory text and squashed together with the `darcs help` output. However, the manually handled part of the documentation got a bit out of date, and the darcs team decided to sack it with the release of 2.10. Now the documentation is present in the form of `darcs help markdown`, `darcs help patterns`, `darcs help environment` + the wiki.
+- Dan takes a stab at viewing suspended patches in Darcsden
+- Vinh gives comments about the website/wiki
+- Guillaume digs more into select changes
+
+## Sunday
+
+- Guillaume deciding to have the NamedPatch to PatchInfo optimization into 2.10.2
+- kicking off darcs.net's upgrade to current debian stable (ganesh and eric)
+- Guillaume: porting Ale's last year get deps to HEAD
+

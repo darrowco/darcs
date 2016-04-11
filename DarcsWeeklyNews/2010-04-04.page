@@ -1,0 +1,110 @@
+# News and discussions
+
+1.  Lennart Kolmodin announced that darcs 2.4 was available in Gentoo
+    Linux:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-March/023513.html](http://lists.osuosl.org/pipermail/darcs-users/2010-March/023513.html)
+
+2.  Mark Stosberg talked about darcs handling large repositories, then
+    spawning a discussion on git vs darcs from the UI point of view:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-March/023526.html](http://lists.osuosl.org/pipermail/darcs-users/2010-March/023526.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-March/023539.html](http://lists.osuosl.org/pipermail/darcs-users/2010-March/023539.html)
+
+3.  If you haven't already read it on this blog, you can have a look at
+    Eric's report from the last darcs hacking sprint:
+
+    -   [http://blog.darcs.net/2010/03/darcs-hacking-sprint-4-report.html](http://blog.darcs.net/2010/03/darcs-hacking-sprint-4-report.html)
+
+# Issues resolved in the last week (4)
+
+issue1208 [dixiecko@gmail.com](mailto:dixiecko@gmail.com)
+  ~ -   wish: darcs trackdown --bisect
+    -   [http://bugs.darcs.net/issue1208](http://bugs.darcs.net/issue1208)
+
+issue1427 Guillaume Hoffmann
+  ~ -   accept gzipped patch bundles in darcs apply
+    -   [http://bugs.darcs.net/issue1427](http://bugs.darcs.net/issue1427)
+
+issue1739 Reinier Lamers
+  ~ -   make ColorPrinter handle characters \> 255
+    -   [http://bugs.darcs.net/issue1739](http://bugs.darcs.net/issue1739)
+
+issue1756 Petr Rockai
+  ~ -   new h-s handles file removals correctly in Index.
+    -   [http://bugs.darcs.net/issue1756](http://bugs.darcs.net/issue1756)
+
+issue1765 Reinier Lamers
+  ~ -   refuse to remove non-tracked directories recursively
+    -   [http://bugs.darcs.net/issue1765](http://bugs.darcs.net/issue1765)
+
+# Patches applied in the last week (29)
+
+2010-03-30 Ganesh Sittampalam
+  ~ -   drop unnecessary GHC extensions from test helper
+    -   speed up test by compiling helper once
+    -   add type witnesses to trackdown --bisect
+    -   fix warning
+
+2010-03-29 [dixiecko@gmail.com](mailto:dixiecko@gmail.com)
+  ~ -   resolve-issue1208: trackdown --bisect (PatchTree).
+
+2010-04-02 Eric Kow
+  ~ -   Test for issue183.
+    -   Fix bug in issue1645 test.
+
+2010-03-30 Petr Rockai
+  ~ -   Avoid a direct multibyte string in issue1739 test that confuses
+        ShellHarness.
+
+2010-03-21 Reinier Lamers
+  ~ -   Refactor makeRemovePatch: use foldM and split in two
+    -   Rename issue1765 test to reflect that it succeeds
+    -   resolve issue1765: refuse to remove non-tracked directories
+        recursively
+
+2010-03-29 Eric Kow
+  ~ -   Tidy up issue1727 test.
+
+2010-03-29 Sean Erle Johnson
+  ~ -   Accept issue1727: darcs move . target fails.
+
+2010-03-21 Guillaume Hoffmann
+  ~ -   resolve issue1427 accept gzipped patch bundles in darcs apply
+    -   accept issue1427 accept gzipped patch bundles in darcs apply
+
+2010-03-27 Trent W. Buck
+  ~ -   Extend issue1645 with additional pathologies.
+
+2010-03-24 Petr Rockai
+  ~ -   Resolve issue1756: new h-s handles file removals correctly in
+        Index.
+
+2010-03-17 Ganesh Sittampalam
+  ~ -   disable unused do binding warnings for now
+    -   add PatternGuards extension to witnesses build
+    -   add cabal flag to control build of darcs library
+
+2010-03-21 Florent Becker
+  ~ -   Make commuteFL symmetrical with commuteRL
+
+2010-03-20 [refis.thomas@gmail.com](mailto:refis.thomas@gmail.com)
+  ~ -   useless string concatenation plus useless $.
+
+2010-03-21 Guillaume Hoffmann
+  ~ -   use isPrefixOf instead of take x y == "string" in some places
+
+2010-03-21 Reinier Lamers
+  ~ -   accept issue1763: pull on non-ascii filenames
+    -   resolve issue1739: make ColorPrinter handle characters \> 255
+
+2010-01-10 David Markvica
+  ~ -   remove the hardcoded string "\_darcs" in some places and replace
+        it with the global darcsdir
+
+2010-02-15 Florent Becker
+  ~ -   export stdout in RepoPath
+    -   demonadify useAbsoluteOrStd
+    -   Put presentParticiple into the English module
+
+

@@ -1,0 +1,28 @@
+(Experimental page) All our pending decisions/proposals at a glance.
+
+Please keep twitteresque brevity. The point is to get a sort of
+dashboard view Note that I may have misunderstood the discussion/mails,
+hence the point of having an overview
+
+Feel free to kill entries on the page as a way of saying "we don't need
+to be thinking about this now"
+
+This is basically a list of things which should be on our mental radars
+
+# 2011
+
+1.  proposal: add a 'darcs do' command (Apr)
+      ~ <http://lists.osuosl.org/pipermail/darcs-users/2011-April/026081.html>
+
+# 2010
+
+1.  how to improve extensibility of darcs format? (Nov)
+      ~ <http://lists.osuosl.org/pipermail/darcs-users/2010-November/025614.html>
+
+2.  changepref - how to clean up changepref for Darcs 3 (Sep)
+      ~ <http://irclog.perlgeek.de/darcs/2010-09-03#i_2778833>
+
+3.  proposal: new repository semantics (Aug)
+      ~ <http://wiki.darcs.net/Ideas/NewRepositorySemantics>
+
+

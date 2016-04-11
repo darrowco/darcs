@@ -1,0 +1,53 @@
+# News and discussions
+
+1. Petr Rockai announced availability of Darcs 2.3 beta 1, via regular
+  ~ download and cabal install:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-June/020275.html](http://lists.osuosl.org/pipermail/darcs-users/2009-June/020275.html)
+
+2. Petr Rockai's fast darcs Summer of Code progess reports 5 and 6:
+  ~ -   [http://web.mornfall.net/blog/soc\_progress\_5.html](http://web.mornfall.net/blog/soc_progress_5.html)
+    -   [http://web.mornfall.net/blog/soc\_progress\_6.html](http://web.mornfall.net/blog/soc_progress_6.html)
+
+# Issues resolved in the last week (0)
+
+# Patches applied in the last week (17)
+
+2009-06-29
+[benjamin.franksen@bessy.de](mailto:benjamin.franksen@bessy.de)
+  ~ -   allow package HTTP version up to < 4000.1
+
+2009-06-28 Petr Rockai
+  ~ -   Add a TODO comment to the inefficient look-for-adds
+        implementation.
+
+2009-06-29 Thorkil Naur
+  ~ -   Fix flag(http) test for darcs executable
+
+2009-06-26 Trent W. Buck
+  ~ -   Remove unused binding.
+    -   Add type signature for Darcs.Commands.ShowIndex.dump.
+    -   Keep GHC quiet about orphaned typeclass instances in
+        Darcs.Gorsvet.
+    -   Avoid shadow binding in Darcs.Gorsvet.
+    -   Add type signature for Darcs.Gorsvet.floatFn.
+    -   Remove unused import.
+
+2009-06-23 Petr Rockai
+  ~ -   Bump version to 2.2.98.1
+    -   Avoid getSymbolicLinkStatus in mmap implementation, works around
+        GHC 6.8.2 bug.
+    -   Make "darcs clone" a hidden alias for "darcs get".
+    -   Cut down descriptions, so that darcs help does not wrap on an
+        80-column TTY.
+    -   Put blank lines between command groups in "darcs help".
+
+2009-06-21 Trent W. Buck
+  ~ -   Extended DARCS\_GET\_FOO example.
+    -   Remove documentation for long-gone $DARCS\_WGET environment
+        variable.
+
+2009-06-18 Eric Kow
+  ~ -   Haddock encode\_white and decode\_white.
+
+

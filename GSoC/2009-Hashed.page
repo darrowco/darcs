@@ -1,0 +1,182 @@
+This is a timeline for Petr Rockai's hashed-storage GSoC project
+
+# Overview
+
+Darcs supports 'hashed' repositories in which each file in the pristine
+cache is associated with a cryptographic hash. Hashed repositories help
+Darcs to resist some forms of corruption and also allow for nice
+features such as a global patch cache and lazy patch fetching.
+Unfortunately, our implementation can be rather slow.
+
+Petr has some nice ideas for making these repositories work a lot
+faster. He will be producing a library he calls 'hashed-storage' which
+generalises the idea of storing files associating them with a
+cryptographic hash and furthermore improves on the current
+implementation used by Darcs. The hashed-storage library is general
+purpose and may find a use in other applications that need to manage a
+large number of files.
+
+For more information, see
+[http://mornfall.net/blog/summer\_of\_code.html](http://mornfall.net/blog/summer_of_code.html)
+
+*This project was completed and passed.* :-)
+
+# Timeline
+
+Note that Petr started a week earlier than the official dates, so
+everything is shifted back one.
+
+1.  (ending 25 May)
+
+    -   [progress](http://mornfall.net/blog/soc_progress_1.html): *fill
+        in quick blurb*
+
+2.  (1 Jun)
+
+    -   [progress](http://mornfall.net/blog/soc_progress_2.html): *fill
+        in quick blurb*
+
+3.  (8 Jun)
+
+    -   Darcs format mechanism extended to deal with hashed-storage
+        verions? [do we need this?]
+    -   Future-proofing strategy elucidated - Petr already has written
+        up email about this, so maybe just links
+
+4.  (15 Jun) - format documentation published (at least for index)
+
+    -   TODO hashed-storage:
+          ~ -   without bytestring-mmap dependency
+            -   the Diff module made optional
+
+    -   TODO darcs-hs:
+          ~ -   darcs wh filename spends 80% of time in announce\_files,
+                since it slurps pristine to check if the files given are
+                in the repository (this can be avoided using
+                hashed-storage)
+
+    -   context: Darcs 2.3 freeze
+
+5.  (22 Jun) - rough benchmarking infrastructure in place (''status?'')
+
+    -   done: API stabilising for darcs 2.3
+    -   thought about: packing, and requirements for packed repository
+    -   done: post darcs 2.3; all pristine -\> working diffing using
+        hashed-storage
+
+6.  (29 Jun)
+
+    -   hashed-storage 0.3.4
+    -   done: endianitiy
+    -   done: magic word in index (index upgrade)
+    -   Aribtrary Tree (QC)
+
+7.  (6 Jul)
+8.  (13 Jul)
+
+    -   context: Darcs 2.3 release!
+    -   context: *Mid-term evaluations deadline*
+
+9.  (20 Jul)
+10. (27 Jul) - future work roadmap complete
+11. (3 Aug)
+12. (10 Aug)
+13. (17 Aug) - nothing [ends at 12]
+
+    -   context: *GSoC pencils down deadline*
+
+# Bigger picture neighbourhood
+
+-   Hacking sprint: 2009-09
+-   Darcs 2.4: 2010-01
+-   Darcs 2.5: 2010-07
+-   Summer of Code 2010
+
+# Deliverables
+
+-   hashed-storage
+-   documentation on formats used by hashed-storage (e.g. [camp repo
+    format](http://projects.haskell.org/camp/repository))
+-   API docs
+-   unit tests
+-   benchmarking infrastructure
+
+    -   ./go.sh script or similar
+    -   ./publish-benchmarks.sh or similar
+
+-   published benchmarks
+-   Darcs 2.3 integration!
+
+    -   extension to Darcs format mechanism (numerical versions?)
+
+-   Darcs 2.4 integration
+-   future work roadmap and hints (e.g. ideas for how packs might work)
+
+# Design goals
+
+-   Future proofing
+
+    -   design in such a way that lets old hashed-storage read (and
+        write to?) stores created by new hashed-storage
+    -   versioning mechanism - hopefully one that we can avoid using
+
+-   Facilitation of future work
+
+    -   how would hashed-storage development work if you had
+        contributors?
+    -   is there anything you could spin off, e.g. into undergrad
+        student projects?
+
+-   Portability
+
+    -   endianness issues?
+    -   can the same store be read to, written by different kinds of
+        systems?
+
+-   Safety
+
+    -   atomicity of operations
+
+-   Robustness
+
+    -   tolerant IO in working directories?
+
+-   Good interactions with other systems
+
+    -   patch application
+    -   network code
+    -   cache mechanism
+
+# Technical details
+
+-   index file (timestamps)
+-   can we combine small files into one? (see \`camp repo format
+    <[http://projects.haskell.org/camp/repository](http://projects.haskell.org/camp/repository)\>\`
+    offset mechanism)
+-   avoiding creating large directories
+-   could hashed-storage easily implement other formats, e.g. camp? e.g.
+    git [relevant?]
+
+# Worries and questions for the roadmap
+
+Note: for general design questions, see \`hashed-storage <\>\`
+
+-   Darcs 2.4 integration sounds tricky - hard to do in an incremental
+    fashion.
+
+    We already do this incrementally (see darcs 2.3 integration
+    patches). -- Petr
+
+-   Do we implement HashedStorageIO akin to DarcsIO and HashedIO?
+
+    See Storage.Hashed.Monad -- I think that may cover what you mean? --
+    Petr
+
+-   What is the minimum set of features hashed-storage needs to work for
+    darcs?
+
+-   Why does hashed-storage need a diff mechanism?
+
+    It's proof of concept, really. TODO make it optional. -- Petr
+
+

@@ -1,0 +1,167 @@
+# News and discussions
+
+1.  Enfranchising darcs! An update on the build systems question
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-October/014849.html](http://lists.osuosl.org/pipermail/darcs-users/2008-October/014849.html)
+
+2.  Darcs hacking sprint in 2 days!
+    -   [http://wiki.darcs.net/index.html/Sprints](http://wiki.darcs.net/index.html/Sprints)
+
+3.  What does it mean to commute? Darcs hackers like to talk about
+    'commuting' patches all the time. But what does that mean? Jason
+    explains and provides a tiny bit of code for us to play with
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-October/014779.html](http://lists.osuosl.org/pipermail/darcs-users/2008-October/014779.html)
+
+4.  darcsweb 1.1-rc1 Alberto Bertogli reports a release candidate for
+    darcsweb 1.1, with support for darcs 2 repositories, and syntax
+    highlight support if the pygments module is available
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-October/014784.html](http://lists.osuosl.org/pipermail/darcs-users/2008-October/014784.html)
+
+5.  First impressions of darcs. A Pythonista named Benjamin tries darcs
+    out for the first time. Here are his likes and dislikes.
+    -   [http://pybites.blogspot.com/2008/10/first-impressions-of-darcs.html](http://pybites.blogspot.com/2008/10/first-impressions-of-darcs.html)
+
+6.  Choosing a revision control system. Daniel Carerra compares darcs
+    with Monotone, Mercurial and Bazaar. Daniel finds our "brilliant
+    patch management" to be unique, but what can we learn from the
+    others?
+    -   [http://daniel.carrera.name/2008/10/14/choosing-a-revision-control-system](http://daniel.carrera.name/2008/10/14/choosing-a-revision-control-system)/
+
+# Reviewers
+
+-   Jason Dagit
+
+# New contributors
+
+-   Christian Kellermann
+-   Salvatore Insalaco
+-   J.  Garrett Morris
+
+# Issues resolved in the last week (1)
+
+issue784 Salvatore Insalaco
+  ~ -   fix file handle leak and check for exceptions on process
+        running.
+    -   [http://bugs.darcs.net/issue784](http://bugs.darcs.net/issue784)
+
+# Patches applied in the last week (66)
+
+2008-10-22 David Roundy
+  ~ -   make releaseVersion explicitly depend on the version, not
+        Setup.hs.
+    -   remove unneeded cd .. from Setup.hs.
+    -   change setup.hs to Setup.hs in Setup.hs.
+    -   cut unused amInRepo from Setup.hs.
+
+2008-10-21 Eric Kow
+  ~ -   Do not recompute ChangeLog files at all.
+    -   Do not recompute ChangeLog (franchise).
+    -   Hard-code darcs-2.1.0 ChangeLog entries.
+    -   Rename tests/template so it doesn't get deleted by make clean.
+
+2008-10-22 Florent Becker
+  ~ -   Allow empty matchers in Patch.Match
+
+2008-10-22 Eric Kow
+  ~ -   Avoid using ls to get test files (makefile).
+    -   Simplify test targets in makefile.
+    -   Rollback accidentally applied darcs.cabal patch.
+    -   Add cabal file modified from Petr and Gwern's cabalisation
+        branch.
+    -   Simplify darcs.cabal.in and add more precise dependencies.
+    -   Simplify author field in darcs.cabal.in.
+
+2008-10-21 David Roundy
+  ~ -   don't install franchise while testing.
+    -   make pull work with multiple --repodirs.
+
+2008-10-21 Chistian Kellermann
+  ~ -   call $(MAKE) instead of 'make', because GNUMake is not called
+        'make' everywhere
+
+2008-10-20 Eric Kow
+  ~ -   Add a darcs-nightly target to the makefile.
+
+2008-10-21 David Roundy
+  ~ -   prefer recursive acronymn to embarrassing one
+
+2008-10-21 Eric Kow
+  ~ -   Create the darcs.cabal file in franchise.
+    -   Add a template for building the darcs.cabal file.
+
+2008-10-19 Salvatore Insalaco
+  ~ -   resolve issue784: fix file handle leak and check for exceptions
+        on process running.
+
+2008-10-14 Eric Kow
+  ~ -   Reenable some tests under Windows now that we are ignoring
+        setCooked errors.
+
+2008-10-20 David Roundy
+  ~ -   avoid needless work in Setup.hs
+    -   enable franchise build tests under wine 1.0.
+    -   enable test of franchise build.
+    -   only build ChangeLog if we're in a darcs repository.
+    -   remove dependence on haskell98 package from preproc.hs and
+        make\_changelog.hs.
+    -   we don't need to announce we're on windows, just log it.
+    -   reorganize and comment ./Setup.hs flags.
+    -   simplify checking for windows using franchise.
+    -   test for endianness using franchise.
+    -   fix test-franchise-build.sh to work with renamed Setup.hs.
+
+2008-10-18 Eric Kow
+  ~ -   Capitalise Setup.hs for consistency.
+
+2008-10-17 David Roundy
+  ~ -   add CURSES test to setup.hs.
+    -   half-resolve issue1138: make it possible in setup.hs to not use
+        -Werror.
+    -   use unlessFlag in setup.hs to simplify haskeline check.
+    -   add haskeline test to setup.hs.
+    -   clean up setup.hs by using lookForModule instead of catching
+        exceptions.
+    -   add test for siginfo.h (which shows up on SunOS maybe?)
+    -   clean up test-franchise-build.sh a bit more...
+    -   clean up test-franchise-build.sh
+    -   clean up setup.hs configure a bit.
+
+2008-10-12 Dmitry Kurochkin
+  ~ -   Fix curl version in setup.hs.
+
+2008-10-11 David Roundy
+  ~ -   avoid re-checking for windows.
+    -   setup.hs: don't fail if darcs doesn't yet exist.
+    -   fix spelling error in setup.hs.
+    -   make setup.hs look for libcurl
+    -   ratify use of readFile in setup.hs
+    -   add script for testing the franchise build.
+    -   add franchise setup file.
+    -   on windows, try renameFile before deleting target file.
+
+2008-10-11 Dmitry Kurochkin
+  ~ -   Simplify Darcs.Lock.withDir.
+    -   Do not remove temporary directories if DARCS\_KEEP\_TMPDIR
+        environment variable is set.
+
+2008-10-10 David Roundy
+  ~ -   eliminate autogeneration of Workaround.hs.
+
+2008-10-17 J. Garrett Morris
+  ~ -   Add import list for System.Process in Exec.lhs
+
+2008-10-15 Dmitry Kurochkin
+  ~ -   Use command\_control\_list directly in run\_the\_command.
+    -   Fix imports in Darcs.ArgumentDefaults.
+    -   Refactor Darcs.ArgumentDefaults to use command\_control\_list
+        directly.
+    -   Refactor Darcs.Commands, move command run code to
+        Darcs.RunCommand.
+    -   Remove unused extended\_usage.
+    -   Use help\_cmd instead of usage in main.
+    -   Use help\_cmd directly in main.
+    -   Refactor 'darcs --commands' to list\_available\_commands.
+
+2008-10-15 Thorkil Naur
+  ~ -   fix Submitting patches to darcs with respect to send -u
+
+

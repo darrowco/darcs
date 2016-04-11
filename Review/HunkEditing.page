@@ -1,0 +1,113 @@
+This page describes the design of the hunk editing feature [Ganesh
+Sittampalam](../People/GaneshSittampalam) has submitted to implement
+[http://bugs.darcs.net/issue291](http://bugs.darcs.net/issue291)
+
+Most recent set of patches for review:
+[http://lists.osuosl.org/pipermail/darcs-users/2009-September/021474.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021474.html)
+
+The way that record (etc) normally work is that they diff the working
+copy against pristine to get a sequence of primitive patches, which are
+then offered to the user in turn. (Pending adds a few more details, but
+the basic structure is the same.)
+
+As with all patch sequences in darcs, order does matter. For example if
+one primitive patch deletes 2 lines and adds 3 lines to file X at line
+k, then the right position for any patches to X at a line \>k will be
+dependent on the presence of the first patch.
+
+This means that during the selection process, we have to do some work to
+maintain the sequence. Naturally this uses commutation. Roughly
+speaking, if the user rejects a patch then we just commute it to the end
+of the sequence, taking any dependencies with it.
+
+So how do we make hunk editing fit into this picture? Changing a hunk
+could certainly have an impact on the validity of future patches if we
+just directly substituted the edited hunk.
+
+My solution is that any patch edit operation must replace the patch with
+a sequence that has the *same overall effect*. In terms of witnesses, 'p
+C(x y)' is replaced with 'FL p C(x y)'. The individual members of this
+sequence can then be offered to the user separately and the rejected
+ones get commuted out as with any other rejected patches.
+
+In the specific case of hunk editing, this can be implemented as
+follows:
+
+The starting point is a hunk to be edited '(before, after)'. The user is
+presented with both 'before' and 'after' and allowed to change them,
+giving '(before2, after2)'. We then create the sequence \`(before,
+before2);(before2, after2);(after2, after)'.
+
+A question now arises as to whether we should actually offer the entire
+sequence to the user. Kamil tried it and found that being offered
+'(after2, after)' was confusing because it was basically undoing the
+edit he just made. So perhaps we should set a default answer for that
+patch of "no" so that it isn't offered. We can't do the same with
+'(before, before2)' because it's likely that the edited hunk '(before2,
+after2)' will depend on that. Presumably if the user edits the before
+lines they really mean to record the '(before, before2)' hunk rather
+than the '(before2, after2)' hunk. Or perhaps we should ban editing the
+before lines.
+
+> Kamil: All my experience of editing hunks in git was removing some
+> part of the addition, usually a printline or trailing whitespace. In
+> practice the edit before lines feature won't probably be used. Would
+> it make the interface simpler/easier to understand if the possibility
+> of modifying the before lines was removed?
+>
+> Ganesh: One issue is that the user probably should at least be able to
+> *read* the before lines, and since we are presenting them things in an
+> arbitrary text editor, we can't physically prevent them from changing
+> them, all we can do is make clear that any changes will be ignored. My
+> guess is that sometimes users will want to base their edits on the
+> before text rather than on the after text, so this should be kept as
+> easy as possible.
+
+Things Ganesh needs to add to this page:
+  ~ -   canonization of final selected sequence
+    -   possibility of different editing behaviours, e.g. giving the
+        user the whole file
+    -   how to apply the edits to working
+    -   should revert/unrevert offer edit too?
+    -   how about being able to edit existing hunks in amend-record or
+        even add completely new patch pieces?
+
+# Case studies
+
+Perhaps concrete examples are good? Part of my worry is that making one
+thing easy will make another thing hard, so I'm hoping some sort of case
+studies will help us keep a global view on how people want to use this.
+
+## Adding stuff before/after
+
+## Tweaking a diff (eg whitespace)
+
+If the diff includes the separator below, how do you change this to the
+one above?
+
+e.g.
+
+> +foo +bar +
+
+==\>
+
+> + +foo +bar
+
+or
+
+> +} + +void foo() +{ +...
+
+==\>
+
+> +void foo() +{ +... +} +
+
+## Splitting an add
+
+## Splitting a remove
+
+With the current before/after interface, this is fairly unintuitive
+
+    -line1
+    -line2
+
+To just remove line2 you remove line1 from the before...

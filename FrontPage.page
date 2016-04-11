@@ -1,0 +1,85 @@
+---
+toc:no
+...
+
+<div id="splash">
+
+<div id="download">
+
+<div id="download-heading">install latest Darcs 2.10.3:</div>
+
+* with [stack](http://www.haskellstack.org):<br>
+<code>stack install darcs [--resolver=lts-5.1]</code>
+* with [cabal](http://www.haskell.org/haskellwiki/Cabal/How_to_install_a_Cabal_package):
+<code>cabal install darcs-2.10.3</code>
+* [Darcs binaries](/Binaries) for many platforms
+* [current release source](releases/darcs-2.10.3.tar.gz) tarball
+* or get latest developing source code as [zip file](http://darcs.net/reviewed/reviewed.zip)
+
+</div>
+
+<div id="intro">
+        
+Darcs is a free and open source, cross-platform version control system,
+like <a href="http://git-scm.com/">git</a>, <a
+href="http://mercurial.selenic.com/">mercurial</a> or <a
+href="http://subversion.apache.org/">svn</a> but with a
+very different approach: focus on changes rather
+than snapshots. Darcs offers a **freer** way of working, and a
+**simpler** user interface. Darcs *does not require a central
+server*, and work perfectly in **offline** mode.
+        
+</div>
+
+<div id="leftcol">
+
++---------------------------------------+-------------------------------------+
+| # Why Darcs                           | # Using Darcs                       |
+|                                       |                                     |
+| - [Key Features]                      | - [Darcs for Users]                 |
+| - [What makes Darcs different]        | - [Darcs for Developers]            |
++---------------------------------------+-------------------------------------+
+| # Community                           | # About Darcs                       |
+|                                       |                                     |
+| - [Get Involved]                      |  - [More about Darcs]               |
++---------------------------------------+-------------------------------------+
+
+</div>
+
+<div id="rightcol">
+
+# News
+
+* Apr. 2016 [Darcs News #112](http://blog.darcs.net/2016/04/darcs-news-112.html)
+* Jan. 2016 [Darcs 2.10.3 released!](http://lists.osuosl.org/pipermail/darcs-users/2016-January/027182.html)
+* Nov. 2015 [Darcs 2.10.2 released!](http://lists.osuosl.org/pipermail/darcs-users/2015-November/027151.html)
+* More news: [Planet Darcs](http://planet.darcs.net)
+
+</div>
+
+<div id="footer">
+
+<div id="sponsors">
+<a href="/Thanks">Darcs sponsors & testimonials</a>
+</div>
+
+<div id="donate">
+<a href="/Donations">Donate to the project</a>
+</div>
+
+<div id="conservancy">
+Darcs is a member of the
+<a href="http://sfconservancy.org/">Software Freedom Conservancy</a>
+</div>
+
+</div>
+
+</div>
+
+[Key Features]: /Features
+[What makes Darcs different]: /Differences
+[Darcs for Users]: /Using
+[Darcs for Developers]: /Development
+[Get Involved]: /Community
+[More about Darcs]: /About
+

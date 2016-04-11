@@ -1,0 +1,100 @@
+# General expectations
+
+1. Time and effort: we'd like you to treat this as a full-time job.
+   Do not involve yourself in another professional activity during the project.
+   Tell us about your situation if there are moments of unavailability.
+   Consider the time frame as a rigid one.
+
+2. Integration: this is as important as the technical work.  Concretely, this means:
+
+    - communicate on public channels: IRC, mailing lists. This has several advantages:
+        - efficiency: it directly reaches the maximum number of people that can react
+        - it lets everyone know about what you are working on, reduces redundancy and
+          enables spontaneous discussions
+        - it shows that the project is active :-)
+    - ask for help efficiently
+      (see [How to ask questions the smart way](http://www.catb.org/esr/faqs/smart-questions.html))
+    - document your work (comments, haddocks, high-level developer documentation on the wiki)
+    - blog weekly: tell what you did and worked on every week. Even if it is unfinished.
+    - weekly meetings with your mentors (typically on IRC)
+
+3. Autonomy: we expect you to use the bonding time to learn about the project, and then
+   to be autonomous and proactive from the start of the project. Keep in mind that the
+   rest of us may not have a lot of time to dedicate to assist you.
+
+# Evaluation
+
+By midterms evaluation, we will evaluate you on:
+
+- Integration: you should behave and communicate as do typical contributors of
+  open-source projects. See the book [Producing open source software](http://producingoss.com/)
+- Proactivity: there is always something you can do. Be available, help others.
+  Improve documentation.
+- Code: this consists in following the project plan of the GSoC program.
+
+In particular if you are not autonomous and do not communicate enough, we
+will probably fail you at midterm. Otherwise, you will cost us too much
+effort to help you to finish the project.
+
+# Hacking
+
+You'll be working like any other Darcs developer: write some patches,
+send and them to the tracker via darcs send.
+
+## Hacking tips
+
+-   Check out the Developer's [Getting
+    Started](/Development/GettingStarted) guide on this wiki. It could
+    make your patch submissions go smoother.
+
+# Meetings
+
+Depending on the mentor, we may ask you to have regular meetings with us
+on the [IRC](/IRC) channel.
+Every week, the mentor would talk to you and see how you're doing and if
+there's anything you need help with. The mentor also helps you to form
+your own concrete, achievable goals for the week and to track them.
+If the mentor is unavailable, you should be autonomous and ask for
+help publicly (IRC, mailing lists).
+
+## Meeting tips
+
+-   Did you know that you can access the wiki with Darcs, not just the
+    web interface?
+
+        darcs get --lazy http://wiki.darcs.net
+
+    It could be useful to updating meeting notes and what not.
+
+# Blogging
+
+We'll be asking that you write a short blog post every week to let us
+know what you've been working on.
+
+Blogging is an extremely useful tool for thinking about your work. It
+also lets us know that you're still alive, keeps the community in touch,
+lets your mentors get up to speed faster and subtly advertises Darcs
+hacking as excellent way to spend your summer :-)
+
+## Blogging tips
+
+-   If you find yourself getting stuck, try this template
+
+    1.  brief reminder of your project (could be half a sentence)
+    2.  what you worked on this week (maybe bullet points)
+    3.  elaboration on what you did this week (one paragraph per bullet
+        point)
+    4.  problems/difficulties you encountered
+    5.  what you plan to work on next week.
+
+-   when you find out your application has been accepted, please contact
+    the administrators of
+    [http://planet.haskell.org](http://planet.haskell.org) and
+    [http://planet.darcs.net](http://planet.darcs.net) so that they can
+    add your feed
+-   if do not already have a blog, you may want to think of registering
+    it as a general hacking blog for your personal use after GSoC is up.
+    You might end up liking to blog after all! Just make sure to use
+    some sort of Darcs tag on your posts.
+
+

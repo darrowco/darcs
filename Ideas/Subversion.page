@@ -1,0 +1,136 @@
+# Overview
+
+This is a sketching-out page for 'seamless SVN integration' proposed in
+<http://bugs.darcs.net/issue1627>.
+
+Please hold any discussion about this feature on the darcs-users mailing
+list and only use this page to summarise proposals.
+
+# The dream
+
+I want Darcs to be able to just treat any SVN repository as a Darcs
+repository. You should be able to pull revisions as patches and push
+patches as revisions. You should also be able to talk to the same SVN
+repository from multiple Darcs repos which in turn should be able to
+exchange patches between each other.
+
+No need for any silly git-svn style tricks... just seamlessness
+
+# Desiderata
+
+-   darcs clone/pull/push svn://foo just works
+
+-   SVN revisions should be able to flow from one Darcs repo to another
+
+        SVN ----------+
+         |            |
+         | r1-r4      | r1-r2
+         V            V
+        Eric ------- Nicolas
+             -> r3-r4
+             -> e2, e6
+             <- n4
+
+-   Darcs should know not to try to push SVN revisions back
+
+-   Ability to cherry-pick SVN revisions within Darcs (r5 without r3)
+-   In the end, basically, SVN repository behaves just like an
+    append-only darcs repository.
+
+# Open problems
+
+-   How import the copying changes.
+-   How import the renaming changes (since they are encoded as
+    copy;delete).
+-   How to deal with svn properties.
+-   How to deal with SVN automagically rewriting line terminators
+-   How to deal with conflicts?
+
+# Still being sketched out
+
+## Bidirectional mapping between SVN revisions and Darcs patches
+
+Use SVN properties and maybe some Darcs metadata in the patch log
+`Ignore-this: SVN-foo`
+
+You only need to mark foreign-originated patches in such a way:
+revisions in subversion that came to existence as darcs patches first,
+and darcs patches that originated as SVN revisions. Either way, you need
+to make the conversion process from subversion to darcs fully
+deterministic (see the caution in the "replace" patch discussion below),
+which means that there's no need to keep any extra metadata in
+subversion about those -- a given revision will always produce an
+identical patch (in identical context) within darcs.
+
+One more thing to note is that you want to include SVN UUID and the
+conversion root in the darcs metadata. So say:
+
+Ignore-This: SVN cf2b9d22-acb5-11dc-bc8c-05e83ce5dbec /trunk r1200
+
+this should uniquely identify a given pristine state (as stored by
+subversion). It may make sense to actually name both revisions, the
+delta of which has been converted into a darcs patch: r1200:r1201 or so
+(or you could say that r1200 always means r1199 -\> r1200, or
+something).
+
+STATUS: still need to check discussion on mailing list and tracker
+
+## SVN copying
+
+MAYBE: I propose that we model these as addfile+hunk patches that depend
+on all named patches that touch the file being copied. This is basically
+us relying on the fact that SVN doesn't do commutation.
+
+STATUS: Nicolas said this might work.
+
+## darcs replace patches
+
+-   PROPOSAL A: have a separate SVN format that disallows darcs replace
+    patches
+-   PROPOSAL B1: emit a warning like "SVN repositories do not support
+    darcs replace patches... are you sure you want to create this?"
+-   PROPOSAL B2: make B1 refuse to create them by default, but allow an
+    override
+-   PROPOSAL C: allow them, but transform them to hunk patches when
+    pushing to SVN (and use metadata to tell Darcs that it's really a
+    replace patch). This relies on lack of commutation in SVN.
+
+A generalisation of this problem is that even hunks are not "safe"
+within subversion. As a matter of fact, subversion stores tree
+snapshots, not patches. So there are basically two approaches to the
+generalised problem: either store darcs patches in svn revprops in their
+entirety, or alternatively, only store "fancy" patches that way and rely
+on re-diffing the states to obtain hunks. It should be noted, that it is
+*unsafe* to let subversion compute the diff -- it is imperative that we
+fetch the two versions and do the diff ourselves. In this case, it is
+also imperative that the diffing algorithm is frozen in darcs, otherwise
+the result would be *incorrect*.
+
+Moreover, if we want multiple "get"s of the subversion repository to be
+compatible among each other, we have to freeze the diffing algorithm of
+darcs and make it part of the repository format contract. It would be
+very unfortunate if two different versions of future darcs would produce
+slightly incompatible copies of the same subversion repository, leading
+to extremely subtle bugs. The same caution applies to *any*
+snapshot-based repository format.
+
+## darcs mv patches
+
+# Confirmed details
+
+## Branches
+
+SVN does not have a model of branches; they're just subdirectories.
+
+We should treat each branch/directory as a repository of its own, so
+that
+
+-   `darcs clone svn://gforge.inria.fr/projectname/trunk` and
+-   `darcs clone svn://gforge.inria.fr/projectname`
+
+give you two completely repositories that don't exchange patches. Tough
+luck; we're keeping it simple.
+
+On the darcs clone layer, we could follow one superficial convention so
+that doing darcs clone `svn://gforge.inria.fr/projectname/trunk` gives you
+a repository called `projectname` instead of `trunk`.

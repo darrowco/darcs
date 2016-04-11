@@ -1,0 +1,212 @@
+# News and discussions
+
+1.  Sad news and steady changes. David will be stepping down from
+    leadership of the darcs project, with Eric taking over in these new
+    roles.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/015506.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/015506.html)
+
+2.  Planet darcs. New aggregator for blogs from the darcs community.
+    Posts to the planet are mainly but not necessarily always related to
+    darcs
+    -   [http://planet.darcs.net](http://planet.darcs.net)
+
+3.  Standard darcs benchmarks. Let's get serious about numbers.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-October/015312.html](http://lists.osuosl.org/pipermail/darcs-users/2008-October/015312.html)
+
+4.  Haskell talk at Columbia Area Linux Users Group. Andrew Robbins
+    talks about "How the Haskell programming language promotes bug-free
+    software.by enforcing heavy restrictions on source code, and on
+    several open source software projects that use Haskell for this
+    purpose (darcs, parsec, xmonad, yi)."
+    -   [http://calug.org/meetings.html](http://calug.org/meetings.html)
+    -   [http://calug.org/meetings/2008/09/10.1/haskell.odp](http://calug.org/meetings/2008/09/10.1/haskell.odp)
+    -   [http://calug.org/meetings/2008/09/10.1/haskell.ppt](http://calug.org/meetings/2008/09/10.1/haskell.ppt)
+
+5.  How does conflict marking work? Ian peers into the heart of conflict
+    marking.
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-November/015467.html](http://lists.osuosl.org/pipermail/darcs-users/2008-November/015467.html)
+
+6.  New camp trac and mailing list!
+    -   [http://trac.haskell.org/camp/report/1](http://trac.haskell.org/camp/report/1)
+    -   [http://projects.haskell.org/cgi-bin/mailman/listinfo/camp](http://projects.haskell.org/cgi-bin/mailman/listinfo/camp)
+
+# Reviewers
+
+Thanks to our patch reviewers this week!
+
+-   Trent Buck
+-   Jason Dagit
+-   Florent Becker
+
+# Issues resolved in the last week (1)
+
+issue1183 Thorkil Naur
+  ~ -   newline after "Skipping depended-upon patch:"
+    -   [http://bugs.darcs.net/issue1183](http://bugs.darcs.net/issue1183)
+
+# Patches applied in the last week (99)
+
+2008-10-23 Trent W. Buck
+  ~ -   Remove unpleasant sequencing operators (;) from haddock targets.
+    -   Remove obsolete "deb" target.
+    -   Explain ghcflags\_fancy.
+    -   Tweak C\_OBJS declaration.
+    -   DARCS\_FILES\_DEPS is never bound, so don't evaluate it.
+    -   Generate SRC\_DIRS programmatically.
+    -   Typo: inadequate quotation in configure.ac.
+
+2008-10-28 Spencer Janssen
+  ~ -   ByteStringUtils: simply re-export BS functions for GHC \> 6.6
+
+2008-10-26 Don Stewart
+  ~ -   cleaner implementation of linesPS test
+    -   remove dead code
+    -   pack the small string, rather than unpack the bytestring
+
+2008-10-29 Ganesh Sittampalam
+  ~ -   remove quadratic blowups from mapPrimFL
+
+2008-11-02 David Roundy
+  ~ -   resolve another replace conflict.
+
+2008-10-28 Jason Dagit
+  ~ -   use fmap in unit.lhs
+    -   use fmap in Patch.Apply
+    -   use fmap in Match
+    -   use fmap in Lock
+    -   use fmap in External
+    -   use fmap in Diff
+    -   use fmap in Commands.Send
+    -   use fmap in Commands.Annotate
+    -   use fmap in ByteStringUtils
+
+2008-11-02 David Roundy
+  ~ -   add test of lazy get of lazy get.
+    -   simplify Setup.hs a bit.
+    -   revert hashing change that ignores all but last 20 bytes of each
+        line.
+    -   resolve conflicts
+
+2008-10-26 Eric Kow
+  ~ -   Unused import police
+
+2008-10-28 Jason Dagit
+  ~ -   fixup ByteString compatibility for sake of ghc6.6
+    -   clean up module imports after ByteString changes
+
+2008-10-27 Don Stewart
+  ~ -   small merges
+    -   Remove all references to FastPackedString the module. Gone
+    -   remove last references to the PackedString type
+
+2008-10-26 Jason Dagit
+  ~ -   clean up module imports after ByteString changes
+
+2008-10-26 Don Stewart
+  ~ -   remove dead code
+    -   remove all references to unsafeWithCStringLenPS
+    -   remove all references to mallocForeignPtr
+    -   remove all references to createPS
+    -   and in tests
+    -   remove all traces of packString
+    -   remove all references to breakOnPS
+    -   remove all references to spanEndPS
+    -   remove all references to indexPSW (only ever used as 'head')
+    -   remove all references to generatePS
+
+2008-10-26 Jason Dagit
+  ~ -   clean up imports in other modules after ByteString refactorings
+
+2008-10-26 Don Stewart
+  ~ -   Remove all references to dropWhilePS, clean up silly\_lex while
+        I'm here
+    -   pure haskell implementation of breakSpace, from Data.ByteString
+    -   remove fpstring.c:first\_nonwhite, in favor of pure haskell
+        implementation
+    -   remove all references to dropPS
+    -   remove all references to concatPS
+    -   remove all references to findLastPS
+    -   remove all references to breakPS
+    -   remove all references to findPS
+    -   remove all references to packWords
+    -   remove all references to takePS
+    -   Remove appendPS, dead code
+    -   remove all references to initPS
+    -   remove all references to tailPS
+    -   remove all references to nilPS
+
+2008-10-26 Ganesh Sittampalam
+  ~ -   remove writeFilePS usage from HTTP.hs
+
+2008-10-26 Don Stewart
+  ~ -   Remove all references to unpackPS
+    -   optimise use of unpack in Format.lhs
+    -   Optimize inefficiency when unpacking string for tok replace
+    -   Optimize hunk handling not to needlessly unpack bytestrings
+    -   Don't unpack the same bytestring twice in two lines
+    -   Optimize ignore\_junk to not unpack the bytestring
+
+2008-10-26 Jason Dagit
+  ~ -   remove nullPS from Darcs.Patch.Test
+
+2008-10-26 Don Stewart
+  ~ -   Remove all references to nullPS
+    -   remove all references to headPS
+
+2008-10-26 Jason Dagit
+  ~ -   make BC.last depend on GADT\_WITNESSES in Diff.lhs
+
+2008-10-26 Don Stewart
+  ~ -   remove all references to splitAtPS
+    -   More explict import lists
+    -   explicit import lists
+    -   remove all referenes to lengthPS
+    -   replace reimplementation of c2w with bytestring's c2w
+    -   remove references to indexPS
+    -   remove references to lastPS
+    -   remove references anyPS
+    -   remove references to hGetPS
+    -   remove references to hPutPS
+    -   Remove all references to hGetContentsPS
+    -   remove references to readFilePS
+    -   Remove references to writeFilePS
+    -   Remove splitPS in favor of its definition
+    -   Remove OldFastPackedString entirely
+
+2008-10-25 Ganesh Sittampalam
+  ~ -   just hash the last 20 characters in LCS
+
+2008-11-02 David Roundy
+  ~ -   compensate for bugfix in franchise in defineAs.
+    -   TAG unstable before bytestring patches.
+    -   changes to work with latest franchise.
+
+2008-10-28 Ganesh Sittampalam
+  ~ -   rewrite partitionFL and partitionRL to reduce the number of
+        commutes they do
+
+2008-11-01 David Roundy
+  ~ -   don't link into the manual, since this is fragile.
+
+2008-10-30 Eric P. Mangold
+  ~ -   improve front page of [http://darcs.net](http://darcs.net)
+
+2008-10-30 David Roundy
+  ~ -   enable unbox-strict-fields in Setup.hs.
+
+2008-10-30 Thorkil Naur
+  ~ -   Fix issue1183
+
+2008-10-30 David Roundy
+  ~ -   make default be to --run-posthook and --run-prehook
+    -   rename smart\_diff to unsafeDiff to reflect its unsafeness.
+    -   make a few changes to the sporadically-failing init.sh script.
+
+2008-10-26 Don Stewart
+  ~ -   replace insanely low level version of ifHeadThenTail with uncons
+    -   Remove dead code: reversePS
+
+2008-10-26 Jason Dagit
+  ~ -   add exception to haskell\_policy.sh for Data.ByteString.readFile
+
+

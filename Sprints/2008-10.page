@@ -1,0 +1,182 @@
+Here are the details from our first darcs hacking sprint ever!
+
+# Report
+
+[http://blog.darcs.net/2008/10/darcs-hacking-sprint-1-report.html](http://blog.darcs.net/2008/10/darcs-hacking-sprint-1-report.html)
+
+# 25-26 October 2008
+
+So far, we are offering venues in the UK, USA and France. There will be
+jobs for both new and experienced hackers. Join one of the teams, or
+come hack with us on IRC \#darcs (freenode).
+
+Venues:
+
+-   CONFIRMED - Brighton
+-   CONFIRMED - Portland
+-   CONFIRMED - Paris
+
+## Team Brighton
+
+Site: Confirmed! University of Brighton, Moulescoomb campus, Watts
+Building, Lewes Road, Brighton, BN2 4GJ
+
+Access: Either the 25 or 49 in the Universities or Moulescoomb
+directions, or train to the Moulescoomb station. [EricKow](EricKow)'s
+mobile number available upon request
+
+Contact: [EricKow](EricKow)
+
+Food: There are pubs within walking distance of the University for
+lunch. We would probably go into central Brighton for dinner at least
+Saturday night and maybe Sunday depending on how people feel.
+
+Please bring: Laptop (network access will likely be provided)
+
+People:
+
+-   [EricKow](EricKow)
+-   [GaneshSittampalam](GaneshSittampalam)
+-   [IanLynagh](People/IanLynagh)
+
+## Team Portland
+
+Site: Confirmed! Galois Inc, 421 SW 6th Ave. Suite 300 Portland, OR
+97204
+
+Access: This is in downtown Portland. Please get in touch with
+[JasonDagit](JasonDagit)
+
+Contact: [JasonDagit](JasonDagit)
+
+Please bring: Laptop (wifi on offer)
+
+People:
+
+-   [JasonDagit](JasonDagit)
+-   [DonStewart](DonStewart)
+-   [DuncanCoutts](DuncanCoutts) (this or Brighton)
+-   [TimChevalier](People/TimChevalier) (possible, but will probably
+    participate in the influence-the-presidential-election sprint
+    instead)
+
+## Team Paris
+
+Site: Université de Paris 7, 175 Rue du Chevaleret [please bring ID]
+
+Contact: [NicolasPouillard](People/NicolasPouillard) (note: we need a
+full list of participants by Wed 2008-10-22)
+
+Please bring:
+
+-   Laptop (switch will be provided)
+-   ID People:
+
+-   [FlorentBecker](FlorentBecker)
+-   [NicolasPouillard](People/NicolasPouillard) - Paris
+-   [ReinierLamers](ReinierLamers) - Utrecht, NL
+
+## Team IRC
+
+Site: \#darcs on irc.freenode.net (maybe you could organise your own
+venues?)
+
+People:
+
+-   [RobHoelz](RobHoelz) - Madison, WI
+-   [BenediktSchmidt](BenediktSchmidt) - Zurich,CH
+-   [SimonMichael](SimonMichael) - Los Angeles
+
+# Agenda
+
+During this first sprint, we shall be focusing our attention on the day
+to day performance issues that darcs users commonly face.
+
+This is what we are reaching for:
+
+1.  Fast network operations. We want to make it very pleasant for users
+    to darcs get a repository and pull some patches to it over http and
+    ssh. Git does this very well, and we plan to learn from them.
+2.  Cutting memory consumption. We want to profile the heck out of
+    operations like darcs record, darcs convert and darcs whatsnew.
+    What's eating up all the memory? And how can we can cut it down to
+    size?
+3.  Responsiveness. Sometimes basic darcs commands can take long enough
+    for programmers to lose their train of thought. We want to track
+    down these lost seconds and kill that dreaded context switch.
+4.  Even better UI (lots of nice features to assign individually, for
+    example, [issue75](http://bugs.darcs.net/issue75) and
+    [issue126](http://bugs.darcs.net/issue126)) Of course, if you are
+    interested in other areas, then you can work on those instead.
+
+## What needs doing?
+
+-   investigate:
+-   [http://bugs.darcs.net/issue390](http://bugs.darcs.net/issue390)
+    whatsnew lstats every file (Reinier?)
+-   [http://bugs.darcs.net/issue80](http://bugs.darcs.net/issue80)
+    record takes 2x memory (Jason and Don?)
+-   performance regression suite
+-   identify good 5 [StandardDarcsBenchmarks](StandardDarcsBenchmarks)
+    that can be run on the buildbot, and add them to the repository
+    (Eric)
+-   integrate Ian's memory suite into darcs? (open!)
+-   make it possible to view only the benchmarking results in buildbot
+    (open!)
+-   summarise benchmark results in buildbot (open!)
+-   new performance features
+-   on disk chunky hunk format (would be a new compatible repo format
+    like old-fashioned vs hashed) (IanLynagh, [JasonDagit](JasonDagit),
+    [DonStewart](DonStewart))
+-   packs, as a network (latency) plus a responsivenes (less seeking of
+    files) issue? (NicolasPouillard)
+-   cache for darcs annotate (GaneshSittampalam,BenediktSchmidt)
+-   poking at darcs
+-   profile darcs for memory usage on
+    [StandardDarcsBenchmarks](StandardDarcsBenchmarks) (needs fleshing
+    out) (open!)
+-   audit bytestring use in darcs (needs fleshing out) (open!)
+-   all easy jobs
+-   [http://bugs.darcs.net/issue?@columns=title,id,activity,status,assignedto&@sort=activity&@group=priority&@filter=topic,status&@pagesize=50&@startwith=0&topic=6&status=-1,1,2,3,4,5,6,7&@dispname=ProbablyEasy](http://bugs.darcs.net/issue?@columns=title,id,activity,status,assignedto&@sort=activity&@group=priority&@filter=topic,status&@pagesize=50&@startwith=0&topic=6&status=-1,1,2,3,4,5,6,7&@dispname=ProbablyEasy)
+-   very easy jobs
+-   [http://bugs.darcs.net/issue286](http://bugs.darcs.net/issue286)
+    - dist --tag
+-   [http://bugs.darcs.net/issue545](http://bugs.darcs.net/issue545)
+    - send --gpg-command
+-   [http://bugs.darcs.net/issue1000](http://bugs.darcs.net/issue1000)
+    - tag names
+-   [http://bugs.darcs.net/issue762](http://bugs.darcs.net/issue762)
+    - unpull messages
+-   [http://bugs.darcs.net/issue395](http://bugs.darcs.net/issue395)
+    - record -m x (taken by Reinier!)
+-   [http://bugs.darcs.net/issue839](http://bugs.darcs.net/issue839)
+-   less easy jobs
+-   [http://bugs.darcs.net/issue182](http://bugs.darcs.net/issue182)
+    - show status command?
+-   [http://bugs.darcs.net/issue75](http://bugs.darcs.net/issue75)
+    - \_darcs/trash
+-   [http://bugs.darcs.net/issue126](http://bugs.darcs.net/issue126)
+    -   splitting hunks (!)
+
+### Other plans
+
+-   tour of the darcs source (Nicolas and Jason)
+-   early - it would be nice if we could help our new hackers, Gaetan
+    and Reinier get up to speed with the darcs code
+-   (talk about) iteratee/enumerator refactor? (JasonDagit and
+    [DonStewart](DonStewart))
+-   working on camp (IanLynagh)
+
+## Hackers that need jobs
+
+-   Reinier (thinking of issue 390)
+-   Rob
+-   Florent
+-   Duncan
+
+## Repos
+
+Most work is being done in
+[http://code.haskell.org/darcs/sprint](http://code.haskell.org/darcs/sprint)
+. There are additional repos, see
+[http://code.haskell.org/darcs](http://code.haskell.org/darcs)/

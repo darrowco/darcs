@@ -1,0 +1,50 @@
+# Blog posts
+
+* [darcs primitive patches version 3](http://www.mornfall.net/blog/soc_reloaded:_darcs_primitive_patches_version_3.html)
+* [progress 1](http://www.mornfall.net/blog/soc_reloaded:_progress_1.html)
+* [outcomes](http://www.mornfall.net/blog/soc_reloaded:_outcomes.html)
+
+# Discussions
+
+# Timeline
+
+Week starting...
+
+-   23 May
+-   30 May
+
+-   6 Jun
+-   13 Jun (more or less exams this week)
+-   20 Jun
+
+    it's been testsuite work up till here, in a somewhat disappointing
+    tempo and not very motivated either
+
+    I'll aim at writing usable Arbitrary instances today, so I can move
+    on with actual implementation next week
+
+-   27 Jun
+
+    I have one last exam in this week, although that shouldn't be a real
+    problem; I'll implement \*Hunk, Manifest and Move patches with
+    commute and apply.
+
+-   4 Jul
+
+    Implement PatchMonad and move the V3 implementation inside, probably
+    using a wrapper (runPatchMonad or such) to implement the "normal"
+    Prim interface.
+
+    This should more or less cover the basic objectives set out in the
+    proposal, without any of the optional stuff. The optionals can come
+    in after midterms.
+
+-   11 Jul (midterms this week)
+-   18 Jul
+-   25 Jul
+
+-   1 Aug
+-   8 Aug
+-   15 Aug
+
+(Firm pencils down: 22 Aug)

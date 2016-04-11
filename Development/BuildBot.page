@@ -1,0 +1,52 @@
+# Buildbot
+
+The current buildmaster runs at
+<http://buildbot.darcs.net>.
+
+## Setting up a buildslave
+
+First install buildbot on your system -- see
+<http://buildbot.net> (your distribution may have packages, too).
+
+You should have `cabal-install`: either from your distribution, or
+bootstrap from
+<http://haskell.org/cabal/download.html>
+-- get the `cabal-install-0.x.y.tar.gz` on UNIX (if you are on Windows,
+get the [haskell platform](http://hackage.haskell.org/platform)
+instead). Make sure that the buildbot user account has access to the
+cabal binary.
+
+Now the following steps should be done *on behalf of the buildbot
+user/account*:
+
+-   Run `cabal update`.
+-   Run `cabal install darcs`. This needs curl and (on UNIX) zlib
+    development files... but you can use `-f-curl` to avoid curl).
+-   Run
+    `buildbot create-slave /path/to/working/area buildmaster.darcs.net:9988 bot_name bot_password`.
+
+Additionally, you need a working darcs on your (buildbot's) PATH. You
+can use the one you built by cabal above the binary is in
+`$HOME/.cabal/bin/` on UNIX (we don't know about Windows).
+
+Finally, e-mail the buildbot maintainer with your buildslave name and
+password (currently Petr Rockai, me-at-mornfall-dot-net) and possibly
+extra flags that you need to have passed to `Setup configure`
+(`-w /path/to/ghc`, `-f-curl` and such). If you have multiple GHC
+versions available, we would be happy to set up a builder for each GHC.
+
+## Maintenance
+
+Sometimes, darcs will require new versions of hackage libraries. There
+are basically two options:
+
+-   You can let the buildbot sort this out automatically: you need
+    "cabal" binary on your (buildbot's) path -- this should be sorted if
+    you followed the above instructions -- and you don't mind darcs
+    builds installing hackage packages. Note you want this when you are
+    sending the password.
+-   You want to sort this manually: there's a script,
+    contrib/install-deps.sh in the darcs source, which you can use: you
+    need a current checkout of darcs (you can use the one in buildbot's
+    scratch area).
+

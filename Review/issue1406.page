@@ -1,0 +1,147 @@
+# Summary
+
+1.  What is the bug?
+
+    -   [http://bugs.darcs.net/issue1406](http://bugs.darcs.net/issue1406)
+    -   amend effectively deletes the *original* patch if --test fails
+    -   this only affects old-fashioned repositories
+
+2.  On a high level, what do we think is the cause of the bug?
+
+    -   issue1406-specific: Why does it only affect old-fashioned
+        repositories?
+
+The failure described in the bug report was caused by one of the
+functions called by tentativeRemovePatches, namely
+DarcsRepo.remove\_from\_tentative\_inventory, changing the real state of
+the repository. As it was written, it was preserving consistency but
+breaking atomicity of any transaction it was used in.
+
+3.  What is the proposed solution?
+
+I have rewritten the function to make changes only to the tentative
+state and thus preserve both properties.
+
+4.  What are the generally agreed-upon parts of the proposed solution?
+
+5.  What are the topics for debate?
+
+    -   orphan patches created
+    -   inverse patches in tentative\_pristine VS commuting patches to
+        the end and discarding them.
+
+# Background reading and technical notes
+
+Tentative state corresponds to the real state of the repository. The
+representation is the same except for the tentative\_pristine, which is
+stored as a sequence of patches (I don't mean a sequence as in
+inventory, sequence of hunks and such), a diff from the real pristine.
+
+Tentative state is cleared, or more precisely copied from the real repo
+state, before a transaction is executed. This is done by withRepoLock,
+which is used in amend-record command for example. withRepoLock calls
+revertRepositoryChanges, which in turn calls revert\_tentative\_changes.
+
+Operations in a transaction (one such operation is
+tentatvelyRemovePatches) should operate on the tentative state only.
+
+The test command is executed on a tentative version of the repository.
+If the test fails then darcs simply exits with a failure code (no
+cleanup to tentative happens at this point).
+
+A transaction is committed by finalize\_tentative\_changes called by
+finalizeRepositoryChanges, which you can see used in the amend-record
+command's source code.
+
+-   [Checkpoints](../Checkpoints)
+-   tentative\_pristine in hashed repos is a root pointer, but in
+    old\_fashioned repos, it's a patch?
+-   [http://bugs.darcs.net/issue1325](http://bugs.darcs.net/issue1325) -
+    shortcomings in coalesce
+-   Email reviews
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2009-September/021175.html](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021175.html)
+
+# Discussion
+
+## Orphan patches created
+
+What could go wrong?
+
+    On Sun, Sep 6, 2009 at 8:18 PM, Jason Dagit<dagit@codersbase.com> wrote:
+    > On Sun, Sep 6, 2009 at 11:48 AM, Petr Rockai<me@mornfall.net> wrote:
+    >> Jason Dagit <dagit@codersbase.com> writes:
+    >>> In that case, the patches we want to remove from the
+    >>> tentative_pristine need to be removed carefully.  For example,
+    >>> commuting them to the end and discarding them.  The code as written
+    >>> writes the inverses to the tentative_pristine.  Do we make any effort
+    >>> to later collapse inverses and remove the resulting identity patches?
+    >>> The ideal case is that patches to be removed simply do not exist in
+    >>> the tentative_pristine when we're done.  Failing that, we need to
+    >>> simulate a 'rollback' which is what applying their inverse is all
+    >>> about.
+    >> This is tentative_*pristine*, not tentative patches. Even if we store patches
+    >> in there, these will never materialise as actual patches in the repository,
+    >> they exist solely for the purpose of application. (Hopefully.)
+    >
+    > Yes, but if you look at the code and read over my description from the
+    > most recent patch review, you'll see that with these changes we would
+    > call write_patch on changes that are tentative.  Priory to that
+    > write_patch was only called on patches that already existed in the
+    > repository but which had been changed via a commute with the patches
+    > to_remove.  With the change, write_patch is also called on patches
+    > read from the tentative inventory.
+
+Here is how I understand the problem: To remove the (un)desired patches
+from the tentative\_inventory, we need to commute them to the end. This
+operation may change a number of patches in that inventory sequence and
+thus we have to ensure each of them is written to the disk. Now, we
+write the patches to a common store shared by inventory and
+tentative\_inventory. Since tentative\_inventory, as the name implies,
+might get discarded in case of test failure for example, the modified
+patches thus written will be orphaned.
+
+However, the problem of orphaned patches exists in darcs before this
+patch. For instance, the amend on success will leave the original patch
+and any commuted patches orphaned (tell me if I'm wrong). Probably any
+other command that commutes the patches in the inventory does it too.
+
+I think the orphaned patches could be a separate issue (a command
+analogous to the git gc). This problem exists in the current darcs, it
+is not introduced by this patch. The patch addresses the lack of
+atomicity in the amend-record, thus making it fully ACID. It is true
+that amend before the patch used to create less garbage in case of
+failure, but with the price of committing half the changes in the middle
+of the transaction.
+
+-   Kamil
+
+    > Ganesh (13/09/09): I agree that the orphan patches are not a (new)
+    > problem, loads of commands create them, e.g. unrecord, obliterate
+    > as well as a successful amend-record.
+    >
+    > Kamil (13/09/09): As noticed by Petr, my patch would introduce a
+    > serious defect. Commuting patches to the end for removal
+    > potentially requires changing some patches that will stay. All the
+    > patches are written to disk with file names that don't change
+    > across commutation. This means that the patches directory is in
+    > sync with tentative\_inventory but not inventory, so if the
+    > transaction gets cancelled, the repo is in an inconsistent state.
+    >
+    > I initially wanted to keep trying to fix this issue by keeping a
+    > tentative\_patches directory with a copy of all the patches there,
+    > but that sounds costly.
+    >
+    > Ganesh mentioned a possibility of doing a commute (that brings the
+    > patches to be removed to the end) on the *real* inventory and
+    > patches, and after that proceeding with a tentative removal. That
+    > would work I think though it does require some restructuring of
+    > the code.
+    >
+    > Anyway, I am shelving this issue for now. The defect is present in
+    > darcs since the beginning and probably it is not worth to sweat it
+    > now when the old-fashioned is in the autumn of its life.
+
+## Inverse patches in tentative\_pristine
+
+What could go wrong?

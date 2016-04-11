@@ -1,0 +1,60 @@
+# News and discussions
+
+1. The second darcs hacking sprint is confirmed: 17-19 April, Utrecht!
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-February/017769.html](http://lists.osuosl.org/pipermail/darcs-users/2009-February/017769.html)
+
+2. Discussions are going on about a submission for Google Summer of
+  ~ Code 2009. Hashed-storage ? Patch GUI ?
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-February/017766.html](http://lists.osuosl.org/pipermail/darcs-users/2009-February/017766.html)
+
+3. darcs 2.2.1 was not released this week. A discussion ensued about the
+  ~ minor version releases and whether they should be done anyway:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-February/017736.html](http://lists.osuosl.org/pipermail/darcs-users/2009-February/017736.html)
+
+# Issues resolved in the last week (1)
+
+issue1347 Dave Love
+  ~ -   Check for unsafeMMapFile if mmap use enabled.
+    -   [http://bugs.darcs.net/issue1347](http://bugs.darcs.net/issue1347)
+
+# Patches applied in the last week (16)
+
+2009-02-12 Eric Kow
+  ~ -   Work around weird haddock error.
+
+2009-02-12 Simon Michael
+  ~ -   haddock typo
+
+2009-02-12 Petr Rockai
+  ~ -   Cabal: Fix haddock generation.
+    -   Fix test failure by ratifying the offending readFile.
+
+2009-02-12 Eric Kow
+  ~ -   Ratify readFile in list\_authors
+
+2009-02-12 Petr Rockai
+  ~ -   Export read\_pending from Darcs.Repository.Internal.
+
+2009-02-11 Dave Love
+  ~ -   Resolve issue1347: Check for unsafeMMapFile if mmap use enabled.
+
+2009-02-10 Eric Kow
+  ~ -   doc: Fix a typo and some trailing whitespace.
+
+2009-02-07 [kari@hoijarvi.org](mailto:kari@hoijarvi.org)
+  ~ -   MS Windows specific docs
+
+2009-02-08 Simon Michael
+  ~ -   document .authorspellings in show authors --help
+    -   add help to authorspellings file
+    -   small authorspellings fix
+    -   add list\_authors-style canonicalizing to the show authors
+        command
+    -   add .authorspellings file appropriate for our repo
+    -   canonical authors may be defined in an .authorspellings file
+    -   configuring author spelling variations was complicated, now
+        easier
+
+

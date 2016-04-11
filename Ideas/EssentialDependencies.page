@@ -1,0 +1,133 @@
+In Darcs, there are two kinds of [dependencies](Using/Model#dependencies): implicit and explicit ones. Implicit dependencies are recorded behind the scenes for every named patch. Additional explicit dependencies can be specified using `darcs tag` or `darcs record --ask-deps`.
+
+Implicit dependencies are unnecessarily coarse grained if users record unrelated changes in a single named patch. As a consequence, patches that depend on such a big patch implicitly depend on unrelated changes which unnecessarily restricts possible repository manipulations.
+
+To solve this problem, Darcs could record which implicit dependencies are essential. Essential dependencies are those implicit dependencies that Darcs would record if every primitive patch would be recorded in its own named patch.
+
+As shown below, users can record essential dependecies by carefully recording small patches. But often users record big patches that combine many changes into a logical unit. Darcs should allow to do this without recording unnecessary dependencies.
+
+# Darcs implicitly records unnecessary dependencies
+
+The following example motivates recording of essential dependecies by showing how Darcs unnecessarily restricts repository manipulations.
+
+Say, we record two patches: one that creates two files and another that adds `contents` to one of the files.
+
+~~~
+darcs changes -v
+  * added contents to essential file
+    hunk ./essential 1
+    +contents
+
+  * added files essential and unnecessary
+    addfile ./essential
+    addfile ./unnecessary
+~~~
+
+In this situation, the patch that adds `contents` implicitly depends on the patch that adds the two files (because it modifies one of them.) As a consequence, the patch that adds `contents` implicitly depends on the primitive patch `addfile ./unnecessary` although it is unrelated to this change.
+
+Say, we accidentally recorded `addfile ./unnecessary` together with `addfile ./essential` and we want to restructure the repository to not add the `unnecessary` file. It is unnecessarily difficult to undo the primitive patch `addfile ./unnecessary`: Darcs does not allow to do this using `darcs amend-record --unrecord --patch "added files"` because another patch depends on the selected patch.
+
+# Users can manually record only essential dependencies
+
+We can use `darcs unrecord` followed by `darcs record` to restructure the patches according to essential dependencies.
+
+~~~
+darcs changes -v
+  * added contents to essential file
+    hunk ./essential 1
+    +contents
+
+  * added files essential and unnecessary [2 of 2]
+    addfile ./unnecessary
+
+  * added files essential and unnecessary [1 of 2]
+    addfile ./essential
+~~~
+
+In this situation the patch adding `contents` only depends on the patch adding the `essential` file. Hence, we can undo the primitive patch `addfile ./unnecessary` using `darcs amend-record --unrecord --patch "2 of 2"`.
+
+~~~
+darcs changes -v
+  * added files essential and unnecessary [2 of 2]
+
+  * added contents to essential file
+    hunk ./essential 1
+    +contents
+
+  * added files essential and unnecessary [1 of 2]
+    addfile ./essential
+~~~
+
+The selected named patch has been commuted to the top. (We could use `darcs obliterate` to completely remove the now empty patch.)
+
+This manual procedure has two drawbacks:
+
+  * Users need to calculate dependencies to partition the recorded changes into unrelated sets of changes.
+
+  * The small patches no longer reflect logical grouping and cannot be pulled as a single patch.
+
+## Adding empty patches as logical units
+
+We can bundle unrelated changes to be exchanged as a unit by recording empty patches that depend on them. Say, we want to bundle two patches, each of them adding a file to the repository.
+
+~~~
+darcs changes -v
+  * added files essential and unnecessary [2 of 2]
+    addfile ./unnecessary
+
+  * added files essential and unnecessary [1 of 2]
+    addfile ./essential
+~~~
+
+In this situation, we could use a `darcs tag` to bundle the patches because there are no other patches in the repository. If there are other patches, a tag is not what we want, however, because a tag depends on the complete state of the repository rather than only on the patches we want to bundle.
+
+Darcs does not allow to directly record empty patches. Instead, we first record a non-empty patch and specify additional explicit dependencies using `darcs record --ask-deps`.
+
+~~~
+darcs changes -v
+  * added files essential and unnecessary
+    addfile ./bundle
+
+  * added files essential and unnecessary [2 of 2]
+    addfile ./unnecessary
+
+  * added files essential and unnecessary [1 of 2]
+    addfile ./essential
+~~~
+
+Now we can use `darcs amend-record --unrecord bundle` to remove that primitive patch `addfile ./bundle` from the selected patch.
+
+~~~
+darcs changes -v
+  * added files essential and unnecessary
+
+  * added files essential and unnecessary [2 of 2]
+    addfile ./unnecessary
+
+  * added files essential and unnecessary [1 of 2]
+    addfile ./essential
+~~~
+
+We now have an empty patch that depends on two unrelated changes so they can be exchanged as a unit. In order to undo the primitive patch `addfile ./unnecessary` we first need to unrecord the empty patch that depends on it. Unrecording an empty patch should be easy because other patches will never implicitly depend on an empty patch.
+
+We can also retroactively add new explicit dependencies to an empty patch using `darcs amend-record --ask-deps`. Pulling an empty patch with additional dependencies is possible even if a previous version of it has been pulled previously, though the repository will end up with both the old version and the new version. So users can use empty patches to communicate conceptually related changes without essential dependencies.
+
+# Darcs should automatically record only essential dependencies
+
+It is error prone for users to record only essential dependencies. They might accidentally include unrelated changes into a patch like in the motivating example. Moreover, manually bundling unrelated named patches as logical unit is awkward because it requires a workaround to create an empty patch with explicit dependencies.
+
+Darcs knows about implicit dependencies of unrecorded changes. For example, when recording a new file with some contents Darcs will not aks users to select the hunk patch adding the contents if they already decided against including the corresponding `addfile` primitive patch. `darcs record --split-deps` could automatically record multiple named patches reflecting essential dependencies, append `[n of m]` to the given patch name for each of them, and then record an empty patch that depends on all of them using the given patch name and description.
+
+# Summary, advocating the `--split-deps` flag for `darcs record`
+
+To summarize, here are answers to the [questions to think about when advocating a new feature](Development/NewFeature#advocate-the-feature).
+
+Consequent usage of the `--split-deps` flag for `darcs record` ensures that all implicit dependencies tracked by Darcs are essential. End users can therefore avoid accidentally recording unnecessary dependencies when authoring patches which lets them (and others) later undo changes more flexibly. Automatic bundling using an empty patch allows patch authors to communicate their changes via a single patch that can be tracked by others. To ensure consequent use of `--split-deps`, users can configure it as a default flag for `darcs record`.
+
+A typical usage scenario is the development of a large feature. It is convenient to exchange the feature using a single patch including, for example, helper functions not necessarily restricted to the feature. If others later want to use helper functions without pulling the feature, they can pull one or more of the independently recorded named patches. On the other hand, users interested in the complete implementation of the feature don't have to select all independently recorded named patches but can instead pull the empty patch that depends on them.
+
+This feature does not introduce any incompatibilities as users can already achieve the effect of `--split-deps` with some manual effort. Moreover, users can choose to not use the feature by not using the flag. Existing workflows to unrecord and then rerecord changes are simplified because all changes can be automatically structured into minimal named patches from the start. When using `--split-deps` as a default flag for `darcs record`, subsequent calls to `darcs changes` and similar commands showing information about patches will show multiple named patches where they previously showed only a single patch. The user interface of `darcs record` itself would not change. A single call to `darcs record` would implicitly record multiple named patches reflecting essential dependencies. As a consequence, the `--split-deps` flag has no effect on the conceptual integrity of Darcs.
+
+A possible unintended interaction with existing features that manipulate patches could arise from having many small patches instead of one big one. For example, unrecording the empty patch used to bundle unrelated changes will not change the state of the repository. To remove a feature, all bundled patches need to be unrecorded individually. Presumably, this is only a minor nuisance, because `darcs changes` clearly shows the individual patches and Darcs's features for patch selection are flexible enough to select all bundled patches based on their names.
+
+This proposal originated from a [discussion on patch groups](http://thread.gmane.org/gmane.comp.version-control.darcs.user/26720/focus=26728). Patch groups were proposed to solve the problems of retroactively splitting patches and grouping them into logical units. The need for retroactively splitting patches is reduced by recording only essential dependencies from the start. The need for a separate concept for logical units of patches is reduced by recording empty patches with explicit dependencies. Apart from adding the flag, no changes to the user interface of Darcs are necessary. Therefore, this proposal seems less intrusive to Darcs than the proposed patch groups with all its discussed user interface changes. It also seems easier to implement because the implementation only requires information that is already available to `darcs record`.

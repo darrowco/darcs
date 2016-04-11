@@ -1,0 +1,61 @@
+# News and discussions
+
+1. Ganesh Sittampalam gave us an update about progress on crc error
+  ~ handling:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-May/019633.html](http://lists.osuosl.org/pipermail/darcs-users/2009-May/019633.html)
+
+2. Neil Mitchell asked about how to use "darcs send" when the remote
+  ~ server is unavailable:
+
+> -   [http://lists.osuosl.org/pipermail/darcs-users/2009-May/019620.html](http://lists.osuosl.org/pipermail/darcs-users/2009-May/019620.html)
+
+3. The GHC team announced that the migration from darcs to git was no
+  ~ longer a priority, given the recent developments of darcs:
+
+> -   [http://hackage.haskell.org/trac/ghc/wiki/Status/May09](http://hackage.haskell.org/trac/ghc/wiki/Status/May09)
+
+# Issues resolved in the last week (2)
+
+issue1312 Trent W. Buck
+  ~ -   update and reduce build notes.
+    -   [http://bugs.darcs.net/issue1312](http://bugs.darcs.net/issue1312)
+
+issue1435 Trent W. Buck
+  ~ -   default to get --hashed from a darcs-1.0 source.
+    -   [http://bugs.darcs.net/issue1435](http://bugs.darcs.net/issue1435)
+
+# Patches applied in the last week (11)
+
+2009-04-10 Dmitry Kurochkin
+  ~ -   Properly handle errors from request\_url.
+
+2009-05-05 Trent W. Buck
+  ~ -   Resolve issue1312: update and reduce build notes.
+    -   Refactor record-scaling test.
+
+2008-12-10 David Roundy
+  ~ -   add test that record doesn't read all old inventories.
+
+2009-05-03 Trent W. Buck
+  ~ -   Refactor tests/check.sh.
+
+2008-11-15 David Roundy
+  ~ -   add check.sh test.
+
+2009-04-30 Eric Kow
+  ~ -   Haddock the 'Common' functions in Darcs.Patch.Real.
+
+2009-05-01 Trent W. Buck
+  ~ -   Replace single-use option with an argument (darcs help
+        patterns).
+    -   Resolve issue1435: default to get --hashed from a darcs-1.0
+        source.
+
+2009-04-27 Eric Kow
+  ~ -   Haddock some simple functions in Darcs.Patch.Real.
+
+2009-04-26 Trent W. Buck
+  ~ -   Remove stale --no-pristine-tree docs.
+
+

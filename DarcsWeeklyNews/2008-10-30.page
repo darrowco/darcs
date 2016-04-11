@@ -1,0 +1,199 @@
+# News and discussions
+
+1.  Darcs hacking sprint report
+    -   [http://blog.darcs.net/2008/10/darcs-hacking-sprint-1-report.html](http://blog.darcs.net/2008/10/darcs-hacking-sprint-1-report.html)
+
+2.  darcsweb-1.1 released! With darcs 2 support, bugfixes and syntactic
+    highlighting. Congratulations, Alberto!
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2008-October/015172.html](http://lists.osuosl.org/pipermail/darcs-users/2008-October/015172.html)
+
+3.  Official darcs blog. For announcements, darcs weekly news, and links
+    to posts about darcs. Planet darcs to be announced shortly.
+    -   [http://blog.darcs.net](http://blog.darcs.net)
+
+# Reviewers
+
+Thanks to our patch reviewers for this week for giving David a hand!
+
+-   Trent Buck
+-   Reinier Lamers
+-   Jason Dagit
+
+# Issues resolved in the last week (8)
+
+issue395 Reinier Lamers
+  ~ -   warn the user when the patch name looks like a command line
+        option
+    -   [http://bugs.darcs.net/issue395](http://bugs.darcs.net/issue395)
+
+issue628 Christian Kellermann
+  ~ -   reuse the long comment code from Darcs.record
+    -   [http://bugs.darcs.net/issue628](http://bugs.darcs.net/issue628)
+
+issue774 Salvatore Insalaco
+  ~ -   fix character echo on win32.
+    -   [http://bugs.darcs.net/issue774](http://bugs.darcs.net/issue774)
+
+issue839 Simon Michael
+  ~ -   enable global cache by default
+    -   [http://bugs.darcs.net/issue839](http://bugs.darcs.net/issue839)
+
+issue1000 Christian Kellerman
+  ~ -   warn when tags are too short (length name <2)
+    -   [http://bugs.darcs.net/issue1000](http://bugs.darcs.net/issue1000)
+
+issue1023 Salvatore Insalaco
+  ~ -   bracket file writing to prevent windows permission errors.
+    -   [http://bugs.darcs.net/issue1023](http://bugs.darcs.net/issue1023)
+
+issue1046 Simon Michael
+  ~ -   record nothing when only a non-repo file is specified
+    -   [http://bugs.darcs.net/issue1046](http://bugs.darcs.net/issue1046)
+
+issue1051 Florent Becker
+  ~ -   Allow --dry-run --interactive
+    -   [http://bugs.darcs.net/issue1051](http://bugs.darcs.net/issue1051)
+
+# Patches applied in the last week (73)
+
+2008-10-26 Jason Dagit
+  ~ -   add exception to haskell\_policy.sh for Data.ByteString.readFile
+
+2008-10-29 David Roundy
+  ~ -   add a test for whatsnew given a file argument.
+
+2008-10-29 Thorkil Naur
+  ~ -   Add (failing) test for issue1162
+
+2008-10-28 Jason Dagit
+  ~ -   Fixup LANGUAGE pragmas for the sake of ghc6.6
+
+2008-10-25 Don Stewart
+  ~ -   Add -fno-warn-name-shadowing
+    -   Add LANGUAGE pragmas for explicit language extensions
+    -   Add LANGUAGE extensions for explicit language extensions
+    -   Add LANGUAGE pragmas for explicit language extensions
+    -   Add LANGUAGE pragmas for explicit language extensions
+
+2008-10-28 Jason Dagit
+  ~ -   use fmap in Darcs.Utils
+    -   use fmap in DateMatcher
+    -   use fmap in list\_authors.hs
+    -   add one more Functor instance
+    -   add more Functor instances
+    -   add some Functor instances
+    -   use fmap in Compat
+    -   use fmap in Commands.Tag
+    -   use fmap in Commands.Replace
+    -   use fmap in Commands.Optimize
+    -   use fmap in Commands.Diff
+    -   use fmap in Commands.Add
+    -   use fmap in ArgumentDefaults
+
+2008-10-26 Ganesh Sittampalam
+  ~ -   add a comment
+    -   add some haddock to get\_slurp\_context\_\*
+
+2008-10-27 Benedikt Schmidt
+  ~ -   test for darcs changes and unrecorded moves
+    -   simplify TouchesFiles.look\_touch
+
+2008-10-26 Salvatore Insalaco
+  ~ -   Fix echo handling in windows scripts.
+    -   resolve issue774: fix character echo on win32.
+
+2008-10-28 David Roundy
+  ~ -   remove export of read\_pending.
+    -   cut unused argument to with\_selected\_patch\_from\_repo.
+
+2008-10-27 Simon Michael
+  ~ -   "make continuous" or "make ci" rebuilds darcs whenever files
+        change
+    -   resolve issue0839: enable global cache by default
+    -   refactor get\_global, make it more cross-platform
+    -   explain global cache a little more clearly
+    -   resolve issue1046: record nothing when only a non-repo file is
+        specified
+
+2008-10-27 David Roundy
+  ~ -   fix bug in haddock docs.
+
+2008-10-25 Ganesh Sittampalam
+  ~ -   accumulate hash strictly in hash/hashPS
+    -   remove trailing whitespace
+    -   add a few comments/update annotate docs slightly
+
+2008-10-24 Reinier Lamers
+  ~ -   resolve issue395: warn the user when the patch name looks like a
+        command line option
+
+2008-10-25 Salvatore Insalaco
+  ~ -   Fix newline endings on Windows for HTTP module.
+    -   resolve issue1023: bracket file writing to prevent windows
+        permission errors.
+
+2008-10-25 Christian Kellerman
+  ~ -   resolve issue1000: warn when tags are too short (length name <2)
+
+2008-10-24 Trent W. Buck
+  ~ -   $DARCS is no longer set by shell\_harness.
+    -   Cleanup after others before running tests.
+
+2008-10-24 Florent Becker
+  ~ -   resolve issue1051: Allow --dry-run --interactive
+
+2008-10-24 David Roundy
+  ~ -   franchise now has optimization-disabling built in.
+
+2008-10-22 Florent Becker
+  ~ -   making Darcs.Patch.Set comment into haddock
+
+2008-10-24 David Roundy
+  ~ -   fix documentation bug.
+
+2008-10-24 Florent Becker
+  ~ -   Haddock typoes and formatting in Darcs.Match
+
+2008-10-24 Christian Kellermann
+  ~ -   enable the use of $SENDMAIL for darcs send
+    -   resolve issue628: reuse the long comment code from Darcs.record
+    -   code cleanup
+    -   Canonize Christian Kellermann
+
+2008-10-24 Eric Kow
+  ~ -   Clarify darcs transfer-mode debug message.
+
+2008-10-24 Trent W. Buck
+  ~ -   Use ANNOUNCE\_GHC convention for .depend.
+    -   Use $@ to avoid repetition in makefile.
+
+2008-10-23 Reinier Lamers
+  ~ -   improve test\_unit performance with QuickCheck 2.1
+
+2008-10-23 Eric Kow
+  ~ -   Remove unused functions just\_dir and drop\_paths from
+        FilePathUtils.
+    -   Replace just\_dir with System.FilePath.takeFileName.
+
+2008-10-23 Trent W. Buck
+  ~ -   Appease GHC by removing unused import.
+    -   Typo.
+
+2008-10-22 Florent Becker
+  ~ -   Haddock documentation for Darcs.Patch.Match
+    -   haddock documentation and better names for Darcs.Match
+    -   remove duplicate Darcs.Match.doesnt\_not\_match
+
+2008-10-23 Eric Kow
+  ~ -   Do not use literate Haskell for Darcs.Population and
+        PopulationData
+    -   Convert Darcs.Population and Darcs.PopulationData comments into
+        haddock.
+    -   Remove redundant nullPI
+    -   Fix placement of ChangeLog signatures.
+    -   Make threading mandatory in darcs.cabal.in.
+    -   Remove Changelog.README.
+    -   Style tweak in Darcs.Utils.firstNotBlank
+    -   Minor Haskell style refactor.
+
+

@@ -1,0 +1,62 @@
+# News and discussions
+
+1.  Petr updated the hashed-storage library, fixing a performance
+    regression in the upcoming darcs 2.4, and gave us new timing scores
+    of different versions of darcs:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-February/023019.html](http://lists.osuosl.org/pipermail/darcs-users/2010-February/023019.html)
+
+2.  Eric sketched out a roadmap for darcs 2.5, which influenced our
+    plans for the upcoming hacking sprint:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-February/022997.html](http://lists.osuosl.org/pipermail/darcs-users/2010-February/022997.html)
+    -   [http://wiki.darcs.net/Roadmap](http://wiki.darcs.net/Roadmap)
+    -   [http://wiki.darcs.net/Sprints/2010-03](http://wiki.darcs.net/Sprints/2010-03)
+
+3.  The darcs team is looking for students who want to apply for a
+    Google Summer of Code 2010:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-February/023020.html](http://lists.osuosl.org/pipermail/darcs-users/2010-February/023020.html)
+
+# Issues resolved in the last week (2)
+
+issue1250 Florent Becker
+  ~ -   check for newlines in setpref values
+    -   [http://bugs.darcs.net/issue1250](http://bugs.darcs.net/issue1250)
+
+issue1719 Florent Becker
+  ~ -   1719
+    -   [http://bugs.darcs.net/issue1719](http://bugs.darcs.net/issue1719)
+
+# Patches applied in the last week (14)
+
+2010-02-14 Eric Kow
+  ~ -   Point out upcoming Darcs 2.4 release on homepage news.
+
+2010-02-08 Florent Becker
+  ~ -   Add witnesses to Commands.Changes
+    -   Allow PatchSets not to start at the origin of the repo
+    -   Remove useless case in Patch.Bundle
+    -   add seals in Changes to prepare for witnesses
+    -   Give Darcs.SelectChanges.text\_view a sane type
+    -   Rename filterFL to filterFLFL, replace it with a version using
+        Sealed2
+
+2010-02-09 Eric Kow
+  ~ -   Camel case Darcs.RunCommand.
+    -   Simplify sourcing of lib in EXAMPLE.sh.
+
+2010-01-05 Florent Becker
+  ~ -   resolve issue 1719
+    -   Warn for extra patches before selection in apply
+
+2010-02-03 Petr Rockai
+  ~ -   In check, compare index path list against working, not pristine.
+
+2010-02-03 Eric Kow
+  ~ -   Remove default $20 donation as this confuses people.
+
+2010-01-05 Florent Becker
+  ~ -   resolve issue1250: check for newlines in setpref values
+
+

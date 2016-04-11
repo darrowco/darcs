@@ -1,0 +1,50 @@
+This page is to record the various choices made in developing patch index.
+
+# Patch index annotate filter
+The function is getPatches in Darcs.Repository.FileMod
+
+## Return value
+A list of patches will lose the context(cannot be applied one after the other)
+after filtering out patches. Hence the first choice would be a return type of
+[Sealed2 (PatchInfoAnd p)]. (Although the given list of patches can be applied
+one after the other for the specific files given as input to getPatches.)
+
+However, annotate in Darcs.Patch.Annotate takes the patches as a FL (PatchInfoAnd p) wX wY.
+
+There was a choice to either convert the return type of getPatches or input type of annotate.
+The return type of getPatches was converted to FL (This preserved the additional
+safety and information in annotate, at the expense of some unsafe magic in getPatches
+(to claim a context that was not there))
+
+If we converted the input of annotate, we would have lost some information and safety
+in annotate. 
+
+## Annotate on directory
+
+annotateDirectory in Darcs.Patch.Annotate takes [FileName] as one of the input. These FileNames were missing
+a "./" in the front, which cased many to not find the patch corresponding to that path. A ./ was added to all
+FileNames. This caused the output patch for some files to change. However, note that this is only in cases were
+there is ambiguity in the patch to be selected. (Caused by multiple files having the same name at different points in history)
+
+# Patch Index Changes filter
+This is function filterPatches in Darcs.Repository.FileMod
+There is an existing function that filterPatchesByNames that also does the same thing, but without using patch index. 
+It has been decided to subject the output of filterPatches to filterPatchesByNames, so that the patch index and non patch index output will conform. This causes some performance degradation. To negate this, while preserving identical output, we have to:
+
+## Changes over a directory
+
+filterPatches over a directory gives more patches as output that it should. This can be rectified without any design changes.
+
+## Duplicate Patches
+
+filterPatches allows duplicate patches, when filterPatchesByNames does not. Either filterPatchesByNames has to be changed to allow duplicate patches, or filterPatches should not return duplicate patches(This may require a change in patch index structures). 
+
+# UI
+
+## Automatic building of pi on existing repos
+
+Patch index is automatically built on existing repos, if pi darcs needs to use/update patch index. The user can interrupt the building of patch index using Ctrl-C. This ensures that the user gets to use the optimization. However, the user get a surprise, and a potentially big delay.
+
+## Disabling pi on --lazy or user interrupt at get
+
+Patch index will not be build at get if the user uses --lazy or interrupts the getting of patches. This is because all patches are needed to build patch index. This basically assumes that the user is willing to trade slower changes/annotate for a faster get.

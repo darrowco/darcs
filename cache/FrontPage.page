@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <title>Darcs - FrontPage</title>
+        <link href="/css/custom.css" rel="stylesheet" media="screen, projection" type="text/css" />
+    <link href="/css/print.css" rel="stylesheet" media="print" type= "text/css" />
+    
+    <!--[if IE]><link href="/css/ie.css" rel="stylesheet" media="screen, projection" type="text/css" /><![endif]-->
+  </head>
+  <body>
+    <div id="doc3" class="yui-t1">
+        <div id="yui-main">
+          <div id="maincol" class="yui-b" style="margin-left:0;">
+            <div id="header" style="vertical-align:top;">
+  <a href="/" title="Go to top page"><img src="/img/logos/logo.png" style="vertical-align:top;" /></a>
+  <div style="float:right;">
+    <div id="userbox">
+  <noscript>
+    <a href="/_login">Login</a>
+    <a href="/_logout">Logout</a>
+  </noscript>
+  &nbsp;
+  <a id="loginlink" class="login" href="/_login">Login / Register</a>
+  <a id="logoutlink" class="login" href="/_logout">Logout <span id="username"></span></a>
+</div>
+  </div>
+  <div style="float:right; padding-top:.5em;">
+    <form action="/_search" method="post" id="searchform">
+     <input type="text" name="patterns" id="patterns"/>
+     <input type="submit" name="search" id="search" value="Search"/>
+    </form>
+  </div>
+  <div style="float:right; padding-top:1em;">
+    <a href="/_index">all pages</a>&nbsp;&nbsp;
+    <!-- <a href="/_categories">categories</a>&nbsp;&nbsp; -->
+    <a href="/_activity">recent changes</a>&nbsp;&nbsp;
+    </ul>
+  </div>
+</div>
+            <ul class="tabs"
+><li class="selected"
+  ><a href="/FrontPage"
+    >view</a
+    ></li
+  ><li
+  ><a href="/_history/FrontPage"
+    >history</a
+    ></li
+  ><li
+  ><a href="/_discuss/FrontPage"
+    >discuss</a
+    ></li
+  ></ul
+> 
+            <div id="content">
+  
+  <style>h1.pageTitle.FrontPage {display:none;}</style>
+  <h1 class="pageTitle FrontPage"><a href="/FrontPage">FrontPage</a></h1>
+  
+  <div id="wikipage"
+>
+<div id="splash">
+<div id="download">
+<div id="download-heading">
+install latest Darcs 2.10.3:
+</div>
+<ul>
+<li>with <a href="http://www.haskellstack.org">stack</a>:<br> <code>stack install darcs [–resolver=lts-5.1]</code></li>
+<li>with <a href="http://www.haskell.org/haskellwiki/Cabal/How_to_install_a_Cabal_package">cabal</a>: <code>cabal install darcs-2.10.3</code></li>
+<li><a href="/Binaries">Darcs binaries</a> for many platforms</li>
+<li><a href="releases/darcs-2.10.3.tar.gz">current release source</a> tarball</li>
+<li>or get latest developing source code as <a href="http://darcs.net/reviewed/reviewed.zip">zip file</a></li>
+</ul>
+</div>
+<div id="intro">
+<p>Darcs is a free and open source, cross-platform version control system, like <a href="http://git-scm.com/">git</a>, <a href="http://mercurial.selenic.com/">mercurial</a> or <a href="http://subversion.apache.org/">svn</a> but with a very different approach: focus on changes rather than snapshots. Darcs offers a <strong>freer</strong> way of working, and a <strong>simpler</strong> user interface. Darcs <em>does not require a central server</em>, and work perfectly in <strong>offline</strong> mode.</p>
+</div>
+<div id="leftcol">
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><h1 id="why-darcs">Why Darcs</h1>
+<ul>
+<li><a href="/Features">Key Features</a></li>
+<li><a href="/Differences">What makes Darcs different</a></li>
+</ul></td>
+<td><h1 id="using-darcs">Using Darcs</h1>
+<ul>
+<li><a href="/Using">Darcs for Users</a></li>
+<li><a href="/Development">Darcs for Developers</a></li>
+</ul></td>
+</tr>
+<tr class="even">
+<td><h1 id="community">Community</h1>
+<ul>
+<li><a href="/Community">Get Involved</a></li>
+</ul></td>
+<td><h1 id="about-darcs">About Darcs</h1>
+<ul>
+<li><a href="/About">More about Darcs</a></li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="rightcol">
+<h1 id="news">News</h1>
+<ul>
+<li>Apr. 2016 <a href="http://blog.darcs.net/2016/04/darcs-news-112.html">Darcs News #112</a></li>
+<li>Jan. 2016 <a href="http://lists.osuosl.org/pipermail/darcs-users/2016-January/027182.html">Darcs 2.10.3 released!</a></li>
+<li>Nov. 2015 <a href="http://lists.osuosl.org/pipermail/darcs-users/2015-November/027151.html">Darcs 2.10.2 released!</a></li>
+<li>More news: <a href="http://planet.darcs.net">Planet Darcs</a></li>
+</ul>
+</div>
+<div id="footer">
+<div id="sponsors">
+<p><a href="/Thanks">Darcs sponsors &amp; testimonials</a></p>
+</div>
+<div id="donate">
+<p><a href="/Donations">Donate to the project</a></p>
+</div>
+<div id="conservancy">
+<p>Darcs is a member of the <a href="http://sfconservancy.org/">Software Freedom Conservancy</a></p>
+</div>
+</div>
+</div></div
+>
+</div>
+            <div id="footer">
+  Wiki source: <code>darcs get --lazy http://darcs.net/darcs-wiki</code>
+  <br/>
+  Powered by <a href="http://gitit.net/">darcsit (aka gitit)</a>
+  <br/>
+  <a href="http://flattr.com/thing/943161/Darcs-free-and-open-source-cross-platform-version-control-system" target="_blank">
+  <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a>
+</div>
+          </div>
+        </div>
+    </div>
+    <script src="/js/jquery-1.2.6.min.js" type="text/javascript"
+></script
+><script src="/js/jquery-ui-combined-1.6rc2.min.js" type="text/javascript"
+></script
+><script src="/js/footnotes.js" type="text/javascript"
+></script
+><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"
+></script
+>
+    <script type="text/javascript" src="/js/jquery.hotkeys-0.7.9.min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+     $(document).bind("keydown", "ctrl+r", function() {
+         $.post("/_expire/FrontPage");
+         return true;
+         });
+/* ]]> */
+</script>
+
+    <script type="text/javascript">
+/* <![CDATA[ */
+  $.get("/_user", {}, function(username, status) {
+     $("#logged_in_user").text(username);
+     if (username == "") {  // nobody logged in
+        $("#logoutlink").hide();
+        $("#loginlink").show();
+     } else {
+        $("#logoutlink").show();
+        $("#loginlink").hide();
+     };
+   });
+/* ]]> */
+</script>
+  </body>
+</html>

@@ -1,0 +1,174 @@
+# News and discussions
+
+1.  Reinier announced the release schedule of Darcs 2.5 (soft freeze
+    July 8th, release August 7th):
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-June/024284.html](http://lists.osuosl.org/pipermail/darcs-users/2010-June/024284.html)
+
+2.  Reiner also issued a call for volunteers for fixing unassigned bugs
+    that should be fixed for the next release:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-June/024407.html](http://lists.osuosl.org/pipermail/darcs-users/2010-June/024407.html)
+
+3.  Eric explained how to make the patch reviewing process more
+    efficient:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-June/024370.html](http://lists.osuosl.org/pipermail/darcs-users/2010-June/024370.html)
+
+4.  And the Sumer of Code blog posts of the last two weeks:
+
+    -   [http://darcs-gsoc2010.blogspot.com/2010/06/gsoc-2010-progress-report-1.html](http://darcs-gsoc2010.blogspot.com/2010/06/gsoc-2010-progress-report-1.html)
+    -   [http://abuiles.blogspot.com/2010/06/gsoc-report-week-4.html](http://abuiles.blogspot.com/2010/06/gsoc-report-week-4.html)
+    -   [http://abuiles.blogspot.com/2010/06/gsoc-report-week-5.html](http://abuiles.blogspot.com/2010/06/gsoc-report-week-5.html)
+
+# Issues resolved in the last week (7)
+
+issue1176 Adolfo Builes
+  ~ -   1176: caches interfere with --remote-repo flag
+    -   [http://bugs.darcs.net/issue1176](http://bugs.darcs.net/issue1176)
+
+issue1277 Eric Kow
+  ~ -   percolate repository format errors correctly.
+    -   [http://bugs.darcs.net/issue1277](http://bugs.darcs.net/issue1277)
+
+issue1389 Reinier Lamers
+  ~ -   Change predist pref to point people to use 'cabal sdist'
+    -   [http://bugs.darcs.net/issue1389](http://bugs.darcs.net/issue1389)
+
+issue1713 Eric Kow
+  ~ -   shorter interactive prompts.
+    -   [http://bugs.darcs.net/issue1713](http://bugs.darcs.net/issue1713)
+
+issue1857 Petr Rockai
+  ~ -   Use and update pristine root pointer upon conversion.
+    -   [http://bugs.darcs.net/issue1857](http://bugs.darcs.net/issue1857)
+
+issue1877 Florent Becker
+  ~ -   make pull --dry-run --xml terse
+    -   [http://bugs.darcs.net/issue1877](http://bugs.darcs.net/issue1877)
+
+issue1879 Eric Kow
+  ~ -   notice unexpected commute failure on merge.
+    -   [http://bugs.darcs.net/issue1879](http://bugs.darcs.net/issue1879)
+
+# Patches applied in the last week (53)
+
+2010-06-21 Eric Kow
+  ~ -   Generalise mechanism for distinguishing between bad and non
+        repos.
+    -   Extend issue1277 test for more prerequisites.
+    -   Resolve issue1277: percolate repository format errors correctly.
+    -   Accept issue1277: darcs repository format errors not reported in
+        add.
+
+2010-06-26 Petr Rockai
+  ~ -   Allow BL.readFile through haskell\_policy for now.
+    -   Fix witnesses after Alexey's optimize --http work.
+
+2010-06-24 Alexey Levan
+  ~ -   Implement darcs optimize --http
+    -   Create a function for lazy fetching of files
+    -   Refactor Darcs.Repository.copyInventory (consistent naming)
+    -   Add --http flag for optimize
+
+2010-06-25 Petr Rockai
+  ~ -   Fix underquoted get.sh...
+
+2010-06-11 Eric Kow
+  ~ -   More robust distinction between basic and advanced chars in
+        prompt.
+    -   Resolve issue1713: shorter interactive prompts.
+    -   Make promptCharFancy easier to extend.
+    -   Camel case Darcs.SelectChanges.
+    -   Rename Darcs.Utils.promptCharFancy to promptChar.
+
+2010-06-23 Petr Rockai
+  ~ -   Accept issue1865: cover the interaction of get --context with
+        tags.
+
+2010-06-23 Eric Kow
+  ~ -   Mark issue1610 test as failing again (like it should be).
+    -   Resolve issue1879: notice unexpected commute failure on merge.
+    -   Accept issue1879: failing to notice unexpected commute failure.
+
+2010-06-07 Petr Rockai
+  ~ -   Make partitionFL do a 3-way split, and detect commutation bugs
+        in Depends.
+
+2010-06-23 Eric Kow
+  ~ -   Fix progress message in tentativelyMergePatches.
+    -   Clarify merge2FL haddock.
+
+2010-06-07 Petr Rockai
+  ~ -   Use merge2FL instead of plain merge in tentativelMergePatches.
+
+2010-06-22 Ganesh Sittampalam
+  ~ -   fix witnesses
+
+2010-06-22 Florent Becker
+  ~ -   use shell negation properly in issue1877 test
+
+2010-06-22 Eric Kow
+  ~ -   Mark issue1877 test as passing.
+
+2010-06-22 Florent Becker
+  ~ -   resolve issue1877: make pull --dry-run --xml terse
+
+2010-06-08 Adolfo Builes
+  ~ -   Added test for issue 1503: prefer local caches to remote ones
+
+2010-06-21 Eric Kow
+  ~ -   Remove trailing whitespaces in test helper code.
+    -   Remove trailing whitespaces in Darcs.Witnesses.Ordered.
+    -   Remove trailing whitespaces in Darcs.Test.Patch.Check.
+    -   Remove trailing whitespace in src/Darcs/\*
+    -   Remove trailing whitespace in src/\*
+    -   Remove trailing whitespace in date matching code.
+    -   Remove trailing whitespace in Darcs.Repository and submodules.
+    -   Remove trailing whitespace in Darcs.Patch and submodules.
+    -   Remove trailing whitespace in Darcs.Commands and submodules.
+
+2010-06-20 Lele Gaifax
+  ~ -   Failing test for issue1877: pull --xml-output should not emit
+        any verbosity
+
+2010-06-18 Eric Kow
+  ~ -   Slightly more aggresive and extendable issue1763 test.
+    -   Bug fix: treat filenames in darcs-2 patches as raw bytes.
+    -   Bug fix: inverse conflictors should also use raw bytes for
+        filenames.
+
+2010-06-15 Reinier Lamers
+  ~ -   resolve issue1389: Change predist pref to point people to use
+        'cabal sdist'
+
+2010-06-17 Eric Kow
+  ~ -   Tweak haddock markup.
+
+2010-06-16 Adolfo Builes
+  ~ -   Remove duplicated entries after any modification is done to the
+        cache
+    -   Resolve issue 1176: caches interfere with --remote-repo flag
+
+2010-06-15 Eric Kow
+  ~ -   Generalise mechanism for updating roundup.
+
+2010-06-14 Adolfo Builes
+  ~ -   Checking for any cache entry in test for issue1210
+
+2010-06-11 Florent Becker
+  ~ -   Make the tests for dont-prompt-deps use -i
+
+2010-06-14 Adolfo Builes
+  ~ -   Drop global cache entries from \_darcs/prefs/sources
+
+2010-06-07 Petr Rockai
+  ~ -   Check conflictor consistency in "darcs check".
+    -   Resolve issue1857: Use and update pristine root pointer upon
+        conversion.
+
+2010-06-13 Eric Kow
+  ~ -   Make it possible to optionally set roundup status on command
+        line.
+
+

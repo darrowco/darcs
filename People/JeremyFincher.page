@@ -1,0 +1,23 @@
+I'm the original author of Supybot
+[http://supybot.sf.net/](http://supybot.sf.net/), a Python IRC bot. I'm
+moving our source code to Darcs, but there are a few things I'm not
+happy about.
+
+I want CVS keywords (or some similar functionality) in Darcs. I want to
+be able, from within my running program, to find out what "version" of a
+file is running. I want my hack to put my \_\_revision\_\_ string in
+uncaught exceptions to continue to work, so I can see easily from the
+exception whether a user needs to upgrade or not. Not all IRC bot users
+are the brightest stars in their section of the sky; I need to be able
+to \*know\* what version they're running, and not have to trust them
+when they tell me what they \*think\* they're running.
+
+---
+
+''Don't you have a python version number that you put into each release?
+You may be interested in searching the list archives on this topic, as
+some other solutions have been suggested on how to achieve something
+like CVS keywords. --[MarkStosberg](People/MarkStosberg)''
+
+''Why don't you use a predist script to insert whatever it is you want
+to insert into the sources?''

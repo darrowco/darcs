@@ -1,0 +1,121 @@
+# The triggers
+
+## IRC discussion
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14:16 < dixie> kowey: what is your opinion on http://bugs.darcs.net/issue1579?
+14:16 < kowey> glancing at that, dixie, I think it could be worth looking at the plans for cleaning up all the flags
+14:16 < kowey> but I don't mean to turn one issue into a huge scary one
+14:17 < kowey> in a way, I'm inclined to say that if we're going to change how the opts work
+14:17 < kowey> we might as well do it right
+14:17 < kowey> (the big overhaul; it's in the tracker somewhere)
+14:17 < dixie> kowey: do you mean some existing plans?
+14:17 < kowey> and anything less than that would just add to confusion
+14:18 < kowey> dixie: yeah, well a design that mornfall sketched out
+14:19 < kowey> dixie: I'm relying on old memories, as have been out of the loop for a long time
+14:21 < kowey> dixie: http://bugs.darcs.net/issue1457
+14:21 < kowey> this may need something like a http://darcs.net/Ideas/Flags
+14:22 < kowey> dixie: sorry to throw that thing at you; I don't mean to distract
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+## Related issues
+
+- [issue1457](http://bugs.darcs.net/issue1457) - the big overhaul (--no-foo => --foo=no)
+- [issue1579](http://bugs.darcs.net/issue1579)
+- [issue1291](http://bugs.darcs.net/issue1291)
+- [issue2063](http://bugs.darcs.net/issue2063) - --match/--patch/etc inconsistencies
+- [issue1158](http://bugs.darcs.net/issue1158) - next --match/--patch inconsistency
+
+## Proposal (issue1467)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+darcs record help for issue1457
+
+Options:
+  -m PATCHNAME  --name=PATCHNAME                         name of patch
+  -A EMAIL      --author=EMAIL                           specify author id
+                --test[=yes/no]                          run the test script (default: no)
+                --remove-test-directory[=yes/no]         remove the test directory (default: yes) [!!!]
+  -a            --all                                    answer yes to all patches
+                --pipe                                   ask user interactively for the patch metadata
+  -i            --interactive[=yes/no]                   prompt user interactively (default: yes)
+                --ask-deps[=yes/no]                      ask for extra dependencies (default: no)
+                --edit-long-comment[=yes/no/prompt]      edit the long comment by default (default: prompt) [!!!]
+  -l            --look-for-adds[=yes/no]                 look for (non-boring) files that could be added (default: no)
+                --repodir=DIRECTORY                      specify the repository directory in which to run
+                --disable                                disable this command
+  -h            --help                                   shows brief description of command and its arguments
+
+Advanced options:
+                --debug[=yes/no]                         give debug output
+                --debug-http                             give debug output for libcurl
+  -v            --verbosity[=0..2]                       verbosity level (default: 1) [!!!]
+  -q            --quiet                                  suppress informational output (same as --verbosity=quiet)
+                --timings                                provide debugging timings information
+                --logfile=FILE                           give patch name and comment in file
+                --delete-logfile[=yes/no]                delete the logfile when done (default: no)
+                --compress[=yes/no]                      create compressed patches (default: yes)
+                --trust-times[=yes/no]                   trust the file modification times (default: yes) [!!!]
+                --umask=UMASK                            specify umask to use when writing
+                --set-scripts-executable[=yes/no]        make scripts executable (default: no)
+                --use-cache[=yes/no]                     use patch caches (default: yes) [!!!]
+                --posthook=COMMAND                       specify command to run after this darcs command
+                --run-posthook[=yes/no/prompt]           run posthook command (default: prompt)
+                --prehook=COMMAND                        specify command to run before this darcs command
+                --run-prehook[=yes/no/prompt]            run prehook command without prompting (default: prompt)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+### Notes
+
+One potential principle (to be taken with a grain of salt) is that
+`--foo=[yes/no]` flags should (A) use a verb and (B) use the verb that most
+evokes darcs actively doing something.
+
+So `--test-directory[=remove/leave]` is potentially confusing because if you're
+not paying attention, you might think that one should pass in a test directory
+name to that flag.
+
+Likewise, `--leave-test-directory` is perhaps suboptimal compared to
+`--remove-test-directory` (because it means you're passing a flag to tell darcs
+to *not* take an action).
+
+This second half of this principle slightly improves resistance to defaults
+changing (in other words, if you make the decision on the basis of
+`--remove-directory` being the default and `--leave-directory` being the special
+case, then the day you change your mind about the default, the basis for your
+choice is rendered void).
+
+- `remove-test-directory`: was `--{remove,leave}-test-directory.`
+  thinking that `--test-directory` expects a directory
+
+- `edit-long-comment`: was `--{edit,no,prompt}-long-comment`
+
+- verbosity: was `--verbose`, `--standard-verbosity`, `--quiet`.  Note that debug output
+  is considered orthogonal to this (you could have `--debug` `-q`). 
+  Note also that the default for the command would be `--verbosity=1` (no args),
+  but if you just supply `--verbosity` you get `--verbosity=2`.  This sort of confusion
+  makse me think it's best to make the argument a required one.
+
+- `trust-times`: was `--{dont-,no-,}ignore-times`; I figured that the double-negative
+  `--ignore-times=no` would just confuse people
+
+- use-cache: was `--no-cache` (with no option to override!)
+
+## Backward compatibility
+
+Flags overhaul should not immediately break the user's known pattern, hence
+the temporary the backward compatibility is needed.
+
+Overhaul process would looks like following:
+
+1. Design flags structure
+2. Implement & deprecate old flags (release 2.10)
+3. Remove depreciated flags (release 2.12)
+4. ???
+5. Profit
+
+### Deprecated flags
+
+These flags should have following behavior:
+
+- Help always display them like a deprecated (maybe hide them from help...?)
+- Usage of them should display warning `Parameter --foo is DEPRECATED, please use --bar'

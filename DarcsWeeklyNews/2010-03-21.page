@@ -1,0 +1,112 @@
+# News and discussions
+
+1.  The fourth Darcs hacking sprint has just ended! A dozen of Darcs
+    developers were present at Zurich for three days. Before a
+    full-length report is posted, you can consult the wiki for a rough
+    outline of the work done:
+
+    -   [http://koweycode.blogspot.com/2010/03/darcs-team-at-zurihac.html](http://koweycode.blogspot.com/2010/03/darcs-team-at-zurihac.html)
+    -   [http://wiki.darcs.net/Sprints/2010-03](http://wiki.darcs.net/Sprints/2010-03)
+
+2.  GHC version support was discussed in depth, and it was decided that
+    Darcs would only be guaranteed to compile with the last two stable
+    branches of GHC:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-March/023269.html](http://lists.osuosl.org/pipermail/darcs-users/2010-March/023269.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-March/023323.html](http://lists.osuosl.org/pipermail/darcs-users/2010-March/023323.html)
+    -   [http://wiki.darcs.net/Development/Policy](http://wiki.darcs.net/Development/Policy)
+
+# Issues resolved in the last week (5)
+
+issue643 Guillaume Hoffmann
+  ~ -   darcs send -o outputs remote repo email address
+    -   [http://bugs.darcs.net/issue643](http://bugs.darcs.net/issue643)
+
+issue1456 Guillaume Hoffmann
+  ~ -   by using Tar and GZip haskell modules for dist
+    -   [http://bugs.darcs.net/issue1456](http://bugs.darcs.net/issue1456)
+
+issue1473 [mail@stefanwehr.de](mailto:mail@stefanwehr.de)
+  ~ -   annotate command accepts "." and treats "" as invalid input
+    -   [http://bugs.darcs.net/issue1473](http://bugs.darcs.net/issue1473)
+
+issue1750 Eric Kow
+  ~ -   uncover help text for darcs show pristine.
+    -   [http://bugs.darcs.net/issue1750](http://bugs.darcs.net/issue1750)
+
+issue1767 Ganesh Sittampalam
+  ~ -   send CRC warnings to stderr
+    -   [http://bugs.darcs.net/issue1767](http://bugs.darcs.net/issue1767)
+
+# Patches applied in the last week (25)
+
+2010-03-20 Ganesh Sittampalam
+  ~ -   add --keep-date option to amend-record
+
+2010-03-21 Reinier Lamers
+  ~ -   Resolve conflict between tar dependency and hashed-storage bump
+
+2010-03-21 Salvatore Insalaco
+  ~ -   Bump hashed-storage dependency to 0.4.8
+
+2010-03-20 Luca Molteni
+  ~ -   Accept issue1765: recursive remove on root
+
+2010-03-20 Guillaume Hoffmann
+  ~ -   Resolve issue643 darcs send -o outputs remote repo email address
+    -   useless string concatenation
+
+2010-03-20 Florent Becker
+  ~ -   Add --match option to apply
+
+2010-03-20 Ganesh Sittampalam
+  ~ -   use library function 'not' for checking failure
+
+2010-03-20 [mail@stefanwehr.de](mailto:mail@stefanwehr.de)
+  ~ -   Resolve issue1473: annotate command accepts "." and treats "" as
+        invalid input
+
+2010-03-20 Petr Rockai
+  ~ -   Only use stderr in install-deps, avoiding stderr/stdout
+        interleaving issues.
+    -   Pass the install-deps options down to second cabal install call
+        as well.
+    -   We also need tar to build witnesses.
+
+2010-03-20 Guillaume Hoffmann
+  ~ -   make dist.sh test check the archive created by dist
+    -   resolve issue1456 by using Tar and GZip haskell modules for dist
+
+2010-03-19 Stefan Wehr
+  ~ -   Removed -cpp flag as suggested by HLint
+
+2010-03-18 Eric Kow
+  ~ -   New bugtracker reporting page.
+
+2010-03-18 Jason Dagit
+  ~ -   replace if-statement with guard in elegant\_merge
+
+2010-02-21 Eric Kow
+  ~ -   Resolve issue1750: uncover help text for darcs show pristine.
+    -   Correct online help text for aliases of subcommands.
+
+2010-01-20 Petr Rockai
+  ~ -   Augment the .boring file to cover the generated manual bits.
+
+2010-03-15 Reinier Lamers
+  ~ -   Update tests/README.test\_maintainers.txt to cabalized build
+        system
+    -   Include tests/README.test\_maintainers.txt in distribution
+        tarballs
+
+2010-03-15 Eric Kow
+  ~ -   Fix update\_roundup.pl for the case where only one patch is
+        applied.
+
+2010-03-14 Ganesh Sittampalam
+  ~ -   resolve issue1767: send CRC warnings to stderr
+
+2010-03-14 Eric Kow
+  ~ -   Fix my posthook test (sorry!).
+
+

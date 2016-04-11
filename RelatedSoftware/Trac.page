@@ -1,0 +1,348 @@
+TracDarcs can be found at
+<http://hub.darcs.net/lelit/trac-darcs>
+and is the work of [LeleGaifax](LeleGaifax).
+
+Here are the steps I took to set it up so that eventually we could have
+a sourceforge-like environment for darcs. Note that this is a work in
+progress.
+
+Notes:
+
+-   **WARNING**: The new instructions have not been tested from A-Z; I
+    would appreciate it if some people would confirm that it works
+    and/or fix the bugs in this HOWTO
+-   Matt Dorn has posted (2007) his own recipe to do this, here:
+    [http://www.mattdorn.com/content/trac-darcs-restructuredtext](http://www.mattdorn.com/content/trac-darcs-restructuredtext)/
+    . If the instructions below do not work, then please consult Matt
+    Dorn's instructions, figure out what went wrong, and then improve
+    these instructions!
+
+# Getting started
+
+## Debian
+
+1.  Burn an ISO for Debian Sarge, network install
+2.  *FIXME: please update these instructions to work with Etch*
+3.  Install on the computer, all on one partition (unless you really
+    want to think about this), using the webserver set of packages
+    -turns out this is very easy to do. Only took 15 minutes.
+4.  *FIXME: somebody should come up with a reasonably sane and simple
+    partitioning scheme, assuming a dedicated server*
+5.  Remove some uneeded stuff (thanks to \#debian on irc.freenode.net) :
+    `apt-get remove portmap pidentd`
+6.  Install some comfort tools: `apt-get install vim emacs joe`
+7.  Create some directories for the stuff you are about to install:
+    `cd; mkdir -p install/dtPlugins`
+
+## Darcs
+
+Debian Sarge does indeed have a darcs package, but the version they have
+is 1.0.2, and a lot of bugs have been fixed since then. We will compile
+darcs by hand. Alternatively you may consider using the version from
+[www.backports.org](http://www.backports.org/instructions.html), they
+also seem to have a [current
+version](http://www.backports.org/debian/pool/main/d/darcs/).
+
+1.  apt-get install ghc6 zlib1g-dev
+
+2.  cd ~/install
+        wget http://www.darcs.net/darcs-1.0.8.tar.gz
+        tar xzf darcs-1.0.8.tar.gz
+        cd darcs-1.0.8
+        ./configure
+        make
+        make install
+
+3.  Create a place for darcs repositories:
+
+        mkdir /var/darcs
+        addgroup darcs
+        chown root:darcs /var/darcs
+
+## Trac
+
+1.  Use apt to get the dependencies we need to build trac manually:
+
+        apt-get build-dep trac
+
+2.  Install the latest version of setup tools - while setuptools is
+    available as a Debian package, the one on Sarge does not seem to be
+    recent enough
+
+        cd ~/install
+        apt-get install python-dev
+        wget http://peak.telecommunity.com/dist/ez_setup.py
+        python ez_setup.py
+
+3.  Get py-sqlite2, which unfortunately, is not available in Debian
+    Sarge:
+
+        apt-get install libsqlite3-0
+        wget http://backports.org/debian/pool/main/p/python-pysqlite2/python2.3-pysqlite2_2.2.2-0bpo1_i386.deb
+        dpkg -i python2.3-pysqlite2_2.2.2-0bpo1_i386.deb
+
+4.  Don't forget to replace `intel` by `powerpc` or whatever
+    architecture is appropriate
+5.  Install genshi, a recent dependency of Trac (it used to depend on
+    [ClearSilver](ClearSilver)):
+
+        svn co http://svn.edgewall.org/repos/genshi/trunk genshi
+        cd genshi
+        python setup.py install
+
+6.  Get the latest version of trac:
+
+        cd ~/install
+        svn co http://svn.edgewall.com/repos/trac/trunk trac
+        cd trac
+        python setup.py install
+
+7.  Create a directory to hold all of the trac environments and their
+    caches
+
+        mkdir /var/trac
+        mkdir /var/trac-eggs
+        mkdir /var/trac-darcs-cache
+
+## Plugins
+
+1.  install TracDarcs\_:
+
+        cd ~/install
+        darcs get http://darcs.arstecnica.it/trac-darcs
+        cd trac-darcs
+        python setup.py bdist_egg
+        cp dist/TracDarcs-0.4-py2.3.egg ~/install/dtPlugins
+
+2.  install WebAdmin\_:
+
+        cd ~/install
+        svn co http://svn.edgewall.com/repos/trac/sandbox/webadmin/
+        cd webadmin
+        python setup.py install
+
+3.  install AccountManager\_:
+
+        cd ~/install
+        svn co http://trac-hacks.swapoff.org/svn/accountmanagerplugin
+        cd accountmanagerplugin/0.9
+        python setup.py bdist_egg
+        cp dist/TracAccountManager-0.1.2-py2.3.egg ~/install/dtPlugins
+
+## A test environment
+
+1.  Create a play repository (alternately, you could darcs get one of
+    your own preexisting repos):
+
+        mkdir -p /var/darcs/TestEnv/TestRepo
+        cd /var/darcs/TestEnv/TestRepo
+        darcs init
+        echo "blah blah blah" > foo
+        darcs add foo
+        darcs record -a -m "foo"
+
+2.  Note how we allow for the eventual possibility that
+    [TestEnv](TestEnv) has multiple repositories. Trac on Darcs does not
+    yet support this, but maybe someday!
+
+3.  Disable unpull and unrecord because trac on darcs doesn't like it,
+    and also because it's probably a bad idea on "official" repositories
+
+        echo unpull --disable >> _darcs/prefs/defaults
+        echo unrecord --disable >> _darcs/prefs/defaults
+        echo obliterate --disable >> _darcs/prefs/defaults
+
+4.  Create a test environment:
+
+        trac-admin /var/trac/TestEnv initenv
+
+5.  Note that the previous command must be issued from within the
+    directory you moved to with "cd" in step 1.
+6.  When asked for a repository type, enter: `darcs`
+7.  When asked for a repsoitory, enter `/var/darcs/TestEnv/TestRepo`
+8.  Copy all plugins to the test environment:
+
+        cp ~/install/dtPlugins/*.egg /var/trac/TestEnv/plugins
+
+9.  Set up the darcs database stuff:
+
+        trac-admin /var/trac/TestEnv upgrade
+
+10. Create the cachedir. The darcs plugin needs a place to cache
+    versions of the files it creates while viewing files and changesets.
+
+        mkdir /var/trac-darcs-cache/TestEnv
+
+    Add the following lines to the end of the trac.ini file
+
+        # /var/trac/TestEnv/conf/trac.ini
+
+        [darcs]
+        cachedir=/var/trac-darcs-cache/TestEnv
+
+11. Start the trac server to see if things worked out:
+
+        tracd --port 8000 /var/trac/TestEnv
+
+12. Check it out by visiting yourserver:8000. The most gratifying moment
+    should be when you click on 'Browse' and 'Timeline' and see your
+    darcs changes.
+13. Hit Ctrl-c to kill the trac server.
+
+## Permissions
+
+1.  addgroup trac
+        adduser www-data trac
+        chown -R root:trac /var/trac /var/trac-eggs /var/trac-darcs-cache
+        chmod -R g+w /var/trac /var/trac-eggs /var/trac-darcs-cache
+
+## Apache
+
+1.  Install and configure Apache2
+
+        apt-get install apache2 libapache2-mod-python
+        vim /etc/apache2/apache2.conf
+
+2.  Uncomment the following lines:
+
+        UserDir public_html
+        UserDir disabled root
+
+        <Directory /home/*/public_html>
+        AllowOverride
+        FileInfo AuthConfig Limit Options
+        Indexes SymLinksIfOwnerMatch
+        IncludesNoExec
+        </Directory>
+
+-   this enables homepages in \~projname
+-   Insert the following at the end of the file :
+
+        # note, this may have been mangled by a wiki syntax
+        # switchover... be careful
+        <Location /projects>
+        SetHandler mod_python
+        PythonHandler trac.web.modpython_frontend
+        PythonOption
+        TracEnvParentDir /var/trac
+        PythonOption TracUriRoot /projects 
+        SetEnv PYTHON_EGG_CACHE /var/trac-eggs
+        </Location>
+
+        <Directory /var/darcs>
+        AllowOverride
+        FileInfo
+        AuthConfig Limit Options
+        Indexes SymLinksIfOwnerMatch
+        IncludesNoExec
+        </Directory>
+
+        Alias /darcs/ "/var/darcs/"
+
+-   The `Options Indexes` block is so that people don't get a confusing
+    (but harmless) 403 Forbidden when they click on a darcs repository
+    link
+-   Note: the /darcs alias is so that people can do stuff like
+    `darcs get http://yourserver/darcs/TestEnv/TestRepo`)
+-   You may need to also enable the userdir module with:
+
+        ln -s /etc/apache2/mods-available/userdir.load /etc/apache2/mods-enabled/userdir.load
+
+-   create an htpasswd file so that people can login
+
+        touch /var/trac/.htaccess
+
+-   chase the robots away: (otherwise, you'll have bots running darcs on
+    your machine, which will slow things down a great deal). Put the
+    following in `/var/www/robots.txt`:
+
+        User-agent: *
+        Disallow: /projects/
+
+-   restart apache
+
+        /etc/init.d/apache2 restart
+
+## Bask in your accomplishments so far
+
+Congatulations, at this point you have Trac running on top of darcs!
+Your Test Environment isn't complete; there aren't any users, and the
+[WebAdmin](WebAdmin) and Account-Manager plugins need to be enabled by
+further editing the trac.ini. More info about this configuration can be
+found on their respective home pages. If all you need is to Trac a
+single project then go set that up and you are done!
+
+We aren't going to do that here since with the Test Environment we were
+just trying to prove Trac on Darcs works. We are now going to set up a
+multi-project environment and have some scripts (currently beta)
+designed to do that setup for you, so read onwards.
+
+## Jailkit
+
+Now that you've got trac, darcs, and your webserver set up, the next
+step is to create a jail for the darcs users on your machine. Whether or
+not this is actually useful is debatable, but it does make me marginally
+more comfortable with the idea of giving shell access to your users.
+
+Notes:
+
+-   This isn't absolutely mandatory, but note that the adminDT scripts
+    below assume that you have things set up with jailkit.
+-   An alternative would be to use a restrained shell, as the RepoSSH
+    page suggests, but then people can't do stuff like set up their
+    public\_html spaces).
+-   Trac itself would not be running in the jail; just the users when
+    they ssh into your machine
+
+- Obtain [Jailkit](http://olivier.sessink.nl/jailkit/) :
+  ~ \`\`
+
+apt-get install bzip2 cd \~/install wget
+[http://olivier.sessink.nl/jailkit/jailkit-1.3.tar.bz2](http://olivier.sessink.nl/jailkit/jailkit-1.3.tar.bz2)
+tar xjvf jailkit-1.3.tar.bz2 cd jailkit-1.3 ./configure make make
+install
+`-  Setup your jail directory (basically from their instructions,    except we use /var/jail):`
+mkdir /var/jail chown root:root /var/jail mkdir /var/jail/tmp chmod
+a+rwx /var/jail/tmp jk\_init -v /var/jail basicshell jk\_init -v
+/var/jail editors jk\_init -v /var/jail extendedshell jk\_init -v
+/var/jail scp jk\_cp /var/jail /usr/local/bin/darcs mkdir /var/jail/var
+mv /var/darcs /var/jail/var chown -R root:darcs /var/jail/var/darcs ln
+-s /var/jail/var/darcs /var/darcs
+`-  Edit your`/etc/apache2/apache.conf`and make the following    modification:`
+\# replace this line <Directory /home/*/public\_html\> \# with...
+<Directory /var/jail/home/*/public\_html\> `-  Restart apache again:`
+/etc/init.d/apache2 restart \`\`
+
+# Creating a new project
+
+Creating a project consists of setting up a darcs repository, a trac
+environment, and *one* Unix user for the project. This user will have no
+password, as is expected to log in by ssh key (the idea being that all
+developers give their public keys to the user). To automate the whole
+process, you can use the following shell scripts:
+
+    darcs get http://trac.loria.fr/darcs/admindt/adminDT
+
+These scripts also provide a little bit of extra fanciness, such as
+automated nightly darcs dist. You can find out more on the [project
+page](http://trac.loria.fr/projects/admindt)
+
+## Missing pieces
+
+-   apache configuration stuff for the new project
+-   virtual host stuff
+-   need to think about what jailed users really need to be able to do
+-   integrate --disable into darcs prefs for each user
+-   should we jail apache as well?
+-   tips for maintaining/securing your installation
+
+# Options
+
+-   password protected repositories using
+    [HttpAuthentication](HttpAuthentication)
+
+# Notes
+
+-   I don't claim to know what I'm doing with the Apache stuff... or in
+    fact, any of this. It's just what worked for me.
+

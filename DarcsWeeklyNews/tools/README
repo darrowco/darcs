@@ -1,0 +1,46 @@
+the first time you do this
+--------------------------
+1. cabal install pandoc xml
+   ghc --make parsechanges.hs -package pandoc -package xml
+
+2. darcs changes --repo http://darcs.net\
+                  --match 'date "1 week ago"'\
+                  | head -n 2 | tail -n 1 \
+                  | sed -e 's/^  \* //'\
+                  > lastchange
+
+collecting news items
+---------------------
+One option is to use the darcs repository, start writing your
+../yyyy-mm-dd.page as you see items.  If you are working in more than
+one location, the slight disadvantage is that you have to actually
+remember to darcs record and darcs push. (or just accept to have
+conflicts, which are clearly not a big deal here)
+
+Another option (if you are using a mail client with some notion of tags
+or labels) is to tag notable messages with 'dwn', so that you can just
+review them and go...
+
+creating a news entry
+---------------------
+1. ./createstub.sh >> ../yyyy-mm-dd.page
+
+2. (visit <http://lists.osuosl.org/pipermail/darcs-users/>)
+   (write up ../yyyy-mm-dd.page)
+
+3. darcs add    ../yyyy-mm-dd.age
+   darcs record
+   darcs push
+
+4. (request comments and make modifications)
+
+5. darcs record
+   darcs push
+
+6. ./changestoblog.sh ../yyyy-mm-dd.page
+
+7. (Fix the html, like changing the <h1> into <h3> and editing out the patches.)
+
+8. (paste into blogspot... do not be alarmed by weirdness (yet).
+    toggle back and forth between compose/view mode until it looks
+    right)

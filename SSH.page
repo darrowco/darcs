@@ -1,0 +1,296 @@
+# Using Darcs with sshfs
+
+To reduce power, space and cooling requirements, your company's file
+server has been replaced with an embedded NAS. This NAS serves NFS and
+CIFS on the LAN. To the internet it also provides SFTP (SSH) access and
+unauthenticated HTTP access to a public subset of its files.
+
+While in the office, you continue to darcs pull and push over NFS. While
+offsite, you can darcs pull using HTTP, but you can't "darcs push"
+because the NAS doesn't have darcs installed. Even if you could compile
+darcs for the NAS's MIPS/uclibc linux environment, it only has 16MB of
+RAM -- not enough for the "darcs apply" process that a darcs push over
+SSH would run on it.
+
+You use SSHFS to make the NAS repos appear as part of the local
+filesystem, just as NFS does when you're in the office. Because Darcs
+sees this as a local push, it runs "darcs apply" on your laptop instead
+of on the NAS. This doesn't require darcs (nor lots of RAM) on the NAS,
+but it will result in a lot more network traffic.
+
+## With darcs 2.10
+
+Clone your repository into a bare repository in your sshfs-mounted directory:
+
+    cd /path/to/repo
+    darcs clone . /path/to/sshfs/mountpoint/repo --no-working-dir --no-set-default --complete
+
+You should be able to interact with this new repository without problem.
+
+## With darcs 2.8
+
+Export DARCS_SLOPPY_LOCKS before any interaction you have
+with the sshfs-mounted repository.
+
+Clone your repository into a bare repository in your sshfs-mounted directory:
+
+    cd sshfs-mountpoint
+    export DARCS_SLOPPY_LOCKS=True
+    darcs clone /path/to/repo --no-working-dir
+
+## With darcs 2.5 or older
+
+Export DARCS_SLOPPY_LOCKS before any interaction you have
+with the sshfs-mounted repository.
+
+Suppose that the server's name is example.com, and the repo you want to
+push to is /srv/vcs/foo. Your local copy is \~/foo (on your laptop).
+
+    $ mkdir ~/vcs
+    $ sshfs -o workaround=rename example.com:/srv/vcs ~/vcs
+    $ export DARCS_SLOPPY_LOCKS=True
+    $ cd ~/foo
+    $ darcs push --all ~/vcs/foo
+    Pushing to "/home/twb/vcs/foo"...
+    Writing inventory 1/1 :
+    Finished applying...
+    Synchronizing pristine 1/1
+    Push successful.
+    $ fusermount -u ~/vcs
+
+## Troubleshooting
+
+### read: Connection reset by peer (sshfs)
+
+The SSH server didn't accept your authentication. Run sftp(1) or ssh(1)
+to try to find out more. Also look at the logs on the server (e.g.
+/var/log/auth.log), as that will say \*why\* access was refused.
+
+    $ sftp example.com:/srv/vcs
+    Connecting to example.com...
+    Changing to: /srv/vcs
+    sftp> ls
+    foo  bar  baz  quux
+
+### fusermount: user has no write access to mountpoint (sshfs)
+
+You're trying to mount something like /srv, which your user is not
+allowed to do. Either mount somewhere else, or run sshfs as root. The
+latter is not recommended as root cannot access your ssh-agent, and will
+not use your .ssh/config and .ssh/id\_rsa by default. This makes it
+fiddly to set up (though once working, you could script it).
+
+### darcs: takeLock [...]: atomic\_create [...]: unsupported operation (Function not implemented)
+
+You need to export DARCS\_SLOPPY\_LOCKS=True (to darcs). This should
+not happen anymore with darcs 2.10.
+See <http://bugs.darcs.net/issue904>.
+
+### darcs: [...]: renameFile: permission denied (Operation not permitted)
+
+You need to pass -o workaround=rename to sshfs. See
+<http://bugs.darcs.net/issue1182>
+
+# Shared repository via SSH
+
+Say you have a server on the internet, and you want to put a darcs repo
+there for several people to contribute to. If they all have accounts on
+the machine and can ssh to it, then no problem: Just put the repo
+somewhere where all those accounts can get to it (`/var/repos`, say) and
+ensure that they all have write privileges to it.
+
+The syntax for pulling from such a repo is:
+`darcs pull user@hostname:dir`
+
+However, a common situation is that those people don't have accounts on
+the system. You just want to give them the ability to push and pull via
+ssh, but nothing else.
+
+Here's how I did it on my Linux box:
+
+Note: I'm running Fedora Core 3, and the command line examples are from
+that; your milage may vary...
+
+1.  Create an account on the server that will own the repos. As root,
+    run: `useradd darcs` Don't forget to set a password for this account
+    because ssh won't work if the account is 'locked'. I set the
+    password to the md5 hash of a log file as I will *never* login to
+    this account!
+2.  Login as this user. (Or as root, `su - darcs`)
+3.  Create `bin` and `repos` directories in the home directory if
+    needed.
+4.  Copy the `darcs-wrapper.pl` script at the bottom of this page into
+    `bin`. **IMPORTANT** Please note that the perl script below does
+    **not** prevent users from uploading and running arbitrary programs
+    with the darcs account privileges.
+5.  In `repos`, create additional directories as needed, and initialize
+    repos. For example:
+
+<!-- -->
+
+    cd repos
+    (darcs init junk)
+    (darcs init cool)
+
+6.  Now, if you haven't already got them, you'll need an ssh public key
+    from each person that you want to give access to. They can use
+    public keys they already have, or generate keys just for this
+    purpose. The choice depends on your level of paranoia. Assuming they
+    have **OpenSSH** on their system, then can generate a key by
+    executing on their machine, in their account:
+
+<!-- -->
+
+    cd ~/.ssh
+    ssh-keygen -t dsa -f for-darcs-identity
+
+7.  Get each public key (`for-darcs-identity.pub` in the example above)
+    onto the server somehow.
+8.  Back on the server, logged in as the repo user:
+9.  Create the `.ssh` directory if needed. Make the permissions on this
+    directory are `drwx------`, use `chmod 700 .ssh` if needed.
+10. In `.ssh`, edit (or create) `authorized_keys`
+11. For each public key you want to grant access to, add a line to
+    `authorized_keys` that looks like this (this is shown here as
+    several lines, but each key must be on a single, very long line):
+
+<!-- -->
+
+    command="./bin/darcs-wrapper.pl",no-port-forwarding,no-X11-forwarding,
+    no-agent-forwarding,no-pty ssh-dss AAAAB3NzaC1kc3MAAACBAOAIfWRzgwIfyOcM3SA9YYQBO
+    2ufKwVgvMTL0O/l2SI0t8OYGFr3VNvscrjnTJYpdqmhDUJNOSme1d8iT5J6vv1jzlmyqEVZYCmi0NWK3
+    XbCCqpxwoH92vQsznkKVFiYKBdhj3fL/ZpzjbU3XokwmvXXtSG7YHbkuMSJ9LaKUKhpAAAAFQD7NSkeM
+    tNW5MrVc3l9HAsblDbaVQAAAIBUGWeCIzjn+wVJ/vSwK7Ih5RA+MbkIyW7KEvKod75WcIT3scmmCwDnm
+    B8RF62yRy3i2BFoBwGyrB3Tqn3F3KymcWXrezLZKEikBL6qCSCxtMZXUxeFgxcMnth4st2njDONARNkF
+    e2nXQSCHFbBp258VX13H3sw2b1AkZ/GRw8DJgAAAIBLb+MHXxKfP196gZgH3N+t4xgGlO/ARB/14PiQ4
+    K4SlFtGb+E0zlfELUa50FPr0HIESDwIwjb+cldNUpsf6DP3Tq3qZ6xUsW7JI9BjFMnTlEXq9/6i0uAMn
+    jgnqB5GCNJcGZszgfx/kNKUM8DMuFb8Xq1IpyRY2WW9sW5WUkpPlA== markl@gravity
+
+12. Make sure the permissions on `authorized_keys` are `-rw-------`, use
+    `chmod 600 authorized_keys` if needed
+13. You're done!
+
+Now users with the authorized keys can push and pull from these the
+repos on this machine as needed:
+
+    cd ~/development
+    darcs clone darcs@server.example.org:repos/cool
+    cd cool
+    echo Amy Smart >> people
+    darcs record
+    darcs push
+    ...time passes...
+    darcs pull
+
+## Security Issues
+
+Obviously, the security here relies on ssh and your users managing their
+secret keys intelligently. Without one of the private keys that matches
+the authorized public keys, this technique opens no new vulnerabilities
+on your server than you already have with ssh.
+
+For the authorized users, realize that you *are* granting these users
+the right to read, write and delete files on your machine. The script
+tries to attempt to limit what they can do. However, your authorized
+users will be able to run a shell or other arbitrary commands and they
+will be able to read and write any file the repo user on the server can.
+This includes the wrapper script and the authorized\_keys file.
+
+The point of the wrapper script is to keep the authorized users from
+casually popping on to the machine. If they want to get in, it wouldn't
+be too hard.
+
+## RSSH + darcs
+
+There is a
+[patch](http://sourceforge.net/tracker/index.php?func=detail&aid=1351939&group_id=65349&atid=510643)
+to [rssh](http://www.pizzashack.org/rssh/) to allow darcs run as a
+restricted command. This works fine for our team, we deliver a per
+project ssh-pub-key to each committer.
+
+## Wrapper Script
+
+This script goes in `bin/darcs-wrapper.pl` in the home directory of the
+account on the server that will hold the repos.
+
+    #!/usr/bin/perl
+
+    sub fail {
+        my ($msg) = @_;
+        print STDERR "account restricted to darcs: ", $msg, "\n";
+        exit 1;
+    }
+
+    # Since this script is called as a forced command, need to get the
+    # original command given by the client.
+
+    ($command = $ENV{SSH_ORIGINAL_COMMAND})
+        || fail "environment variable SSH_ORIGINAL_COMMAND not set";
+
+    open LOG, '>>', '/home/darcs/wrapper-log';
+    $now = localtime;
+    print LOG $now, ": ", $command, "\n";
+    close LOG;
+
+    # Split the command string to make an argument list, and remove the first
+    # element (the command name; we'll supply our own);
+
+    @orig_argv = split /[ \t]+/, $command;
+
+    while (1) { 
+        $orig_command = shift @orig_argv;
+
+        if ($orig_command eq "cd") {
+            $dir = shift @orig_argv;
+            fail "bad cd sequence" 
+                unless (shift @orig_argv) eq '&&';
+            fail "illegal repo $dir"
+                unless $dir =~ /^'(repos\/[a-zA-Z0-9\/]+)'$/;
+            chdir $1;
+        }
+        elsif ($orig_command eq "darcs") {
+            foreach my $arg (@orig_argv) {
+                $arg =~ s/^(['"])(repos\/[a-zA-Z0-9\/]+)\1$/$2/;
+            }
+            last;
+        }
+    # NB: there's no need to whitelist these if you have darcs 2 on both
+    # the client and the server side
+    #      elsif ($orig_command eq "scp") {
+    #          $ok = 0;
+    #          foreach $arg (@orig_argv) {
+    #              if ($arg eq '-t' || $arg eq '-f') {
+    #                  $ok = 1;
+    #                  last;
+    #              }
+    #          }
+    # 
+    #          fail "bad scp command"
+    #              unless $ok;
+    # 
+    #          last;
+    #      }
+    #      elsif ($orig_command =~ "sftp-server") {
+    #      $orig_command = '/usr/libexec/openssh/sftp-server';
+    #          last;
+    #      }
+        else {
+            fail "$orig_command not allowed"
+        }
+    }
+
+    # Wipe the environment as a security precaution.  This might conceivably
+    # break something, but if it does you can filter the environment more
+    # selectively here.
+
+    %ENV = ();
+
+    exec $orig_command, @orig_argv;
+
+## Notes:
+
+1.  Make sure the location of perl given in the first line is correct
+    for your server
+2.  I restrict the repos to be under the `repos` directory, and named
+    with fairly limited characters - this isn't perfect
+

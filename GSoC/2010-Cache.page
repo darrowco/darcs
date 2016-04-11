@@ -1,0 +1,334 @@
+# Status
+
+This was a successful project. Thanks, Adolfo!
+
+# Overview
+
+Improving the behaviour and reliablity of the Global Cache.
+
+Adolfo and Eric tend to meet on \#darcs, Sunday at 20:00 UTC (15:00 COT,
+21:00 BST)
+
+# Timeline
+
+0.  (ending 23 May)
+
+    -   University time - no Adolfo yet
+    -   Hacking starts 24 May
+
+1.  (ending 30 May)
+
+    -   Start to study code
+    -   Report:
+        [http://abuiles.blogspot.com/2010/05/gsoc-week-1-getting-to-know-you.html](http://abuiles.blogspot.com/2010/05/gsoc-week-1-getting-to-know-you.html)
+
+    -   Goal: timeline fleshed out
+    -   Progress: 25%: next three weeks planned, goal to have high-level
+        doc w/ week for comments
+
+    -   Goal: skeleton of high-level code documentation :
+        [http://wiki.darcs.net/DarcsInternals/CacheSystem](http://wiki.darcs.net/DarcsInternals/CacheSystem)
+    -   Progress: DONE; skeleton in place
+
+    -   Goal: at least one warm-up issue implemented
+    -   Progress: 50%; Adolfo has a clear idea how to fix issue1503
+
+2.  (6 Jun)
+
+    -   Goal: complete issue1503
+    -   Progress: 75% (needs test case);
+        [http://bugs.darcs.net/patch257](http://bugs.darcs.net/patch257)
+
+    -   Goal: complete issue1210
+    -   Progress: 50% (first draft)
+        [http://bugs.darcs.net/patch266](http://bugs.darcs.net/patch266)
+
+    -   Goal: description of cache usage for each module in
+        Darcs.Repository
+    -   Progress: DONE
+
+    -   Report:
+        [http://abuiles.blogspot.com/2010/06/gsoc-week-2.html](http://abuiles.blogspot.com/2010/06/gsoc-week-2.html)
+
+3.  (13 Jun)
+
+    -   Goal: complete issue1176
+    -   Progress: 75% (needs one final review)
+
+    -   Goal: rough test plan for issue1599
+    -   Progress: 0%
+
+    -   Goal: Test for issue1503 (patch257)
+    -   Progress: DONE
+
+    -   Goal: complete issue1210 (amend patch266)
+    -   Progress: DONE
+
+    -   Goal: Test for issue1210 (patch266)
+    -   Progress: 75% (still failing on Windows)
+
+    -   Goal: CacheSystem Q1 answered - What exactly happens when Darcs
+        attempts to fetch a file with a given hash?
+    -   Progress: 50% (hmm, more high-level please)
+
+    -   Goal: clarification on distinction between HashedRepo and
+        HashedIO
+    -   Progress: 0%
+
+    -   Goal: flesh out Darcs.Repository.Cache description
+    -   Progress: DONE (Eric has more comments, though)
+
+    -   Report:
+        [http://abuiles.blogspot.com/2010/06/gsoc-week-4.html](http://abuiles.blogspot.com/2010/06/gsoc-week-4.html)
+
+4.  (20 Jun)
+
+    -   Goal: complete issue1176 [spillover]
+    -   Progress: DONE
+
+    -   Goal: Figure out why issue1210 test fails on Windows
+    -   Progress: DONE
+
+    -   Goal: Extend cache sorting to all relevant commands
+    -   Progress: 0%
+
+    -   Goal: higher-level explanations for Q1
+    -   Progress: DONE
+
+    -   Goal: clarification on distinction between HashedRepo and
+        HashedIO
+    -   Progress: DONE
+
+    -   Report:
+        [http://abuiles.blogspot.com/2010/07/gsoc-week-5.html](http://abuiles.blogspot.com/2010/07/gsoc-week-5.html)
+
+5.  (27 Jun) Start working on the issue1599
+    ([http://bugs.darcs.net/issue1599](http://bugs.darcs.net/issue1599))
+
+    -   Goal: cleanups on Q1 (phrasing) Q2 (clarify low-level) and Q3
+        (flesh out a bit more)
+    -   Progress: DONE
+
+    -   Goal: cleanups on document structure
+    -   Progress: 0%
+
+    -   Goal: rough test plan for issue1599
+    -   Progress: 25% (needs more meat)
+
+    -   Goal: simple test case for issue1599
+    -   Progress: 50% (needs a bit of reworking)
+
+    -   Goal: comments on Petr's plan (ie. have read and thought about
+        plan suggested by Petr). Comments on what could go wrong would
+        be nice.
+    -   Progess:
+
+6.  (4 Jul) [NB: no meeting at the end of this week]
+
+    -   Goal: answer for Q4
+    -   Progress: 75% - needs proofreading
+
+    -   Goal: first draft of [CacheSystem](/DarcsInternals/CacheSystem)
+        doc complete
+    -   Progress: DONE
+
+    -   Goal: Implement time out environmental variable.
+    -   Progress: stuck on Windows related isuse
+
+    -   Goal: Mark non-existing local caches and notify to the user
+        about it.
+    -   Progress: not done (but progress made understanding the issue)
+
+7.  (11 Jul)
+
+    -   Thinking about how to do issue1599
+
+    -   **Google Deadline** 12 Jul MIDTERM EVALUATIONS
+    -   Goal: high-level documentation of cache code done
+
+8.  (18 Jul)
+
+    -   Goal: Patch for issue1599
+    -   Progress: still working on it
+    -   Report:
+        [http://abuiles.blogspot.com/2010/07/gsoc-report-week-8-dealing-with-bad.html](http://abuiles.blogspot.com/2010/07/gsoc-report-week-8-dealing-with-bad.html)
+
+9.  (25 Jul)
+
+    -   Goal: Patch for issue1599
+    -   Progress: first draft submitted! (amendments requested)
+
+10. (1 Aug)
+
+    -   Goal: Polish patch for issue1599: **sent (amendments
+        requested)**
+    -   Goal: Extend Haddock in the Repository/Cache.hs: **done but need
+        to put it in a patch )**
+
+11. (8 Aug)
+
+    -   Goal: Complete patch for issue1599: DONE
+    -   Goal: Write test for issue1599: DONE
+    -   Goal: Extends high-level document with behaviour for bad caches:
+        **done**
+    -   Goal: Documentation for issue1599: not done, push to next week
+
+12. (15 Aug)
+
+    -   Goal: Windows-related problems with darcs timing out: DONE
+    -   Goal: Extends user manual: DONE
+    -   **Google Deadline** 16 Aug PENCILS DOWN
+    -   Final report:
+        [http://abuiles.blogspot.com/2010/08/gsoc-week-12.html](http://abuiles.blogspot.com/2010/08/gsoc-week-12.html)
+
+# Neighbourhood
+
+-   2010-07-01 - Darcs 2.5 freeze? release at end of month
+-   2010-10 - Darcs Hacking Sprint \#5
+
+# Deliverables
+
+-   document about the caching mechanism, and how it fits in the main
+    view of Darcs
+-   resolution for warm-up issues
+
+    -   [http://bugs.darcs.net/issue1503](http://bugs.darcs.net/issue1503)
+        (prefer local cache to remote ones)
+    -   [http://bugs.darcs.net/issue1210](http://bugs.darcs.net/issue1210)
+        (global cache recorded in \_darcs/sources)
+    -   [http://bugs.darcs.net/issue1832](http://bugs.darcs.net/issue1832)
+        (too many errors caught by cache code)
+    -   [http://bugs.darcs.net/issue1176](http://bugs.darcs.net/issue1176)
+        (caches interfere with --remote-repo flag)
+
+-   resolution for issue1599 include
+
+    -   haddock
+    -   high level documentation (explaining exactly how darcs behaves)
+    -   regression tests
+
+# Technical details
+
+\* Where should the high level documentation go? In the user manual or
+on the wiki? ( We will use for now the wiki, it wouldn't hurt having
+them in both :) )
+
+# Concerns
+
+-   NFS
+-   Windows shares (those things with \\paths)
+-   Multiple partitions
+-   Explictly remote caches (network)
+
+# Original proposal
+
+Improving Darcs Performance
+
+## About the project
+
+The idea of my project is working on the improvement of Darcs
+performance and "predictability". The global cache acts as a giant patch
+pool where Darcs first looks for a patch when grabbing new patches. This
+saves time by not downloading the same patch twice from a remote server.
+It also saves space by storing the patch only once, if you ensure your
+cache and your repositories are on the same hardlink-supporting
+filesystem. Although, being the global cache on the biggest performance
+enhancing tools, there are issues which affect it in certain
+circumstances, my work will focus on doing Darcs automatically expire
+unused caches [1], what is happening right now is that Darcs try to use
+all the time the global cache, in some cases some sources are no longer
+being used but Darcs can figure it out by itself, so between every
+patch, Darcs tries to establish a "connection" with every source taking
+a considerable amount of time while it gives up that connection. [2].
+
+## Goals
+
+The main goal of this proposal is to code a proper way in which Darcs
+can identify the unused cache, and establish a mechanism which allows us
+to determinate whether they should be expire or not.
+
+## Design
+
+An initial plan has been developed by Petr Ročkai [3]. My idea is to
+continue Petr's plan which basically consist of:
+
+> Checking for availability of repo root (that we're fetching from), if
+> it's not available and depending the current environment :
+>
+> > [a] Remote: Ignore the entry for Darcs (we want to keep the entry in
+> > case it's just transient error) and log the issue.
+> >
+> > [b] Local: remove the entry
+
+Petr also suggest disabling all sources from a given host for this
+Darcs.
+
+This plan will likely change as I gain more experience with Darcs.
+
+## Plan
+
+During the first weeks I will be focus on getting familiar with Darcs
+and understanding better how Darcs caching works, then I will start to
+work in some minor issues which will help me as a coding warm-up . After
+I have solved those issues I will start to work the actual problem of
+how to make Darcs expiring the unused cache and doing some refactor in
+its global cache mechanism. Finally after this job is done, I will work
+on documentation and testing.
+
+## Test plan
+
+**Local repositories**: If fetching a file for a local repository fail,
+we check if the fail was given because that local repository doesn't
+exist, in such case we added it to the list of bad caches.
+
+**Remote Repositories**: We have two cases with remote repositories, one
+that the remote repository doesn't exist and two that we are receiving
+time out, if the error is time-out it gets added to the bad caches list,
+if the error is because the file doesn't exist, we check if is the
+repository which doesn't exist, if that happens we add it to the bad
+caches list.
+
+For the rest of the command we don't use the entries in the bad cache
+list to fetch files.
+
+## Deliverables
+
+Following my project plan what I will first deliver will be a document
+about the caching mechanism, and how it fits in the main view of Darcs,
+this will also include a package involving patches for the warm-up
+issues. Finally a major package including code documentation, patches
+for the issues and a set of tests.
+
+## Benefits to the Haskell - Darcs community
+
+Darcs is used as the most common version tools amongst Haskell projects,
+having improvements on it will certainly be a gain not just for the
+Haskell hackers but also to the non-Haskellers who use Darcs. Second,
+Darcs is a prove that Haskell is suitable for real world projects,
+making it better will support this idea and besides it will attract more
+people to get involve with Darcs or Haskell.
+
+## About me and why I want to work on this project
+
+I'm from Medellin, Colombia. I'm a student of Systems Engineering at
+EAFIT University. I enjoy spending my time reading, playing guitar, and
+coding. I have been a Haskell lover for over a year now, it all started
+while I was abroad in the UK, and I bought Real World Haskell, then when
+I came back I found a research group in Logic and Computing in my
+university, and I meet another guy who also likes Haskell, since then we
+have been studying Haskell, and we have a mini-Haskell user-group ( I
+say mini, because we are just 3-7 people). Now when the gsoc time came I
+knew that I wanted to work with Haskell, specially something that could
+be useful in the real world and for the community, this project fits
+perfectly in what I wanted, since Darcs is something done in Haskell and
+doing something related with it will be helpful for the community.
+Currently I'm teacher assistant of the Compilers lecture, I give a
+weekly presentation about Haskell to the students trying to get them
+involve with it.
+
+[1]
+<[http://bugs.darcs.net/issue1599](http://bugs.darcs.net/issue1599)\>
+
+[2] <[http://bugs.darcs.net/msg6379](http://bugs.darcs.net/msg6379)\>
+
+[3] <[http://bugs.darcs.net/msg8724](http://bugs.darcs.net/msg8724)\>

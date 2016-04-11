@@ -1,0 +1,326 @@
+# Report
+
+[http://blog.darcs.net/2009/11/darcs-hacking-sprint-3-report.html](http://blog.darcs.net/2009/11/darcs-hacking-sprint-3-report.html)
+
+# Date and venue
+
+When: 14-15 November 2009
+
+Where:
+
+-   University of Technology in Vienna, Wiedner Hauptstraße 8-10
+    (Freihaus, red zone, first floor, to the left of the
+    [occupied](http://tu-brennt.fsinf.at) HS1) [Google Maps
+    link](http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Wiedner+Hauptstraße+8-10,+Wieden+1040+Vienna,+Austria&sll=48.198262,16.369307&sspn=0.007866,0.01811&ie=UTF8&ll=48.198563,16.368792&spn=0.007866,0.01811&z=16&iwloc=A)
+    ([with
+    hotels](http://maps.google.com/maps/ms?hl=en&ie=UTF8&msa=0&msid=106040076820866939778.000477eecd870effb7154&ll=48.202195,16.354952&spn=0.041189,0.077162&z=14&start=0))
+-   Portland, OR
+
+# Key information
+
+-   twitter/identi.ca : \#darcs
+-   IRC: \#darcs on irc.freenode.net
+-   wiki: please jot down meeting notes, etc on this wiki!
+
+## Getting started
+
+ASK QUESTIONS! SHOUT IF IT DOES NOT WORK
+
+1.  install msmtp (use zetkin.htu.tuwien.ac.at if you need an SMTP
+    server)
+
+        from you@gmail.com 
+        user darcs09
+        password sprint09
+        host zetkin.htu.tuwien.ac.at
+        tls on
+        auth on
+        syslog on
+        tls_certcheck off
+
+2.  grab darcs
+
+        darcs get --lazy http://darcs.net darcs
+        cd darcs
+        echo "record no-test" >> _darcs/prefs/defaults 
+        echo "send sendmail-command msmtp -t %<" >> _darcs/prefs/defaults
+        echo "send edit-description" >> _darcs/prefs/defaults
+
+3.  find a trivial bug to work on:
+    [http://code.haskell.org/darcs/hlint.html](http://code.haskell.org/darcs/hlint.html)
+
+        cd darcs
+        # hack hack hack
+        darcs record
+        darcs send
+
+4.  see [GettingStarted](../Development/GettingStarted) page
+
+# Progress
+
+1.  hashed-storage: Windows bugs fixed
+2.  hashed-storage warnings
+3.  issue1244 - darcs convert
+
+## Prioritising for sprint (Friday)
+
+Vienna: held discussions on the DeleteFile problem on Windows, upcoming
+list of priorities, probably easy bugs - Eric, Luca, Reinier, Petr,
+Salvatore
+
+## SVN support (Saturday)
+
+-   Eric, Petr, Thomas.
+-   non-reproducible : darcs get first
+-   darcs pull
+-   IRC: do we even want this?
+
+## Windows support meeting (Sunday)
+
+1.  Official binary
+2.  Better Windows distribution
+
+    -   installer
+    -   supported SSH tools: Tortoise SSH, putty-keygen
+    -   email support: msmtp-like tool
+
+3.  Cygwin
+
+    -   don't support until there is a GHC Cygwin
+    -   just use the official binary
+    -   TODO: document what works and doesn't work
+
+4.  Darcs send sucks
+
+    -   [http://bugs.darcs.net/issue1686](http://bugs.darcs.net/issue1686)
+        for darcs send -o
+    -   drop MAPI support! (rely on official installer to ship msmtp
+        type tool)
+
+5.  Windows 7
+
+    -   need to find a buildslave
+
+## Darcs Roadmap
+
+-   Darcs 2.4 priorities - things we can do now
+-   Darcs 2.5 Windows installer and filecache work...
+
+## Winding up
+
+How to make Darcs better
+
+-   DEFINITELY do the top N list of probablyeasy bugs (that worked well)
+-   send email with more precise instructions on getting darcs set up
+    for sending patches
+-   possible darcs hacking VM image
+-   better mentoring: group mentoring session in the beginning, pairing
+    people
+-   encourage USB keyboards for pair programming
+-   darcs sprint repo
+
+# Priorities
+
+## Target 2.4 Priorities
+
+1.  hashed-storage : only use mmap for index and nothing else
+
+    -   does this fix the Windows bugs? [IT DOES! rejoice!]
+    -   does this significantly degrade performance [just curious?]
+
+2.  does darcs-benchmark work on Windows?
+
+3.  break global cache up into subdirectories
+
+## ProbablyEasy Priorities
+
+-   darcs send -o output
+    [http://bugs.darcs.net/issue643](http://bugs.darcs.net/issue643)
+-   versioned darcs transfer-mode
+    [http://bugs.darcs.net/issue1167](http://bugs.darcs.net/issue1167)
+-   optimize --upgrade should do optimize -
+    [http://bugs.darcs.net/issue1643](http://bugs.darcs.net/issue1643)
+-   remove -r -
+    [http://bugs.darcs.net/issue540](http://bugs.darcs.net/issue540)
+-   you have N patches to pull warning should happen early in push -
+    [http://bugs.darcs.net/issue1308](http://bugs.darcs.net/issue1308)
+    [TAKEN]
+-   support -P for plink SSH\_PORT -
+    [http://bugs.darcs.net/issue1371](http://bugs.darcs.net/issue1371)
+-   convert should read \_darcs/prefs/prefs -
+    [http://bugs.darcs.net/issue1232](http://bugs.darcs.net/issue1232)
+-   you cannot unrevert warning on non-interactive UI
+-   author prompt on non-interactive UI
+-   \_darcs/trash (unobliterate) -
+    [http://bugs.darcs.net/issue75](http://bugs.darcs.net/issue75)
+-   progress indicators -
+    [http://bugs.darcs.net/issue1500](http://bugs.darcs.net/issue1500)
+    [TAKEN] (apparently taken by Quiark)
+-   --remote-darcs -
+    [http://bugs.darcs.net/issue223](http://bugs.darcs.net/issue223)
+    [HOLD - waiting for partial patch from C-Keen]
+-   parsec for authorspellings [TAKEN]
+-   get --complete should not offer lazy -
+    [http://bugs.darcs.net/issue1122](http://bugs.darcs.net/issue1122)
+    [TAKEN]
+-   trackdown --bisect -
+    [http://bugs.darcs.net/issue1208](http://bugs.darcs.net/issue1208)
+    [TAKEN]
+-   show files [file...] -
+    [http://bugs.darcs.net/issue835](http://bugs.darcs.net/issue835)
+    [TAKEN]
+-   fix hashed-storage warnings [DONE]
+
+## Slightly more challenging, but still not too hard
+
+-   optimize --upgrade should do optimize --pristine -
+    [http://bugs.darcs.net/issue1642](http://bugs.darcs.net/issue1642)
+
+# Themes
+
+All Darcs/Camp related work is welcome, but here are the two areas we
+will be focusing on.
+
+-   Darcs 2.4 polish: Darned good hashed repositories
+
+    -   [Target-2.4
+        bugs](http://bugs.darcs.net/issue?@search_text=&title=&@columns=title&topic=34&id=&@columns=id&creation=&creator=&activity=&@columns=activity&@sort=activity&actor=&nosy=&priority=&@group=priority&status=-1,1,2,3,4,5,6,16,17&@columns=status&assignedto=&@columns=assignedto&@pagesize=50&@startwith=0&@queryname=&@old-queryname=&@action=search)
+    -   [GHC
+        criteria](http://lists.osuosl.org/pipermail/darcs-users/2009-September/021370.html)
+
+-   Haskell/Darcs training: Brush up on Haskell hacking on a real world
+    open source project
+
+    -   Dedicated mentor(s) will be available
+
+        -   Salvatore Insalaco
+        -   Reinier Lamers
+        -   Eric Kow (tentative)
+
+    -   [ProbablyEasy
+        bugs](http://bugs.darcs.net/issue?@search_text=&title=&@columns=title&topic=6&id=&@columns=id&creation=&creator=&activity=&@columns=activity&@sort=activity&actor=&nosy=&priority=&@group=priority&status=17&@columns=status&assignedto=&@columns=assignedto&@pagesize=50&@startwith=0&@queryname=&@old-queryname=&@action=search)
+
+# Helpers needed
+
+-   At least one more mentor required (Eric can fill in otherwise)
+-   Photographer (Portland)
+
+# Schedule
+
+## Friday (Vienna)
+
+12:00 - Meet at Hotel Bristol Kärntner Ring 1, 1015 Vienna, Austria
+
+16:30 - Meet at Hostel Ruthensteiner Robert Hamerling Gasse 24, 1150
+Rudolfsheim-Fünfhaus
+
+## Saturday
+
+09:00 - Arrival, settling in
+
+09:30 - Hello! Introductions, pairing, bug tracker
+
+10:00 - Hack time!
+
+13:00 - Lunch/meetings?
+
+14:30 - Hack time!
+
+18:00 - Drinks, dinner?
+
+## Sunday
+
+09:00 - Hack time!
+
+13:00 - Lunch/meetings?
+
+14:30 - Hack time!
+
+16:30 - Roadmap planning meeting [Vienna]
+
+17:30 - Wrap up, taking stock
+
+18:00 - Drinks, dinner?
+
+# Upcoming meetings
+
+Please add yourself if you're interested in joining a chat :-) Nothing
+formal, really! Just making a note of things that would be nice to
+discuss
+
+-   Eric, Thomas [SVN integration](../../Ideas/Subversion) [Saturday
+    morning?]
+-   Eric, Joachim [darcswatch/roundup
+    integration](http://bugs.darcs.net/issue1602) [Saturday afternoon?]
+-   Eric, Salvatore, Reinier - what's our Windows strategy? [Sunday
+    afternoon?]
+-   Everybody - planning the Darcs Roadmap [Sunday afternoon]
+-   ??? - sorting out the darcs preferences [Sunday morning]
+
+# Vienna Attendees
+
+1.  [Joachim Breitner](../People/JoachimBreitner) [arriving airport Sat
+    08:00, leaving Mon 18:10]
+2.  Benedikt Huber (local team)
+3.  [Eric Kow](../People/EricKow) [arriving airport Fri 10:20, leaving
+    Mon (morning) 11:00]
+4.  [Reinier Lamers](../People/ReinierLamers) [arriving airport Fri
+    14:00, leaving Mon 14:00]
+5.  David Markvica (local team)
+6.  [Petr Rockai](../People/PetrRockai) [arriving to Westbahnhof around
+    4 PM on Fri, leaving from Südbahnhof at 7:28 AM on Mon]
+7.  Radoslav Dorcik (Haskell beginner) [commuting from Bratislava]
+8.  [Salvatore Insalaco](../People/SalvatoreInsalaco) (mentor) [arriving
+    airport Fri 09:05, leaving Sun 20:10]
+9.  Matthias Fischmann [just arrived, my flight is leaving mon 6:30am]
+10. Thomas Danecker (local team)
+11. Christian Berrer (local team)
+12. Luca Molteni (Haskell beginner) [arriving airport Fri 09:05, leaving
+    Sun 20:10]
+13. Federico Sudaro (Haskell beginner)
+14. Roman Plášil (beginner)
+15. Tomáš Caithaml [arriving Joseph-Roth-Gasse/Praterstern Fri 15:30]
+
+# Portland Attendees
+
+1.  [Jason Dagit](../People/JasonDagit) ([Call Jason via Google
+    Voice](https://clients4.google.com/voice/embed/webCallButton?id=0bca96cd2574c21c45b6a3b766e0bb655e7d0cfb))
+2.  Don Stewart
+3.  Josh Hoyt
+4.  Thomas Hartman
+5.  Thomas DuBuisson
+
+# Accommodation
+
+Affordable hostels in Vienna:
+
+-   [Meininger Hostel](http://www.meininger-hotels.com)
+-   [Hostel Ruthensteiner](http://www.hostelruthensteiner.com)
+-   [Wombats](http://www.wombats-hostels.com/vienna/the-lounge/)
+
+# Public Transport in Vienna
+
+For 13,60€ you get a 72h ticket. All tickets are valid for the
+Underground and all the trains, trams and busses in Vienna (except some
+special sight-seeing busses and the like).
+
+From the Airport you can take the Train S8 to Landstraße-Wien Mitte
+(don't take the CAT [City Airport Train], this one has to be payed extra
+and isn't really faster). From there you can take the U3 (Underground)
+to Westbahnhof which is 5 minutes from the Hostel Ruthensteiner.
+
+You can get to the University of Technology by Underground (U1/U2/U4,
+Station Karlsplatz) or by Tram (1/62, Station Resselgasse).
+
+Just use Google Maps to look for the fastest routes (by switching to "By
+public transport").
+
+# Food
+
+-   [http://www.wiener-wiazhaus.at](http://www.wiener-wiazhaus.at)/
+    (Austrian cuisine)
+-   [http://www.wokandmore.at](http://www.wokandmore.at)/ (asian)
+-   Mr.Lee (another asian at the Naschmarkt)
+-   green apple (low priced teppanyaki all you can eat buffet)
+-   There's also a greek just vis-à-vis the building
+

@@ -1,0 +1,65 @@
+# News and discussions
+
+1.  News from Summer of Code -- BSRK Aditya posted his first entry about his
+    work on patch index:
+
+    -   <http://bsrkaditya.blogspot.com.ar/2012/05/gsoc-patch-index-week-1.html>
+
+2.  Meanwhile, an optimization of 'darcs diff' written by Petr Rockai has been
+    ported to HEAD:
+
+    -   <http://lists.osuosl.org/pipermail/darcs-users/2012-May/026519.html>
+
+# Issues resolved in the last week (0)
+
+
+# Patches applied in the last week (24)
+
+2012-05-16 Owen Stephens
+  ~ -   Accept issue1959 unwritable cache should not kill darcs
+
+2012-05-26 Eric Kow
+  ~ -   Improve issue2193 test style.
+    -   Improve issue2187 test style.
+
+2012-05-01 Ilya Permonov
+  ~ -   Accept issue2193: darcs apply --test runs the test twice.
+    -   Accept issue2187: "darcs apply --test <patch-set" crashes if the test fails.
+    -   Accept issue2186: apply --reply is broken.
+
+2012-05-18 Guillaume Hoffmann
+  ~ -   remove inventory code of optimize without --reorder flag since it did nothing
+
+2012-05-15 Ganesh Sittampalam
+  ~ -   resolve conflicts in cabal version field
+    -   bump version to 2.8.1 and update NEWS
+    -   resolve conflict in mtl dependency bump
+    -   bump mtl dependency
+
+2012-04-22 Florent Becker
+  ~ -   bump version to 2.8.0
+
+2012-04-07 Ganesh Sittampalam
+  ~ -   Bump version to 2.7.99.2
+
+2012-03-30 Florent Becker
+  ~ -   Change version to 2.7.99.1
+
+2012-05-14 Ganesh Sittampalam
+  ~ -   darcs-users -> darcs-devel
+    -   update NEWS with 2.8 release notes
+
+2012-05-24 Guillaume Hoffmann
+  ~ -   haddock for fixUrl and fix 2 haddocks
+    -   make darcs apply work with url
+    -   kill footnotes in manual and uninformative command-overview paragraph
+
+2012-05-18 Michael Hendricks
+  ~ -   Fix show-authors test on OS X
+
+2012-05-16 Owen Stephens
+  ~ -   Tidy/Style ShowAuthors
+    -   Add missing -f flag to rm in show-authors test
+    -   Add rank to show authors
+    -   Accept issue2179 darcs diff no longer works given a dir path
+

@@ -1,0 +1,95 @@
+# News and discussions
+
+1. Daniel Carrera asked about a set of features currently absent from
+darcs,
+  ~ that is data integrity checking and patch signing:
+
+\*
+[http://lists.osuosl.org/pipermail/darcs-users/2009-April/018938.html](http://lists.osuosl.org/pipermail/darcs-users/2009-April/018938.html)
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-April/018985.html](http://lists.osuosl.org/pipermail/darcs-users/2009-April/018985.html)
+
+2. A proposal for refactoring the homepage led to marketing
+considerations:
+  ~ -   [http://lists.osuosl.org/pipermail/darcs-users/2009-April/019049.html](http://lists.osuosl.org/pipermail/darcs-users/2009-April/019049.html)
+
+# Issues resolved in the last week (3)
+
+issue1413 Trent W. Buck
+  ~ -   remove duplicate documentation.
+    -   [http://bugs.darcs.net/issue1413](http://bugs.darcs.net/issue1413)
+
+issue1415 Trent W. Buck
+  ~ -   --edit-long-comment, not --edit-description, in help.
+    -   [http://bugs.darcs.net/issue1415](http://bugs.darcs.net/issue1415)
+
+issue1423 Trent W. Buck
+  ~ -   complain about empty add/remove.
+    -   [http://bugs.darcs.net/issue1423](http://bugs.darcs.net/issue1423)
+
+# Patches applied in the last week (31)
+
+2009-04-11 Eric Kow
+  ~ -   Remove unused import in Darcs.Commands.Remove.
+
+2009-04-11 Trent W. Buck
+  ~ -   Follow autoconf convention of @VAR@ for .in files.
+    -   Code churn in Darcs.Commands.Add and Darcs.Commands.Remove.
+
+2009-04-11 Eric Kow
+  ~ -   Alphabetise .authorspellings.
+    -   Canonize Aaron Kaplan.
+
+2009-03-29
+[dk59gjhnd@aaronkaplan.info](mailto:dk59gjhnd@aaronkaplan.info)
+  ~ -   Add issue1327.sh
+
+2009-04-10 Trent W. Buck
+  ~ -   Resolve issue1423: complain about empty add/remove.
+
+2009-04-10 Thomas Hartman
+  ~ -   fix help message for \_\_index
+
+2009-04-06 Trent W. Buck
+  ~ -   Include literate docs from Darcs.Patch.Prim in the user manual.
+
+2009-04-01 [ben.franksen@online.de](mailto:ben.franksen@online.de)
+  ~ -   added more docs, plus some renamings and simplifications
+
+2009-04-08 Tommy Pettersson
+  ~ -   bugfix, don't allow replace tokens containing whitespace
+    -   rollback rollback of test for issue1373, and modify it
+    -   rollback rollback of refactoring of Replace, and modify to
+        disallow space
+    -   rollback rollback of haddock for Replace
+    -   haddock RegChars
+    -   add test for replace with space in token
+
+2009-04-06 [ben.franksen@online.de](mailto:ben.franksen@online.de)
+  ~ -   fixed check for haskeline, there was one comma too much
+    -   moved test for resolved issue1162 from bugs to tests
+
+2009-04-07 Trent W. Buck
+  ~ -   Remove duplicate function: n\_fn.
+    -   Resolve issue1413: remove duplicate documentation.
+    -   Attribute and license (GPL2+) zsh completion code.
+    -   Resolve issue1415: --edit-long-comment, not --edit-description,
+        in help.
+    -   Accept issue1401: bug in get\_extra commuting patches.
+    -   It's now safe to assume darcsCommand appears on its own line.
+    -   Demote some single-use top-level functions.
+    -   Add haddocks to preproc (the LaTeX mangler).
+    -   Typo: s/at/all/.
+
+2009-04-06 Eric Kow
+  ~ -   Rollback issue1373 fix, which causes a regression.
+
+2009-04-03 Adam Vogt
+  ~ -   add test for issue1406
+
+2009-03-29 Florian Gilcher
+  ~ -   Made --summary --xml-output work for other commands then changes
+
+2009-03-27 Marco Túlio Gontijo e Silva
+  ~ -   Simplify move of a new directory, as it's made to files.
+
+

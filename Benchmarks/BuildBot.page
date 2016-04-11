@@ -1,0 +1,169 @@
+# Darcs Versions
+
+darcs-HEAD 0: 2.4.98.1 (+ 106 patches),
+  ~ 2010-08-08 12:12:51, GHC 6.12.1
+
+darcs-HEAD 1: 2.4.98.1 (+ 107 patches),
+  ~ 2010-08-08 13:16:43, GHC 6.12.1
+
+darcs-HEAD 2: 2.4.98.1 (+ 109 patches),
+  ~ 2010-08-08 14:44:27, GHC 6.12.1
+
+darcs-HEAD 3: 2.4.98.1 (+ 108 patches),
+  ~ 2010-08-08 15:37:13, GHC 6.12.1
+
+darcs-HEAD 4: 2.4.98.1 (+ 110 patches),
+  ~ 2010-08-08 15:42:28, GHC 6.12.1
+
+darcs-HEAD 5: 2.4.98.1 (+ 111 patches),
+  ~ 2010-08-08 16:42:45, GHC 6.12.1
+
+darcs-HEAD 6: 2.4.98.1 (+ 127 patches),
+  ~ 2010-08-08 22:41:26, GHC 6.12.1
+
+darcs-HEAD 7: 2.4.98.1 (+ 127 patches),
+  ~ 2010-08-10 09:36:27, GHC 6.12.1
+
+darcs-HEAD 8: 2.4.98.1 (+ 127 patches),
+  ~ 2010-08-10 18:44:21, GHC 6.12.1
+
+darcs-HEAD 9: 2.4.98.1 (+ 128 patches),
+  ~ 2010-08-10 19:45:44, GHC 6.12.1
+
+# Graphs
+
+## GHC
+
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:ijhhhkhh9iA&chtt=wh+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4%7Cop+HEAD&chxr=1,0.0,38.104656&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:ml9nnlikwmA&chtt=wh+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4%7Cop+HEAD&chxr=1,0.0,383.22284&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:tsssttst94A&chtt=wh+-l+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4%7Cop+HEAD&chxr=1,0.0,120.771255&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:QUPTPPQPX9A&chtt=record+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4%7Cop+HEAD&chxr=1,0.0,1214.8772&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:h9gggjqgqiA&chtt=revert+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4%7Cop+HEAD&chxr=1,0.0,374.15088&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:sutttuss9yA&chtt=(un)revert+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4%7Cop+HEAD&chxr=1,0.0,627.2019&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:3351234197A&chtt=get+(full)+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4%7Cop+HEAD&chxr=1,0.0,18.763464&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:qfnneono9xA&chtt=get+(lazy)+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4%7Cop+HEAD&chxr=1,0.0,6.563713&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:qq3rroon98A&chtt=pull+100+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4%7Cop+HEAD&chxr=1,0.0,5.303419&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:As9uAu7s3uA&chtt=pull+1000+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4%7Cop+HEAD&chxr=1,0.0,52.01807&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:A383A39364A&chtt=check+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4%7Cop+HEAD&chxr=1,0.0,190.35403&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:A793A684436&chtt=repair+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4%7Cop+HEAD&chxr=1,0.0,190.15117&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:___________&chtt=annotate+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4%7Cop+HEAD&chxr=1,0.0,0.0&chbh=23,5,20)
+## Tahoe LAFS
+
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:84xuvu9z10&chtt=wh+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,16.941692&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:uuy45w9t60&chtt=wh+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,201.15985&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:qqsprzqv9q&chtt=wh+-l+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,56.962833&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:iihi9njhvl&chtt=record+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,275.57205&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:rvrrrqut9p&chtt=revert+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,139.70296&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:zyw9wuyuvt&chtt=(un)revert+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,289.75052&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:1124321459&chtt=get+(full)+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,7.194999&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:2Vnx9tvml7&chtt=get+(lazy)+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,3872.3936&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:A926A16307&chtt=pull+100+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,4.0058274&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:Az80A09y0z&chtt=pull+1000+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,29.752802&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:Ao8pAn9nrs&chtt=check+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,24.146387&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:Ao9oAo8orr&chtt=repair+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,24.098604&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:AZ9ZAZ8Zcc&chtt=annotate+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,31.09913&chbh=23,5,20)
+## darcs
+
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:UTUUUTUU9q&chtt=wh+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,46.2992&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:fmsipnpm90&chtt=wh+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,298.62524&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:kktpkjlj93&chtt=wh+-l+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,73.659584&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:utruvvrr49&chtt=record+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,304.03104&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:jllmkkmj9t&chtt=revert+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,191.1235&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:qprqppzp97&chtt=(un)revert+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,405.78278&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:0wuz012w94&chtt=get+(full)+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,5.763256&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:nporskr19U&chtt=get+(lazy)+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,3123.9023&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:wnprqnrrx9&chtt=pull+100+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,2302.4224&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:rrsrussq94&chtt=pull+1000+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,14.132728&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:4272417189&chtt=check+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,18.806795&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:2050205z94&chtt=repair+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,19.509035&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:un9nun8mus&chtt=annotate+(s)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,15.7305355&chbh=23,5,20)
+## tabular
+
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:SQRVRWRR9x&chtt=wh+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,43.096104&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:aZbbdZaa89&chtt=wh+mod+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,46.363144&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:XbaXXXXW93&chtt=wh+-l+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,41.924095&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:idlieikf9x&chtt=record+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,116.80773&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:ndy3tmqox9&chtt=revert+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,58.721737&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:lommkklj69&chtt=(un)revert+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,135.8523&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:qutx1uux79&chtt=get+(full)+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,82.06215&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:oklnnfkg90&chtt=get+(lazy)+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,69.93013&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:2y856y5z97&chtt=pull+100+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,333.34286&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:sowuspvpu9&chtt=pull+1000+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,407.2206&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:rnroqoso97&chtt=check+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,78.515945&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:ljnkmjni97&chtt=repair+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,92.10914&chbh=23,5,20)
+![image](http://chart.apis.google.com/chart?cht=bvg&chs=600x200&chd=s:uoxquowp69&chtt=annotate+(ms)&chco=fce94f%7Cc4a000%7Cfcaf3e%7Cce5c00%7Ce9b96e%7C8f5902&chxt=x,y&chxl=0:%7Cop+HEAD+7%7Cop+HEAD+0%7Cop+HEAD+9%7Cop+HEAD+5%7Cop+HEAD+8%7Cop+HEAD+1%7Cop+HEAD+6%7Cop+HEAD+2%7Cop+HEAD+3%7Cop+HEAD+4&chxr=1,0.0,134.28368&chbh=23,5,20)
+# Tables
+
+## GHC
+
+               op HEAD 7   sdev       op HEAD 0   sdev        op HEAD 9   sdev        op HEAD 5   sdev       op HEAD 8   sdev       op HEAD 1   sdev       op HEAD 6   sdev       op HEAD 2   sdev       op HEAD 3   sdev        op HEAD 4   sdev        op HEAD   sdev
+  ------------ ----------- ---------- ----------- ----------- ----------- ----------- ----------- ---------- ----------- ---------- ----------- ---------- ----------- ---------- ----------- ---------- ----------- ----------- ----------- ----------- --------- --------
+  wh           21.3ms      (1.0ms)    22.3ms      (1.7ms)     20.9ms      (0.6ms)     20.9ms      (0.6ms)    20.9ms      (0.6ms)    22.5ms      (1.9ms)    20.8ms      (0.6ms)    21.2ms      (0.8ms)    38.1ms      (11.7ms)    21.7ms      (1.0ms)     -         -
+  wh mod       242.3ms     (96.4ms)   237.5ms     (94.3ms)    383.2ms     (200.7ms)   249.2ms     (98.8ms)   248.2ms     (96.3ms)   236.7ms     (85.2ms)   213.6ms     (72.6ms)   227.7ms     (82.6ms)   304.8ms     (72.1ms)    238.7ms     (86.2ms)    -         -
+  wh -l        89.8ms      (2.5ms)    87.2ms      (0.6ms)     87.4ms      (0.7ms)     88.4ms      (1.1ms)    90.9ms      (3.5ms)    89.4ms      (2.1ms)    89.0ms      (2.2ms)    90.0ms      (3.2ms)    120.8ms     (17.8ms)    111.6ms     (20.8ms)    -         -
+  record       328.9ms     (29.1ms)   403.3ms     (95.8ms)    314.2ms     (16.9ms)    393.3ms     (82.6ms)   309.6ms     (17.1ms)   316.8ms     (25.9ms)   337.7ms     (36.0ms)   313.0ms     (21.3ms)   458.7ms     (85.9ms)    1214.9ms    (729.8ms)   -         -
+  revert       204.3ms     (11.6ms)   374.2ms     (155.1ms)   197.2ms     (6.1ms)     199.1ms     (7.8ms)    199.3ms     (8.1ms)    218.8ms     (25.9ms)   260.5ms     (60.5ms)   197.9ms     (8.1ms)    257.8ms     (36.5ms)    210.2ms     (10.7ms)    -         -
+  (un)revert   456.7ms     (5.4ms)    480.1ms     (26.2ms)    465.9ms     (11.6ms)    468.7ms     (15.6ms)   463.3ms     (10.5ms)   482.6ms     (30.0ms)   462.3ms     (9.3ms)    455.7ms     (8.2ms)    627.2ms     (105.3ms)   524.2ms     (29.3ms)    -         -
+  get (full)   ?17.1s      (0.3s)     ?17.0s      (0.3s)      ?17.6s      (0.6s)      ?16.3s      (0.0s)     ?16.9s      (0.3s)     ?17.1s      (0.1s)     ?17.3s      (0.5s)     ?16.6s      (0.0s)     ?18.8s      (0.6s)      ?18.3s      (0.7s)      -         -
+  get (lazy)   ?4.6s       (1.0s)     ?3.4s       (0.4s)      ?4.2s       (0.9s)      ?4.3s       (0.9s)     ?3.3s       (0.4s)     ?4.3s       (0.2s)     ?4.2s       (0.2s)     ?4.4s       (0.8s)     ?6.6s       (1.7s)      ?5.3s       (0.9s)      -         -
+  pull 100     ?3.7s       (0.0s)     ?3.7s       (0.3s)      ?4.8s       (0.9s)      ?3.8s       (0.2s)     ?3.8s       (0.1s)     ?3.5s       (0.1s)     ?3.5s       (0.1s)     ?3.4s       (0.1s)     ?5.3s       (1.0s)      ?5.2s       (1.1s)      -         -
+  pull 1000    -           -          ?37.6s      (0.2s)      ?52.0s      (0.7s)      ?39.5s      (0.2s)     -           -          ?39.7s      (1.3s)     ?50.8s      (0.2s)     ?38.3s      (0.5s)     ?47.7s      (2.7s)      ?39.6s      (1.4s)      -         -
+  check        -           -          ?2m52.0s    (0.4s)      ?3m9.9s     (0.2s)      ?2m52.8s    (0.2s)     -           -          ?2m52.2s    (0.4s)     ?3m10.4s    (0.3s)     ?2m52.1s    (0.2s)     ?3m1.7s     (3.0s)      ?2m57.3s    (1.5s)      -         -
+  repair       -           -          ?3m4.4s     (5.7s)      ?3m10.2s    (0.4s)      ?2m52.6s    (0.1s)     -           -          ?3m2.0s     (6.0s)     ?3m10.0s    (0.3s)     ?2m57.5s    (3.3s)     ?2m57.0s    (1.0s)      ?2m54.5s    (1.6s)      ?3m2.6s   (0.1s)
+  annotate     -           -          -           -           -           -           -           -          -           -          -           -          -           -          -           -          -           -           -           -           -         -
+
+## Tahoe LAFS
+
+               op HEAD 7    sdev         op HEAD 0    sdev        op HEAD 9    sdev        op HEAD 5   sdev        op HEAD 8   sdev         op HEAD 1    sdev         op HEAD 6   sdev        op HEAD 2    sdev         op HEAD 3    sdev         op HEAD 4   sdev
+  ------------ ------------ ------------ ------------ ----------- ------------ ----------- ----------- ----------- ----------- ------------ ------------ ------------ ----------- ----------- ------------ ------------ ------------ ------------ ----------- -----------
+  wh           16.9ms       (3.5ms)      15.7ms       (3.0ms)     13.6ms       (0.8ms)     13.0ms      (0.4ms)     13.1ms      (0.4ms)      13.0ms       (0.4ms)      16.9ms      (3.8ms)     14.2ms       (1.4ms)      14.7ms       (1.7ms)      14.5ms      (2.2ms)
+  wh mod       154.2ms      (60.5ms)     154.3ms      (61.2ms)    165.3ms      (76.2ms)    187.8ms     (93.5ms)    189.2ms     (98.7ms)     158.3ms      (62.1ms)     201.2ms     (97.6ms)    150.9ms      (61.5ms)     191.4ms      (74.9ms)     172.0ms     (90.3ms)
+  wh -l        39.6ms       (0.7ms)      39.8ms       (1.2ms)     41.6ms       (2.3ms)     39.2ms      (0.5ms)     40.9ms      (2.0ms)      48.5ms       (8.5ms)      39.5ms      (0.6ms)     44.2ms       (4.9ms)      57.0ms       (14.2ms)     39.8ms      (1.3ms)
+  record       156.7ms      (18.5ms)     156.9ms      (21.6ms)    151.1ms      (13.9ms)    154.7ms     (18.3ms)    275.6ms     (123.0ms)    176.7ms      (36.4ms)     158.6ms     (21.2ms)    152.6ms      (19.7ms)     216.2ms      (62.0ms)     170.0ms     (34.6ms)
+  revert       98.9ms       (6.6ms)      108.5ms      (16.2ms)    100.0ms      (7.5ms)     100.1ms     (8.2ms)     98.5ms      (6.2ms)      96.8ms       (7.5ms)      105.8ms     (13.5ms)    103.9ms      (12.6ms)     139.7ms      (43.3ms)     95.6ms      (6.6ms)
+  (un)revert   246.3ms      (20.1ms)     241.0ms      (22.1ms)    231.1ms      (7.8ms)     289.8ms     (59.4ms)    231.5ms     (8.0ms)      222.1ms      (7.3ms)      238.5ms     (17.1ms)    222.4ms      (8.7ms)      227.8ms      (7.2ms)      217.0ms     (4.1ms)
+  get (full)   ?6.4s        (0.0s)       ?6.3s        (0.0s)      ?6.5s        (0.1s)      ?6.7s       (0.3s)      ?6.6s       (0.2s)       ?6.4s        (0.1s)       ?6.3s       (0.0s)      ?6.7s        (0.2s)       ?6.8s        (0.2s)       ?7.2s       (0.5s)
+  get (lazy)   \~3487.1ms   (1314.5ms)   \~1380.8ms   (516.8ms)   \~2503.5ms   (982.3ms)   ?3167.6ms   (272.7ms)   ?3872.4ms   (1015.0ms)   \~2868.0ms   (1249.0ms)   ?3003.1ms   (278.5ms)   \~2459.8ms   (1008.6ms)   \~2355.7ms   (1024.4ms)   ?3798.8ms   (395.8ms)
+  pull 100     -            -            ?4.0s        (0.4s)      ?3.6s        (0.1s)      ?3.9s       (0.3s)      -           -            ?3.5s        (0.1s)       ?3.9s       (0.2s)      ?3.7s        (0.2s)       ?3.4s        (0.0s)       ?3.9s       (0.3s)
+  pull 1000    -            -            ?25.3s       (0.2s)      ?29.6s       (0.6s)      ?25.7s      (0.2s)      -           -            ?25.5s       (0.2s)       ?29.8s      (0.7s)      ?24.8s       (0.4s)       ?25.5s       (0.9s)       ?25.0s      (0.1s)
+  check        -            -            ?15.9s       (0.1s)      ?23.9s       (0.0s)      ?16.3s      (0.2s)      -           -            ?15.8s       (0.0s)       ?24.1s      (0.1s)      ?15.8s       (0.0s)       ?17.0s       (0.3s)       ?17.7s      (0.5s)
+  repair       -            -            ?15.8s       (0.0s)      ?24.1s       (0.1s)      ?15.9s      (0.0s)      -           -            ?15.9s       (0.1s)       ?24.0s      (0.1s)      ?15.9s       (0.1s)       ?17.4s       (0.3s)       ?17.3s      (0.2s)
+  annotate     -            -            ?13.1s       (0.1s)      ?31.1s       (0.1s)      ?13.2s      (0.0s)      -           -            ?13.0s       (0.0s)       ?31.0s      (0.1s)      ?13.0s       (0.0s)       ?14.3s       (0.1s)       ?14.5s      (0.3s)
+
+## darcs
+
+               op HEAD 7    sdev        op HEAD 0    sdev        op HEAD 9    sdev        op HEAD 5    sdev        op HEAD 8    sdev        op HEAD 1    sdev        op HEAD 6    sdev        op HEAD 2    sdev        op HEAD 3    sdev        op HEAD 4    sdev
+  ------------ ------------ ----------- ------------ ----------- ------------ ----------- ------------ ----------- ------------ ----------- ------------ ----------- ------------ ----------- ------------ ----------- ------------ ----------- ------------ -----------
+  wh           15.5ms       (0.6ms)     15.2ms       (0.5ms)     15.3ms       (0.5ms)     15.2ms       (0.5ms)     15.3ms       (0.5ms)     15.1ms       (0.4ms)     15.3ms       (0.5ms)     15.2ms       (0.5ms)     46.3ms       (19.9ms)    31.9ms       (11.5ms)
+  wh mod       155.2ms      (61.3ms)    189.0ms      (88.4ms)    219.2ms      (110.9ms)   170.9ms      (75.8ms)    201.3ms      (96.5ms)    193.3ms      (84.4ms)    201.5ms      (92.3ms)    188.0ms      (86.5ms)    298.6ms      (63.3ms)    256.1ms      (82.6ms)
+  wh -l        44.0ms       (0.7ms)     43.7ms       (1.0ms)     55.5ms       (11.4ms)    50.7ms       (6.8ms)     43.9ms       (0.8ms)     43.4ms       (0.6ms)     45.3ms       (2.1ms)     43.4ms       (0.6ms)     73.7ms       (20.3ms)    66.4ms       (12.2ms)
+  record       229.8ms      (23.3ms)    228.0ms      (25.9ms)    215.6ms      (10.8ms)    231.1ms      (27.4ms)    235.7ms      (28.8ms)    238.8ms      (33.0ms)    217.1ms      (11.4ms)    217.3ms      (17.5ms)    279.4ms      (44.3ms)    304.0ms      (61.7ms)
+  revert       112.1ms      (4.1ms)     118.0ms      (9.9ms)     116.0ms      (6.5ms)     120.0ms      (11.3ms)    114.1ms      (5.9ms)     113.2ms      (6.2ms)     121.6ms      (11.5ms)    110.6ms      (4.1ms)     191.1ms      (55.6ms)    144.0ms      (17.3ms)
+  (un)revert   284.1ms      (10.6ms)    279.3ms      (9.9ms)     287.6ms      (11.7ms)    282.6ms      (11.7ms)    275.6ms      (3.9ms)     277.1ms      (8.8ms)     344.1ms      (58.3ms)    276.4ms      (9.3ms)     405.8ms      (73.8ms)    394.1ms      (67.4ms)
+  get (full)   ?5.0s        (0.3s)      ?4.6s        (0.0s)      ?4.4s        (0.0s)      ?4.9s        (0.3s)      ?5.0s        (0.3s)      ?5.1s        (0.4s)      ?5.1s        (0.5s)      ?4.6s        (0.1s)      ?5.8s        (0.5s)      ?5.3s        (0.3s)
+  get (lazy)   \~2015.1ms   (571.0ms)   \~2145.4ms   (630.8ms)   \~2050.8ms   (379.6ms)   \~2239.8ms   (512.3ms)   \~2258.8ms   (551.2ms)   \~1883.3ms   (574.0ms)   \~2229.3ms   (472.9ms)   \~2747.3ms   (549.2ms)   ?3123.9ms    (368.6ms)   \~1048.1ms   (45.1ms)
+  pull 100     \~1840.3ms   (254.8ms)   \~1493.8ms   (65.0ms)    \~1559.1ms   (37.8ms)    \~1651.9ms   (151.0ms)   \~1612.6ms   (89.9ms)    \~1505.2ms   (69.4ms)    \~1630.2ms   (78.8ms)    \~1649.1ms   (198.3ms)   \~1861.3ms   (291.5ms)   \~2302.4ms   (350.1ms)
+  pull 1000    ?10.1s       (0.1s)      ?10.1s       (0.1s)      ?10.2s       (0.0s)      ?10.1s       (0.2s)      ?10.7s       (0.5s)      ?10.2s       (0.2s)      ?10.3s       (0.0s)      ?9.9s        (0.0s)      ?14.1s       (2.0s)      ?13.0s       (1.1s)
+  check        ?17.4s       (0.0s)      ?16.7s       (0.1s)      ?18.2s       (0.0s)      ?16.9s       (0.0s)      ?17.3s       (0.0s)      ?16.6s       (0.0s)      ?18.3s       (0.1s)      ?16.6s       (0.0s)      ?18.6s       (0.2s)      ?18.8s       (0.2s)
+  repair       ?17.4s       (0.0s)      ?16.7s       (0.1s)      ?18.2s       (0.0s)      ?16.9s       (0.1s)      ?17.3s       (0.0s)      ?16.9s       (0.1s)      ?18.5s       (0.1s)      ?16.6s       (0.0s)      ?19.5s       (0.3s)      ?18.1s       (0.2s)
+  annotate     ?12.1s       (0.1s)      ?10.1s       (0.1s)      ?15.7s       (0.1s)      ?10.3s       (0.1s)      ?11.9s       (0.1s)      ?10.1s       (0.1s)      ?15.6s       (0.0s)      ?10.0s       (0.1s)      ?11.9s       (0.2s)      ?11.3s       (0.4s)
+
+## tabular
+
+               op HEAD 7   sdev       op HEAD 0   sdev       op HEAD 9   sdev       op HEAD 5   sdev       op HEAD 8   sdev       op HEAD 1   sdev       op HEAD 6   sdev       op HEAD 2   sdev       op HEAD 3   sdev       op HEAD 4   sdev
+  ------------ ----------- ---------- ----------- ---------- ----------- ---------- ----------- ---------- ----------- ---------- ----------- ---------- ----------- ---------- ----------- ---------- ----------- ---------- ----------- ----------
+  wh           12.9ms      (1.1ms)    11.9ms      (0.4ms)    12.2ms      (0.4ms)    15.2ms      (3.2ms)    12.2ms      (0.4ms)    15.9ms      (3.9ms)    12.1ms      (0.4ms)    12.6ms      (0.9ms)    43.1ms      (18.3ms)   35.3ms      (14.8ms)
+  wh mod       20.5ms      (2.6ms)    19.5ms      (1.9ms)    20.7ms      (2.6ms)    20.6ms      (2.4ms)    22.5ms      (4.1ms)    19.6ms      (1.9ms)    20.3ms      (2.2ms)    20.3ms      (2.1ms)    46.1ms      (17.5ms)   46.4ms      (17.7ms)
+  wh -l        15.9ms      (0.4ms)    19.1ms      (3.4ms)    18.2ms      (2.4ms)    15.9ms      (0.4ms)    15.9ms      (0.4ms)    15.8ms      (0.5ms)    15.9ms      (0.4ms)    15.7ms      (0.4ms)    41.9ms      (16.6ms)   37.8ms      (15.0ms)
+  record       66.1ms      (11.5ms)   56.0ms      (3.5ms)    72.2ms      (14.7ms)   66.0ms      (9.5ms)    59.1ms      (5.3ms)    66.0ms      (12.0ms)   69.7ms      (14.1ms)   60.4ms      (7.8ms)    116.8ms     (42.7ms)   94.5ms      (22.2ms)
+  revert       38.3ms      (9.5ms)    28.3ms      (0.7ms)    48.8ms      (18.1ms)   53.2ms      (22.3ms)   44.3ms      (15.0ms)   37.2ms      (8.7ms)    41.1ms      (11.6ms)   39.1ms      (10.5ms)   47.9ms      (11.8ms)   58.7ms      (19.8ms)
+  (un)revert   83.7ms      (5.2ms)    90.1ms      (11.8ms)   85.6ms      (4.3ms)    85.2ms      (4.7ms)    82.1ms      (4.1ms)    80.3ms      (3.1ms)    83.9ms      (4.5ms)    79.1ms      (2.9ms)    129.6ms     (30.8ms)   135.9ms     (33.8ms)
+  get (full)   56.6ms      (0.4ms)    62.1ms      (6.1ms)    60.9ms      (1.8ms)    66.7ms      (7.5ms)    72.5ms      (14.3ms)   61.9ms      (6.1ms)    63.0ms      (5.6ms)    66.4ms      (10.0ms)   79.8ms      (15.8ms)   82.1ms      (16.3ms)
+  get (lazy)   46.9ms      (10.1ms)   41.6ms      (6.4ms)    43.5ms      (4.9ms)    45.1ms      (6.8ms)    45.4ms      (9.0ms)    36.3ms      (1.6ms)    42.0ms      (5.5ms)    37.8ms      (3.4ms)    69.9ms      (25.3ms)   60.5ms      (16.4ms)
+  pull 100     298.1ms     (13.3ms)   275.5ms     (9.0ms)    328.0ms     (8.3ms)    314.8ms     (14.5ms)   318.7ms     (27.8ms)   278.3ms     (11.7ms)   314.1ms     (13.6ms)   279.4ms     (15.6ms)   333.3ms     (49.3ms)   325.5ms     (35.1ms)
+  pull 1000    296.4ms     (11.9ms)   272.1ms     (6.1ms)    326.8ms     (7.5ms)    310.7ms     (10.8ms)   297.7ms     (13.0ms)   273.8ms     (7.8ms)    316.1ms     (14.7ms)   274.1ms     (11.7ms)   312.5ms     (40.3ms)   407.2ms     (80.4ms)
+  check        55.7ms      (1.7ms)    50.4ms      (0.4ms)    56.4ms      (0.6ms)    52.5ms      (0.5ms)    54.6ms      (1.0ms)    51.7ms      (1.4ms)    57.9ms      (1.8ms)    52.4ms      (2.0ms)    78.5ms      (16.5ms)   76.6ms      (15.1ms)
+  repair       57.2ms      (1.6ms)    52.9ms      (1.2ms)    59.5ms      (1.7ms)    55.6ms      (1.5ms)    58.4ms      (2.6ms)    53.7ms      (2.0ms)    59.7ms      (2.3ms)    52.8ms      (1.1ms)    92.1ms      (26.5ms)   90.5ms      (22.3ms)
+  annotate     101.5ms     (2.5ms)    88.2ms      (2.1ms)    109.2ms     (3.8ms)    94.3ms      (2.5ms)    102.3ms     (3.5ms)    88.7ms      (2.7ms)    107.3ms     (2.4ms)    90.5ms      (4.0ms)    129.4ms     (22.1ms)   134.3ms     (24.1ms)
+
+

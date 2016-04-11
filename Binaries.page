@@ -1,0 +1,258 @@
+---
+title: Download Darcs
+toc:no
+...
+
+# Latest official binaries
+
+  --------------------------------------------------------------------------------------------------------------
+  Windows               Intel Mac OSX             GNU/Linux      OpenBSD                  FreeBSD
+  -------               -------------             ---------      -------                  -------
+  [Darcs 2.8.1 msi][1]  [Darcs 2.10.1][12]                                                                        
+  ([checksum][2])       ([checksum][13])<br>
+  [Darcs 2.8.5 exe][10]  10.8 Mountain Lion and up
+  ([checksum][11])
+  --------------------------------------------------------------------------------------------------------------
+
+
+ [1]: http://darcs.net/binaries/windows/darcs-2.8.1-win1.msi
+ [2]: http://darcs.net/binaries/windows/darcs-2.8.1-win1.msi.md5
+
+ [3]: http://darcs.net/binaries/macosx/darcs-2.8.4-OSX-10.8.4-x86_64.tar.bz2
+ [4]: http://darcs.net/binaries/macosx/darcs-2.8.4-OSX-10.8.4-x86_64.tar.bz2.md5
+
+ [3107]: http://darcs.net/binaries/macosx/darcs-2.8.4-OSX-10.7-x86_64.tar.bz2
+ [4107]: http://darcs.net/binaries/macosx/darcs-2.8.4-OSX-10.7-x86_64.tar.bz2.md5
+
+ [10]: http://darcs.net/binaries/windows/darcs-2.8.5.exe
+ [11]: http://darcs.net/binaries/windows/darcs-2.8.5.exe.md5
+
+ [12]: http://darcs.net/binaries/macosx/darcs2.10.tgz
+
+ [13]: http://darcs.net/binaries/macosx/darcs2.10.tgz.sha1
+
+
+The current stable release is [darcs 2.10.2, released 2015-11-09](/Releases/2.10).
+
+# Compiling from source
+
+You can grab the source of the latest reviewed branch from
+<http://darcs.net/reviewed/reviewed.zip>.
+
+You can also clone darcs' repository using darcs itself:
+
+    darcs clone --lazy http://darcs.net/          # more up-to-date, less tested
+    darcs clone --lazy http://darcs.net/reviewed  # less up-to-date, more tested
+
+If for whatever reason you need an older release of darcs, see [Releases]().
+
+Darcs is written in [Haskell](http://www.haskell.org/), and to build it
+we recommend the installation of the [Haskell Platform](http://hackage.haskell.org/platform).
+Building can then be done by typing `cabal update` followed by `cabal install` in the source
+directory. Note for Mac users: by default, cabal will attempt to install packages with 
+profiling enabled, which may cause installation failures; disabling profiling may help 
+- see [issue2268](http://bugs.darcs.net/issue2268) for details.
+
+## Flags to alter compilation
+
+There some flags that can be used to alter compilation. They are specified like this:
+
+    $ cabal install -fflag_name
+
+Here are some may be of interest. Search for "flags" in the `darcs.cabal` file
+file for the complete list.
+
+* `-f-curl`:
+  By default the cabal-based build requires the cURL library and development
+  headers. If you can't provide cURL, use this flag to disable the use of it.
+  The pure Haskell 'HTTP' package will be used instead.
+
+* `-frts`:
+  When trying to use the patch-index feature, you can may get an error like
+  this: "Stack space overflow: current size 8388608 bytes." darcs can be
+  recompiled with this flag to avoid the issue.
+
+* `-fstatic`:
+  Builds a static binary, which bundles most dependencies. The resulting binary
+  is larger, but is able to be installed on similar machines without also
+  installing all the dependencies separately.
+
+# More binaries
+
+## Microsoft Windows
+
+Official Windows binaries:
+
+-   [darcs
+    2.5.2](http://darcs.net/binaries/windows/darcs-2.5.2-win1.zip)
+    ([checksum](http://darcs.net/binaries/windows/darcs-2.5.2-win1.zip.md5),
+    built with GHC 6.12.3, curl version 7.21.4)
+-   [darcs
+    2.5.1](http://darcs.net/binaries/windows/darcs-2.5.1-win1.zip)
+    ([checksum](http://darcs.net/binaries/windows/darcs-2.5.1-win1.zip.md5),
+    built with GHC 6.12.3, curl version 7.21.4)
+-   [darcs 2.5](http://darcs.net/binaries/windows/darcs-2.5-win2.zip)
+    ([checksum](http://darcs.net/binaries/windows/darcs-2.5-win2.zip.md5),
+    built with GHC 6.12.3, curl version 7.21.2)
+-   [darcs
+    2.4.4](http://darcs.net/binaries/windows/darcs-2.4.4-win1.zip)
+    ([checksum](http://darcs.net/binaries/windows/darcs-2.4.4-win1.zip.md5),
+    built with GHC 6.10.4, curl version 7.19.6)
+
+For local or HTTP access, just download the zip file above and unpack
+it. If you need SSH support, see [Windows]().
+
+## Mac OS X
+
+MacOS X now has four binary architectures; ppc, ppc64, x86, x86\_64. For
+the purposes of haskell/darcs building, I think this mostly amounts the
+two architectures of the ppc/x86 split. The Rosetta emulation layer that
+ships with 10.4 x86 allows x86 users to run many (but not all) ppc
+binaries, however ppc users cannot run x86 binaries.
+
+### Homebrew 
+
+Darcs 2.10.1 (Mavericks, Intel x86_64) <http://covariant.me/stuff/darcs/darcs2.10.tgz> is available via [Homebrew](http://brew.sh). If you have `brew` installed just type in
+
+    brew install http://darcs.covariant.me/darcs.rb
+
+
+sha256 checksum: `cf77d01d16e35d84fc38ca1537a3aedac5a7f2277695779be2b70e8e2ef71e68`
+
+### Intel OS X
+
+Official MacOS X binaries:
+
+- [darcs 2.10.1 (+1 patch)](http://covariant.me/stuff/darcs/darcs2.10.tgz) ([checksum](http://covariant.me/stuff/darcs/darcs2.10.tgz.sha1)), **Mavericks** and **Yosemite** Intel x86_64
+- [darcs 2.8.4 (+1 patch)][3] ([checksum][4]) ONLY 10.8 **Mountain Lion** Intel x86_64
+- [darcs 2.8.4 (+1 patch)][3107] ([checksum][4107]) 10.7 **Lion**
+- [darcs 2.5](http://darcs.net/binaries/macosx/darcs-2.5-OSX-10.6-i386.tar.gz)
+  ([checksum](http://darcs.net/binaries/macosx/darcs-2.5-OSX-10.6-i386.tar.gz.md5)) 10.6 **Snow Leopard** Intel
+- [darcs 2.4.4](http://darcs.net/binaries/macosx/darcs-2.4.4-OSX-10.6-i386.tar.gz)
+  ([checksum](http://darcs.net/binaries/macosx/darcs-2.4.4-OSX-10.6-i386.tar.gz.md5)) 10.6 **Snow Leopard** Intel
+
+
+### Try compiling from source
+
+Binary not recent enough?  Compiling from source can actually be quite easy.
+Just download the [Haskell Platform](http://hackage.haskell.org/platform)
+and run `cabal install darcs`
+
+For former versions of OS X you can compile like this:
+
+    MACOSX_DEPLOYMENT_TARGET=10.7 cabal install darcs
+
+or like this (which is not tested yet):
+
+    cabal install --gcc-options="-mmacosx-version-min=10.7" darcs
+
+
+## GNU/Linux
+
+**Binary for Linux**
+
+-   v2.4.4:
+    <http://progg.free.fr/darcs/darcs-2.4.4-ghc6.12.1-http-static.bin.bz2>
+    (32-bit; statically linked)
+-   v2.3.1:
+    <http://urchin.earth.li/~ganesh/darcs/darcs-2.3.1-ghc6.10.4-http-static.bin>
+    (32-bit; statically linked)
+-   v2.2.0:
+    <http://repos.mornfall.net/darcs/darcs-2.2.0-ghc6.10-libwww-static.bin>
+    (32-bit; statically linked)
+
+v2.2.0 above may be useful to run with older kernels.
+
+**Packages for Debian and Ubuntu**
+
+Download a .deb from [packages.debian.org](https://packages.debian.org/darcs)
+
+**Distributions that provide darcs**
+
+- Arch Linux: in the [AUR](https://aur.archlinux.org/packages/darcs-bin/)
+- Debian
+- Fedora
+- Frugalware
+- Gentoo:
+  you can see which "stable" and "unstable" versions are available for
+  your architecture at <http://packages.gentoo.org/package/dev-util/darcs>.
+  You can try the "unstable" version (for non-i386 platforms
+  replace \~x86 with correct keyword, for amd-64 use \~amd64):
+      - `mkdir /etc/portage` *(if you have not already done so)*
+      - `echo "dev-util/darcs ~x86" >> /etc/portage/package.keywords`
+      - `emerge darcs`
+
+- Mandriva: ensure your urpmi is setup with *contrib* media.
+  For all issue related to this package, please contact the official
+  maintainer: <nanardon@mandriva.org>
+  To have benefits of bash completion, install the `bash-completion` package.
+- Ubuntu: you will have to enable the *universe* packages source
+
+## BSD
+
+### FreeBSD
+
+To see wether Darcs builds on your FreeBSD version, check the [FreeBSD
+ports
+collection](http://www.freebsd.org/cgi/ports.cgi?query=darcs&stype=all):
+
+To build from source: `cd /usr/ports/devel/darcs && make install` or, to
+install the server as well:
+`cd /usr/ports/devel/darcs && make -DWITH_SERVER install` If you install
+the server, the CGI executable is installed as
+/usr/local/libexec/darcs/cgi-bin/darcs, and its configuration file is
+/usr/local/etc/darcs/darcs/cgi.conf.
+
+Since darcs depends on Haskell, be prepared for the above to also
+download and install any Haskell related ports that you don't already
+have, such as ghc.
+
+To fetch and install a binary package from an official FreeBSD server:
+`pkg_add -r darcs`
+
+The statically-linked Linux binary above also appears to work if you've
+got COMPAT\_LINUX in your kernel.
+
+If you want to compile darcs yourself on FreeBSD, be sure to use `gmake`
+instead of `make`.
+
+### OpenBSD
+
+darcs is available in ports.  To install the binary ports package:
+
+    export PKG_PATH=ftp://ftp.openbsd.org/pub/OpenBSD/`uname -r`/packages/`machine -a`/
+    pkg_add -v darcs
+
+The following table lists the darcs version available in each OpenBSD release.
+
+--------------------------------
+OpenBSD release    darcs version
+------------------ -------------
+5.5                2.8.4p0
+
+5.4                2.8.4
+
+5.3                2.8.3
+
+5.2                2.8.0p0
+
+5.1                2.5.2p5
+
+5.0                2.5.2p3
+
+4.9                2.5
+
+4.8                2.4.4p1
+
+4.7                2.2.0p0
+
+4.6                2.2.0
+--------------------------------
+
+### NetBSD
+
+No native binaries are available yet. On x86, the statically-linked
+Linux binary above works if you've got COMPAT\_LINUX in your kernel.
+
+It's possible to use pkgsrc to install binary or build Darcs from
+sources. Darcs is in directory pkgsrc/devel/darcs.

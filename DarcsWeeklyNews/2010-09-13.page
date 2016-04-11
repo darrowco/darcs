@@ -1,0 +1,271 @@
+# News and discussions
+
+1.  Darcs 2.5 beta 5 was released:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-September/025215.html](http://lists.osuosl.org/pipermail/darcs-users/2010-September/025215.html)
+
+2.  Eric put online a series of videos (\~1h) explaining the sate of
+    darcs in 2010 (adapted from his recent talk in AngloHaskell 2010):
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-September/025266.html](http://lists.osuosl.org/pipermail/darcs-users/2010-September/025266.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-September/025270.html](http://lists.osuosl.org/pipermail/darcs-users/2010-September/025270.html)
+
+3.  Petr released darcs-fastconvert, a tool that helps converting darcs
+    and git repositories in both directions:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-September/025251.html](http://lists.osuosl.org/pipermail/darcs-users/2010-September/025251.html)
+
+4.  Jason asked for feedback about his proposition for darcs to uniquely
+    identify the state of a repository by a hash:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-September/025198.html](http://lists.osuosl.org/pipermail/darcs-users/2010-September/025198.html)
+
+5.  Petr kicked off his \`\`adventure'' branch, a long-lived public
+    branch of darcs he will use to make disruptive changes in the
+    codebase:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-August/025048.html](http://lists.osuosl.org/pipermail/darcs-users/2010-August/025048.html)
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-August/025105.html](http://lists.osuosl.org/pipermail/darcs-users/2010-August/025105.html)
+
+6.  Ganesh proposed to used a \`\`submitted'' public branch to help
+    developers share they work and deal with the reviewing process more
+    smoothly:
+
+    -   [http://lists.osuosl.org/pipermail/darcs-users/2010-September/025271.html](http://lists.osuosl.org/pipermail/darcs-users/2010-September/025271.html)
+
+# Issues resolved in the last 3 weeks (2)
+
+issue1884 Alexey Levan
+  ~ -   correct report about getting lazy repository
+    -   [http://bugs.darcs.net/issue1884](http://bugs.darcs.net/issue1884)
+
+issue1942 Petr Rockai
+  ~ -   Fix an IO interleaving bug in old-fashioned readRepo.
+    -   [http://bugs.darcs.net/issue1942](http://bugs.darcs.net/issue1942)
+
+# Patches applied in the last 3 weeks (140)
+
+2010-09-13 Eric Kow
+  ~ -   Mark ssh test as skipped if REMOTE is not set.
+    -   Move external and ssh tests to network directory.
+
+2010-08-29 Petr Rockai
+  ~ -   Make the tests a bit less verbose (do not print all of lib every
+        time).
+    -   Set a $format variable in lib, depending on current repo format
+        under test.
+
+2010-09-08 Eric Kow
+  ~ -   Accept issue1951: add outside of current repository.
+
+2010-09-03 Petr Rockai
+  ~ -   Resolve yet another darcs.cabal conflict.
+
+2010-08-28 Ganesh Sittampalam
+  ~ -   drop unnecessary import
+    -   move Darcs.Patch.Properties to Darcs.Test.Patch.Properties
+    -   break up Darcs.Patch.Patchy and make Darcs.Patch.Named more
+        self-contained
+    -   drop unnecessary import
+    -   drop unnecessary superclass
+    -   fix warning in Darcs.Test.Email
+    -   fix warning in Darcs.Test.Patch.Info
+    -   drop unnecessary constraint
+    -   remove commented out imports
+    -   remove unnecessary pragmas from Darcs.Patch.Match
+    -   remove unused import
+
+2010-09-07 Eric Kow
+  ~ -   Fix misleading configuration documentation.
+
+2010-09-05 Reinier Lamers
+  ~ -   TAG 2.4.98.5
+    -   Bump version number to 2.4.98.5
+
+2010-08-30 Eric Kow
+  ~ -   Clean up trackdown --bisect documentation.
+
+2010-09-01 Iago Abal
+  ~ -   remove --index option from matchOneNontag because issue1926
+
+2010-09-04 Petr Rockai
+  ~ -   Resolve issue1942: Fix an IO interleaving bug in old-fashioned
+        readRepo.
+
+2010-08-25 Dmitry Astapov
+  ~ -   Accept issue1932: darcs add -qr . should not fail on filenames
+        with ':'
+
+2010-09-04 Eric Kow
+  ~ -   Document Darcs.Patch.Info.makeFilename.
+
+2010-09-03 Ganesh Sittampalam
+  ~ -   add some haddock to Darcs.Witnesses.Eq
+    -   drop unused concatReverseFL
+    -   drop unused headRL
+    -   drop unsafeMap\_l2f
+    -   drop unused filterE/Proof
+
+2010-09-03 Alexey Levan
+  ~ -   Resolve issue1884: correct report about getting lazy repository
+    -   Redefine Darcs.Commands.putInfo in Darcs.Repository
+
+2010-09-03 Eric Kow
+  ~ -   Remove now-superfluous cleanup step from EXAMPLE.sh
+
+2010-09-02 Petr Rockai
+  ~ -   Use lib in tests/issue257.sh.
+    -   Remove the now-defunct Distribution directory.
+    -   Add a tarball of a small oldfashioned repository for testing
+        purposes.
+    -   Update haddock.
+    -   Use more meaningful names for seal\_up\_patches' parameters.
+    -   Wibble path building in Repository.Prefs.
+
+2010-09-02 Eric Kow
+  ~ -   Document cultural reference in Darcs.Witnesses.WZipper.
+    -   Jot down a few more tips about testing.
+    -   Add MIT boilerplate to all public domain scripts.
+    -   Update issue1503 network test for new harness.
+
+2010-09-02 Petr Rockai
+  ~ -   Propagate the exit code of darcs-test to exit code of cabal
+        test.
+    -   Allow "output=plain" to be passed to cabal test.
+
+2010-09-02 Eric Kow
+  ~ -   Suppress check for darcs-test in Setup.
+    -   More portable executable names in Setup.
+    -   Update cabal file for new test-support paths.
+    -   Fix conflicts between darcs-test enabling and other cabal
+        patches.
+
+2010-08-29 Petr Rockai
+  ~ -   Drop the "test" cabal flag and build darcs-test unconditionally.
+    -   Fix a bug in cabal test argument parsing.
+    -   Make it possible to pass "threads=N" to cabal test.
+
+2010-09-02 Eric Kow
+  ~ -   Replace some developer links with a wiki page.
+    -   Nicer patch counting mechanism for buildbot-try.
+    -   Use unified diff for copying unrecorded changes in buildbot-try.
+    -   Wrap buildbot-try with ssh-agent.
+
+2010-09-02 Jason Dagit
+  ~ -   URL.hs: fix a typo in import list
+
+2010-08-25 Dmitry Astapov
+  ~ -   Fix for issue1932
+
+2010-08-29 Petr Rockai
+  ~ -   Bump shellish dependency to \>= 0.1.1, to avoid the infinite
+        loop in rm\_rf problem.
+    -   Flip "cabal test" over to use darcs-test to run the shell tests.
+    -   Add a --network option to darcs-test to run the network shell
+        tests.
+    -   Couple of improvements in the new shell test runner.
+    -   Implement a test-framework-based shell harness.
+
+2010-08-22 Guillaume Hoffmann
+  ~ -   send prints remote address right away
+
+2010-08-12 Eric Kow
+  ~ -   Use long titles for more stable URLs in user manual.
+
+2010-08-22 Jason Dagit
+  ~ -   Changes.lhs: remove extra (and weird) case
+    -   TheComands.hs: fix prelude import
+
+2010-08-28 Eric Kow
+  ~ -   Fix conflict between base and hashed-storage deps.
+    -   Remove PatternSignatures as we currently require GHC 6.10 and
+        up.
+    -   Document GHC 6.10 dependency.
+    -   Raise base package dependency to \>= 4 (keeping it < 5).
+
+2010-08-24 Petr Rockai
+  ~ -   Relax the hashed-storage dependency (to \>= 0.5.2 && < 0.6).
+
+2010-08-27 Ganesh Sittampalam
+  ~ -   add missing V2.hs
+    -   move some Patchy instances into a separate file
+    -   don't export Patch/RealPatch from Darcs.Patch
+    -   split up the Commute class
+    -   get rid of unnecessary superclass
+    -   drop some exports from Darcs.Patch
+    -   break Patch-specific bits of Show and Viewing out into V1
+    -   get rid of apparently unnecessary instance dependency
+    -   move v1 Patch applying into separate module
+    -   move v1 Patch reading into separate module
+    -   Darcs.Patch.Core now just contains Named
+    -   move Named instances out of V1.Commute
+    -   move Darcs.Patch.Commute into V1 namespace
+    -   move RealPatch into its own namespace
+    -   remove unused re-export
+    -   start on moving v1 patch code into its own namespace
+    -   fix warnings in Darcs.SelectChanges
+    -   fix warnings in Darcs.Commands.Apply
+    -   fix warnings in Darcs.Witnesses.Ordered
+    -   fix warning in Darcs.Repository.Repair
+    -   fix warning in Darcs.Patch.Depends
+    -   fix warning in Darcs.Patch.Choices
+    -   fix warnings in Darcs.Commands.Send
+    -   fix warnings in Darcs.Commands.Record
+    -   fix warnings in Darcs.Commands.Push
+    -   fix warnings in Darcs.Commands.Pull
+    -   fix warnings in tests
+
+2010-08-25 Jason Dagit
+  ~ -   Depends.hs: add back catch all case to silence warning
+
+2010-08-26 Eric Kow
+  ~ -   Fix issue1926 headers.
+
+2010-08-20 Iago Abal
+  ~ -   Accept issue1926: amend-record ignores --index option.
+
+2010-08-26 Eric Kow
+  ~ -   Avoid cascading permissions error in issue612 test.
+
+2010-08-25 Jason Dagit
+  ~ -   fix unit test imports
+    -   clean up Witnesses imports across codebase
+    -   ArgumentDefaults.lhs: fix warnings
+    -   Commands/Put.lhs: fix warnings
+    -   Commands/Pull.lhs: fix warnings
+    -   Commands/Unrevert.lhs: remove redundant imports
+    -   Commands/Unrecord.lhs: fix warnings
+    -   Commands/Send.lhs: remove redundant imports
+    -   Commands/Record.lhs: remove redundant imports
+    -   Commands/Apply.lhs: fix warnings
+    -   SelectChanges.hs: fix warnings
+    -   Annotate.lhs: remove redundant imports
+    -   Population.hs: remove redundant imports
+    -   ShowFiles.lhs: rename shadowed binding
+    -   Get.lhs: remove redundant import
+    -   Commands/Diff.lhs: remove redundant import
+    -   Match.lhs: remove redundant imports
+    -   WhatsNew.lhs: fix warnings
+    -   HashedRepo.hs: clean up imports to fix warnings
+    -   splitout parts of Darcs.Witnesses into new modules
+    -   TrackDown.lhs: fix warnings
+    -   ShowAuthors.lhs: remove redundant import
+    -   MarkConflicts.hs: rename shadowed binding
+    -   Convert.lhs: remove redundant import
+    -   Repository.hs: remove unused binding
+    -   Merge.hs: remove redundant import
+    -   Checkpoint.hs: remove redundant imports
+    -   Internal.hs: remove warnings
+    -   Info.hs: remove redundant imports
+    -   URL.hs: fix warning about conditional import of debugFail
+    -   Diff.hs: remove unused bindings
+    -   ReadMonads.hs: remove unused lexStrings
+    -   Global.hs: remove import to fix warning
+    -   move dropWhileFL to Ordered.hs
+    -   move dropWhileRL to Ordered.hs
+
+2010-08-25 Eric Kow
+  ~ -   Accept issue1931: Fix issue612 test and mark it as failing.
+    -   Modernise issue612 test (use exit 200 to skip).
+
+

@@ -1,0 +1,182 @@
+Hi everybody,
+
+I thought it would be useful if we got back into the habit up
+summarising our weekly darcs activities. This is the first entry of what
+I hope to be Darcs Weekly News.
+
+# News and discussions
+
+hacking sprint (25/26 October)
+  ~ We are now planning three sites for the upcoming darcs hacking
+    sprint: Brighton (moved from Cambridge), Paris and Portland. More
+    news as we finalise the venues in the next two weeks!
+
+performance benchmarking
+  ~ Eric is working on integrating performance regression testing into
+    the darcs buildbot. The progress is slow but steady!
+
+darcs 2 real world comparison
+  ~ Jason analyses a comparison of darcs push between 1.0.9 and 2.0.2.
+    [http://blog.codersbase.com/2008/08/21/darcs-2-real-world-push-performance-evaluation](http://blog.codersbase.com/2008/08/21/darcs-2-real-world-push-performance-evaluation)/
+
+darcs weekly news
+  ~ Most of darcs weekly news is automated, but we still need human
+    editors! To help out, darcs get
+    [http://code.haskell.org/darcs/darcs-news](http://code.haskell.org/darcs/darcs-news)
+
+# Issues resolved in the last two weeks (5)
+
+-   issue115 (Dmitry Kurochkin) match patches touching given files.
+    [http://bugs.darcs.net/issue115](http://bugs.darcs.net/issue115)
+
+-   issue823 (Dmitry Kurochkin) do not exit on keyboard interrupt when
+    getting patches.
+    [http://bugs.darcs.net/issue823](http://bugs.darcs.net/issue823)
+
+-   issue936 (Dmitry Kurochkin) fix type witnesses configure check.
+    [http://bugs.darcs.net/issue936](http://bugs.darcs.net/issue936)
+
+-   issue950 (David Roundy) fix fix\_filepath to work with --repodir
+    (and add test demonstrating this).
+    [http://bugs.darcs.net/issue950](http://bugs.darcs.net/issue950)
+
+-   issue995 (Dmitry Kurochkin) changes --context :
+    {--human-readable,--xml-output} have no effect.
+    [http://bugs.darcs.net/issue995](http://bugs.darcs.net/issue995)
+
+# Patches applied in the last two weeks (69)
+
+2008-08-25 Jason Dagit
+  ~ minor refator to get\_extra improve comments
+
+2008-08-25 Eric Kow
+  ~ Same ChangeLog entries since 2.0.2 Some more globally ignored
+    changes.
+
+2008-08-24 David Roundy
+  ~ Simplify filepath handling, cutting lots of hardly-used code. don't
+    bother computing path when checking prereqs (since we now can handle
+    looking at beginning/ending working directories). resolve issue950:
+    fix fix\_filepath to work with --repodir (and add test demonstrating
+    this). eliminate fix\_flag. add new framework for ensuring that
+    certain arguments are converted to absolute paths. make Darcs.Lock
+    functions accept FilePathLike arguments. refactor maybeMkSubPath
+    very slightly. refactor repoPath very slightly. make makeAbsolute
+    behavior match comment.
+
+2008-08-22 Dmitry Kurochkin
+  ~ Fix makeAbsolute to work with '../foo' paths.
+
+2008-08-22 David Roundy
+  ~ move withCurrentDirectory, withTempDir and withPermDir rewrite
+    mkAbsolutePath to be safe.
+
+2008-08-22 Eric Kow
+  ~ Changelog (ignore 'Add a test entries')
+
+2008-08-22 David Roundy
+  ~ resolve conflicts.
+
+2008-08-19 Dmitry Kurochkin
+  ~ Resolve issue936: fix type witnesses configure check. Use forkIO in
+    URL module as suggested by Simon Marlow. Remove HTTP.copyUrl,
+    integrate it to URL module. More URL module refactoring.
+
+2008-08-22 Eric Kow
+  ~ Canonize Nathaniel Filardo and Simon Marlow. Add test case for
+    issue966 (from Dan Pascu's bug report)
+
+2008-08-21 David Roundy
+  ~ remove trailing whitespace.
+
+2008-08-21 Dmitry Kurochkin
+  ~ Documentation for match touch primitive. Resolve issue115: match
+    patches touching given files.
+
+2008-08-22 Eric Kow
+  ~ Remove unused FileSystem module.
+
+2008-08-20 David Roundy
+  ~ fix type witnesses in with\_selected\_patch\_from\_repo. clean up
+    bugs functions (eliminate darcsBug.h).
+
+2008-08-19 Jason Dagit
+  ~ Fix a bug with incorrectly specified
+    with\_selecte\_patch\_from\_repository.
+
+2008-08-19 Dmitry Kurochkin
+  ~ Remove HTTP.exists, use Autoconf.have\_HTTP instead.
+
+2008-08-19 David Roundy
+  ~ fix improper use of bug in HTTP.
+
+2008-08-19 Dmitry Kurochkin
+  ~ Do not import HTTP module in Darcs.Bug, use bug and debugFail for
+    error reporting in HTTP module.
+
+2008-08-19 David Roundy
+  ~ fix incompatibility with ghc 6.6. make scan\_bundle create a lazy
+    patch bundle. resolve conflicts with Darcs.Ordered change.
+
+2008-08-15 Jason Dagit
+  ~ replace separate\_middle\_last\_from\_first and
+    separate\_last\_from\_first\_middle with get\_choices correct a bug
+    in with\_selected\_patches\_from\_repository refine type witnesses
+    in SelectChanges make WhatsNew work with type witnesses major
+    refactor of SelectChanges to work with type witnesses
+
+2008-08-16 [nwf@cs.jhu.edu](mailto:nwf@cs.jhu.edu)
+  ~ Move Darcs.Patch.Ordered to Darcs.Ordered since it isn't patchy
+
+2008-08-19 Simon Marlow
+  ~ Fix use of threadWaitRead on Windows Fix Windows build
+
+2008-08-17 Dmitry Kurochkin
+  ~ URL module refactoring. Do not compile curl support if libwww is
+    enabled. URL.hs: always import debugFail, again. URL.hs: call
+    debugFail when download fails. URL.hs: debug messages. Spacing in
+    Darcs/Commands/Changes.lhs Rename catchInt to catchInterrupt, better
+    message when get is interrupted. Resolve issue995: changes --context
+    : {--human-readable,--xml-output} have no effect.
+
+2008-08-18 Eric Kow
+  ~ Add test for issue1017 (as suggested by Bjorn Bringert)
+
+2008-08-19 David Roundy
+  ~ don't print "Wrote patch to -" when writing patch to stdout. always
+    send with context.
+
+2008-08-18 Eric Kow
+  ~ Tidy up known failing shell tests. Tidy up failing test for
+    issue1013. Move hidden conflicts bug to tests directory. Add failing
+    test for issue1012 (Simon Marlow).
+
+2008-08-15 Dmitry Kurochkin
+  ~ Resolve issue823: do not exit on keyboard interrupt when getting
+    patches.
+
+2008-08-14 David Roundy
+  ~ fix buggy comments in bugs/identical-patches.sh.
+
+2008-08-13 Eric Kow
+  ~ Add Ian's identical-patch test case.
+
+2008-08-13 Dmitry Kurochkin
+  ~ URL.hs: store only URL in waitToStart queue.
+
+2008-08-14 Eric Kow
+  ~ Add (failing) test for issue944.
+
+2008-08-13 [nwf@cs.jhu.edu](mailto:nwf@cs.jhu.edu)
+  ~ Split Cache mostly out of Darsc/Repository/Prefs into its own file
+    (take 2)
+
+2008-08-13 Jason Dagit
+  ~ remove a few unsightly functions
+
+2008-08-13 Dmitry Kurochkin
+  ~ Fix URL module bug with pipelining enabled. Minor change to URL
+    module. Enable pipelining by default, add --disable-pipelining
+    option (issue838).
+
+
