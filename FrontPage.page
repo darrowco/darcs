@@ -15,6 +15,11 @@ Tools<br>
 * [gitit](http://www.gitit.net/) Creates a git-based wiki<br>
 * [Pandoc](http://pandoc.org/) Document conversion<br>
 * [Slide.ly](http://pandoc.org/) Slide Show<br>
+<br>
+Slideshow<br>
+<br>
+* [git Slideshow](): git workflow with multiple workers<br>
+* [gitit Slideshow](): Distributed slideshow creation<br>
 
 </div>
 

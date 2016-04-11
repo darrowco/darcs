@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     
-    <title>Darcs - FrontPage</title>
+    <title>Darcs - Community</title>
         <link href="/css/custom.css" rel="stylesheet" media="screen, projection" type="text/css" />
     <link href="/css/print.css" rel="stylesheet" media="print" type= "text/css" />
     
@@ -42,15 +42,19 @@
 </div>
             <ul class="tabs"
 ><li class="selected"
-  ><a href="/FrontPage"
+  ><a href="/Community"
     >view</a
     ></li
   ><li
-  ><a href="/_history/FrontPage"
+  ><a href="/_edit/Community"
+    >edit</a
+    ></li
+  ><li
+  ><a href="/_history/Community"
     >history</a
     ></li
   ><li
-  ><a href="/_discuss/FrontPage"
+  ><a href="/_discuss/Community"
     >discuss</a
     ></li
   ></ul
@@ -58,69 +62,19 @@
             <div id="content">
   
   <style>h1.pageTitle.FrontPage {display:none;}</style>
-  <h1 class="pageTitle FrontPage"><a href="/FrontPage">FrontPage</a></h1>
+  <h1 class="pageTitle Community"><a href="/Community">Community</a></h1>
   
   <div id="wikipage"
 >
-<div id="splash">
-<div id="download">
-<div id="download-heading">
-Code4Lib - CSUCI - April 11, 2016
-</div>
-<p><br> Tools<br> <br> * <a href="https://git-scm.com/">git</a>: Distributed Verson Control<br> * <a href="https://github.com/">github</a>: Web Git repository<br> * <a href="http://www.gitit.net/">gitit</a> Creates a git-based wiki<br> * <a href="http://pandoc.org/">Pandoc</a> Document conversion<br> * <a href="http://pandoc.org/">Slide.ly</a> Slide Show<br></p>
-</div>
-<div id="intro">
-<p>The Code4Lib community is a group of computer programmers and library technologists who largely work for and with libraries.</p>
-</div>
-<div id="leftcol">
-<table>
-<colgroup>
-<col width="50%" />
-<col width="50%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><h1 id="why-git">Why git</h1>
+<div>
 <ul>
-<li><a href="/Features">Key Features</a></li>
-<li>[What makes git different]</li>
-</ul></td>
-<td><h1 id="using-git">Using git</h1>
-<ul>
-<li>[git for Users]</li>
-<li>[git for Developers]</li>
-</ul></td>
-</tr>
-<tr class="even">
-<td><h1 id="community">Community</h1>
-<ul>
-<li><a href="/Community">Get Involved</a></li>
-</ul></td>
-<td><h1 id="about-git">About git</h1>
-<ul>
-<li>[More about git]</li>
-</ul></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="rightcol">
-<h1 id="news">News</h1>
-<ul>
-<li>Apr. 2016 Code4Lib meetup</li>
+<li><a href="/MailingLists">Mailing lists</a></li>
+<li><a href="/IRC">IRC channel</a></li>
+<li><a href="http://bugs.darcs.net">Bug tracker</a></li>
+<li>Darcs on <a href="http://reddit.com/r/darcs">Reddit</a> and <a href="http://stackoverflow.com/questions/tagged?tagnames=darcs">Stack Overflow</a></li>
+<li><a href="https://trello.com/board/darcs/50018818943578851e95b534">Trello Board</a></li>
+<li><a href="http://shop.spreadshirt.com/darcs/">darcs schwag</a> t-shirts, mugs</li>
 </ul>
-</div>
-<div id="footer">
-<div id="sponsors">
-<p><a href="http://www.library.ucla.edu/about/giving-library">UCLA Library sponsors</a></p>
-</div>
-<div id="donate">
-<p><a href="http://www.library.ucla.edu/about/giving-library">Giving to the Library</a></p>
-</div>
-<div id="conservancy">
-<p><a href="http://www.library.ucla.edu/">Library Home Page</a></p>
-</div>
-</div>
 </div></div
 >
 </div>
@@ -148,7 +102,7 @@ Code4Lib - CSUCI - April 11, 2016
 <script type="text/javascript">
 /* <![CDATA[ */
      $(document).bind("keydown", "ctrl+r", function() {
-         $.post("/_expire/FrontPage");
+         $.post("/_expire/Community");
          return true;
          });
 /* ]]> */
