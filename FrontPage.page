@@ -11,10 +11,10 @@ toc:no
 Tools<br>
 <br>
 * [git](https://git-scm.com/): Distributed Verson Control<br>
-* use with [github](https://github.com/): Web-based Git repository hosting service<br>
-* [gitit](http://www.gitit.net/) creates a git-based wiki<br>
-* comprehensive document conversion by [Pandoc](http://pandoc.org/)<br>
-* conversion output includes [Slide.ly](http://pandoc.org/) that created this slide show<br>
+* [github](https://github.com/): Web Git repository<br>
+* [gitit](http://www.gitit.net/) Creates a git-based wiki<br>
+* [Pandoc](http://pandoc.org/) Document conversion<br>
+* [Slide.ly](http://pandoc.org/) Slide Show<br>
 
 </div>
 
