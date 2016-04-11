@@ -5,7 +5,7 @@ toc: no
 # Some Key Features
 
 -   **Offline mode**.
-    Darcs is distributed.
+    Git is distributed.
     This means your own working directory is a repository in its own right.
     You can quickly record your work even if you're on the road
     with no access to the server or with a bad network connection. 
